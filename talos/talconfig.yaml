@@ -6,7 +6,7 @@ talosVersion: v1.9.4
 kubernetesVersion: v1.32.2
 
 clusterName: kubernetes
-endpoint: https://192.168.122.200:6443
+endpoint: https://10.0.10.203:6443
 
 clusterPodNets:
   - "10.42.0.0/16"
@@ -15,7 +15,7 @@ clusterSvcNets:
 
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
-  - "192.168.122.200"
+  - "10.0.10.203"
 additionalMachineCertSans: *sans
 
 # Disable built-in CNI to use Cilium
@@ -24,7 +24,7 @@ cniConfig:
 
 nodes:
   - hostname: "node01"
-    ipAddress: "192.168.122.211"
+    ipAddress: "10.0.10.234"
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
@@ -35,13 +35,13 @@ nodes:
           hardwareAddr: "52:54:00:0c:23:b9"
         dhcp: false
         addresses:
-          - "192.168.122.211/24"
+          - "10.0.10.234/24"
         routes:
           - network: "0.0.0.0/0"
-            gateway: "192.168.122.1"
+            gateway: "10.0.10.1"
         mtu: 1500
         vip:
-          ip: "192.168.122.200"
+          ip: "10.0.10.203"
 
 # Global patches
 patches:
