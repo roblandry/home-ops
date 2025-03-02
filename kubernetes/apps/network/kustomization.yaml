@@ -6,5 +6,7 @@ namespace: network
 components:
   - ../../components/common
 resources:
+  - ./error-pages/ks.yaml
   - ./external/ks.yaml
   - ./internal/ks.yaml
+  - ./traefik/ks.yaml

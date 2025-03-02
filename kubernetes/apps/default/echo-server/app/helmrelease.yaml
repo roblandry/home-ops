@@ -83,9 +83,18 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: external
+        # className: external
+        # annotations:
+        #   external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        ingressClassName: "traefik"
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          cert-manager.io/cluster-issuer: "letsencrypt-staging"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+          external-dns/is-public: "true"
+          # hajimari.io/enable: "true"
+          # hajimari.io/icon: "video-input-antenna"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
