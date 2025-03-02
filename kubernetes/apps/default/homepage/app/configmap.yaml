@@ -1,0 +1,339 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  bookmarks.yaml: |
+    - Communicate:
+      - Discord:
+        - icon: discord.png
+          href: 'https://discord.com/app'
+      - Gmail:
+        - icon: gmail.png
+          href: 'http://gmail.com'
+      - Google Calendar:
+        - icon: google-calendar.png
+          href: 'https://calendar.google.com'
+      - Outlook:
+        - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/outlook.png
+          href: 'https://outlook.com'
+    - Media:
+      - YouTube:
+        - icon: youtube.png
+          href: 'https://youtube.com/feed/subscriptions'
+      - Spotify:
+        - icon: spotify.png
+          href: 'http://open.spotify.com'
+      - Youtube Music:
+        - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/youtube-music.png
+          href: 'https://music.youtube.com'
+    - Reading:
+      # - Beyond:
+      #   - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
+      #     href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
+      # - Western Subaru Club:
+      #     - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/wsc.png
+      #       href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
+      - Reddit:
+        - icon: reddit.png
+          href: 'https://reddit.com'
+    - Git:
+      - kubesearch:
+        - icon: kubernetes-dashboard.png
+          href: 'https://kubesearch.dev/'
+      - kluster-template:
+        - icon: github-light.png
+          href: 'https://github.com/roblandry/kluster-template'
+
+  docker.yaml: ""
+
+  kubernetes.yaml: |
+    mode: cluster
+
+  services.yaml: |
+    # - Calendar:
+    #   - Calendar:
+    #       widget:
+    #         type: calendar
+    #         firstDayInWeek: sunday # optional - defaults to monday
+    #         view: monthly # optional - possible values monthly, agenda
+    #         maxEvents: 10 # optional - defaults to 10
+    #         integrations: # optional
+    #           - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Sonarr # service name for that widget
+    #           - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Radarr # service name for that widget
+    #           - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Readarr # service name for that
+    #   - Agenda:
+    #       widget:
+    #         type: calendar
+    #         view: agenda # optional - possible values monthly, agenda
+    #         maxEvents: 20 # optional - defaults to 10
+    #         integrations: # optional
+    #           - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Sonarr # service name for that widget
+    #           - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Radarr # service name for that widget
+    #           - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
+    #             service_group: Downloads # group name where widget exists
+    #             service_name: Readarr # service name for that widget
+    - Infrastructure:
+      - Cloudflared:
+          href: https://dash.cloudflare.com/
+          icon: cloudflare-zero-trust.png
+          description: Cloudflared Tunnel Status
+          # widget:
+          #   type: cloudflared
+          #   accountid: ${CLOUDFLARED_ACCOUNTID}
+          #   tunnelid: ${CLOUDFLARED_TUNNELID}
+          #   key: ${CLOUDFLARED_API_TOKEN}
+      # - Pfsense:
+      # - APC:
+      # - KVM1:
+      # - KVM2:
+      # - AP1:
+      # - Switch:
+      # - Proxmox:
+    - Services:
+      - PiHole:
+          href: http://pi.hole
+          icon: pi-hole.png
+          description: PiHole DNS
+          widget:
+            type: pihole
+            url: http://pi.hole
+            key: ${PIHOLE_TOKEN}
+      - Portainer:
+          href: &url http://${SECRET_UNRAID_IP}:9000
+          icon: portainer.png
+          description: Docker Container Management
+          widget:
+            type: portainer
+            url: http://${SECRET_UNRAID_IP}:9000
+            env: 1
+            key: ${PORTAINER_TOKEN}
+      # - Search:
+      # - Log:
+      # - Pass:
+    - Media:
+      # - Plex:
+      # - Photos:
+      # - Photoprism:
+      # - Find:
+      # - Ombi:
+      - Tautulli:
+          href: http://${SECRET_UNRAID_IP}:8182
+          icon: tautulli.png
+          description: Media Info
+          widget:
+            type: tautulli
+            url: http://${SECRET_UNRAID_IP}:8182/tautulli
+            key: ${TAUTULLI_KEY}
+    - Media Organization:
+      # - Calibre:
+      # - Calibre-Web:
+      - Radarr:
+          href: https://apps.${SECRET_DOMAIN}/radarr
+          icon: radarr.png
+          description: Movie Management
+          widget:
+            type: radarr
+            url: https://apps.${SECRET_DOMAIN}/radarr
+            key: ${RADARR_KEY}
+      - Sonarr:
+          href: https://apps.${SECRET_DOMAIN}/sonarr
+          icon: sonarr.png
+          description: TV Show Management
+          widget:
+            type: sonarr
+            url: https://apps.${SECRET_DOMAIN}/sonarr
+            key: ${SONARR_KEY}
+      - Lidarr:
+          href: https://apps.${SECRET_DOMAIN}/lidarr
+          icon: lidarr.png
+          description: Music Management
+          widget:
+            type: lidarr
+            url: https://apps.${SECRET_DOMAIN}/lidarr
+            key: ${LIDARR_KEY}
+      - Readarr:
+          href: https://apps.${SECRET_DOMAIN}/readarr
+          icon: readarr.png
+          description: Book Management
+          widget:
+            type: readarr
+            url: https://apps.${SECRET_DOMAIN}/readarr
+            key: ${READARR_KEY}
+      - Prowlarr:
+          href: https://apps.${SECRET_DOMAIN}/prowlarr
+          icon: prowlarr.png
+          description: Indexer Manager
+          widget:
+            type: prowlarr
+            url: https://apps.${SECRET_DOMAIN}/prowlarr
+            key: ${PROWLARR_KEY}
+      - Bazarr:
+          href: https://apps.${SECRET_DOMAIN}/bazarr
+          icon: bazarr.png
+          description: Subtitle Manager
+          widget:
+            type: bazarr
+            url: https://apps.${SECRET_DOMAIN}/bazarr
+            key: ${BAZARR_KEY}
+    - Downloads:
+      - SABnzbd:
+          href: https://apps.${SECRET_DOMAIN}/sabnzbd/
+          icon: sabnzbd.png
+          description: NZB Downloader
+          widget:
+            type: sabnzbd
+            url: https://apps.${SECRET_DOMAIN}/sabnzbd/
+            key: ${SABNZBD_KEY}
+      - Transmission:
+          href: https://apps.${SECRET_DOMAIN}/transmission/
+          icon: transmission.png
+          description: Torrent Downloader
+          widget:
+            type: transmission
+            url: http://${SECRET_UNRAID_IP}:9091
+            username: ${TRANSMISSION_USERNAME}
+            password: "${TRANSMISSION_PASSWORD}"
+            rpcUrl: /transmission/
+    - Automation:
+      # - Home Assistant:
+      - Valetudo:
+          href: http://10.0.0.88
+          icon: valetudo.png
+          description: Valetudo Robot Vacuum
+    # - NVR:
+      # - Frigate:
+      # - Double Take:
+    # - AI:
+      # - AI:
+      # - Chat:
+      # - Chat2:
+    # - Office:
+      # - Docspell:
+      # - NextCloud:
+      # - Webtrees:
+    # - Web:
+      # - www:
+      # - apps:
+    # - Other:
+      # - Mealie:
+      # - Obico:
+      # - OctoPrint:
+    - Storage:
+      # - Unraid:
+      # - Minio:
+      - Rook-Ceph:
+          href: https://rook.${SECRET_DOMAIN}
+          icon: ceph.png
+          description: Rook-Ceph
+  settings.yaml: |
+    title: Homepage
+    # favicon: heimdall.png
+    theme: dark
+    color: slate
+    headerStyle: clean
+    layout:
+      # Calendar:
+      #   style: column
+      #   icon: mdi-calendar
+      Media:
+        style: row
+        columns: 4
+        icon: mdi-play-circle
+      Media Organization:
+        style: row
+        columns: 4
+        icon: mdi-movie
+      Downloads:
+        style: column
+        icon: mdi-download-circle
+      Automation:
+        style: column
+        icon: mdi-robot
+      NVR:
+        style: column
+        icon: mdi-video
+      AI:
+        style: column
+        icon: mdi-robot
+      Office:
+        style: column
+        icon: mdi-office-building
+      Web:
+        style: column
+        icon: mdi-web
+      Other:
+        style: column
+        icon: mdi-dots-horizontal
+      Services:
+        style: row
+        columns: 3
+        icon: mdi-server
+      Infrastructure:
+        style: row
+        columns: 3
+        icon: mdi-server
+      Storage:
+        style: row
+        columns: 2
+        icon: mdi-desktop-tower
+      Home:
+        style: column
+        icon: mdi-home-analytics
+      Observability:
+        style: column
+        icon: mdi-chart-line
+
+    # providers:
+    #   longhorn:
+    #     url: https://longhorn.${SECRET_DOMAIN}
+
+  widgets.yaml: |
+    - logo:
+        icon: heimdall.png
+    - search:
+        # provider: [duckduckgo, google]
+        focus: false
+        target: _blank
+        provider: custom
+        url: https://search.${SECRET_DOMAIN}/search?q=
+    - greeting:
+        text_size: xl
+        text: "Howdy Hey!"
+    - kubernetes:
+        cluster:
+          cpu: true
+          label: cluster
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - openmeteo:
+        label: Home
+        latitude: ${LATITUDE}
+        longitude: ${LONGITUDE}
+        units: imperial
+        cache: 5
+    - datetime:
+        text_size: l
+        format:
+          dateStyle: long
+          timeStyle: short
+          hourCycle: h23
