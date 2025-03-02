@@ -3,7 +3,6 @@
   kind: HelmRelease
   metadata:
     name: traefik
-    namespace: networking
   spec:
     interval: 15m
     chart:
@@ -26,7 +25,7 @@
       - name: cert-manager
         namespace: kube-system
       - name: metallb
-        namespace: networking
+        namespace: network
     values:
       deployment:
         kind: Deployment
