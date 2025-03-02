@@ -86,7 +86,7 @@ spec:
         # className: external
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-staging"
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
