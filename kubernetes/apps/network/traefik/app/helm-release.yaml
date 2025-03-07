@@ -90,8 +90,8 @@ spec:
     pilot:
       enabled: false
 
-    experimental:
-      plugins: {}
+    # experimental:
+    #   plugins: {}
         # enabled: false
 
     serviceAccount:
