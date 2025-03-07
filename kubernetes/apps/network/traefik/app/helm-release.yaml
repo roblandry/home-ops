@@ -91,8 +91,8 @@ spec:
       enabled: false
 
     experimental:
-      plugins:
-        enabled: false
+      plugins: {}
+        # enabled: false
 
     serviceAccount:
       name: traefik-sa
