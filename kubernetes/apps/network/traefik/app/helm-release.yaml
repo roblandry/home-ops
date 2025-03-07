@@ -45,7 +45,7 @@ spec:
 
     ingressClass:
       enabled: true
-      default: true
+      isDefaultClass: true
 
     ingressRoute:
       dashboard:
@@ -65,7 +65,8 @@ spec:
 
     ports:
       traefik:
-        expose: true
+        expose:
+          enabled: true
       web:
         redirectTo: websecure
       websecure:
@@ -74,7 +75,8 @@ spec:
           options: "default"
       metrics:
         port: 8082
-        expose: true
+        expose:
+          enabled: true
         exposedPort: 8082
 
     tlsOptions:
@@ -93,7 +95,7 @@ spec:
         enabled: false
 
     serviceAccount:
-      create: true
+      name: traefik-sa
 
     resources:
       requests:
