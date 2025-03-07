@@ -3,8 +3,9 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app traefik
+  namespace: network
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: traefik
@@ -13,30 +14,22 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
-      interval: 15m
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
-  # dependsOn:
-  #   - name: cert-manager
-  #     namespace: kube-system
-  #   - name: metallb
-  #     namespace: network
+      interval: 5m
   values:
+    image:
+      name: traefik
     deployment:
       kind: Deployment
       replicas: 1
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+        operator: Exists
     service:
       enabled: true
       type: LoadBalancer
-      annotations:
-        metallb.universe.tf/loadBalancerIPs: |-
-          ${METALLB_TRAEFIK_ADDR}
       spec:
+        loadBalancerIP: "10.0.10.126"
         externalTrafficPolicy: Local
     logs:
       general:
@@ -63,6 +56,7 @@ spec:
       - "--providers.kubernetesingress.ingressendpoint.ip=${METALLB_TRAEFIK_ADDR}"
       - "--providers.kubernetesingress.allowexternalnameservices=true"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
+      - "--providers.kubernetescrd.allowCrossNamespace=true"
     ports:
       traefik:
         expose: true
