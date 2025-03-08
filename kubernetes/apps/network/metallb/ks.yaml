@@ -2,14 +2,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kubernetes-apps-metallb
-  namespace: flux-system
+  name: &app kubernetes-apps-metallb
+  namespace: &namespace network
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/network/metallb/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -18,9 +23,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kubernetes-apps-metallb-config
-  namespace: flux-system
+  name: &app kubernetes-apps-metallb-config
+  namespace: &namespace network
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: kubernetes-apps-metallb
   path: ./kubernetes/apps/network/metallb/config
@@ -28,6 +36,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   wait: true
   interval: 30m
   retryInterval: 1m
