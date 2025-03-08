@@ -13,7 +13,8 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
+  - ./metallb.yaml
   - ./metrics-server.yaml
   - ./spegel.yaml
   - ./stakater.yaml
-  # - ./traefik.yaml
+  - ./traefik.yaml

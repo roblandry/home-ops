@@ -8,5 +8,6 @@ components:
 resources:
   # - ./error-pages/ks.yaml
   - ./external/ks.yaml
-  - ./internal/ks.yaml
-  # - ./traefik/ks.yaml
+  - ./internal/ks.yam
+  - ./metallb/ks.yaml
+  - ./traefik/ks.yaml
