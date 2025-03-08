@@ -22,7 +22,6 @@ kind: Kustomization
 metadata:
   name: &app cluster-core-traefik
   namespace: &namespace flux-system
-  targetNamespace: *namespace
 spec:
   commonMetadata:
     labels:
@@ -37,7 +36,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+    targetNamespace: *namespace
   wait: true
   interval: 30m
   retryInterval: 1m
