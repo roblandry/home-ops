@@ -20,9 +20,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-core-traefik
-  namespace: flux-system
+  name: &app cluster-core-traefik
+  namespace: &namespace flux-system
+  targetNamespace: *namespace
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
     # - name: cluster-core-traefik-certificates
     - name: kubernetes-apps-metallb-config
@@ -32,6 +36,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   wait: true
   interval: 30m
   retryInterval: 1m
