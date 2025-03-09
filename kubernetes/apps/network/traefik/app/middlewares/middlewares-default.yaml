@@ -1,0 +1,92 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: default-middlewares
+  namespace: network
+spec:
+  chain:
+    middlewares:
+      - default-headers
+      # - authelia
+      - compress-gzip
+      - error-pages-middleware@docker
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: compress-gzip
+  namespace: network
+spec:
+  compress: {}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: limit
+  namespace: network
+spec:
+  buffering:
+    maxRequestBodyBytes: 200000000
+    maxResponseBodyBytes: 200000000
+    memRequestBodyBytes: 200000000
+    memResponseBodyBytes: 200000000
+
+# ---
+    # addprefix-pihole:
+    #   addPrefix:
+    #     prefix: "/admin"
+
+# ---
+    # ws-headers:
+    #   headers:
+    #     # customResponseHeaders:
+    #     #   X-Forwarded-Proto: "https,wss"
+    #     #   server: "landry.me"
+    #     customRequestHeaders:
+    #       X-Forwarded-Proto: https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: default-headers
+  namespace: network
+spec:
+  headers:
+    frameDeny: true
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 15552000
+    customFrameOptionsValue: SAMEORIGIN
+    referrerPolicy: "strict-origin-when-cross-origin"
+    customRequestHeaders:
+      X-Forwarded-Proto: https
+    customResponseHeaders:
+      X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
+      server: ""
+      X-Forwarded-Proto: "https,wss"
+    hostsProxyHeaders:
+      - "X-Forwarded-Host"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: internal-only
+  namespace: network
+spec:
+  IPAllowList:
+    sourceRange:
+      - 127.0.0.1/32
+      - 10.0.0.1/24
+      - 10.0.10.1/24
+      - 10.0.30.1/24
+      # - 172.19.0.1/16  # cloudflare
+      - 172.20.0.0/24  # wireguard
+      - 172.21.0.0/16  # traefik

@@ -1,0 +1,22 @@
+http:
+
+  #--------------------------------** ROUTERS **--------------------------------##
+  routers:
+
+    traefik:
+      entryPoints:
+        - web
+        - websecure
+      rule: 'Host(`traefik.landry.me`)'
+      service: api@internal
+      middlewares:
+        - internal-only@file
+        # - error-pages-middleware@docker
+        - default-middlewares@file
+        - middlewares-authentik@file
+
+  #--------------------------------** SERVICES **-------------------------------##
+  # services:
+
+  #--------------------------------** MIDDLEWARES **----------------------------##
+  # middlewares:
