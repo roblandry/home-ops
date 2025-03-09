@@ -6,18 +6,18 @@
 #   namespace: network
 #   annotations:
 #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-#     hajimari.io/appName: "traefik"
-#     hajimari.io/enable: "true"
-#     hajimari.io/icon: "web"
-#     hajimari.io/instance: "monitor"
-#     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+#     # hajimari.io/appName: "traefik"
+#     # hajimari.io/enable: "true"
+#     # hajimari.io/icon: "web"
+#     # hajimari.io/instance: "monitor"
+#     traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
 # spec:
 #   ingressClassName: "traefik"
 #   tls:
 #     - hosts:
 #         - "traefik.${SECRET_DOMAIN}"
 #       secretName: "${SECRET_DOMAIN/./-}-production-tls"
-#       namespace: cert-manager
+#       # namespace: cert-manager
 #   rules:
 #     - host: "traefik.${SECRET_DOMAIN}"
 #       http:
@@ -45,7 +45,6 @@ spec:
       kind: TraefikService
     middlewares:
     #   - name: auth
-
     - name: network-internal-only@kubernetescrd
     # - error-pages-middleware@docker
     - name: network-default-middlewares@kubernetescrd
