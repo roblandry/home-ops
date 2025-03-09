@@ -90,7 +90,7 @@ spec:
         default:
           defaultCertificate:
             secretName: "${SECRET_DOMAIN/./-}-staging-tls"
-            namespace: cert-manager
+            # namespace: cert-manager
             # storeType: kubernetes
     tlsOptions:
       default:

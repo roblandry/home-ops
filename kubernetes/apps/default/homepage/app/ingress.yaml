@@ -17,7 +17,7 @@ spec:
     - hosts:
         - "homepage.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"
-      namespace: cert-manager
+      # namespace: cert-manager
   rules:
     - host: "homepage.${SECRET_DOMAIN}"
       http:
