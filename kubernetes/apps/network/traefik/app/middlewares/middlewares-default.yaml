@@ -10,7 +10,7 @@ spec:
       - default-headers
       # - authelia
       - compress-gzip
-      - error-pages-middleware@docker
+      # - error-pages-middleware@docker
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
