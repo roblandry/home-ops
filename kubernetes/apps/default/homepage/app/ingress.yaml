@@ -10,14 +10,15 @@ metadata:
     # hajimari.io/enable: "true"
     # hajimari.io/icon: "web"
     # hajimari.io/instance: "monitor"
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
+    # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
 spec:
-  ingressClassName: traefik
+  ingressClassName: "traefik"
   tls:
     - hosts:
         - "homepage.${SECRET_DOMAIN}"
-      secretName: "${SECRET_DOMAIN/./-}-production-tls"
-      # namespace: cert-manager
+      secretName: "homepage-dashboard-tls"
   rules:
     - host: "homepage.${SECRET_DOMAIN}"
       http:
