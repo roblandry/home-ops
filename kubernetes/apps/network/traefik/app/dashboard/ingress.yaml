@@ -43,8 +43,13 @@ spec:
     services:
     - name: api@internal
       kind: TraefikService
-    # middlewares:
+    middlewares:
     #   - name: auth
+
+    - name: network-internal-only@kubernetescrd
+    # - error-pages-middleware@docker
+    - name: network-default-middlewares@kubernetescrd
+    # - name: middlewares-authentik@file
 
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
