@@ -27,7 +27,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api@internal
+                name: traefik
                 port:
                   number: 9000
 # ---
