@@ -106,7 +106,7 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
-serviceAccount:  # @schema additionalProperties: false
+# serviceAccount:  # @schema additionalProperties: false
   # If set, an existing service account is used
   # If not set, a service account is created automatically using the fullname template
-  name: ""
+  # name: ""
