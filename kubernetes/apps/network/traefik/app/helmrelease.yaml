@@ -66,6 +66,7 @@ spec:
       traefik:
         expose:
           default: false
+        port: 9000
       # dashboard:
       #   port: 9000  # Ensure this is included
       web:
