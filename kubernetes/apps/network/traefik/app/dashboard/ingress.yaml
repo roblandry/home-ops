@@ -44,12 +44,12 @@ spec:
     # middlewares:
     #   - name: auth
 
-  tls:
-    secretName: "${SECRET_DOMAIN}-production-tls"
-    # namespace: cert-manager
-    options:
-      # name: opt
-      namespace: cert-manager
+  # tls:
+  #   secretName: "${SECRET_DOMAIN}-production-tls"
+  #   # namespace: cert-manager
+  #   options:
+  #     name: "${SECRET_DOMAIN}-production-tls"
+  #     namespace: cert-manager
 
 # ---
 # apiVersion: traefik.io/v1alpha1
