@@ -8,4 +8,4 @@ resources:
   - middlewares
   # - routes
   - auth.sops.yaml
-  - rbac.yaml
+  # - rbac.yaml
