@@ -3,21 +3,19 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: default-middlewares
-  namespace: network
 spec:
   chain:
     middlewares:
-      - default-headers
-      # - authelia
-      - compress-gzip
-      # - error-pages-middleware@docker
+      - name: default-headers
+      # - name: authelia
+      - name: compress-gzip
+      # - name: error-pages-middleware@docker
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: compress-gzip
-  namespace: network
 spec:
   compress: {}
 
@@ -26,7 +24,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: limit
-  namespace: network
 spec:
   buffering:
     maxRequestBodyBytes: 200000000
@@ -53,7 +50,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: default-headers
-  namespace: network
 spec:
   headers:
     frameDeny: true
@@ -79,7 +75,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: internal-only
-  namespace: network
 spec:
   IPAllowList:
     sourceRange:
