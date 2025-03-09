@@ -23,11 +23,11 @@ spec:
     - host: "traefik.${SECRET_DOMAIN}"
       http:
         paths:
-          - path: /
+          - path: /dashboard
             pathType: Prefix
             backend:
               service:
-                name: traefik
+                name: api@internal
                 port:
                   number: 9000
 # ---
