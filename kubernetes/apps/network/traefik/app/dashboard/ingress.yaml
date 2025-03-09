@@ -45,10 +45,10 @@ spec:
     #   - name: auth
 
   tls:
-    secretName: "${SECRET_DOMAIN}-production-tls"
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
     # namespace: cert-manager
     options:
-      name: "${SECRET_DOMAIN}-production-tls"
+      name: "${SECRET_DOMAIN/./-}-production-tls"
       namespace: cert-manager
 
 # ---
