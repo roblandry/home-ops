@@ -86,11 +86,3 @@ spec:
     serviceAccount:
       create: true
       name: *app
-    additionalArguments:
-      - "--traefik.http.routers.gethomepage.rule=Host(`homepage.${SECRET_DOMAIN}`)"
-      - "--traefik.http.routers.gethomepage.entrypoints=websecure"
-      - "--traefik.http.routers.gethomepage.middlewares=internal-only@file,middlewares-authentik@file"
-      - "--traefik.http.routers.gethomepage.tls=true"
-      - "--traefik.http.routers.gethomepage.tls.certresolver=letsencrypt"
-      - "--traefik.http.services.gethomepage.loadbalancer.server.port=3000"
-      - "--traefik.enable=true"
