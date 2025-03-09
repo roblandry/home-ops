@@ -1,60 +1,61 @@
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: traefik-dashboard
-#   namespace: network
-#   annotations:
-#     cert-manager.io/cluster-issuer: "letsencrypt-production"
-#     # hajimari.io/appName: "traefik"
-#     # hajimari.io/enable: "true"
-#     # hajimari.io/icon: "web"
-#     # hajimari.io/instance: "monitor"
-#     traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
-# spec:
-#   ingressClassName: "traefik"
-#   tls:
-#     - hosts:
-#         - "traefik.${SECRET_DOMAIN}"
-#       secretName: "${SECRET_DOMAIN/./-}-production-tls"
-#       # namespace: cert-manager
-#   rules:
-#     - host: "traefik.${SECRET_DOMAIN}"
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: traefik
-#                 port:
-#                   number: 9000
 ---
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: traefik-dashboard
+  namespace: network
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    # hajimari.io/appName: "traefik"
+    # hajimari.io/enable: "true"
+    # hajimari.io/icon: "web"
+    # hajimari.io/instance: "monitor"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "internal-only@kubernetescrd,default-middlewares@kubernetescrd"
+    # traefik.ingress.kubernetes.io/router.middlewares: "internal-only@kubernetescrd,default-middlewares@kubernetescrd,middlewares-authentik@kubernetescrd"
 spec:
-  routes:
-  - match: "Host(`traefik.${SECRET_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
-    kind: Rule
-    services:
-    - name: api@internal
-      kind: TraefikService
-    middlewares:
-    #   - name: auth
-    - name: network-internal-only@kubernetescrd
-    # - error-pages-middleware@docker
-    - name: network-default-middlewares@kubernetescrd
-    # - name: middlewares-authentik@file
-
+  ingressClassName: "traefik"
   tls:
-    secretName: "${SECRET_DOMAIN/./-}-production-tls"
-    # options:
-    #   name: "${SECRET_DOMAIN/./-}-production-tls"
-    #   namespace: cert-manager
+    - hosts:
+        - "traefik.${SECRET_DOMAIN}"
+      secretName: "traefik-dashboard-tls"
+  rules:
+    - host: "traefik.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik
+                port:
+                  number: 9000
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: traefik-dashboard
+#   annotations:
+#     cert-manager.io/cluster-issuer: "letsencrypt-production"
+# spec:
+#   routes:
+#   - match: "Host(`traefik.${SECRET_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+#     kind: Rule
+#     services:
+#     - name: api@internal
+#       kind: TraefikService
+#     middlewares:
+#     #   - name: auth
+#     - name: network-internal-only@kubernetescrd
+#     # - error-pages-middleware@docker
+#     - name: network-default-middlewares@kubernetescrd
+#     # - name: middlewares-authentik@file
+
+#   tls:
+#     secretName: "${SECRET_DOMAIN/./-}-production-tls"
+#     # options:
+#     #   name: "${SECRET_DOMAIN/./-}-production-tls"
+#     #   namespace: cert-manager
 
 # ---
 # apiVersion: traefik.io/v1alpha1
