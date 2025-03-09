@@ -11,8 +11,8 @@ metadata:
     # hajimari.io/icon: "web"
     # hajimari.io/instance: "monitor"
     traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "internal-only@kubernetescrd,default-middlewares@kubernetescrd"
-    # traefik.ingress.kubernetes.io/router.middlewares: "internal-only@kubernetescrd,default-middlewares@kubernetescrd,middlewares-authentik@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
+    # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
 spec:
   ingressClassName: "traefik"
   tls:
