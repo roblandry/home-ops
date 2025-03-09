@@ -46,7 +46,10 @@ spec:
 
   tls:
     secretName: "${SECRET_DOMAIN}-production-tls"
-    namespace: cert-manager
+    # namespace: cert-manager
+    options:
+      # name: opt
+      namespace: cert-manager
 
 # ---
 # apiVersion: traefik.io/v1alpha1
