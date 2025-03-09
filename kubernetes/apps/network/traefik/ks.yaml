@@ -30,7 +30,7 @@ spec:
     # - name: cluster-core-traefik-certificates
     - name: kubernetes-apps-metallb-config
     - name: cert-manager-tls
-``    namespace: cert-manager
+      namespace: cert-manager
   path: ./kubernetes/apps/network/traefik/app
   prune: true
   sourceRef:
