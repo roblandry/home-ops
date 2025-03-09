@@ -63,7 +63,11 @@ spec:
         expose:
           default: true
       web:
-        redirectTo: websecure
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
       websecure:
         tls:
           enabled: true
