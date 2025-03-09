@@ -1,5 +1,5 @@
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: default-middlewares
@@ -12,7 +12,7 @@ spec:
       # - name: error-pages-middleware@docker
 
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: compress-gzip
@@ -20,7 +20,7 @@ spec:
   compress: {}
 
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: limit
@@ -46,7 +46,7 @@ spec:
     #       X-Forwarded-Proto: https
 
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: default-headers
@@ -71,7 +71,7 @@ spec:
       - "X-Forwarded-Host"
 
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: internal-only
