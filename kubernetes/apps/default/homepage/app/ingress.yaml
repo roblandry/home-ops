@@ -12,11 +12,11 @@ metadata:
     # hajimari.io/instance: "monitor"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
 spec:
-  ingressClassName: "homepage"
+  ingressClassName: traefik
   tls:
     - hosts:
         - "homepage.${SECRET_DOMAIN}"
-      secretName: "traefik-dashboard-tls"
+      secretName: "${SECRET_DOMAIN/./-}-staging-tls"
   rules:
     - host: "homepage.${SECRET_DOMAIN}"
       http:
