@@ -2,27 +2,28 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: authsecret
-    namespace: network
+  name: authsecret
+  namespace: network
 data:
-    users: ENC[AES256_GCM,data:P2QM0kroz5y6hdBOWOGWTkU6EQf29tZ1JXw5jYmjrADRDUwEqMac7YEPaqYv35KtuY/u+4Lo2bWRxifqYypIuA==,iv:OUW5zp7++tUdNybkWCqU7Y/YXtgETJr6QdVAg4kM5/Y=,tag:d/IH3H+HqHty9pmAQLgYog==,type:str]
+  users: ""
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1l6h2hpu26ufmw0px2ukm23xjj6u5prxazuq3zdr07htfmmk46dxslksp44
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3RWJoMVE0MmV5eE10V0V5
-            ZTN4OWgwOVhqS1NhRGhMSFMzSjFpaHpZZ1V3Cm9TS1htSkNuVUVsQzUrQW4vQnM2
-            YnU2VDVqa2g3eXhOR1NOM3hBNHRxUm8KLS0tIGs3YkdVMHZrQXFSUjB6NkN0eVA0
-            d1haUHg5K2lvT0U0NHFPNldUdGZTbzgKi5Mh+OVM+tc5jD9YXx4y4wyNWCscsOOy
-            mfczkNIycr++mk1QTF7zXasHaC/NA6E8r0fTCAyDRBu0Vt3WJ/5p2Q==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-06-16T00:43:18Z"
-    mac: ENC[AES256_GCM,data:h3N74zgaIzIQ6N00CMkIKjwTmFp4ktjhi8x0AbmBPFgvXQ3OCzonjwPULSR0jEJQLh9kIl9suKfG5PTg1mznwGKji5o+Zjw/pBOO3MOKVDOWYQhIEHD0LrcBZ9ar0Ns7FFD8jzHX3qTQ0hT0Fpyo5pqaOll0sM7jDnyVc4iOvLA=,iv:DFqeT4ci678JEffl3tGh4OhL6Wahh9lbRI2zELNojaw=,tag:ZiDxYHm9SbjjUKlm5wgDSw==,type:str]
-    pgp: []
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1j854e9la67xk5a3e9mqtjudesmayazyf6k50zeq24v6y22vzwy9sym67am
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGcytJU3FKaVF0K2lhQTBr
+        a0ZJSlMwcU56eGtzMzFFSG8wRkNNTzR4TWx3CjVsWG4wQXpPcVNpckN1S05tTnpF
+        MDFMa1ZpQmxwWVhxMUlXVHd2MUd2QjAKLS0tIHlnZkdtbUd0Q0poTExKMC9QeHF4
+        dGtwT01PQzV0SGN3R1dYdTByeEN3UzAK9mbrzpSvP3+ysrHEkhOSqnw4OuBkrdxW
+        jXQvoVwzkTOdus1RlkOAYWyj35uzAyN4JOhd8tTILnv+n2whg3bbeQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-03-09T00:32:28Z"
+  mac: ENC[AES256_GCM,data:wkVW2tNu9uGeqQse/+p1yjAI6EiFduxiMm3K4sqcrbxrykL+RnRuqZgrT5Odj+A2NYme1upFMUCfEqbHdvrtVHrZaw0ViaowL5mbh/LvV8DrswBZcWKHXL/U8ewUMvz+/0vu+535MaPG2ddcywrBjkPJPbqbCx+HhE9rhoIkLQI=,iv:wd/mvLlTADihKJxNhMlJTje/wvGKjNLaLKI1VzmIASA=,tag:lTtSWwZOHhPygGkAHj+FGQ==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.9.4
