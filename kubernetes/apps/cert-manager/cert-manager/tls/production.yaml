@@ -19,7 +19,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN/./-}-production"
+  name: "${SECRET_DOMAIN/./-}-network"
   namespace: network
 spec:
   secretName: "${SECRET_DOMAIN/./-}-production-tls"
@@ -36,7 +36,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN/./-}-production"
+  name: "${SECRET_DOMAIN/./-}-default"
   namespace: default
 spec:
   secretName: "${SECRET_DOMAIN/./-}-production-tls"
