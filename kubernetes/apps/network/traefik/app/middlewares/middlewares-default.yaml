@@ -81,7 +81,7 @@ metadata:
   name: internal-only
   namespace: network
 spec:
-  IPAllowList:
+  ipAllowList:
     sourceRange:
       - 127.0.0.1/32
       - 10.0.0.1/24
