@@ -72,15 +72,16 @@ spec:
         tls:
           enabled: true
           options: "default"
-          stores:
-            default:
-              defaultCertificate:
-                secretName: "${SECRET_DOMAIN/./-}-staging-tls"
       metrics:
         port: 8082
         expose:
           default: true
         exposedPort: 8082
+    tls:
+      stores:
+        default:
+          defaultCertificate:
+            secretName: "${SECRET_DOMAIN/./-}-staging-tls"
     tlsOptions:
       default:
         minVersion: VersionTLS12
