@@ -7,5 +7,5 @@ resources:
   # - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./ingress.yaml
-  # - ./rbac.yaml
+  - ./rbac.yaml
   # - ../../../../templates/gatus/guarded
