@@ -10,9 +10,14 @@ metadata:
     # hajimari.io/enable: "true"
     # hajimari.io/icon: "web"
     # hajimari.io/instance: "monitor"
-    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.rule: Host(`homepage.landry.me`)
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    traefik.http.services.gethomepage.loadbalancer.server.port: "3000"
+    traefik.enable: "true"
 spec:
   ingressClassName: "traefik"
   tls:
