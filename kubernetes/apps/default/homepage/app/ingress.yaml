@@ -17,6 +17,7 @@ spec:
     - hosts:
         - "homepage.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-staging-tls"
+      namespace: cert-manager
   rules:
     - host: "homepage.${SECRET_DOMAIN}"
       http:

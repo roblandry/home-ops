@@ -82,6 +82,8 @@ spec:
         default:
           defaultCertificate:
             secretName: "${SECRET_DOMAIN/./-}-staging-tls"
+            namespace: cert-manager
+            # storeType: kubernetes
     tlsOptions:
       default:
         minVersion: VersionTLS12
@@ -97,3 +99,7 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
+serviceAccount:  # @schema additionalProperties: false
+  # If set, an existing service account is used
+  # If not set, a service account is created automatically using the fullname template
+  name: ""
