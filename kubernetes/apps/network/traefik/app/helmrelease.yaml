@@ -65,7 +65,7 @@ spec:
       # - "--entryPoints.traefik.address=:9000"
     ports:
       traefik:
-        # port: 9000
+        port: 9000
         expose:
           default: true
         exposedPort: 9000
