@@ -6,6 +6,6 @@ resources:
   - helmrelease.yaml
   - dashboard
   - middlewares
-  - routes
+  # - routes
   - auth.sops.yaml
   - rbac.yaml
