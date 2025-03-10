@@ -10,5 +10,6 @@ resources:
   # - ./error-pages/ks.yaml
   - ./external/ks.yaml
   # - ./internal/ks.yaml
+  - ./k8s-gateway/ks.yaml
   # - ./metallb/ks.yaml
   - ./traefik/ks.yaml
