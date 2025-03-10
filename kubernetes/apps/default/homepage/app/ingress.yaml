@@ -6,14 +6,9 @@ metadata:
   namespace: default
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    # hajimari.io/appName: "traefik"
-    # hajimari.io/enable: "true"
-    # hajimari.io/icon: "web"
-    # hajimari.io/instance: "monitor"
     traefik.ingress.kubernetes.io/router.entrypoints: "web"
     traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
-    # traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
     traefik.enable: "true"
 spec:
   ingressClassName: "traefik"
