@@ -79,16 +79,16 @@ spec:
             to: websecure
             scheme: https
             permanent: true
-      lan:
-        port: 8080
-        expose:
-          default: true
-        exposedPort: 8080
-      tunnel:
-        port: 8443
-        expose:
-          default: true
-        exposedPort: 8443
+      # lan:
+      #   port: 8080
+      #   expose:
+      #     default: true
+      #   exposedPort: 8080
+      # tunnel:
+      #   port: 8443
+      #   expose:
+      #     default: true
+      #   exposedPort: 8443
       websecure:
         tls:
           enabled: true
