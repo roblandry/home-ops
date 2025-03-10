@@ -10,10 +10,10 @@ resources:
   # - ./error-pages.yaml
   - ./external-dns.yaml
   - ./homepage.yaml
-  - ./ingress-nginx.yaml
+  # - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
-  - ./metallb.yaml
+  # - ./metallb.yaml
   - ./metrics-server.yaml
   - ./spegel.yaml
   - ./stakater.yaml
