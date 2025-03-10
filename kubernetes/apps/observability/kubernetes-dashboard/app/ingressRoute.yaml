@@ -19,13 +19,9 @@ spec:
         # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
-          name: kubernetes-dashboard
+          name: kubernetes-dashboard-kong-proxy
           port: 443
-          sticky:
-            cookie:
-              httpOnly: true
-              secure: true
-              sameSite: none
+
   tls:
     secretName: kdash-dashboard-tls
     domains:
