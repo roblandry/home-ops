@@ -21,3 +21,13 @@
       cleanupOnFail: true
       remediation:
         retries: 3
+    # values:
+    #   replicaCount:
+    #   updateStrategy:
+    #   image.repository:
+    #   image.tag:
+    #   image.pullPolicy:
+    #   resources:
+    #   nodeSelector:
+    #   tolerations:
+    #   affinity:
