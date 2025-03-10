@@ -4,8 +4,6 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: network
-  # annotations:
-    # cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   interval: 5m
   chart:
@@ -33,10 +31,6 @@ spec:
       spec:
         loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
         externalTrafficPolicy: Local
-      # annotations:
-      #   io.cilium/lb-ipam-ips: ${METALLB_TRAEFIK_ADDR}
-      # spec:
-      #   externalTrafficPolicy: Local
     logs:
       general:
         format: json

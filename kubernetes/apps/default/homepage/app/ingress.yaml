@@ -10,6 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
     traefik.enable: "true"
+    traefik.http.services.homepage.loadbalancer.server.port: "3000"
 spec:
   ingressClassName: "traefik"
   tls:
