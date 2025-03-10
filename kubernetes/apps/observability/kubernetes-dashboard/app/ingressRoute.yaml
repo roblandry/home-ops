@@ -21,9 +21,9 @@ spec:
           port: 443
 
   tls:
-    secretName: kdash-dashboard-tls
-    domains:
-      - main: "${SECRET_DOMAIN}"
-        sans:
-          - "*.${SECRET_DOMAIN}"
-          - "kdash.${SECRET_DOMAIN}"
+    secretName: "${SECRET_DOMAIN/./-}-observability-tls"
+    # domains:
+    #   - main: "${SECRET_DOMAIN}"
+    #     sans:
+    #       - "*.${SECRET_DOMAIN}"
+    #       - "kdash.${SECRET_DOMAIN}"

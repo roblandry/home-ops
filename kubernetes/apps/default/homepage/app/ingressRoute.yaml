@@ -4,7 +4,7 @@ metadata:
   name: homepage
   namespace: default
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    # cert-manager.io/cluster-issuer: "letsencrypt-production"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
     # traefik.enable: "true"
@@ -29,9 +29,9 @@ spec:
               secure: true
               sameSite: none
   tls:
-    secretName: homepage-dashboard-tls
-    domains:
-      - main: "${SECRET_DOMAIN}"
-        sans:
-          - "*.${SECRET_DOMAIN}"
-          - "homepage.${SECRET_DOMAIN}"
+    secretName: "${SECRET_DOMAIN/./-}-default-tls"
+    # domains:
+    #   - main: "${SECRET_DOMAIN}"
+    #     sans:
+    #       - "*.${SECRET_DOMAIN}"
+    #       - "homepage.${SECRET_DOMAIN}"
