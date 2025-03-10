@@ -17,8 +17,9 @@ spec:
       match: "Host(`homepage.${SECRET_DOMAIN}`)"
       middlewares:
         - name: network-internal-only@kubernetescrd
-          # namespace: network
+          namespace: network
         - name: network-default-middlewares@kubernetescrd
+          namespace: network
         # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
