@@ -33,10 +33,10 @@ spec:
     service:
       annotations:
         lbipam.cilium.io/ips: "${CLUSTER_INGRESS_ADDR}"
-      # enabled: true
-      # type: LoadBalancer
+      enabled: true
+      type: LoadBalancer
       spec:
-        # loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
+        loadBalancerIP: "${CLUSTER_INGRESS_ADDR}"
         externalTrafficPolicy: Cluster
     logs:
       general:
