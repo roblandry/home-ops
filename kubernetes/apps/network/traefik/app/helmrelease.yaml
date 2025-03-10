@@ -17,9 +17,9 @@ spec:
         name: traefik
         namespace: flux-system
       interval: 5m
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
+  # dependsOn:
+  #   - name: cert-manager
+  #     namespace: cert-manager
   values:
     image:
       tag: v3
