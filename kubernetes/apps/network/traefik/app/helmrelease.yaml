@@ -32,7 +32,7 @@ spec:
         operator: Exists
     service:
       annotations:
-        lbipam.cilium.io/ips: ${CLUSTER_INGRESS_ADDR}
+        lbipam.cilium.io/ips: "${CLUSTER_INGRESS_ADDR}"
       # enabled: true
       # type: LoadBalancer
       spec:
