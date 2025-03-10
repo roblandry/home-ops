@@ -28,15 +28,15 @@ spec:
         effect: NoSchedule
         operator: Exists
     service:
-      # enabled: true
-      # type: LoadBalancer
-      # spec:
-      #   loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
-      #   externalTrafficPolicy: Local
+      enabled: true
+      type: LoadBalancer
+      spec:
+        loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
+        externalTrafficPolicy: Local
       annotations:
         io.cilium/lb-ipam-ips: ${METALLB_TRAEFIK_ADDR}
-      spec:
-        externalTrafficPolicy: Local
+      # spec:
+      #   externalTrafficPolicy: Local
     logs:
       general:
         format: json
