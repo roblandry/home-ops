@@ -45,7 +45,6 @@ spec:
       isDefaultClass: true
       # fallbackApiVersion: v1
     ingressRoute:
-      enabled: true
       dashboard:
         enabled: false
     globalArguments:
