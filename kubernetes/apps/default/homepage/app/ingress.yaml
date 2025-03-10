@@ -6,7 +6,7 @@ metadata:
   namespace: default
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
     traefik.enable: "true"

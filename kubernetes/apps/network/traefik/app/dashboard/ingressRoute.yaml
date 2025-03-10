@@ -1,0 +1,26 @@
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: traefik-dashboard
+#   annotations:
+#     cert-manager.io/cluster-issuer: "letsencrypt-production"
+# spec:
+#   routes:
+#   - match: "Host(`traefik.${SECRET_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+#     kind: Rule
+#     services:
+#     - name: api@internal
+#       kind: TraefikService
+#     middlewares:
+#     #   - name: auth
+#     - name: network-internal-only@kubernetescrd
+#     # - error-pages-middleware@docker
+#     - name: network-default-middlewares@kubernetescrd
+#     # - name: middlewares-authentik@file
+
+#   tls:
+#     secretName: "${SECRET_DOMAIN/./-}-production-tls"
+#     # options:
+#     #   name: "${SECRET_DOMAIN/./-}-production-tls"
+#     #   namespace: cert-manager

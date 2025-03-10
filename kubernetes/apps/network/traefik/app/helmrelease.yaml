@@ -4,6 +4,8 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: network
+  # annotations:
+  #   cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   interval: 5m
   chart:
@@ -97,12 +99,15 @@ spec:
           default: true
         exposedPort: 8082
     # tls:
+    #   domains:
+    #     - main: landrys.io
+    #       sans:
+    #         - "*.landrys.io"
+    #       secretName: "traefik-dashboard-tls"
     #   stores:
     #     default:
     #       defaultCertificate:
-    #         secretName: "${SECRET_DOMAIN/./-}-production-tls"
-    #         # namespace: cert-manager
-    #         # storeType: kubernetes
+    #         secretName: "${SECRET_DOMAIN/./-}-traefik-tls"
     tlsOptions:
       default:
         minVersion: VersionTLS12
