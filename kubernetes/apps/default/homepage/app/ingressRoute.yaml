@@ -4,6 +4,7 @@ metadata:
   name: homepage
   namespace: default
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: "homepage.${SECRET_DOMAIN}"
     # cert-manager.io/cluster-issuer: "letsencrypt-production"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"

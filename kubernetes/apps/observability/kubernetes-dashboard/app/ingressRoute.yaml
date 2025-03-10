@@ -4,7 +4,8 @@ metadata:
   name: kubernetes-dashboard
   namespace: observaility
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    # cert-manager.io/cluster-issuer: "letsencrypt-production"
+    external-dns.alpha.kubernetes.io/hostname: "tdash.${SECRET_DOMAIN}"
 spec:
   entryPoints:
     - websecure
