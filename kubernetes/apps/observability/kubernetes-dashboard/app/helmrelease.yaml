@@ -43,4 +43,4 @@ spec:
           - hosts:
               - *host
     serviceAccount:  # @schema additionalProperties: false
-      name: "kubernetes-dashboard-sa"
+      name: "admin-user"
