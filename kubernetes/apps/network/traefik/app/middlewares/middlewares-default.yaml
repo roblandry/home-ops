@@ -91,5 +91,5 @@ spec:
       - 172.20.0.0/24  # wireguard
       # - 10.42.0.0/16  # traefik pod
       # - 10.43.0.0/16  # traefik svc
-    ipStrategy:
-      depth: 1
+    # ipStrategy:
+    #   depth: 1
