@@ -83,11 +83,11 @@ spec:
       #   expose:
       #     default: true
       #   exposedPort: 8080
-      tunnel:
-        port: 8443
-        expose:
-          default: true
-        exposedPort: 8443
+      # tunnel:
+      #   port: 8443
+      #   expose:
+      #     default: true
+      #   exposedPort: 8443
       websecure:
         tls:
           enabled: true
