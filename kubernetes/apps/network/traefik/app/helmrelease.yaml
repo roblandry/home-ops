@@ -66,8 +66,8 @@ spec:
       - "--providers.kubernetesingress.allowexternalnameservices=true"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
       # - "--api.debug=true"  # Optional: Enables debugging
-      - "--entryPoints.web.forwardedHeaders.insecure"
-      - "--entryPoints.websecure.forwardedHeaders.insecure"
+      # - "--entryPoints.web.forwardedHeaders.insecure"
+      # - "--entryPoints.websecure.forwardedHeaders.insecure"
     ports:
       traefik:
         port: 9000
