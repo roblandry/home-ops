@@ -114,8 +114,11 @@ spec:
         sniStrict: true
     pilot:
       enabled: false
-    # experimental:
-    #   plugins: {}
+    experimental:
+      plugins:
+        cloudflarewarp:
+          moduleName: "github.com/BetterCorp/cloudflarewarp"
+          version: "v1.3.3"
     resources:
       requests:
         memory: 100Mi
