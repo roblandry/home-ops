@@ -9,4 +9,3 @@ resources:
   - auth.sops.yaml
   - helmrelease.yaml
   - rbac.yaml
-  # - services.yaml

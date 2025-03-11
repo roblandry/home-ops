@@ -5,11 +5,6 @@ metadata:
   namespace: default
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "homepage.${SECRET_DOMAIN}"
-    # cert-manager.io/cluster-issuer: "letsencrypt-production"
-    # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
-    # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
-    # traefik.enable: "true"
-    # traefik.http.services.homepage.loadbalancer.server.port: "3000"
 spec:
   entryPoints:
     - websecure
@@ -31,8 +26,4 @@ spec:
               sameSite: none
   tls:
     secretName: "${SECRET_DOMAIN/./-}-default-tls"
-    # domains:
-    #   - main: "${SECRET_DOMAIN}"
-    #     sans:
-    #       - "*.${SECRET_DOMAIN}"
-    #       - "homepage.${SECRET_DOMAIN}"
+

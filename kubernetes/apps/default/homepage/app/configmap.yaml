@@ -17,36 +17,55 @@ data:
       - Google Calendar:
         - icon: google-calendar.png
           href: 'https://calendar.google.com'
-      - Outlook:
-        - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/outlook.png
-          href: 'https://outlook.com'
-    - Media:
+      # - Outlook:
+      #   - icon: microsoft-office.png
+      #     href: 'https://outlook.com'
+    - Online Media:
       - YouTube:
         - icon: youtube.png
           href: 'https://youtube.com/feed/subscriptions'
-      - Spotify:
-        - icon: spotify.png
-          href: 'http://open.spotify.com'
+      # - Spotify:
+      #   - icon: spotify.png
+      #     href: 'http://open.spotify.com'
       - Youtube Music:
-        - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/youtube-music.png
+        - icon: youtube-music.svg
           href: 'https://music.youtube.com'
-    - Reading:
+    # - Reading:
       # - Beyond:
       #   - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
       #     href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
       # - Western Subaru Club:
       #     - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/wsc.png
       #       href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
-      - Reddit:
-        - icon: reddit.png
-          href: 'https://reddit.com'
+      # - Reddit:
+      #   - icon: reddit.png
+      #     href: 'https://reddit.com'
+    - Unifi:
+      - Site Manager:
+        - icon: unifi.png
+          href: 'https://unifi.ui.com/'
+      - Design:
+        - icon: unifi.png
+          href: 'https://design.ui.com/'
+      - Specs:
+        - icon: unifi.png
+          href: 'https://techspecs.ui.com/'
+      - Calculator:
+        - icon: unifi.png
+          href: 'https://calculator.ui.com/'
+      - Support:
+        - icon: unifi.png
+          href: 'https://help.ui.com/'
     - Git:
-      - kubesearch:
-        - icon: kubernetes-dashboard.png
-          href: 'https://kubesearch.dev/'
-      - kluster-template:
+      - My Repositories:
         - icon: github-light.png
-          href: 'https://github.com/roblandry/kluster-template'
+          href: 'https://github.com/roblandry?tab=repositories'
+      - Get Homepage Docs:
+        - icon: homepage.png
+          href: 'https://gethomepage.dev/'
+      - Get Homepage Icons:
+        - icon: homepage.png
+          href: 'https://github.com/walkxcode/dashboard-icons'
 
   docker.yaml: ""
 
@@ -54,286 +73,479 @@ data:
     mode: cluster
 
   services.yaml: |
-    # - Calendar:
-    #   - Calendar:
-    #       widget:
-    #         type: calendar
-    #         firstDayInWeek: sunday # optional - defaults to monday
-    #         view: monthly # optional - possible values monthly, agenda
-    #         maxEvents: 10 # optional - defaults to 10
-    #         integrations: # optional
-    #           - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Sonarr # service name for that widget
-    #           - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Radarr # service name for that widget
-    #           - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Readarr # service name for that
-    #   - Agenda:
-    #       widget:
-    #         type: calendar
-    #         view: agenda # optional - possible values monthly, agenda
-    #         maxEvents: 20 # optional - defaults to 10
-    #         integrations: # optional
-    #           - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Sonarr # service name for that widget
-    #           - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Radarr # service name for that widget
-    #           - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
-    #             service_group: Downloads # group name where widget exists
-    #             service_name: Readarr # service name for that widget
     - Infrastructure:
-      - Cloudflared:
-          href: https://dash.cloudflare.com/
-          icon: cloudflare-zero-trust.png
-          description: Cloudflared Tunnel Status
-          # widget:
-          #   type: cloudflared
-          #   accountid: ${CLOUDFLARED_ACCOUNTID}
-          #   tunnelid: ${CLOUDFLARED_TUNNELID}
-          #   key: ${CLOUDFLARED_API_TOKEN}
       # - Pfsense:
-      # - APC:
-      # - KVM1:
-      # - KVM2:
-      # - AP1:
-      # - Switch:
-      # - Proxmox:
+      #     href: https://router.{{HOMEPAGE_VAR_DOMAIN}}
+      #     icon: pfsense.png
+      #     description: Pfsense Firewall
+      #     widget:
+      #         type: pfsense
+      #         url: https://{{HOMEPAGE_VAR_IP_ROUTER}}:8443
+      #         username: {{HOMEPAGE_VAR_PFSENSE_USERNAME}}
+      #         password: '{{HOMEPAGE_VAR_PFSENSE_PASSWORD}}'
+      #         wan: igb0
+      - Unifi:
+          href: https://{{HOMEPAGE_VAR_IP_ROUTER}}
+          icon: unifi.png
+          username: hass
+          password: '{{HOMEPAGE_VAR_UNIFI_PASSWORD}}'
+          widget:
+              type: unifi
+              url: https://{{HOMEPAGE_VAR_IP_ROUTER}}
+              username: hass
+              password: '{{HOMEPAGE_VAR_UNIFI_PASSWORD}}'
+              # site: Site Name # optional
+      - APC:
+          # href: https://apc.{{HOMEPAGE_VAR_DOMAIN}}
+          href: http://{{HOMEPAGE_VAR_IP_APCUPS}}
+          icon: apc.png
+          description: APC UPS
+          ping: http://{{HOMEPAGE_VAR_IP_APCUPS}}  # add to env
+      - KVM1:
+          # href: https://kvm1.{{HOMEPAGE_VAR_DOMAIN}}
+          href: https://{{HOMEPAGE_VAR_IP_KVM1}}
+          icon: idrac.png
+          description: KVM1
+          ping: https://{{HOMEPAGE_VAR_IP_KVM1}}  # add to env
+      - KVM2:
+          # href: https://kvm2.{{HOMEPAGE_VAR_DOMAIN}}
+          href: http://{{HOMEPAGE_VAR_IP_KVM2}}
+          icon: pikvm.png
+          description: KVM2
+          ping: http://{{HOMEPAGE_VAR_IP_KVM2}}  # add to env
+      #- AP1:
+      #    href: https://ap1.{{HOMEPAGE_VAR_DOMAIN}}
+      #    icon: asus.png
+      #    description: ASUS Wireless AP
+      #    ping: http://{{IP}} # add to env
+      - Switch:
+          # href: https://switch.{{HOMEPAGE_VAR_DOMAIN}}
+          href: http://{{HOMEPAGE_VAR_IP_CISCO_SWITCH}}
+          icon: cisco.png
+          description: Cisco POE Switch
+          ping: http://{{HOMEPAGE_VAR_IP_CISCO_SWITCH}} # add to env
+      - Proxmox:
+          # href: https://pve.{{HOMEPAGE_VAR_DOMAIN}}
+          href: https://{{HOMEPAGE_VAR_IP_PVE}}:8006
+          icon: proxmox.png
+          description: Proxmox Cluster
+          ping: https://{{HOMEPAGE_VAR_IP_PVE}}:8006
+          widget:
+              type: proxmox
+              url: https://{{HOMEPAGE_VAR_IP_PVE}}:8006
+              username: {{HOMEPAGE_VAR_PVE_USER}}
+              password: {{HOMEPAGE_VAR_PVE_PASS}}
     - Services:
       - PiHole:
-          href: http://pi.hole
+          href: http://{{HOMEPAGE_VAR_IP_PIHOLE}}/admin
           icon: pi-hole.png
           description: PiHole DNS
+          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE}}
           widget:
-            type: pihole
-            url: http://pi.hole
-            key: ${PIHOLE_TOKEN}
+              type: pihole
+              url: *url
+              version: 6
+              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
+      - PiHole1:
+          href: http://{{HOMEPAGE_VAR_IP_PIHOLE1}}/admin
+          icon: pi-hole.png
+          description: PiHole DNS
+          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE1}}
+          widget:
+              type: pihole
+              url: *url
+              version: 6
+              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
+      - PiHole2:
+          href: http://{{HOMEPAGE_VAR_IP_PIHOLE2}}/admin
+          icon: pi-hole.png
+          description: PiHole DNS
+          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE2}}
+          widget:
+              type: pihole
+              url: *url
+              version: 6
+              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
       - Portainer:
-          href: &url http://${SECRET_UNRAID_IP}:9000
+          href: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
           icon: portainer.png
           description: Docker Container Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
           widget:
-            type: portainer
-            url: http://${SECRET_UNRAID_IP}:9000
-            env: 1
-            key: ${PORTAINER_TOKEN}
-      # - Search:
+              type: portainer
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
+              env: 1
+              key: {{HOMEPAGE_VAR_PORTAINER_TOKEN}}
+      - Search:
+          href: https://search.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: searxng.png
+          description: SearXNG
+          # ping: https://search.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
       # - Log:
-      # - Pass:
+      #     href: https://log.{{HOMEPAGE_VAR_DOMAIN}}
+      #     icon: graylog.png
+      #     description: Logs
+      #     # ping: https://log.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      #     # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9001
+      - Pass:
+          href: https://pass.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: bitwarden.png
+          description: Bitwarden Password Manager
+          # ping: https://pass.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
     - Media:
-      # - Plex:
-      # - Photos:
-      # - Photoprism:
-      # - Find:
-      # - Ombi:
+      - Plex:
+          href: https://plex.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: plex.png
+          description: Plex Media Server
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:32400
+          widget:
+              type: plex
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:32400
+              key: {{HOMEPAGE_VAR_PLEX_KEY}}
+      - Photos:
+          href: https://photos.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: lychee.png
+          description: Lychee Photos
+          # ping: https://photos.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Photoprism:
+          href: https://photoprism.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: photoprism.png
+          description: Photoprism Photo Management
+          # ping: https://photoprism.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+          widget:
+              type: photoprism
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:2342
+              username: {{HOMEPAGE_VAR_PHOTOPRISM_USERNAME}}
+              password: '{{HOMEPAGE_VAR_PHOTOPRISM_PASSWORD}}'
+      - Overseerr:
+          href: https://find.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: overseerr.png
+          description: Find Media
+          # ping: https://find.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+          widget:
+              type: overseerr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:5055
+              key: {{HOMEPAGE_VAR_OVERSEERR_KEY}}
       - Tautulli:
-          href: http://${SECRET_UNRAID_IP}:8182
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/tautulli
           icon: tautulli.png
           description: Media Info
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8182
           widget:
-            type: tautulli
-            url: http://${SECRET_UNRAID_IP}:8182/tautulli
-            key: ${TAUTULLI_KEY}
+              type: tautulli
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8182/tautulli
+              key: {{HOMEPAGE_VAR_TAUTULLI_KEY}}
     - Media Organization:
-      # - Calibre:
-      # - Calibre-Web:
+      - Calibre:
+          href: https://calibre.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: calibre.png
+          description: Calibre Book Management
+          # ping: https://calibre.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Calibre-Web:
+          href: https://calibre-web.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: calibre-web.png
+          description: Calibre-Web Book Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8073
+          widget:
+              type: calibreweb
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8073
+              username: {{HOMEPAGE_VAR_CALIBREWEB_USERNAME}}
+              password: '{{HOMEPAGE_VAR_CALIBREWEB_PASSWORD}}'
       - Radarr:
-          href: https://apps.${SECRET_DOMAIN}/radarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/radarr
           icon: radarr.png
           description: Movie Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:7878
           widget:
-            type: radarr
-            url: https://apps.${SECRET_DOMAIN}/radarr
-            key: ${RADARR_KEY}
+              type: radarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:7878
+              key: {{HOMEPAGE_VAR_RADARR_KEY}}
       - Sonarr:
-          href: https://apps.${SECRET_DOMAIN}/sonarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/sonarr
           icon: sonarr.png
           description: TV Show Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8989
           widget:
-            type: sonarr
-            url: https://apps.${SECRET_DOMAIN}/sonarr
-            key: ${SONARR_KEY}
+              type: sonarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8989
+              key: {{HOMEPAGE_VAR_SONARR_KEY}}
       - Lidarr:
-          href: https://apps.${SECRET_DOMAIN}/lidarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/lidarr
           icon: lidarr.png
           description: Music Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8686
           widget:
-            type: lidarr
-            url: https://apps.${SECRET_DOMAIN}/lidarr
-            key: ${LIDARR_KEY}
+              type: lidarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8686
+              key: {{HOMEPAGE_VAR_LIDARR_KEY}}
       - Readarr:
-          href: https://apps.${SECRET_DOMAIN}/readarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/readarr
           icon: readarr.png
           description: Book Management
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8787
           widget:
-            type: readarr
-            url: https://apps.${SECRET_DOMAIN}/readarr
-            key: ${READARR_KEY}
+              type: readarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8787
+              key: {{HOMEPAGE_VAR_READARR_KEY}}
       - Prowlarr:
-          href: https://apps.${SECRET_DOMAIN}/prowlarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/prowlarr
           icon: prowlarr.png
           description: Indexer Manager
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9696
           widget:
-            type: prowlarr
-            url: https://apps.${SECRET_DOMAIN}/prowlarr
-            key: ${PROWLARR_KEY}
+              type: prowlarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9696
+              key: {{HOMEPAGE_VAR_PROWLARR_KEY}}
       - Bazarr:
-          href: https://apps.${SECRET_DOMAIN}/bazarr
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/bazarr
           icon: bazarr.png
           description: Subtitle Manager
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:6767
           widget:
-            type: bazarr
-            url: https://apps.${SECRET_DOMAIN}/bazarr
-            key: ${BAZARR_KEY}
+              type: bazarr
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:6767/bazarr
+              key: {{HOMEPAGE_VAR_BAZARR_KEY}}
     - Downloads:
       - SABnzbd:
-          href: https://apps.${SECRET_DOMAIN}/sabnzbd/
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/sabnzbd/
           icon: sabnzbd.png
           description: NZB Downloader
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8081
           widget:
-            type: sabnzbd
-            url: https://apps.${SECRET_DOMAIN}/sabnzbd/
-            key: ${SABNZBD_KEY}
+              type: sabnzbd
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:8081
+              key: {{HOMEPAGE_VAR_SABNZBD_KEY}}
       - Transmission:
-          href: https://apps.${SECRET_DOMAIN}/transmission/
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}/transmission/
           icon: transmission.png
           description: Torrent Downloader
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9091
           widget:
-            type: transmission
-            url: http://${SECRET_UNRAID_IP}:9091
-            username: ${TRANSMISSION_USERNAME}
-            password: "${TRANSMISSION_PASSWORD}"
-            rpcUrl: /transmission/
+              type: transmission
+              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9091
+              username: {{HOMEPAGE_VAR_TRANSMISSION_USERNAME}}
+              password: "{{HOMEPAGE_VAR_TRANSMISSION_PASSWORD}}"
+              rpcUrl: /transmission/
     - Automation:
-      # - Home Assistant:
-      - Valetudo:
-          href: http://10.0.0.88
+      - Home Assistant:
+          href: https://hass.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: home-assistant.png
+          description: Home Assistant
+          # ping: https://hass.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Rosie [Valetudo]:
+          href: http://{{HOMEPAGE_VAR_IP_VALETUDO1}}
           icon: valetudo.png
           description: Valetudo Robot Vacuum
-    # - NVR:
-      # - Frigate:
-      # - Double Take:
-    # - AI:
-      # - AI:
-      # - Chat:
-      # - Chat2:
-    # - Office:
-      # - Docspell:
-      # - NextCloud:
-      # - Webtrees:
-    # - Web:
-      # - www:
-      # - apps:
-    # - Other:
-      # - Mealie:
-      # - Obico:
-      # - OctoPrint:
+          ping: http://{{HOMEPAGE_VAR_IP_VALETUDO1}}
+      - DirtyHarry2 [Valetudo]:
+          href: http://{{HOMEPAGE_VAR_IP_VALETUDO2}}
+          icon: valetudo.png
+          description: Valetudo Robot Vacuum
+          ping: http://{{HOMEPAGE_VAR_IP_VALETUDO2}}
+    - NVR:
+      - Frigate:
+          href: https://frigate.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: frigate.png
+          description: Frigate NVR
+          # ping: https://frigate.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Double Take:
+          href: https://dt.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: double-take.png
+          description: Double Take NVR
+          # ping: https://dt.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+    - AI:
+      - AI:
+          href: https://ai.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: openai.png
+          description: LocalAI
+          # ping: https://ai.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Chat:
+          href: https://chat.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: openai.png
+          description: Chat
+          # ping: https://chat.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Chat2:
+          href: https://chat2.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: openai.png
+          description: Chat2
+          # ping: https://chat2.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+    - Office:
+      - Docspell:
+          href: https://docs.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: docspell.png
+          description: Document Management
+          # ping: https://docs.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - NextCloud:
+          href: https://cloud.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: nextcloud.png
+          description: Personal Cloud
+          # ping: https://cloud.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+          widget:
+              type: nextcloud
+              url: https://cloud.{{HOMEPAGE_VAR_DOMAIN}}
+              key: {{HOMEPAGE_VAR_NEXTCLOUD_KEY}}
+      - Webtrees:
+          href: https://tree.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: https://raw.githubusercontent.com/fisharebest/webtrees/main/public/favicon-192.png
+          description: Family Tree
+          # ping: https://tree.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - Firefly-III:
+          href: https://bills.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: https://raw.githubusercontent.com/MattFaz/unraid_templates/main/images/fireflyiii-logo.png
+          description: Personal finance manager
+    - Web:
+      - www:
+          href: https://www.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: wordpress.png
+          description: Personal Website
+          # ping: https://www.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - apps:
+          href: https://apps.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: organizr.png
+          description: Personal Apps
+          # ping: https://apps.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+    - Other:
+      - Mealie:
+          href: https://food.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: mealie.png
+          description: Recipe Manager & Meal Planner
+          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9093
+          widget:
+              type: mealie
+              url: https://food.landry.me
+              version: 2
+              key: {{HOMEPAGE_VAR_MEALIE_KEY}}
+      - Obico:
+          href: https://obi.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: obico.png
+          description: 3D Printer Manager
+          # ping: https://obi.{{HOMEPAGE_VAR_DOMAIN}}  # change to local ip
+      - OctoPrint:
+          href: https://octo.{{HOMEPAGE_VAR_DOMAIN}}
+          icon: octoprint.png
+          description: 3D Printer Manager
+          ping: http://{{HOMEPAGE_VAR_IP_OCTOPRINT}}
     - Storage:
-      # - Unraid:
-      # - Minio:
-      - Rook-Ceph:
-          href: https://rook.${SECRET_DOMAIN}
-          icon: ceph.png
-          description: Rook-Ceph
+      - Unraid:
+          # id: col-small
+          href: https://{{HOMEPAGE_VAR_IP_UNRAID}}:8443
+          icon: unraid.png
+          description: Unraid NAS
+          ping: https://{{HOMEPAGE_VAR_IP_UNRAID}}
+
   settings.yaml: |
     title: Homepage
-    # favicon: heimdall.png
     theme: dark
-    color: slate
+    color: neutral
     headerStyle: clean
     layout:
       # Calendar:
       #   style: column
       #   icon: mdi-calendar
+      # Media Tab
       Media:
-        style: row
-        columns: 4
+        tab: Media
+        style: column
         icon: mdi-play-circle
       Media Organization:
-        style: row
-        columns: 4
+        tab: Media
+        style: column
         icon: mdi-movie
       Downloads:
+        tab: Media
         style: column
         icon: mdi-download-circle
+      # Automation Tab
       Automation:
+        tab: Automation
         style: column
         icon: mdi-robot
       NVR:
+        tab: Automation
         style: column
         icon: mdi-video
       AI:
+        tab: Automation
         style: column
         icon: mdi-robot
+      # Services Tab
       Office:
+        tab: Services
         style: column
         icon: mdi-office-building
       Web:
+        tab: Services
         style: column
         icon: mdi-web
       Other:
+        tab: Services
         style: column
         icon: mdi-dots-horizontal
+      # Infrastructure Tab
       Services:
-        style: row
-        columns: 3
+        tab: Infrastructure
+        style: column
         icon: mdi-server
       Infrastructure:
-        style: row
-        columns: 3
+        tab: Infrastructure
+        style: column
         icon: mdi-server
+      Docker/VMs:
+        tab: Infrastructure
+        style: column
+        icon: mdi-docker
       Storage:
-        style: row
-        columns: 2
+        tab: Infrastructure
+        style: column
         icon: mdi-desktop-tower
-      Home:
-        style: column
-        icon: mdi-home-analytics
-      Observability:
-        style: column
-        icon: mdi-chart-line
-
-    # providers:
-    #   longhorn:
-    #     url: https://longhorn.${SECRET_DOMAIN}
+      # Observability:
+      #   tab: Infrastructure
+      #   style: column
+      #   icon: mdi-chart-line
+      # Home:
+      #   style: column
+      #   icon: mdi-home-analytics
+    providers:
+      openweathermap: openweathermapapikey
+      weatherapi: weatherapiapikey
 
   widgets.yaml: |
     - logo:
-        icon: heimdall.png
+      icon: heimdall.png
     - search:
         # provider: [duckduckgo, google]
-        focus: false
+        # focus: false
         target: _blank
         provider: custom
-        url: https://search.${SECRET_DOMAIN}/search?q=
+        url: https://search.{{HOMEPAGE_VAR_DOMAIN}}/search?q=
     - greeting:
         text_size: xl
         text: "Howdy Hey!"
-    - kubernetes:
-        cluster:
-          cpu: true
-          label: cluster
-          memory: true
-          show: true
-          showLabel: true
-        nodes:
-          cpu: true
-          memory: true
-          show: false
-          showLabel: true
+    # - kubernetes:
+    #     cluster:
+    #         cpu: true
+    #         label: cluster
+    #         memory: true
+    #         show: true
+    #         showLabel: true
+    #     nodes:
+    #         cpu: true
+    #         memory: true
+    #         show: false
+    #         showLabel: true
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
     - openmeteo:
         label: Home
-        latitude: ${LATITUDE}
-        longitude: ${LONGITUDE}
+        latitude: {{HOMEPAGE_VAR_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
         units: imperial
         cache: 5
     - datetime:
         text_size: l
         format:
-          dateStyle: long
-          timeStyle: short
-          hourCycle: h23
+            dateStyle: long
+            timeStyle: short
+            hourCycle: h23

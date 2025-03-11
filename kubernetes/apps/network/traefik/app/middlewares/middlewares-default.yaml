@@ -87,9 +87,4 @@ spec:
       - 10.0.0.0/24
       - 10.0.10.0/24
       - 10.0.30.0/24
-      # - 172.19.0.1/16  # cloudflare
       - 172.20.0.0/24  # wireguard
-      # - 10.42.0.0/16  # traefik pod
-      # - 10.43.0.0/16  # traefik svc
-    # ipStrategy:
-    #   depth: 1
