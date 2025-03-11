@@ -12,6 +12,7 @@ spec:
     - kind: Rule
       match: "Host(`kdash.${SECRET_DOMAIN}`)"
       middlewares:
+        - name: network-error-pages@kubernetescrd
         - name: network-internal-only@kubernetescrd
         - name: network-default-middlewares@kubernetescrd
         # - name: network-middlewares-authentik@kubernetescrd
