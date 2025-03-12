@@ -7,8 +7,8 @@ components:
   - ../../components/common
 resources:
   - ./cilium/ks.yaml
+  - ./cloudnative-pg/ks.yaml
   - ./coredns/ks.yaml
-  # - ./kubegres/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
