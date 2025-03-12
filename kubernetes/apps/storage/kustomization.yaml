@@ -2,14 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: network
+namespace: storage
 components:
   - ../../components/common
 resources:
-  - ./authentik/ks.yaml
-  - ./cert/ks.yaml
-  - ./error-pages/ks.yaml
-  - ./external/ks.yaml
-  # - ./internal/ks.yaml
-  - ./k8s-gateway/ks.yaml
-  - ./traefik/ks.yaml
+  - ./volsync/ks.yaml

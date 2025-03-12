@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: networking
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: 2024.2.3
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: traefik
+      namespace: networking
+  values:
+    global:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      image:
+        repository: ghcr.io/goauthentik/server
+      podAnnotations:
+        secret.reloader.stakater.com/reload: authentik
+      envFrom:
+        - secretRef:
+            key: postgresPassword
+            name: authentik
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          # cert-manager.io/cluster-issuer: letsencrypt-production
+          # hajimari.io/enable: "true"
+          # hajimari.io/appName: Authentik
+          # hajimari.io/icon: shield-lock
+          # hajimari.io/instance: hajimari
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - &host "auth.${SECRET_DOMAIN}"
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-network-tls"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    authentik:
+      log_level: debug
+      postgresql:
+        host: authentik-postgres
+        name: postgres
+        user: postgres
+    redis:
+      enabled: true
+      image:
+        repository: library/redis
+        tag: 7.2.4
