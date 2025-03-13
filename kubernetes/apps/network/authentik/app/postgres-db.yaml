@@ -3,13 +3,13 @@ apiVersion: kubegres.reactive-tech.io/v1
 kind: Kubegres
 metadata:
   name: authentik-postgres
-  namespace: networking
+  namespace: network
 spec:
   replicas: 1
   image: docker.io/library/postgres:15.4
   database:
     size: 5Gi
-    storageClassName: ceph-block
+    storageClassName: openebs-hostpath
   env:
     - name: POSTGRES_PASSWORD
       valueFrom:
