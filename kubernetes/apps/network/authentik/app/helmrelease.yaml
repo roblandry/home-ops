@@ -42,9 +42,9 @@ spec:
       initContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.8
-          envFrom:
-            - secretRef:
-                name: *secret
+          # envFrom:
+          #   - secretRef:
+          #       name: *secret
       ingress:
         enabled: true
         ingressClassName: traefik
