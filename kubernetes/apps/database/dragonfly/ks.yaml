@@ -32,8 +32,8 @@ spec:
   dependsOn:
     - name: dragonfly-operator
       namespace: *namespace
-    - name: onepassword-store
-      namespace: security
+    # - name: onepassword-store
+    #   namespace: security
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
