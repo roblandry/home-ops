@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: gatus
+  namespace: monitor
 spec:
   chart:
     spec:
@@ -28,10 +29,11 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.8
             env:
-              INIT_POSTGRES_HOST: "${SECRET_GATUS_POSTGRES_HOST}"
-              INIT_POSTGRES_USER: "${SECRET_GATUS_POSTGRES_USER}"
-              INIT_POSTGRES_PASS: "${SECRET_GATUS_POSTGRES_PASS}"
-              INIT_POSTGRES_DBNAME: "${SECRET_GATUS_POSTGRES_DBNAME}"
+              INIT_POSTGRES_SUPER_PASS: ${SECRET_GATUS_POSTGRES_SUPER_PASS}
+              INIT_POSTGRES_HOST: ${SECRET_GATUS_POSTGRES_HOST}
+              INIT_POSTGRES_USER: ${SECRET_GATUS_POSTGRES_USER}
+              INIT_POSTGRES_PASS: ${SECRET_GATUS_POSTGRES_PASS}
+              INIT_POSTGRES_DBNAME: ${SECRET_GATUS_POSTGRES_DBNAME}
           init-config:
             dependsOn: init-db
             image:
@@ -57,10 +59,10 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-              INIT_POSTGRES_HOST: "${SECRET_GATUS_POSTGRES_HOST}"
-              INIT_POSTGRES_USER: "${SECRET_GATUS_POSTGRES_USER}"
-              INIT_POSTGRES_PASS: "${SECRET_GATUS_POSTGRES_PASS}"
-              INIT_POSTGRES_DBNAME: "${SECRET_GATUS_POSTGRES_DBNAME}"
+              INIT_POSTGRES_HOST: ${SECRET_GATUS_POSTGRES_HOST}
+              INIT_POSTGRES_USER: ${SECRET_GATUS_POSTGRES_USER}
+              INIT_POSTGRES_PASS: ${SECRET_GATUS_POSTGRES_PASS}
+              INIT_POSTGRES_DBNAME: ${SECRET_GATUS_POSTGRES_DBNAME}
             probes:
               liveness: &probes
                 enabled: true
