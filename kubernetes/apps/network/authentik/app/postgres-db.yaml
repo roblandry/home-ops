@@ -23,9 +23,9 @@ spec:
   #   name: AUTHENTIK_POSTGRESQL__PASSWORD
   monitoring:
     enablePodMonitor: true
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres-v1
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres-v1
   resources:
     requests:
       cpu: 100m
