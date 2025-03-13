@@ -39,7 +39,7 @@ spec:
         - --downsampling.disable
       persistence:
         enabled: true
-        storageClass: "data-nfs"
+        storageClass: "openebs-hostpath"
         size: 30Gi
     # query:
     #   extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
