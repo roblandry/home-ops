@@ -6,3 +6,4 @@ resources:
   # - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./ingressRoute.yaml
+  - ./secret.sops.yaml

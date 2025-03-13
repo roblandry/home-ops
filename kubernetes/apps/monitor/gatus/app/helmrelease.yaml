@@ -22,18 +22,16 @@ spec:
     controllers:
       gatus:
         annotations:
+          secret.reloader.stakater.com/reload: &secret gatus-secrets
           configmap.reloader.stakater.com/reload: &configmap gatus-configmap
         initContainers:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.8
-            env:
-              INIT_POSTGRES_SUPER_PASS: ${SECRET_GATUS_POSTGRES_SUPER_PASS}
-              INIT_POSTGRES_HOST: ${SECRET_GATUS_POSTGRES_HOST}
-              INIT_POSTGRES_USER: ${SECRET_GATUS_POSTGRES_USER}
-              INIT_POSTGRES_PASS: ${SECRET_GATUS_POSTGRES_PASS}
-              INIT_POSTGRES_DBNAME: ${SECRET_GATUS_POSTGRES_DBNAME}
+            envFrom:
+              - secretRef:
+                  name: *secret
           init-config:
             dependsOn: init-db
             image:
@@ -52,6 +50,9 @@ spec:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.16.0
+            envFrom:
+              - secretRef:
+                  name: *secret
             env:
               TZ: ${CONFIG_TIMEZONE}
               PUBLIC_DOMAIN: ${SECRET_DOMAIN}
@@ -59,10 +60,6 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-              INIT_POSTGRES_HOST: ${SECRET_GATUS_POSTGRES_HOST}
-              INIT_POSTGRES_USER: ${SECRET_GATUS_POSTGRES_USER}
-              INIT_POSTGRES_PASS: ${SECRET_GATUS_POSTGRES_PASS}
-              INIT_POSTGRES_DBNAME: ${SECRET_GATUS_POSTGRES_DBNAME}
             probes:
               liveness: &probes
                 enabled: true

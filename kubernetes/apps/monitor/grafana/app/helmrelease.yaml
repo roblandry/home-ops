@@ -19,13 +19,17 @@ spec:
     keepHistory: false
   values:
     annotations:
-      secret.reloader.stakater.com/reload: &secret grafana-secret
+      secret.reloader.stakater.com/reload: &secret grafana-secrets
     extraInitContainers:
       - name: init-db
         image: ghcr.io/onedr0p/postgres-init:16.8
-        # envFrom:
-        #   - secretRef:
-        #       name: *secret
+        envFrom:
+          - secretRef:
+              name: *secret
+        # env:
+        #   # App
+        #   GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
+        #   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
     rbac:
       pspEnabled: false
     persistence:
@@ -49,8 +53,8 @@ spec:
     #   hosts: ["${HOSTNAME}"]
     env:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
-    # envFromSecrets:
-    #   - name: *secret
+    envFromSecrets:
+      - name: *secret
     grafana.ini:
       analytics:
         check_for_updates: false
