@@ -9,3 +9,4 @@ resources:
   # - ./ingress.yaml
   - ./ingressRoute.yaml
   - ./rbac.yaml
+  - ./secret.sops.yaml

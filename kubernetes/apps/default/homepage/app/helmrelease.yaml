@@ -35,9 +35,9 @@ spec:
               tag: v0.10.9
             env:
               TZ: ${TIMEZONE}
-            # envFrom:
-            #   - secretRef:
-            #       name: homepage-secret
+            envFrom:
+              - secretRef:
+                  name: homepage-secrets
             resources:
               requests:
                 cpu: 15m
