@@ -27,7 +27,8 @@ spec:
         replicas: 2
         strategy: RollingUpdate
         annotations:
-          reloader.stakater.com/auto: "true"
+          # reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: &secret homepage-secrets
         containers:
           app:
             image:
