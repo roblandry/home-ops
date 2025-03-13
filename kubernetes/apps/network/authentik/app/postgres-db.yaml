@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
-kind: Kubegres
+kind: Cluster
 metadata:
   name: authentik-postgres
   namespace: network
@@ -10,18 +10,17 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
-  primaryUpdateMethod: switchover
+  # primaryUpdateMethod: switchover
   storage:
-    size: 10Gi
-  # key: AUTHENTIK_POSTGRESQL__PASSWORD
+    size: 5Gi
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
       max_connections: "300"
       work_mem: 64MB
       shared_buffers: 128MB
-  superuserSecret:
-    name: AUTHENTIK_POSTGRESQL__PASSWORD
+  # superuserSecret:
+  #   name: AUTHENTIK_POSTGRESQL__PASSWORD
   monitoring:
     enablePodMonitor: true
   bootstrap:
@@ -29,10 +28,10 @@ spec:
       source: &previousCluster postgres-v1
   resources:
     requests:
-      cpu: 200m
-      memory: 500Mi
+      cpu: 100m
+      memory: 200Mi
     limits:
-      memory: 2Gi
+      memory: 500Mi
   # backup:
   #   retentionPolicy: 7d
   #   barmanObjectStore:
