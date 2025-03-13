@@ -7,12 +7,15 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
+  - ./cloudnative-pg-dashboards.yaml
   - ./cloudnative-pg.yaml
   - ./controlplaneio.yaml
   - ./coredns.yaml
   - ./csi-driver-nfs.yaml
   # - ./error-pages.yaml
+  - ./dragonfly.yaml
   - ./external-dns.yaml
+  - ./grafana.yaml
   - ./homepage.yaml
   # - ./ingress-nginx.yaml
   - ./jetstack.yaml
