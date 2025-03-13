@@ -20,7 +20,7 @@ spec:
       work_mem: 64MB
       shared_buffers: 128MB
   superuserSecret:
-    name: SUPERUSER_SECRET
+    name: ${SECRET_POSTGRES_SUPER_PASS}
   monitoring:
     enablePodMonitor: true
   # bootstrap:
