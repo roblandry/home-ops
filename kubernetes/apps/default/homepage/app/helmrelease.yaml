@@ -28,24 +28,6 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        # initContainers:
-        #   envsubst:
-        #     image: alpine
-        #     command:
-        #       - /bin/sh
-        #       - -c
-        #       - |
-        #         for file in /config/*; do
-        #           envsubst < "$file" > "/app/config/$(basename $file)"
-        #         done
-        #     envFrom:
-        #       - secretRef:
-        #           name: homepage-secrets
-        #     volumeMounts:
-        #       - name: homepage-config
-        #         mountPath: /config
-        #       - name: homepage-runtime-config
-        #         mountPath: /app/config
         containers:
           app:
             image:
@@ -56,9 +38,6 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-secrets
-            # volumeMounts:
-            #   - name: homepage-runtime-config
-            #     mountPath: /app/config
             resources:
               requests:
                 cpu: 15m
