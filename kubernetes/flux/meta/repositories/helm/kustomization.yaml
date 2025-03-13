@@ -27,5 +27,6 @@ resources:
   - ./metrics-server.yaml
   - ./openebs.yaml
   - ./spegel.yaml
+  - ./prometheus-community.yaml
   - ./stakater.yaml
   - ./traefik.yaml
