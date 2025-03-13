@@ -66,10 +66,12 @@ spec:
           memory: 512Mi
     authentik:
       log_level: debug
+      secret_key: ${AUTHENTIK_SECRET_KEY}
       postgresql:
         host: authentik-postgres
         name: postgres
         user: postgres
+        password: ${AUTHENTIK_POSTGRESQL__PASSWORD}
     redis:
       enabled: true
       image:
