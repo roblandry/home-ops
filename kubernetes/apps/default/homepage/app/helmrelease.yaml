@@ -104,6 +104,6 @@ spec:
             path: /app/config/settings.yaml
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
-serviceAccount:
+    serviceAccount:
       create: true
       name: *app
