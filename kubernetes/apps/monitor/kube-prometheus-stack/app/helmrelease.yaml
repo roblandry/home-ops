@@ -107,7 +107,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: private
+        ingressClassName: traefik
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure

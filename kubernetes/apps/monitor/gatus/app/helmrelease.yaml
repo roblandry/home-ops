@@ -108,7 +108,7 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: public
+        className: traefik
         hosts:
           - host: ${HOSTNAME}
             paths:
