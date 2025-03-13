@@ -29,4 +29,5 @@ resources:
   - ./spegel.yaml
   - ./prometheus-community.yaml
   - ./stakater.yaml
+  - ./stevehipwell.yaml
   - ./traefik.yaml
