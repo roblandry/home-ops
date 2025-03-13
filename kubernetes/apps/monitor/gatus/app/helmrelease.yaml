@@ -106,16 +106,16 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
-      app:
-        className: traefik
-        hosts:
-          - host: ${HOSTNAME}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    # ingress:
+    #   app:
+    #     className: traefik
+    #     hosts:
+    #       - host: ${HOSTNAME}
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: app
+    #               port: http
     serviceAccount:
       create: true
       name: gatus

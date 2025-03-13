@@ -105,19 +105,19 @@ spec:
     #             requests:
     #               storage: 1Gi
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/name: Prometheus
-          gethomepage.dev/icon: prometheus.svg
-          gethomepage.dev/pod-selector: app.kubernetes.io/name=prometheus
-          gethomepage.dev/widget.type: prometheus
-          gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitor:9090
-        pathType: Prefix
-        hosts: ["promethius.${SECRET_DOMAIN}"]
+      # ingress:
+      #   enabled: true
+      #   ingressClassName: traefik
+      #   annotations:
+      #     gethomepage.dev/enabled: "true"
+      #     gethomepage.dev/group: Infrastructure
+      #     gethomepage.dev/name: Prometheus
+      #     gethomepage.dev/icon: prometheus.svg
+      #     gethomepage.dev/pod-selector: app.kubernetes.io/name=prometheus
+      #     gethomepage.dev/widget.type: prometheus
+      #     gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitor:9090
+      #   pathType: Prefix
+      #   hosts: ["promethius.${SECRET_DOMAIN}"]
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: "__replica__"
@@ -141,13 +141,13 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-        thanos:
-          image: quay.io/thanos/thanos:v0.37.2
-          objectStorageConfig:
-            existingSecret:
-              name: thanos-objectstore-secret
-              key: objstore.yml
-      thanosService:
-        enabled: true
-      thanosServiceMonitor:
-        enabled: true
+      #   thanos:
+      #     image: quay.io/thanos/thanos:v0.37.2
+      #     objectStorageConfig:
+      #       existingSecret:
+      #         name: thanos-objectstore-secret
+      #         key: objstore.yml
+      # thanosService:
+      #   enabled: true
+      # thanosServiceMonitor:
+      #   enabled: true

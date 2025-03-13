@@ -38,15 +38,15 @@ spec:
       enabled: true
     serviceAccount:
       autoMount: true
-    ingress:
-      enabled: true
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Infrastructure
-        gethomepage.dev/name: Grafana
-        gethomepage.dev/icon: grafana.svg
-      ingressClassName: traefik
-      hosts: ["${HOSTNAME}"]
+    # ingress:
+    #   enabled: true
+    #   annotations:
+    #     gethomepage.dev/enabled: "true"
+    #     gethomepage.dev/group: Infrastructure
+    #     gethomepage.dev/name: Grafana
+    #     gethomepage.dev/icon: grafana.svg
+    #   ingressClassName: traefik
+    #   hosts: ["${HOSTNAME}"]
     env:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
     envFromSecrets:
@@ -133,12 +133,12 @@ spec:
             isDefault: true
             jsonData:
               timeInterval: 30s
-          - name: Alertmanager
-            type: alertmanager
-            access: proxy
-            url: http://alertmanager.monitor.svc.cluster.local:9093
-            jsonData:
-              implementation: prometheus
+          # - name: Alertmanager
+          #   type: alertmanager
+          #   access: proxy
+          #   url: http://alertmanager.monitor.svc.cluster.local:9093
+          #   jsonData:
+          #     implementation: prometheus
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
