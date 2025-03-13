@@ -8,6 +8,7 @@ resources:
   - ./helmrelease.yaml
   - ./ingressRoute.yaml
   - ./rbac.yaml
+  - ./secret.sops.yaml
 configMapGenerator:
   - name: gatus-configmap
     files:
