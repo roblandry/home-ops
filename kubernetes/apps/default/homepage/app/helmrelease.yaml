@@ -38,6 +38,9 @@ spec:
                 for file in /config/*; do
                   envsubst < "$file" > "/app/config/$(basename $file)"
                 done
+            envFrom:
+              - secretRef:
+                  name: homepage-secrets
             volumeMounts:
               - name: homepage-config
                 mountPath: /config
