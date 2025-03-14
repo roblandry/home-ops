@@ -151,16 +151,3 @@ spec:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
-    endpoints:
-      - name: Redis
-        group: Services
-        url: tcp://dragonfly.database.svc.cluster.local:6379
-        interval: 1m
-        ui:
-          hide-url: true
-          hide-hostname: true
-        conditions:
-          - "[CONNECTED] == true"
-        alerts:
-          - type: pushover
-            send-on-resolved: true
