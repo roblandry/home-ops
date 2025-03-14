@@ -25,6 +25,7 @@ kind: Kustomization
 metadata:
   name: &app dragonfly
   namespace: flux-system
+  # namespace: database
 spec:
   targetNamespace: database
   commonMetadata:

@@ -23,8 +23,12 @@ spec:
     objstoreConfig:
       # Creates by kps
       create: false
-      name: thanos-objectstore-secret
-      key: objstore.yml
+      # name: thanos-objectstore-secret
+      # key: objstore.yml
+      type: FILESYSTEM
+      config:
+        directory: /var/local/thanos/objectstore
+      prefix: ""
     additionalEndpoints:
       - dnssrv+_grpc._tcp.kube-prometheus-stack-thanos-discovery.monitor.svc.cluster.local
     additionalReplicaLabels: ["__replica__"]

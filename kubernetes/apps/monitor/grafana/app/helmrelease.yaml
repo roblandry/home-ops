@@ -26,7 +26,12 @@ spec:
         envFrom:
           - secretRef:
               name: *secret
-        # env:
+        env:
+          INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
+          INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
+          INIT_POSTGRES_USER:       &user ${GF_POSTGRES_USER}
+          INIT_POSTGRES_PASS:       &pass ${GF_POSTGRES_PASS}
+          INIT_POSTGRES_DBNAME:     &datb ${GF_POSTGRES_DBNAME}
         #   # App
         #   GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
         #   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
@@ -53,6 +58,11 @@ spec:
     #   hosts: ["${HOSTNAME}"]
     env:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
+      INIT_POSTGRES_SUPER_PASS: *supr
+      INIT_POSTGRES_HOST:       *host
+      INIT_POSTGRES_USER:       *user
+      INIT_POSTGRES_PASS:       *pass
+      INIT_POSTGRES_DBNAME:     *datb
     envFromSecrets:
       - name: *secret
     grafana.ini:
@@ -60,30 +70,30 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
         reporting_enabled: false
-      auth:
-        oauth_auto_login: true
-        signout_redirect_url: https://${HOSTNAME}/application/o/grafana/end-session/
-        oauth_allow_insecure_email_lookup: true
+      # auth:
+      #   oauth_auto_login: true
+      #   signout_redirect_url: https://${HOSTNAME}/application/o/grafana/end-session/
+      #   oauth_allow_insecure_email_lookup: true
       auth.basic:
         enabled: false
       auth.anonymous:
-        enabled: false
+        enabled: true
         # org_id: 1
         # org_role: Viewer
-      auth.generic_oauth:
-        enabled: true
-        name: ${HOSTNAME}
-        icon: signin
-        auth_url: https://${AUTH_HOSTNAME}/application/o/authorize/
-        token_url: https://${AUTH_HOSTNAME}/application/o/token/
-        api_url: https://${AUTH_HOSTNAME}/application/o/userinfo/
-        scopes: openid email profile
-        use_pkce: true
-        skip_org_role_sync: true
-      auth.generic_oauth.group_mapping:
-        role_attribute_path: |
-          contains(groups[*], 'infrastructure') && 'Admin' || 'Viewer'
-        org_id: 1
+      # auth.generic_oauth:
+      #   enabled: true
+      #   name: ${HOSTNAME}
+      #   icon: signin
+      #   auth_url: https://${AUTH_HOSTNAME}/application/o/authorize/
+      #   token_url: https://${AUTH_HOSTNAME}/application/o/token/
+      #   api_url: https://${AUTH_HOSTNAME}/application/o/userinfo/
+      #   scopes: openid email profile
+      #   use_pkce: true
+      #   skip_org_role_sync: true
+      # auth.generic_oauth.group_mapping:
+      #   role_attribute_path: |
+      #     contains(groups[*], 'infrastructure') && 'Admin' || 'Viewer'
+      #   org_id: 1
       log:
         mode: console
       news:
@@ -94,7 +104,7 @@ spec:
         plugins: /var/lib/grafana/plugins
         provisioning: /etc/grafana/provisioning
       server:
-        root_url: https://${HOSTNAME}
+        root_url: https://grafana.${SECRET_DOMAIN}
     plugins:
       - pr0ps-trackmap-panel
       - grafana-clock-panel

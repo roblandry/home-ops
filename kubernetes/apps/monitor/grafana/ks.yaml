@@ -16,10 +16,10 @@ spec:
     #   namespace: security
   interval: 30m
   path: ./kubernetes/apps/monitor/grafana/app
-  postBuild:
-    substitute:
-      HOSTNAME: grafana.${SECRET_DOMAIN}
-      AUTH_HOSTNAME: auth.${PUBLIC_DOMAIN}
+  # postBuild:
+  #   substitute:
+  #     HOSTNAME: grafana.${SECRET_DOMAIN}
+  #     AUTH_HOSTNAME: auth.${PUBLIC_DOMAIN}
   prune: true
   sourceRef:
     kind: GitRepository
