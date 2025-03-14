@@ -11,12 +11,6 @@
 #       send-on-resolved: true
 #       failure-threshold: 3
 #       success-threshold: 3
-test:
-  GATUS_POSTGRES_USER: ${GATUS_POSTGRES_USER}
-  GATUS_POSTGRES_PASS: ${GATUS_POSTGRES_PASS}
-  POSTGRES_HOST: ${POSTGRES_HOST}
-  GATUS_POSTGRES_DBNAME: ${GATUS_POSTGRES_DBNAME}
-  CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
 connectivity:
   checker:
     target: 1.1.1.1:53
@@ -74,4 +68,4 @@ ui:
   title: Status | Gatus
   header: Status
 web:
-  port: ${CUSTOM_WEB_PORT}
+  port: 8080
