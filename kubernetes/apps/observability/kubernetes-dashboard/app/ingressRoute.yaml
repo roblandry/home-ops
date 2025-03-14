@@ -4,7 +4,13 @@ metadata:
   name: kubernetes-dashboard
   namespace: observaility
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "tdash.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/hostname: "kdash.${SECRET_DOMAIN}"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Kubernetes dashboard"
+    gethomepage.dev/description: "A web-based Kubernetes user interface"
+    gethomepage.dev/href: "https://kdash.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "services"
+    gethomepage.dev/icon: "si-kubernetes"
 spec:
   entryPoints:
     - websecure

@@ -10,6 +10,14 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "network-error-pages@kubernetescrd,network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
     # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Traefik"
+    gethomepage.dev/description: "Traefik Dashboard"
+    gethomepage.dev/href: "https://traefik.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "services"
+    gethomepage.dev/icon: "sh-traefik.png"
+    gethomepage.dev/widget.type: traefik
+    gethomepage.dev/widget.url: "https://traefik.${SECRET_DOMAIN}"
 spec:
   ingressClassName: "traefik"
   tls:
