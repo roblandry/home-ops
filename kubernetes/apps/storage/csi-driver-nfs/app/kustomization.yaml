@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./sc-config-nfs.yaml
-  - ./sc-minio-nfs.yaml
   - ./sc-data-nfs.yaml

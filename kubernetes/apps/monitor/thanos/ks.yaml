@@ -10,12 +10,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: csi-driver-nfs
-      namespace: storage
+    # - name: csi-driver-nfs
+    #   namespace: storage
     # - name: onepassword-store
     #   namespace: security
-    - name: openebs
-      namespace: storage
+    # - name: openebs
+    #   namespace: storage
     - name: kube-prometheus-stack
       namespace: monitor
   interval: 30m

@@ -137,17 +137,17 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: csi-driver-nfs
+              storageClassName: data-nfs
               resources:
                 requests:
                   storage: 10Gi
-      #   thanos:
-      #     image: quay.io/thanos/thanos:v0.37.2
-      #     objectStorageConfig:
-      #       existingSecret:
-      #         name: thanos-objectstore-secret
-      #         key: objstore.yml
-      # thanosService:
-      #   enabled: true
-      # thanosServiceMonitor:
-      #   enabled: true
+        thanos:
+          image: quay.io/thanos/thanos:v0.37.2
+          objectStorageConfig:
+            existingSecret:
+              name: thanos-objectstore-secret
+              key: objstore.yml
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
