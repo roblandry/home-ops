@@ -4,12 +4,12 @@ metadata:
   name: grafana
   namespace: monitor
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "grafana.${SECRET_DOMAIN}"
+    # external-dns.alpha.kubernetes.io/hostname: "grafana.${SECRET_DOMAIN}"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Grafana"
-    gethomepage.dev/description: ""
+    gethomepage.dev/description: "The open and composable observability and data visualization platform"
     gethomepage.dev/href: "https://grafana.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "services"
+    gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "sh-grafana.png"
     # gethomepage.dev/widget.type: grafana
     # gethomepage.dev/widget.url: "https://grafana.${SECRET_DOMAIN}"

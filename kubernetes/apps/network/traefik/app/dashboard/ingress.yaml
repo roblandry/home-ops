@@ -5,7 +5,7 @@ metadata:
   name: traefik-dashboard
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "traefik.${SECRET_DOMAIN}"
+    # external-dns.alpha.kubernetes.io/hostname: "traefik.${SECRET_DOMAIN}"
     # cert-manager.io/cluster-issuer: "letsencrypt-production"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "network-error-pages@kubernetescrd,network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
@@ -14,7 +14,7 @@ metadata:
     gethomepage.dev/name: "Traefik"
     gethomepage.dev/description: "Traefik Dashboard"
     gethomepage.dev/href: "https://traefik.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "services"
+    gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "sh-traefik.png"
     gethomepage.dev/widget.type: traefik
     gethomepage.dev/widget.url: "https://traefik.${SECRET_DOMAIN}"
