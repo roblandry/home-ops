@@ -32,6 +32,12 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
+            env:
+              INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
+              INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
+              INIT_POSTGRES_USER:       &user ${GATUS_POSTGRES_USER}
+              INIT_POSTGRES_PASS:       &pass ${GATUS_POSTGRES_PASS}
+              INIT_POSTGRES_DBNAME:     &datb ${GATUS_POSTGRES_DBNAME}
           init-config:
             dependsOn: init-db
             image:
@@ -60,6 +66,11 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
+              INIT_POSTGRES_SUPER_PASS: *supr
+              INIT_POSTGRES_HOST:       *host
+              INIT_POSTGRES_USER:       *user
+              INIT_POSTGRES_PASS:       *pass
+              INIT_POSTGRES_DBNAME:     *datb
             probes:
               liveness: &probes
                 enabled: true
