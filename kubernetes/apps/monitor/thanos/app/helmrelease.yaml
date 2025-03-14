@@ -23,7 +23,7 @@ spec:
     objstoreConfig:
       create: false
       name: thanos-objectstore-secret
-      key: objstore.yml
+      key: objstore.yaml
     additionalEndpoints:
       - dnssrv+_grpc._tcp.kube-prometheus-stack-thanos-discovery.monitor.svc.cluster.local
     additionalReplicaLabels: ["__replica__"]
