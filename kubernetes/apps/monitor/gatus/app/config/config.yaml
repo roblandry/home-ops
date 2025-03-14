@@ -24,7 +24,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     client:
-      dns-resolver: tcp://10.0.10.127:53
+      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
     conditions:
       - "[STATUS] == 200"
     alerts:
@@ -38,7 +38,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     client:
-      dns-resolver: tcp://10.0.10.127:53
+      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
     conditions:
       - "[STATUS] == 404"
     alerts:
@@ -52,7 +52,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     client:
-      dns-resolver: tcp://10.0.10.127:53
+      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
     conditions:
       - "[STATUS] == 200"
     alerts:
