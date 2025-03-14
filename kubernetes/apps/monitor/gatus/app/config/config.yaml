@@ -13,7 +13,7 @@
 #       success-threshold: 3
 connectivity:
   checker:
-    target: 1.1.1.1:53
+    target: ${SECRET_PIHOLE_IP}:53
     interval: 1m
 endpoints:
   - name: Status
