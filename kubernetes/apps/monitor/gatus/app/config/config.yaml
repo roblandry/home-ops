@@ -62,7 +62,7 @@ endpoints:
 metrics: true
 storage:
   type: postgres
-  path: postgres://${GATUS_POSTGRES_USER}:`${GATUS_POSTGRES_PASS}`@${POSTGRES_HOST}:5432/${GATUS_POSTGRES_DBNAME}?sslmode=disable
+  path: postgres://${GATUS_POSTGRES_USER}:${GATUS_POSTGRES_PASS}@${POSTGRES_HOST}:5432/${GATUS_POSTGRES_DBNAME}?sslmode=disable
   caching: true
 ui:
   title: Status | Gatus
