@@ -20,7 +20,7 @@ spec:
       work_mem: 64MB
       shared_buffers: 128MB
   superuserSecret:
-    name: cluster-secrets
+    name: postgres-secrets
   monitoring:
     enablePodMonitor: true
   # bootstrap:

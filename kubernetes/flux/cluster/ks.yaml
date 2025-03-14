@@ -44,6 +44,9 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+      - name: postgres-secrets
+        kind: Secret
+        optional: true
       - name: cluster-settings
         kind: ConfigMap
         optional: true
@@ -69,6 +72,9 @@ spec:
               - name: cluster-secrets
                 kind: Secret
                 optional: false
+              - name: postgres-secrets
+                kind: Secret
+                optional: true
               - name: cluster-settings
                 kind: ConfigMap
                 optional: true
