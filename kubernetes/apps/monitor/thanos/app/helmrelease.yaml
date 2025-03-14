@@ -21,7 +21,6 @@ spec:
     keepHistory: false
   values:
     objstoreConfig:
-      # Creates by kps
       create: false
       name: thanos-objectstore-secret
       key: objstore.yml
@@ -37,10 +36,10 @@ spec:
         - --delete-delay=30m
         - --retention.resolution-raw=30d
         - --downsampling.disable
-      # persistence:
-      #   enabled: true
-      #   storageClass: "data-nfs"
-      #   size: 15Gi
+      persistence:
+        enabled: true
+        storageClass: "data-nfs"
+        size: 15Gi
     # query:
     #   extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
     queryFrontend:
@@ -71,7 +70,7 @@ spec:
     #               for: 5m
     #               labels:
     #                 severity: critical
-      persistence:
-        enabled: true
-        storageClass: openebs-hostpath
-        size: 15Gi
+      # persistence:
+      #   enabled: true
+      #   storageClass: openebs-hostpath
+      #   size: 15Gi
