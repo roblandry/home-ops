@@ -44,9 +44,9 @@ endpoints:
     alerts:
       - type: pushover
         send-on-resolved: true
-  - name: Minio
+  - name: Unraid
     group: Services
-    url: https://minio.${SECRET_DOMAIN}/minio/health/live
+    url: https://unraid.${SECRET_DOMAIN}
     interval: 1m
     ui:
       hide-hostname: true
