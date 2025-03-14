@@ -19,7 +19,7 @@ spec:
     keepHistory: false
   values:
     annotations:
-      secret.reloader.stakater.com/reload: &secret grafana-secrets
+      secret.reloader.stakater.com/reload: &secret cluster-secrets
     extraInitContainers:
       - name: init-db
         image: ghcr.io/onedr0p/postgres-init:16.8
