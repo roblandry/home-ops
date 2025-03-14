@@ -6,5 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./sc-config-nfs.yaml
   - ./sc-data-nfs.yaml
-  - ./sc-prometheus-nfs.yaml
-  - ./sc-thanos-nfs.yaml
+

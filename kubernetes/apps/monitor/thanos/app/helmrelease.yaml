@@ -38,7 +38,7 @@ spec:
         - --downsampling.disable
       persistence:
         enabled: true
-        storageClass: "thanos-nfs"
+        storageClass: "data-nfs"
         size: 15Gi
     # query:
     #   extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
