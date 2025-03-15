@@ -7,3 +7,4 @@ resources:
   - ./helmrelease.yaml
   - ./ingressRoute.yaml
   - ./secret.sops.yaml
+  - ./pvc.yaml
