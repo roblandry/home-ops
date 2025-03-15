@@ -49,25 +49,25 @@ spec:
         ingressClassName: traefik
         hosts:
           - thanos.${SECRET_DOMAIN}
-    rule:
-      enabled: true
-      extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]
-      alertmanagersConfig:
-        value: |-
-          alertmanagers:
-            - api_version: v2
-              static_configs:
-                - dnssrv+_http-web._tcp.kube-prometheus-stack-alertmanager.monitor.svc.cluster.local
-      rules:
-        value: |-
-          groups:
-            - name: PrometheusWatcher
-              rules:
-                - alert: PrometheusDown
-                  annotations:
-                    summary: A Prometheus has disappeared from Prometheus target discovery
-                  expr: absent(up{job="prometheus-prometheus"})
-                  for: 5m
-                  labels:
-                    severity: critical
+    # rule:
+    #   enabled: true
+    #   extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]
+    #   alertmanagersConfig:
+    #     value: |-
+    #       alertmanagers:
+    #         - api_version: v2
+    #           static_configs:
+    #             - dnssrv+_http-web._tcp.kube-prometheus-stack-alertmanager.monitor.svc.cluster.local
+    #   rules:
+    #     value: |-
+    #       groups:
+    #         - name: PrometheusWatcher
+    #           rules:
+    #             - alert: PrometheusDown
+    #               annotations:
+    #                 summary: A Prometheus has disappeared from Prometheus target discovery
+    #               expr: absent(up{job="prometheus-prometheus"})
+    #               for: 5m
+    #               labels:
+    #                 severity: critical
 
