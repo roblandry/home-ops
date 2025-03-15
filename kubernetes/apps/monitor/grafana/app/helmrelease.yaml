@@ -43,7 +43,8 @@ spec:
     rbac:
       pspEnabled: false
     persistence:
-      enabled: false
+      enabled: true
+      existingClaim: grafana-nfs-pvc
     testFramework:
       enabled: false
     imageRenderer:
