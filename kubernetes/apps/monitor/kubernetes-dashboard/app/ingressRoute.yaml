@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: kubernetes-dashboard
-  namespace: observaility
+  namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "kdash.${SECRET_DOMAIN}"
     gethomepage.dev/enabled: "true"

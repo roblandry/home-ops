@@ -6,7 +6,9 @@ namespace: monitor
 components:
   - ../../components/common
 resources:
+  - ./cert/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./kubernetes-dashboard/ks.yaml
   - ./thanos/ks.yaml
