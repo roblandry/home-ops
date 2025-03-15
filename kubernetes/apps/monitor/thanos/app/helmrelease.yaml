@@ -41,14 +41,15 @@ spec:
         storageClass: "data-nfs"
         size: 15Gi
     query:
-      extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
+      # extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
+      - "--alert.query-url=http://thanos.${PUBLIC_DOMAIN}"
     queryFrontend:
       enabled: true
       ingress:
         enabled: true
         ingressClassName: traefik
         hosts:
-          - thanos.${SECRET_DOMAIN}
+          - "thanos.${SECRET_DOMAIN}"
     # rule:
     #   enabled: true
     #   extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]
