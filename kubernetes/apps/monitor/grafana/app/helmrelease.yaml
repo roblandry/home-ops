@@ -44,7 +44,8 @@ spec:
       pspEnabled: false
     persistence:
       enabled: true
-      existingClaim: grafana-nfs-pvc
+      storageClass: "data-nfs"
+      size: 15Gi
     testFramework:
       enabled: false
     imageRenderer:
