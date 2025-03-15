@@ -41,8 +41,8 @@ spec:
         storageClass: "data-nfs"
         size: 15Gi
     query:
-      # extraArgs: --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
-      - "--alert.query-url=http://thanos.${PUBLIC_DOMAIN}"
+      extraArgs: # --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
+        - "--alert.query-url=http://thanos.${PUBLIC_DOMAIN}"
     queryFrontend:
       enabled: true
       ingress:
