@@ -27,11 +27,16 @@ spec:
           - secretRef:
               name: *secret
         env:
-          INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
-          INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
-          INIT_POSTGRES_USER:       &user ${GF_POSTGRES_USER}
-          INIT_POSTGRES_PASS:       &pass ${GF_POSTGRES_PASS}
-          INIT_POSTGRES_DBNAME:     &datb ${GF_POSTGRES_DBNAME}
+          - name: INIT_POSTGRES_SUPER_PASS
+            value: &supr ${POSTGRES_SUPER_PASS}
+          - name: INIT_POSTGRES_HOST
+            value: &host ${POSTGRES_HOST}
+          - name: INIT_POSTGRES_USER
+            value: &user ${GF_POSTGRES_USER}
+          - name: INIT_POSTGRES_PASS
+            value: &pass ${GF_POSTGRES_PASS}
+          - name: INIT_POSTGRES_DBNAME
+            value: &datab ${GF_POSTGRES_DBNAME}
         #   # App
         #   GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
         #   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
