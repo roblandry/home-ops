@@ -22,6 +22,8 @@ spec:
     api:
       dashboard: true
       insecure: false
+      service:
+        enabled: true
     deployment:
       kind: Deployment
       replicas: 3
