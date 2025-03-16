@@ -71,6 +71,9 @@ data:
 
   kubernetes.yaml: |
     mode: cluster
+    ingress: true
+    traefik: true
+    gateway: true
 
   services.yaml: |
     - Infrastructure:
