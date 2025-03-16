@@ -44,7 +44,7 @@ spec:
       isDefaultClass: true
     ingressRoute:
       dashboard:
-        enabled: false
+        enabled: true
     globalArguments:
       - "--api.insecure=true"
       - "--serverstransport.insecureskipverify=true"
