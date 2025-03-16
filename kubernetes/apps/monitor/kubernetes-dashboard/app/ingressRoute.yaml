@@ -5,6 +5,7 @@ metadata:
   namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "kdash.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "kubernetes-dashboard-web"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Kubernetes dashboard"
     gethomepage.dev/description: "A web-based Kubernetes user interface"

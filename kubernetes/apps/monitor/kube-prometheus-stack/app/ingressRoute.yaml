@@ -5,6 +5,7 @@ metadata:
   namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "prometheus.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "prometheus"
 spec:
   entryPoints:
     - websecure

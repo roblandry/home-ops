@@ -5,6 +5,7 @@ metadata:
   namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "status.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "gatus"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Gatus"
     gethomepage.dev/description: "Automated developer-oriented status page"

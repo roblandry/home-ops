@@ -5,6 +5,7 @@ metadata:
   namespace: monitor
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "grafana.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "grafana"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Grafana"
     gethomepage.dev/description: "The open and composable observability and data visualization platform"
