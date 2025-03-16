@@ -54,6 +54,8 @@ spec:
       enabled: true
     serviceAccount:
       autoMount: true
+    initChownData:
+      enabled: false
     # ingress:
     #   enabled: true
     #   annotations:
