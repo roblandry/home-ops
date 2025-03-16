@@ -43,9 +43,9 @@ spec:
     rbac:
       pspEnabled: false
     persistence:
-      enabled: false
-      # storageClass: "data-nfs"
-      # size: 15Gi
+      enabled: true
+      storageClass: "data-nfs"
+      size: 15Gi
     testFramework:
       enabled: false
     imageRenderer:
