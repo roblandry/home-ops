@@ -13,10 +13,10 @@ spec:
     - kind: Rule
       match: "Host(`prometheus.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: network-error-pages@kubernetescrd
-        - name: network-internal-only@kubernetescrd
-        - name: network-default-middlewares@kubernetescrd
-        # - name: network-middlewares-authentik@kubernetescrd
+        - name: error-pages
+        - name: internal-only
+        - name: default-middlewares
+        # - name: middlewares-authentik
       services:
         - kind: Service
           name: prometheus

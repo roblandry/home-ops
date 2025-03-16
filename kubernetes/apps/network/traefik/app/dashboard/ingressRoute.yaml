@@ -24,9 +24,9 @@ spec:
     - match: "Host(`traefik.${SECRET_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       kind: Rule
       middlewares:
-        - name: network-error-pages
-        - name: network-internal-only
-        - name: network-default-middlewares
+        - name: error-pages
+        - name: internal-only
+        - name: default-middlewares
         # - name: network-middlewares-authentik
       services:
         - name: api@internal
