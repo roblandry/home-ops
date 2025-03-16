@@ -136,7 +136,7 @@ spec:
         searchNamespace: ALL
         provider:
           disableDelete: true
-          foldersFromFilesStructure: true
+          foldersFromFilesStructure: false
     datasources:
       datasources.yaml:
         apiVersion: 1
