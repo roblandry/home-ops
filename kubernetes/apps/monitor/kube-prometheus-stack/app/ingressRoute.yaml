@@ -13,13 +13,13 @@ spec:
     - kind: Rule
       match: "Host(`prometheus.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: error-pages
-        - name: internal-only
-        - name: default-middlewares
-        # - name: middlewares-authentik
+        - name: network-error-pages@kubernetescrd
+        - name: network-internal-only@kubernetescrd
+        - name: network-default-middlewares@kubernetescrd
+        # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
-          name: prometheus
+          name: kube-prometheus-stack-prometheus
           port: 9090
           sticky:
             cookie:

@@ -19,15 +19,15 @@ spec:
     - kind: Rule
       match: "Host(`kdash.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: error-pages
-        - name: internal-only
-        - name: default-middlewares
-        # - name: middlewares-authentik
+        - name: network-error-pages@kubernetescrd
+        - name: network-internal-only@kubernetescrd
+        - name: network-default-middlewares@kubernetescrd
+        # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
           name: kubernetes-dashboard-kong-proxy
           port: 443
 
   tls:
-    secretName: "${SECRET_DOMAIN/./-}-observability-tls"
+    secretName: "${SECRET_DOMAIN/./-}-monitor-tls"
 

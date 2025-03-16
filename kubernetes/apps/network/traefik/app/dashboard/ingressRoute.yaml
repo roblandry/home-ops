@@ -13,7 +13,8 @@ metadata:
     gethomepage.dev/name: "Traefik"
     gethomepage.dev/description: "Traefik Dashboard"
     gethomepage.dev/href: "https://traefik.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Services"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/category: "Services"
     gethomepage.dev/icon: "sh-traefik.png"
     gethomepage.dev/widget.type: traefik
     gethomepage.dev/widget.url: "https://traefik.${SECRET_DOMAIN}"
