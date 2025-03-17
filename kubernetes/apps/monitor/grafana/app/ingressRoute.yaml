@@ -10,7 +10,8 @@ metadata:
     gethomepage.dev/name: "Grafana"
     gethomepage.dev/description: "The open and composable observability and data visualization platform"
     gethomepage.dev/href: "https://grafana.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Services"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/category: "Kubernetes"
     gethomepage.dev/icon: "sh-grafana.png"
     # gethomepage.dev/widget.type: grafana
     # gethomepage.dev/widget.url: "https://grafana.${SECRET_DOMAIN}"

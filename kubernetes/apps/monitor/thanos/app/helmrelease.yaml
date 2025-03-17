@@ -45,11 +45,11 @@ spec:
         - "--alert.query-url=http://thanos.${PUBLIC_DOMAIN}"
     queryFrontend:
       enabled: true
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts:
-          - "thanos.${SECRET_DOMAIN}"
+      # ingress:
+      #   enabled: true
+      #   ingressClassName: traefik
+      #   hosts:
+      #     - "thanos.${SECRET_DOMAIN}"
     # rule:
     #   enabled: true
     #   extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]

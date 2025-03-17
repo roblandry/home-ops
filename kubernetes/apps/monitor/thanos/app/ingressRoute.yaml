@@ -1,24 +1,24 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: kubernetes-dashboard
+  name: thanos-query-frontend
   namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "kdash.${SECRET_DOMAIN}"
-    gethomepage.dev/app: "kubernetes-dashboard-web"
+    gethomepage.dev/app: "thanos-query-frontend"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Kubernetes dashboard"
-    gethomepage.dev/description: "A web-based Kubernetes user interface"
-    gethomepage.dev/href: "https://kdash.${SECRET_DOMAIN}"
+    gethomepage.dev/name: "Thanos"
+    gethomepage.dev/description: "A highly available, long-term storage and querying system for Prometheus metrics"
+    gethomepage.dev/href: "https://thanos.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/category: "Kubernetes"
-    gethomepage.dev/icon: "si-kubernetes"
+    gethomepage.dev/icon: "si-thanos"
 spec:
   entryPoints:
     - websecure
   routes:
     - kind: Rule
-      match: "Host(`kdash.${SECRET_DOMAIN}`)"
+      match: "Host(`thanos.${SECRET_DOMAIN}`)"
       middlewares:
         - name: network-error-pages@kubernetescrd
         - name: network-internal-only@kubernetescrd
@@ -26,8 +26,8 @@ spec:
         # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
-          name: kubernetes-dashboard-kong-proxy
-          port: 443
+          name: thanos-query-frontend
+          port: 80
 
   tls:
     secretName: "${SECRET_DOMAIN/./-}-monitor-tls"

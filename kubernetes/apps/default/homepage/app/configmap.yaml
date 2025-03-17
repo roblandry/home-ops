@@ -493,6 +493,10 @@ data:
         tab: Infrastructure
         style: column
         icon: mdi-server
+      Kubernetes:
+        tab: Infrastructure
+        style: column
+        icon: mdi-server
       Docker/VMs:
         tab: Infrastructure
         style: column
