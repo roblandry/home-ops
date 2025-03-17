@@ -11,7 +11,7 @@ metadata:
     gethomepage.dev/description: "A powerful monitoring and alerting toolkit"
     gethomepage.dev/href: "https://prometheus.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Kubernetes"
-    gethomepage.dev/icon: "si-prometheus"
+    gethomepage.dev/icon: "sh-prometheus.png"
 spec:
   entryPoints:
     - websecure
