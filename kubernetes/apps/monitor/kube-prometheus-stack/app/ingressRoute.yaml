@@ -6,9 +6,12 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "prometheus.${SECRET_DOMAIN}"
     gethomepage.dev/app: "kube-prometheus-stack-prometheus"
-    gethomepage.dev/group: "Infrastructure"
-    gethomepage.dev/category: "Kubernetes"
-
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Prometheus"
+    gethomepage.dev/description: "A powerful monitoring and alerting toolkit"
+    gethomepage.dev/href: "https://prometheus.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Kubernetes"
+    gethomepage.dev/icon: "si-prometheus"
 spec:
   entryPoints:
     - websecure
