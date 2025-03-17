@@ -5,7 +5,7 @@ metadata:
   namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "prometheus.${SECRET_DOMAIN}"
-    gethomepage.dev/app: "kube-prometheus-stack-prometheus"
+    gethomepage.dev/app: "prometheus-kube-prometheus-stack"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Prometheus"
     gethomepage.dev/description: "A powerful monitoring and alerting toolkit"
