@@ -103,3 +103,9 @@ spec:
         memory: 500Mi
     serviceAccount:
       name: "traefik-ingress-controller"
+    metrics:
+      prometheus:
+        addEntryPointsLabels: true
+        addRoutersLabels: true
+        addServicesLabels: true
+        entryPoint: "metrics"
