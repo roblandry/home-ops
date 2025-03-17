@@ -13,7 +13,7 @@ spec:
   storage:
     size: 20Gi
     # storageClass: openebs-hostpath
-    storageClass: data-nfs  # Change from "openebs-hostpath" to "data-nfs"
+    storageClass: database-nfs
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
