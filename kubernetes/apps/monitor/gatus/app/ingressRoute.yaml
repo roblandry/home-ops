@@ -12,8 +12,9 @@ metadata:
     gethomepage.dev/href: "https://status.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Kubernetes"
     gethomepage.dev/icon: "sh-gatus.png"
-    gethomepage.dev/widget.type: gatus
-    gethomepage.dev/widget.url: "https://status.${SECRET_DOMAIN}"
+    # widget broken
+    # gethomepage.dev/widget.type: gatus
+    # gethomepage.dev/widget.url: "https://status.${SECRET_DOMAIN}"
 spec:
   entryPoints:
     - websecure
