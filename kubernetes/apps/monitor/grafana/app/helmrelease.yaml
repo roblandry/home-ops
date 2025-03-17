@@ -44,7 +44,7 @@ spec:
       pspEnabled: false
     persistence:
       enabled: true
-      storageClass: "data-nfs"
+      storageClass: "config-nfs"
       size: 15Gi
     testFramework:
       enabled: false
