@@ -64,6 +64,7 @@ spec:
       - "--providers.kubernetescrd.allowexternalnameservices=true"
       # - "--entryPoints.web.forwardedHeaders.insecure"
       # - "--entryPoints.websecure.forwardedHeaders.insecure"
+      - "--entryPoints.metrics.address=:8082"
     ports:
       traefik:
         port: 9000
