@@ -13,7 +13,5 @@ mountOptions:
   - nfsvers=4.1
   - hard
   - noatime
-  - anonuid=26
-  - anongid=26
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
