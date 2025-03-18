@@ -34,8 +34,8 @@ spec:
       memory: 500Mi
     limits:
       memory: 2Gi
-  postgresUID: 99
-  postgresGID: 100
+  # postgresUID: 99
+  # postgresGID: 100
   # backup:
   #   retentionPolicy: 7d
   #   barmanObjectStore:
