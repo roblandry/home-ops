@@ -32,8 +32,10 @@ spec:
   dependsOn:
     - name: cloudnative-pg
       namespace: database
-    - name: csi-driver-nfs
+    - name: openebs
       namespace: storage
+    # - name: csi-driver-nfs
+    #   namespace: storage
     # - name: onepassword-store
     #   namespace: security
   healthCheckExprs:

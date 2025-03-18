@@ -12,8 +12,8 @@ spec:
   primaryUpdateMethod: switchover
   storage:
     size: 20Gi
-    # storageClass: openebs-hostpath
-    storageClass: database-nfs
+    storageClass: openebs-hostpath
+    # storageClass: database-nfs
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
