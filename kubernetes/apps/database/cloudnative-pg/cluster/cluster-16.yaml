@@ -20,6 +20,7 @@ spec:
       max_connections: "300"
       work_mem: 64MB
       shared_buffers: 128MB
+      timezone: "${CONFIG_TIMEZONE}"
   superuserSecret:
     name: cluster-secrets
   monitoring:
