@@ -4,7 +4,8 @@
         "**/*.json5": "jsonc"
     },
     "files.trimTrailingWhitespace": true,
-    "sops.defaults.ageKeyFile": "age.key",
+    "sops.defaults.ageKeyFile": "./age.key",
+    "sops.binPath": "/home/vscode/.local/share/mise/installs/aqua-getsops-sops/3.9.4/sops",
     "vs-kubernetes": {
         "vs-kubernetes.kubeconfig": "./kubeconfig",
         "vs-kubernetes.knownKubeconfigs": [

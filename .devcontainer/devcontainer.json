@@ -1,0 +1,46 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "Debian",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
+	"features": {
+		"ghcr.io/devcontainers-extra/features/mise:1": {
+			"version": "latest"
+		},
+		"ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
+			"setLocale": true,
+			"theme": "robbyrussell",
+			"plugins": "git docker",
+			"desiredLocale": "en_US.UTF-8 UTF-8"
+		}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"blueglassblock.better-json5",
+				"irongeek.vscode-env",
+				"redhat.vscode-yaml",
+				"signageos.signageos-vscode-sops"
+			]
+		}
+	},
+	"runArgs": ["--env-file",".private/devcontainer/.env"],
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "root",
+	"postStartCommand": ".devcontainer/post-start.sh",
+	"postAttachCommand": ".devcontainer/post-attach.sh",
+
+	"workspaceFolder": "/workspaces/home-ops/"
+
+}
