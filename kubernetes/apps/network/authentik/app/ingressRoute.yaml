@@ -1,0 +1,40 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik
+  namespace: monitor
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "auth.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "authentik"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Authentik"
+    gethomepage.dev/description: ""
+    gethomepage.dev/href: "https://auth.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Kubernetes"
+    gethomepage.dev/icon: "sh-authentik.png"
+    # widget broken
+    # gethomepage.dev/widget.type: authentik
+    # gethomepage.dev/widget.url: "https://auth.${SECRET_DOMAIN}"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`auth.${SECRET_DOMAIN}`)"
+      middlewares:
+        - name: network-error-pages@kubernetescrd
+        # - name: network-internal-only@kubernetescrd
+        - name: network-default-middlewares@kubernetescrd
+        # - name: network-middlewares-authentik@kubernetescrd
+      services:
+        - kind: Service
+          name: authentik
+          port: 8080
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-monitor-tls"
+

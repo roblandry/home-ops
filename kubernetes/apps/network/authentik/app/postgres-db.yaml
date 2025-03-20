@@ -10,17 +10,20 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
-  # primaryUpdateMethod: switchover
+  primaryUpdateMethod: switchover
   storage:
     size: 5Gi
+    storageClass: openebs-hostpath
+    # storageClass: database-nfs
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
       max_connections: "300"
       work_mem: 64MB
       shared_buffers: 128MB
-  # superuserSecret:
-  #   name: AUTHENTIK_POSTGRESQL__PASSWORD
+      timezone: "${CONFIG_TIMEZONE}"
+  superuserSecret:
+    name: cluster-secrets
   monitoring:
     enablePodMonitor: true
   # bootstrap:
