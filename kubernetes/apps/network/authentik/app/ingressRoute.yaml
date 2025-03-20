@@ -22,7 +22,7 @@ spec:
     - kind: Rule
       match: "Host(`auth.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: error-pages
+        # - name: error-pages
         # - name: internal-only
         - name: default-middlewares
         # - name: middlewares-authentik
