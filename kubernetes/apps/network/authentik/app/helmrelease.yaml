@@ -33,7 +33,7 @@ spec:
       image:
         repository: ghcr.io/goauthentik/server
       podAnnotations:
-        secret.reloader.stakater.com/reload: &secret cluster-secrets
+        secret.reloader.stakater.com/reload: &secret authentik
         envFrom:
           - secretRef:
               name: *secret
