@@ -33,7 +33,7 @@ spec:
       image:
         repository: ghcr.io/goauthentik/server
       podAnnotations:
-        secret.reloader.stakater.com/reload: &secret authentik
+        secret.reloader.stakater.com/reload: &secret cluster-secrets
         envFrom:
           - secretRef:
               name: *secret
@@ -41,14 +41,14 @@ spec:
       initContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.8
-          # envFrom:
-          #   - secretRef:
-          #       name: *secret
+          envFrom:
+            - secretRef:
+                name: *secret
           env:
             INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
             INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
-            INIT_POSTGRES_USER:       &user ${AUTHENTIK_POSTGRES_USER}
-            INIT_POSTGRES_PASS:       &pass ${AUTHENTIK_POSTGRES_PASS}
+            INIT_POSTGRES_USER:       &user ${AUTHENTIK_POSTGRESQL__USER}
+            INIT_POSTGRES_PASS:       &pass ${AUTHENTIK_POSTGRESQL__PASS}
             INIT_POSTGRES_DBNAME:     &datb ${AUTHENTIK_POSTGRES_DBNAME}
       # ingress:
       #   enabled: true
