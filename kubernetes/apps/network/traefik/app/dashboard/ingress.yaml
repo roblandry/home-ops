@@ -8,24 +8,24 @@ metadata:
     # external-dns.alpha.kubernetes.io/hostname: "traefik.${SECRET_DOMAIN}"
     # cert-manager.io/cluster-issuer: "letsencrypt-production"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "network-error-pages@kubernetescrd,network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd"
-    # traefik.ingress.kubernetes.io/router.middlewares: "network-internal-only@kubernetescrd,network-default-middlewares@kubernetescrd,network-middlewares-authentik@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "error-pages,internal-only,default-middlewares"
+    # traefik.ingress.kubernetes.io/router.middlewares: "internal-only,default-middlewares,middlewares-authentik"
     gethomepage.dev/app: "traefik"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Traefik"
     gethomepage.dev/description: "Traefik Dashboard"
     gethomepage.dev/href: "https://traefik.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Services"
+    gethomepage.dev/group: "Kubernetes"
     gethomepage.dev/icon: "sh-traefik.png"
-    gethomepage.dev/widget.type: traefik
-    gethomepage.dev/widget.url: "https://traefik.${SECRET_DOMAIN}"
+    # widget broken
+    # gethomepage.dev/widget.type: traefik
+    # gethomepage.dev/widget.url: "https://traefik.${SECRET_DOMAIN}"
 spec:
   ingressClassName: "traefik"
   tls:
     - hosts:
         - "traefik.${SECRET_DOMAIN}"
-      secretName: "${SECRET_DOMAIN/./-}-network-tls"
-      # secretName: "traefik-dashboard-tls"
+      secretName: "${SECRET_DOMAIN/./-}-tls"
   rules:
     - host: "traefik.${SECRET_DOMAIN}"
       http:
