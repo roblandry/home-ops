@@ -28,8 +28,8 @@ spec:
         # - name: middlewares-authentik
       services:
         - kind: Service
-          name: authentik
-          port: 8080
+          name: authentik-server
+          port: 80
           sticky:
             cookie:
               httpOnly: true
