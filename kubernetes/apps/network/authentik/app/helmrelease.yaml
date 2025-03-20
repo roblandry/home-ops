@@ -35,9 +35,8 @@ spec:
       podAnnotations:
         secret.reloader.stakater.com/reload: &secret cluster-secrets
         envFrom:
-        - secretRef:
-            key: postgresPassword
-            name: authentik
+          - secretRef:
+              name: *secret
     server:
       initContainers:
         - name: init-db
