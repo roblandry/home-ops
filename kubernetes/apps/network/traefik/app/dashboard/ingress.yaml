@@ -25,7 +25,7 @@ spec:
   tls:
     - hosts:
         - "traefik.${SECRET_DOMAIN}"
-      secretName: "${SECRET_DOMAIN/./-}-tls"
+      secretName: "${SECRET_DOMAIN/./-}-network-tls"
   rules:
     - host: "traefik.${SECRET_DOMAIN}"
       http:
