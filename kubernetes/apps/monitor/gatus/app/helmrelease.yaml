@@ -29,9 +29,9 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.8
-            # envFrom:
-            #   - secretRef:
-            #       name: *secret
+            envFrom:
+              - secretRef:
+                  name: cluster-secrets
             env:
               - name: INIT_POSTGRES_SUPER_PASS
                 value: &supr "${POSTGRES_SUPER_PASS}"
