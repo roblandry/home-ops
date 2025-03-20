@@ -68,9 +68,9 @@ spec:
               CUSTOM_WEB_PORT: &port 8080
               # INIT_POSTGRES_SUPER_PASS: *supr
               # INIT_POSTGRES_HOST:       *host
-              POSTGRES_USER:       *user
-              POSTGRES_PASSWORD:       *pass
-              # INIT_POSTGRES_DBNAME:     *datb
+              POSTGRES_USER:     *user
+              POSTGRES_PASSWORD: *pass
+              POSTGRES_DB:       *datb
             probes:
               liveness: &probes
                 enabled: true
