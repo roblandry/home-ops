@@ -13,4 +13,6 @@ sudo -u vscode bash << EOF
     git config --global --add safe.directory /workspaces/home-ops
 EOF
 
+ln -sf /workspaces/home-ops/.private/zsh_history ~/.zsh_history
+
 exit 0
