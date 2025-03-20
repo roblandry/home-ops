@@ -75,7 +75,7 @@ spec:
       log_level: debug
       secret_key: ${AUTHENTIK_SECRET_KEY}
       postgresql:
-        host: &host
+        host: ${AUTHENTIK_POSTGRES_HOST}
         name: &datb
         user: &user
         password: &pass
