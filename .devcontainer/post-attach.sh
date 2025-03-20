@@ -1,15 +1,16 @@
+#!/bin/bash
+set -e  # Exit on error
 
-# su vscode
-# cd /workspaces/home-ops
-# mise trust -a
-# mise use -g python@3
-# mise use kubecolor
-
-su vscode << EOF
+# Run commands as `vscode` user
+sudo -u vscode bash << EOF
+    export GITHUB_TOKEN=${GITHUB_TOKEN}
+    export MISE_GLOBAL_CONFIG_ROOT=/workspaces/home-ops/
     cd /workspaces/home-ops
     mise trust
-    pip install pipx
+    mise exec python@3 -- python -m ensurepip --default-pip
+    mise exec python@3 -- ~/.local/share/mise/shims/pip install pipx
     mise install
+    git config --global --add safe.directory /workspaces/home-ops
 EOF
 
-return 0
+exit 0
