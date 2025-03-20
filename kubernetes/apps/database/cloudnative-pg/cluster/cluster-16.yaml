@@ -25,9 +25,10 @@ spec:
     name: cluster-secrets
   monitoring:
     enablePodMonitor: true
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres-v1
+  bootstrap:
+    initdb:
+      postInitSQL:
+        - "ALTER USER postgres WITH PASSWORD '${POSTGRES_SUPER_PASS}';"
   resources:
     requests:
       cpu: 200m
