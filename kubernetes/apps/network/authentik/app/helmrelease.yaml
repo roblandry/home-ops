@@ -41,9 +41,9 @@ spec:
       initContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.8
-          envFrom:
-            - secretRef:
-                name: *secret
+          # envFrom:
+          #   - secretRef:
+          #       name: *secret
           env:
             INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
             INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}

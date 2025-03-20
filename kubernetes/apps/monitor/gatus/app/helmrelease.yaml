@@ -31,18 +31,13 @@ spec:
               tag: 16.8
             envFrom:
               - secretRef:
-                  name: cluster-secrets
+                  name: *secret
             env:
-              - name: INIT_POSTGRES_SUPER_PASS
-                value: &supr "${POSTGRES_SUPER_PASS}"
-              - name: INIT_POSTGRES_HOST
-                value: &host "${POSTGRES_HOST}"
-              - name: INIT_POSTGRES_USER
-                value: &user "${AUTHENTIK_POSTGRES_USER}"
-              - name: INIT_POSTGRES_PASS
-                value: &pass "${AUTHENTIK_POSTGRES_PASS}"
-              - name: INIT_POSTGRES_DBNAME
-                value: &datb "${AUTHENTIK_POSTGRES_DBNAME}"
+              INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
+              INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
+              INIT_POSTGRES_USER:       &user ${GATUS_POSTGRES_USER}
+              INIT_POSTGRES_PASS:       &pass ${GATUS_POSTGRES_PASS}
+              INIT_POSTGRES_DBNAME:     &datb ${GATUS_POSTGRES_DBNAME}
           init-config:
             dependsOn: init-db
             image:
