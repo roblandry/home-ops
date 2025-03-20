@@ -22,10 +22,10 @@ spec:
     - kind: Rule
       match: "Host(`auth.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: network-error-pages@kubernetescrd
-        # - name: network-internal-only@kubernetescrd
-        - name: network-default-middlewares@kubernetescrd
-        # - name: network-middlewares-authentik@kubernetescrd
+        - name: error-pages
+        # - name: internal-only
+        - name: default-middlewares
+        # - name: middlewares-authentik
       services:
         - kind: Service
           name: authentik
@@ -36,5 +36,5 @@ spec:
               secure: true
               sameSite: none
   tls:
-    secretName: "${SECRET_DOMAIN/./-}-monitor-tls"
+    secretName: "${SECRET_DOMAIN/./-}-network-tls"
 
