@@ -66,11 +66,11 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-              INIT_POSTGRES_SUPER_PASS: *supr
-              INIT_POSTGRES_HOST:       *host
-              INIT_POSTGRES_USER:       *user
-              INIT_POSTGRES_PASS:       *pass
-              INIT_POSTGRES_DBNAME:     *datb
+              # INIT_POSTGRES_SUPER_PASS: *supr
+              # INIT_POSTGRES_HOST:       *host
+              POSTGRES_USER:       *user
+              POSTGRES_PASSWORD:       *pass
+              # INIT_POSTGRES_DBNAME:     *datb
             probes:
               liveness: &probes
                 enabled: true
