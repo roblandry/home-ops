@@ -22,13 +22,13 @@ spec:
       shared_buffers: 128MB
       timezone: "${CONFIG_TIMEZONE}"
   superuserSecret:
-    name: cluster-secrets
+    name: cloudnative-pg-secret
   monitoring:
     enablePodMonitor: true
-  bootstrap:
-    initdb:
-      postInitSQL:
-        - "ALTER USER postgres WITH PASSWORD '${POSTGRES_SUPER_PASS}';"
+  # bootstrap:
+  #   initdb:
+  #     postInitSQL:
+  #       - "ALTER USER postgres WITH PASSWORD '${POSTGRES_SUPER_PASS}';"
   resources:
     requests:
       cpu: 200m
