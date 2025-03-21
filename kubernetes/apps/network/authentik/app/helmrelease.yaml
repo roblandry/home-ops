@@ -64,14 +64,11 @@ spec:
           memory: 512Mi
     authentik:
       log_level: debug
-      secret_key: "${ AUTHENTIK_SECRET_KEY }"
-      postgresql:
-        host: ${ INIT_POSTGRES_HOST }
-        name: ${ INIT_POSTGRES_DBNAME }
-        user: ${ INIT_POSTGRES_USER }
-        password: ${ INIT_POSTGRES_PASS }
-    redis:
-      enabled: true
-      image:
-        repository: library/redis
-        tag: 7.4.2
+      # secret_key: "${ AUTHENTIK_SECRET_KEY }"
+      redis:
+        host: dragonfly.database.svc.cluster.local
+    # redis:
+    #   enabled: true
+    #   image:
+    #     repository: library/redis
+    #     tag: 7.4.2
