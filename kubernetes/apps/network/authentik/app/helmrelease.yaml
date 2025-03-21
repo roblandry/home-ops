@@ -33,23 +33,15 @@ spec:
       image:
         repository: ghcr.io/goauthentik/server
       podAnnotations:
-        secret.reloader.stakater.com/reload: &secret cluster-secrets
-        envFrom:
+        secret.reloader.stakater.com/reload: &secret authentik-secret
+        envFrom: &envFrom
           - secretRef:
               name: *secret
     server:
       initContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.8
-          envFrom:
-            - secretRef:
-                name: *secret
-          env:
-            INIT_POSTGRES_SUPER_PASS: &supr ${POSTGRES_SUPER_PASS}
-            INIT_POSTGRES_HOST:       &host ${POSTGRES_HOST}
-            INIT_POSTGRES_USER:       &user ${AUTHENTIK_POSTGRESQL__USER}
-            INIT_POSTGRES_PASS:       &pass ${AUTHENTIK_POSTGRESQL__PASS}
-            INIT_POSTGRES_DBNAME:     &datb ${AUTHENTIK_POSTGRES_DBNAME}
+          envFrom: *envFrom
       # ingress:
       #   enabled: true
       #   ingressClassName: traefik
@@ -72,12 +64,12 @@ spec:
           memory: 512Mi
     authentik:
       log_level: debug
-      secret_key: ${AUTHENTIK_SECRET_KEY}
+      secret_key: "{{ .AUTHENTIK_SECRET_KEY }}"
       postgresql:
-        host: ${AUTHENTIK_POSTGRES_HOST}
-        name: &datb
-        user: &user
-        password: &pass
+        host: {{ .INIT_POSTGRES_HOST }}
+        name: {{ .INIT_POSTGRES_DBNAME }}
+        user: {{ .INIT_POSTGRES_USER }}
+        password: {{ .INIT_POSTGRES_PASS }}
     redis:
       enabled: true
       image:
