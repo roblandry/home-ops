@@ -1,4 +1,16 @@
 ---
+# yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: dragonfly
+  namespace: database
+spec:
+  type: oci
+  url: oci://ghcr.io/dragonflydb/dragonfly-operator/helm
+  interval: 1h
+  timeout: 3m
+---
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -12,7 +24,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: dragonfly
-        namespace: flux-system
+        namespace: database
   install:
     crds: CreateReplace
   interval: 30m

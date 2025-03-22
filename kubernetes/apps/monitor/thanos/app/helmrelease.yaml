@@ -1,4 +1,16 @@
 ---
+# yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: stevehipwell
+  namespace: monitor
+spec:
+  type: oci
+  url: oci://ghcr.io/stevehipwell/helm-charts
+  interval: 1h
+  timeout: 3m
+---
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -12,7 +24,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: stevehipwell
-        namespace: flux-system
+        namespace: monitor
   dependsOn:
     - name: kube-prometheus-stack
   interval: 30m

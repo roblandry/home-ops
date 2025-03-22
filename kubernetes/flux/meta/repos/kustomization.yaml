@@ -3,32 +3,35 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./authentik.yaml
-  - ./backube.yaml
+  # - ./authentik.yaml
+  # - ./backube.yaml
   # - ./bjw-s.yaml
   # - ./cilium.yaml
-  - ./cloudnative-pg-dashboards.yaml
-  - ./cloudnative-pg.yaml
-  - ./controlplaneio.yaml
+  # - ./cloudnative-pg-dashboards.yaml
+  # - ./cloudnative-pg.yaml
+  # - ./controlplaneio.yaml
   # - ./coredns.yaml
-  - ./csi-driver-nfs.yaml
+  # - ./csi-driver-nfs.yaml
   # - ./error-pages.yaml
-  - ./dragonfly.yaml
+  # - ./dragonfly.yaml
   - ./external-dns.yaml
-  - ./external-secrets.yaml
-  - ./grafana.yaml
-  - ./homepage.yaml
+  # - ./external-secrets.yaml
+  # - ./grafana.yaml
+  # - ./homepage.yaml
   # - ./ingress-nginx.yaml
   # - ./jetstack.yaml
-  - ./k8s-at-home-charts.yaml
+  # - ./k8s-at-home-charts.yaml
   # - ./k8s-gateway.yaml
-  - ./kubernetes-dashboard.yaml
+  # - ./kubernetes-dashboard.yaml
+
+  # gatus
   - ./kiwigrid.yaml
+
   # - ./metallb.yaml
   # - ./metrics-server.yaml
-  - ./openebs.yaml
+  # - ./openebs.yaml
   # - ./spegel.yaml
-  - ./prometheus-community.yaml
-  - ./stakater.yaml
-  - ./stevehipwell.yaml
-  - ./traefik.yaml
+  # - ./prometheus-community.yaml
+  # - ./stakater.yaml
+  # - ./stevehipwell.yaml
+  # - ./traefik.yaml
