@@ -42,4 +42,18 @@ sudo chown -R vscode:vscode /workspaces/home-ops
 # Switch user
 echo 'if [[ $- == *i* && $USER == "root" ]]; then exec su - vscode; fi' >> /root/.zshrc
 
+# Run commands as `vscode` user
+sudo -u vscode bash << EOF
+    export GITHUB_TOKEN=${GITHUB_TOKEN}
+    export MISE_GLOBAL_CONFIG_ROOT=/workspaces/home-ops/
+    cd /workspaces/home-ops
+    mise trust
+    mise exec python@3 -- python -m ensurepip --default-pip
+    mise exec python@3 -- ~/.local/share/mise/shims/pip install pipx
+    mise install
+    git config --global --add safe.directory /workspaces/home-ops
+EOF
+
+ln -sf /workspaces/home-ops/.private/zsh_history ~/.zsh_history
+
 exit 0
