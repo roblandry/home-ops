@@ -19,7 +19,7 @@ resources:
   - ./grafana.yaml
   - ./homepage.yaml
   # - ./ingress-nginx.yaml
-  - ./jetstack.yaml
+  # - ./jetstack.yaml
   - ./k8s-at-home-charts.yaml
   # - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml

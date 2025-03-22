@@ -18,6 +18,10 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/default/cert/tls
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -27,3 +31,5 @@ spec:
   targetNamespace: *namespace
   timeout: 15m
   wait: true
+
+
