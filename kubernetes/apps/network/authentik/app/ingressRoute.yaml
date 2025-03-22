@@ -30,11 +30,11 @@ spec:
         - kind: Service
           name: authentik-server
           port: 80
-          sticky:
-            cookie:
-              httpOnly: true
-              secure: true
-              sameSite: none
+          # sticky:
+          #   cookie:
+          #     httpOnly: true
+          #     secure: true
+          #     sameSite: none
   tls:
     secretName: "${SECRET_DOMAIN/./-}-network-tls"
 
