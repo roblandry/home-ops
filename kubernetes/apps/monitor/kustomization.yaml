@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitor
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./cert/ks.yaml
   - ./gatus/ks.yaml
