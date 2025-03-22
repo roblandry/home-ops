@@ -21,16 +21,13 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: cloudflared
-      namespace: network
   values:
     fullnameOverride: external-ingress-nginx
     controller:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-          lbipam.cilium.io/ips: "#{ cloudflare_tunnel_ingress_addr }#"
+          lbipam.cilium.io/ips: "#{ cloudflare_ingress_addr }#"
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: external
@@ -53,7 +50,7 @@ spec:
         enable-real-ip: "true"
         force-ssl-redirect: "true"
         hide-headers: Server,X-Powered-By
-        hsts-max-age: 31449600
+        hsts-max-age: "31449600" # quote
         keep-alive-requests: 10000
         keep-alive: 120
         log-format-escape-json: "true"
@@ -76,8 +73,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: |-
-          cert-manager/${SECRET_DOMAIN/./-}-#{ cloudflare_cluster_issuer }#-tls
+        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
           cpu: 100m
