@@ -45,9 +45,9 @@ spec:
         repository: ghcr.io/goauthentik/server
       podAnnotations:
         secret.reloader.stakater.com/reload: &secret authentik-secret
-        envFrom: &envFrom
-          - secretRef:
-              name: *secret
+      envFrom: &envFrom
+        - secretRef:
+            name: *secret
     server:
       initContainers:
         - name: init-db
@@ -75,7 +75,7 @@ spec:
           memory: 512Mi
     authentik:
       log_level: debug
-      # secret_key: "${ AUTHENTIK_SECRET_KEY }"
+      secret_key: "${ AUTHENTIK_SECRET_KEY }"
       redis:
         host: dragonfly.database.svc.cluster.local
     # redis:
