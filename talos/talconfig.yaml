@@ -1,22 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.5
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.3
-
 clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
 endpoint: https://10.0.10.129:6443
-
-clusterPodNets:
-  - "10.42.0.0/16"
-clusterSvcNets:
-  - "10.43.0.0/16"
-
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
   - "10.0.10.129"
 additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
 
 # Disable built-in CNI to use Cilium
 cniConfig:
@@ -64,7 +60,7 @@ nodes:
           ip: "10.0.10.129"
   - hostname: "node03"
     ipAddress: "10.0.10.122"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba

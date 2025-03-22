@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: network
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./authentik/ks.yaml
   - ./cert/ks.yaml

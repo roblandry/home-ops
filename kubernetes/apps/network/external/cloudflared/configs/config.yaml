@@ -4,13 +4,7 @@ originRequest:
 
 ingress:
   - hostname: "${SECRET_DOMAIN}"
-    # service: https://external-ingress-nginx-controller.network.svc.cluster.local:443
-    service: https://traefik.network.svc.cluster.local:443
-    originRequest:
-      noTLSVerify: true
+    service: &svc https://traefik.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
-    # service: https://external-ingress-nginx-controller.network.svc.cluster.local:443
-    service: https://traefik.network.svc.cluster.local:443
-    originRequest:
-      noTLSVerify: true
+    service: *svc
   - service: http_status:404
