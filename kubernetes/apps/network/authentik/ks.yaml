@@ -14,6 +14,10 @@ spec:
   #   - name: core-rook-ceph-cluster
   #   - name: volsync
   path: ./kubernetes/apps/network/authentik/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:

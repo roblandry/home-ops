@@ -17,8 +17,9 @@ spec:
   interval: 30m
   path: ./kubernetes/apps/monitor/gatus/app
   postBuild:
-    substitute:
-      HOSTNAME: status.${SECRET_DOMAIN}
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository

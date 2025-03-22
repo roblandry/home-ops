@@ -16,6 +16,10 @@ spec:
       namespace: monitor
   interval: 30m
   path: ./kubernetes/apps/monitor/thanos/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
