@@ -46,9 +46,9 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-    substitute:
-      HOSTNAME: prometheus.${SECRET_DOMAIN}
-      ALERT_HOSTNAME: alerts.${SECRET_DOMAIN}
+    # substitute:
+    #   HOSTNAME: prometheus.${SECRET_DOMAIN}
+    #   ALERT_HOSTNAME: alerts.${SECRET_DOMAIN}
   prune: true
   sourceRef:
     kind: GitRepository
