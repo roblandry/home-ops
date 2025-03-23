@@ -38,7 +38,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --events
       - --ignore-ingress-tls-spec
-      - --ingress-class=traefik
+      - --ingress-class=external
     policy: sync
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
