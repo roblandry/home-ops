@@ -40,7 +40,7 @@ spec:
       - --ignore-ingress-tls-spec
       - --ingress-class=traefik
     policy: sync
-    sources: ["crd", "ingress", "traefik-proxy"]
+    sources: ["crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: default
     domainFilters: ["${SECRET_DOMAIN}"]
