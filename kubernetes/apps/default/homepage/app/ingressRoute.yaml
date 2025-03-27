@@ -26,5 +26,5 @@ spec:
               secure: true
               sameSite: none
   tls:
-    secretName: "${SECRET_DOMAIN/./-}-default-tls"
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
 

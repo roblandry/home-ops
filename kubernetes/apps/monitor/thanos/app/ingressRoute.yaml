@@ -29,5 +29,5 @@ spec:
           port: 10902
 
   tls:
-    secretName: "${SECRET_DOMAIN/./-}-monitor-tls"
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
