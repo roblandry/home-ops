@@ -30,7 +30,7 @@ spec:
       services:
         - kind: Service
           name: authentik-server
-          port: 443
+          port: 80
           # sticky:
           #   cookie:
           #     httpOnly: true
