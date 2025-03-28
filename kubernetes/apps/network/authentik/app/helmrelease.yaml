@@ -53,8 +53,8 @@ spec:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:17.4
           envFrom: *envFrom
-      # ingress:
-      #   enabled: true
+      ingress:
+        enabled: false
       #   ingressClassName: traefik
       #   annotations:
       #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
