@@ -1,0 +1,30 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n
+  namespace: default
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "n8n.${SECRET_DOMAIN}"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`n8n.${SECRET_DOMAIN}`)"
+      middlewares:
+        - name: network-error-pages@kubernetescrd
+        - name: network-internal-only@kubernetescrd
+        - name: network-default-middlewares@kubernetescrd
+        - name: network-middlewares-authentik@kubernetescrd
+      services:
+        - kind: Service
+          name: n8n
+          port: 3000
+          # sticky:
+          #   cookie:
+          #     httpOnly: true
+          #     secure: true
+          #     sameSite: none
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
