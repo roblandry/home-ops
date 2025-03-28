@@ -6,7 +6,7 @@ metadata:
   namespace: network
 spec:
   forwardAuth:
-    address: "http://authentik_server:9000/outpost.goauthentik.io/auth/traefik"
+    address: "https://authentik.network.svc.cluster.local:443/outpost.goauthentik.io/auth/traefik"
     trustForwardHeader: true
     authResponseHeaders:
       - X-authentik-username
