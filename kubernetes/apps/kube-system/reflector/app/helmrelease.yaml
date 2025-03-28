@@ -33,11 +33,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicaCount: 1
     logLevel: Info
     watch:
       secrets: true
       configMaps: false
-    sync:
-      namespaces: "*"
-      enabled: true
+    reflection:
+      enabled: true         # <-- this is key
+      auto: true            # <-- replicate automatically
+      clusterWide: true     # <-- replicate across all namespaces
