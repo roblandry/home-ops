@@ -49,7 +49,7 @@ spec:
         image:
           repository: ghcr.io/onedr0p/postgres-init
           tag: 17.4
-        envFrom: &envfrom
+        envFrom:
           - secretRef:
               name: *secret
 
@@ -61,10 +61,6 @@ spec:
       hostname: &hostname "n8n.${SECRET_DOMAIN}"
       url: &url "https://n8n.${SECRET_DOMAIN}"
 
-      secretRef: &secretRef
-        secretRef:
-          name: *secret
-
     # image:
     #   repository: 8gears.container-registry.com/ops/n8n
     #   tag: 1.76.1
@@ -72,8 +68,9 @@ spec:
     #   - name: 8gears-registry-n8n
 
     main:
-      envFrom: &envFrom
-        - *secretRef
+      envFrom:
+        - secretRef:
+            name: *secret
 
       config:
         n8n:
@@ -130,14 +127,18 @@ spec:
 
     worker:
       enabled: true
-      envFrom: *envFrom
+      envFrom:
+        - secretRef:
+            name: *secret
       # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
       # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
       # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
 
     webhook:
       enabled: true
-      envFrom: *envFrom
+      envFrom:
+        - secretRef:
+            name: *secret
       # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
       # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
       # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
