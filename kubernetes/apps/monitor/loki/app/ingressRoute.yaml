@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: loki
-  namespace: default
+  namespace: monitor
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "loki.${SECRET_DOMAIN}"
     kubernetes.io/ingress.class: traefik
