@@ -73,8 +73,8 @@ spec:
       - "--providers.kubernetesingress.ingressendpoint.ip=${TRAEFIK_ADDR}"
       - "--providers.kubernetesingress.allowexternalnameservices=true"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
-      # - "--entryPoints.web.forwardedHeaders.insecure"
-      # - "--entryPoints.websecure.forwardedHeaders.insecure"
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
       - "--entryPoints.metrics.address=:8082"
     ports:
       traefik:
