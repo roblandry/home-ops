@@ -26,7 +26,7 @@ spec:
         - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
-          name: loki
+          name: loki-gateway
           port: 80
           # sticky:
           #   cookie:
