@@ -126,14 +126,14 @@ spec:
       replicas: 3
       image:
         registry: ghcr.io
-      # ingress:
-      #   enabled: true
-      #   ingressClassName: internal
-      #   hosts:
-      #     - host: loki.${SECRET_DOMAIN}
-      #       paths:
-      #         - path: /
-      #           pathType: Prefix
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: loki.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
     read:
       replicas: 3
     write:
