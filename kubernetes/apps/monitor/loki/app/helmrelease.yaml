@@ -75,6 +75,10 @@ spec:
         chunk_encoding: snappy
       storage:
         type: filesystem
+        bucketNames:
+          chunks: dummy
+          ruler: dummy
+          admin: dummy
       #   s3:
       #     s3ForcePathStyle: true
       #     insecure: true
