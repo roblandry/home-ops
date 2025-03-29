@@ -27,8 +27,7 @@ spec:
         kind: HelmRepository
         name: n8n
         namespace: default
-  # install:
-  #   createNamespace: false
+
   values:
     image:
       repository: docker.n8n.io/n8nio/n8n
@@ -61,29 +60,28 @@ spec:
       hostname: &hostname "n8n.${SECRET_DOMAIN}"
       url: &url "https://n8n.${SECRET_DOMAIN}"
 
-    # image:
-    #   repository: 8gears.container-registry.com/ops/n8n
-    #   tag: 1.76.1
-    # imagePullSecrets:
-    #   - name: 8gears-registry-n8n
-
     main:
+
+      secret:
+        n8n:
+          encryption_key: "{{ .N8N_ENCRYPTION_KEY }}"
+        db:
+          postgresdb:
+            password: "{{ .DB_POSTGRESDB_PASSWORD }}"
+
       config:
+        db:
+          type: postgresdb
+          postgresdb:
+            host: "{{ .DB_POSTGRESDB_HOST }}"
+            user: "{{ .DB_POSTGRESDB_USER }}"
+            database: "{{ .DB_POSTGRESDB_DATABASE }}"
+
+        executions_mode: queue
+
         n8n:
           editor_base_url: *url
-        executions_mode: queue
-        # db:
-        #   type: postgresdb
-        #   postgresdb:
-        #     host: db-rw
-        #     user: n8n
-        #     # password: password is read from cnpg db-app secretKeyRef
-        #     pool:
-        #       size: 10
-        #     ssl:
-        #       enabled: true
-        #       reject_Unauthorized: true
-        #       ca_file: "/home/ssl/certs/postgresql/ca.crt"
+
         # webhook related settings
         webhook_url: *url
         queue:
@@ -94,56 +92,36 @@ spec:
             redis:
               host: n8n-valkey-primary
               port: 6379
-      # secret:
-      #   n8n:
-      #     encryption_key: "<your-secure-encryption-key>"
-      # extraEnv: &extraEnv
-      #   DB_POSTGRESDB_PASSWORD:
-      #     valueFrom:
-      #       secretKeyRef:
-      #         name: db-app
-      #         key: password
-      extraEnv: &extraEnv
-        - name: N8N_ENCRYPTION_KEY
-          valueFrom:
-            secretKeyRef:
-              name: n8n-secret
-              key: N8N_ENCRYPTION_KEY
-        - name: DB_TYPE
-          value: postgresdb
-        - name: DB_POSTGRESDB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: n8n-secret
-              key: DB_POSTGRESDB_DATABASE
-        - name: DB_POSTGRESDB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: n8n-secret
-              key: DB_POSTGRESDB_HOST
-        - name: DB_POSTGRESDB_USER
-          valueFrom:
-            secretKeyRef:
-              name: n8n-secret
-              key: DB_POSTGRESDB_USER
-        - name: DB_POSTGRESDB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: n8n-secret
-              key: DB_POSTGRESDB_PASSWORD
 
-      # Mount the CNPG CA Cert into N8N container
-      # extraVolumeMounts: &extraVolumeMounts
-      #   - name: db-ca-cert
-      #     mountPath: /home/ssl/certs/postgresql
-      #     readOnly: true
-      # extraVolumes: &extraVolumes
-      #   - name: db-ca-cert
-      #     secret:
-      #       secretName: db-ca
-      #       items:
-      #         - key: ca.crt
-      #           path: ca.crt
+      extraEnv: &extraEnv
+        # - name: N8N_ENCRYPTION_KEY
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: n8n-secret
+        #       key: N8N_ENCRYPTION_KEY
+        - name: N8N_RUNNERS_ENABLED
+          value: true
+        # - name: DB_POSTGRESDB_DATABASE
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: n8n-secret
+        #       key: DB_POSTGRESDB_DATABASE
+        # - name: DB_POSTGRESDB_HOST
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: n8n-secret
+        #       key: DB_POSTGRESDB_HOST
+        # - name: DB_POSTGRESDB_USER
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: n8n-secret
+        #       key: DB_POSTGRESDB_USER
+        # - name: DB_POSTGRESDB_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: n8n-secret
+        #       key: DB_POSTGRESDB_PASSWORD
+
       resources:
         limits:
           memory: 2048Mi
@@ -152,15 +130,15 @@ spec:
 
     worker:
       enabled: true
-      extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
-      # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
-      # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+      extraEnv: *extraEnv
+      # extraVolumeMounts: *extraVolumeMounts
+      # extraVolumes: *extraVolumes
 
     webhook:
       enabled: true
-      extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
-      # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
-      # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+      extraEnv: *extraEnv
+      # extraVolumeMounts: *extraVolumeMounts
+      # extraVolumes: *extraVolumes
 
     valkey:
       enabled: true
@@ -177,24 +155,6 @@ spec:
           requests:
             memory: 256Mi
             cpu: 100m
-
-    # ingress:
-    #   enabled: true
-    #   className: nginx
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: letsencrypt-prod
-    #     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    #     nginx.ingress.kubernetes.io/proxy-buffering: "off"
-    #     nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-    #     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    #   hosts:
-    #     - host: *hostname
-    #       paths:
-    #         - /
-    #   tls:
-    #     - secretName: n8n-ingress-tls
-    #       hosts:
-    #         - *hostname
 
     # cnpg DB cluster request
     # extraManifests:
