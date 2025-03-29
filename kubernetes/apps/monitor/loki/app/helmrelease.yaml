@@ -26,12 +26,12 @@ spec:
         name: grafana
         namespace: monitor
   install:
-    crds: Skip
+    crds: Create
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: Skip
+    crds: CreateReplace
     remediation:
       strategy: rollback
       retries: 3
