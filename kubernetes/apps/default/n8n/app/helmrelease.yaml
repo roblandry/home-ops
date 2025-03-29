@@ -38,6 +38,8 @@ spec:
       accessMode: ReadWriteMany
       size: 5Gi
       storageClass: data-nfs
+      # path: /home/node/.n8n
+      # existingClaim:
 
     replicaCount: 1
     podAnnotations:
