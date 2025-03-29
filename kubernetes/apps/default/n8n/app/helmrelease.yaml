@@ -68,8 +68,6 @@ spec:
     #   - name: 8gears-registry-n8n
 
     main:
-      envFrom: *envFrom
-
       config:
         n8n:
           editor_base_url: *url
@@ -105,6 +103,35 @@ spec:
       #       secretKeyRef:
       #         name: db-app
       #         key: password
+      extraEnv: &extraEnv
+        - name: N8N_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: N8N_ENCRYPTION_KEY
+        - name: DB_TYPE
+          value: postgresdb
+        - name: DB_POSTGRESDB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_DATABASE
+        - name: DB_POSTGRESDB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_HOST
+        - name: DB_POSTGRESDB_USER
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_USER
+        - name: DB_POSTGRESDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_PASSWORD
+
       # Mount the CNPG CA Cert into N8N container
       # extraVolumeMounts: &extraVolumeMounts
       #   - name: db-ca-cert
@@ -125,15 +152,13 @@ spec:
 
     worker:
       enabled: true
-      envFrom: *envFrom
-      # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
+      extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
       # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
       # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
 
     webhook:
       enabled: true
-      envFrom: *envFrom
-      # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
+      extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
       # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
       # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
 
