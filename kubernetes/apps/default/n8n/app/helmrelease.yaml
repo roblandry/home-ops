@@ -22,7 +22,7 @@ spec:
   chart:
     spec:
       chart: .
-      version: 1.0.0
+      version: 1.0.5
       sourceRef:
         kind: HelmRepository
         name: n8n
@@ -34,163 +34,163 @@ spec:
       repository: docker.n8n.io/n8nio/n8n
       tag: latest
 
-    # # persistence:
-    # #   enabled: true
-    # #   accessMode: ReadWriteMany
-    # #   size: 5Gi
-    # #   storageClass: csi-driver-nfs
-
-    # replicaCount: 1
-    # podAnnotations:
-    #   secret.reloader.stakater.com/reload: &secret n8n-secret
-
-    # initContainers:
-    #   init-db:
-    #     image:
-    #       repository: ghcr.io/onedr0p/postgres-init
-    #       tag: 17.4
-    #     envFrom: &envfrom
-    #       - secretRef:
-    #           name: *secret
-
-    # # ----------
-    # # New Config
-    # # ----------
-    # # Define hostname anchor at the top of the file
-    # _shared_config:
-    #   hostname: &hostname "n8n.${SECRET_DOMAIN}"
-    #   url: &url "https://n8n.${SECRET_DOMAIN}"
-
-    # # image:
-    # #   repository: 8gears.container-registry.com/ops/n8n
-    # #   tag: 1.76.1
-    # # imagePullSecrets:
-    # #   - name: 8gears-registry-n8n
-
-    # main:
-    #   envFrom: &envFrom
-    #     - secretRef:
-    #         name: *secret
-    #   config:
-    #     n8n:
-    #       editor_base_url: *url
-    #     executions_mode: queue
-    #     # db:
-    #     #   type: postgresdb
-    #     #   postgresdb:
-    #     #     host: db-rw
-    #     #     user: n8n
-    #     #     # password: password is read from cnpg db-app secretKeyRef
-    #     #     pool:
-    #     #       size: 10
-    #     #     ssl:
-    #     #       enabled: true
-    #     #       reject_Unauthorized: true
-    #     #       ca_file: "/home/ssl/certs/postgresql/ca.crt"
-    #     # webhook related settings
-    #     webhook_url: *url
-    #     queue:
-    #       health:
-    #         check:
-    #           active: true
-    #       bull:
-    #         redis:
-    #           host: n8n-valkey-primary
-    #           port: 6379
-    #   # secret:
-    #   #   n8n:
-    #   #     encryption_key: "<your-secure-encryption-key>"
-    #   # extraEnv: &extraEnv
-    #   #   DB_POSTGRESDB_PASSWORD:
-    #   #     valueFrom:
-    #   #       secretKeyRef:
-    #   #         name: db-app
-    #   #         key: password
-    #   # Mount the CNPG CA Cert into N8N container
-    #   # extraVolumeMounts: &extraVolumeMounts
-    #   #   - name: db-ca-cert
-    #   #     mountPath: /home/ssl/certs/postgresql
-    #   #     readOnly: true
-    #   # extraVolumes: &extraVolumes
-    #   #   - name: db-ca-cert
-    #   #     secret:
-    #   #       secretName: db-ca
-    #   #       items:
-    #   #         - key: ca.crt
-    #   #           path: ca.crt
-    #   resources:
-    #     limits:
-    #       memory: 2048Mi
-    #     requests:
-    #       memory: 512Mi
-
-    # worker:
+    # persistence:
     #   enabled: true
-    #   envFrom: *envFrom
-    #   # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
-    #   # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
-    #   # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+    #   accessMode: ReadWriteMany
+    #   size: 5Gi
+    #   storageClass: csi-driver-nfs
 
-    # webhook:
+    replicaCount: 1
+    podAnnotations:
+      secret.reloader.stakater.com/reload: &secret n8n-secret
+
+    initContainers:
+      init-db:
+        image:
+          repository: ghcr.io/onedr0p/postgres-init
+          tag: 17.4
+        envFrom: &envfrom
+          - secretRef:
+              name: *secret
+
+    # ----------
+    # New Config
+    # ----------
+    # Define hostname anchor at the top of the file
+    _shared_config:
+      hostname: &hostname "n8n.${SECRET_DOMAIN}"
+      url: &url "https://n8n.${SECRET_DOMAIN}"
+
+    # image:
+    #   repository: 8gears.container-registry.com/ops/n8n
+    #   tag: 1.76.1
+    # imagePullSecrets:
+    #   - name: 8gears-registry-n8n
+
+    main:
+      envFrom: &envFrom
+        - secretRef:
+            name: *secret
+      config:
+        n8n:
+          editor_base_url: *url
+        executions_mode: queue
+        # db:
+        #   type: postgresdb
+        #   postgresdb:
+        #     host: db-rw
+        #     user: n8n
+        #     # password: password is read from cnpg db-app secretKeyRef
+        #     pool:
+        #       size: 10
+        #     ssl:
+        #       enabled: true
+        #       reject_Unauthorized: true
+        #       ca_file: "/home/ssl/certs/postgresql/ca.crt"
+        # webhook related settings
+        webhook_url: *url
+        queue:
+          health:
+            check:
+              active: true
+          bull:
+            redis:
+              host: n8n-valkey-primary
+              port: 6379
+      # secret:
+      #   n8n:
+      #     encryption_key: "<your-secure-encryption-key>"
+      # extraEnv: &extraEnv
+      #   DB_POSTGRESDB_PASSWORD:
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: db-app
+      #         key: password
+      # Mount the CNPG CA Cert into N8N container
+      # extraVolumeMounts: &extraVolumeMounts
+      #   - name: db-ca-cert
+      #     mountPath: /home/ssl/certs/postgresql
+      #     readOnly: true
+      # extraVolumes: &extraVolumes
+      #   - name: db-ca-cert
+      #     secret:
+      #       secretName: db-ca
+      #       items:
+      #         - key: ca.crt
+      #           path: ca.crt
+      resources:
+        limits:
+          memory: 2048Mi
+        requests:
+          memory: 512Mi
+
+    worker:
+      enabled: true
+      envFrom: *envFrom
+      # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
+      # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
+      # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+
+    webhook:
+      enabled: true
+      envFrom: *envFrom
+      # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
+      # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
+      # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+
+    valkey:
+      enabled: true
+      architecture: standalone
+      sentinel:
+        enabled: false
+      auth:
+        enabled: false
+      primary:
+        kind: Deployment
+        persistence:
+          enabled: false
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+
+    # ingress:
     #   enabled: true
-    #   envFrom: *envFrom
-    #   # extraEnv: *extraEnv # using YAML magic (anchors) to reference main extraEnv
-    #   # extraVolumeMounts: *extraVolumeMounts # using YAML magic (anchors) to reference main extraVolumeMounts
-    #   # extraVolumes: *extraVolumes # using YAML magic (anchors) to reference main extraVolumes
+    #   className: nginx
+    #   annotations:
+    #     cert-manager.io/cluster-issuer: letsencrypt-prod
+    #     nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    #     nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    #     nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    #     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #   hosts:
+    #     - host: *hostname
+    #       paths:
+    #         - /
+    #   tls:
+    #     - secretName: n8n-ingress-tls
+    #       hosts:
+    #         - *hostname
 
-    # valkey:
-    #   enabled: true
-    #   architecture: standalone
-    #   sentinel:
-    #     enabled: false
-    #   auth:
-    #     enabled: false
-    #   primary:
-    #     kind: Deployment
-    #     persistence:
-    #       enabled: false
-    #     resources:
-    #       requests:
-    #         memory: 256Mi
-    #         cpu: 100m
-
-    # # ingress:
-    # #   enabled: true
-    # #   className: nginx
-    # #   annotations:
-    # #     cert-manager.io/cluster-issuer: letsencrypt-prod
-    # #     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    # #     nginx.ingress.kubernetes.io/proxy-buffering: "off"
-    # #     nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-    # #     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # #   hosts:
-    # #     - host: *hostname
-    # #       paths:
-    # #         - /
-    # #   tls:
-    # #     - secretName: n8n-ingress-tls
-    # #       hosts:
-    # #         - *hostname
-
-    # # cnpg DB cluster request
-    # # extraManifests:
-    # #   - apiVersion: postgresql.cnpg.io/v1
-    # #     kind: Cluster
-    # #     metadata:
-    # #       name: db
-    # #     spec:
-    # #       instances: 1
-    # #       bootstrap:
-    # #         initdb:
-    # #           database: n8n
-    # #           owner: n8n
-    # #       postgresql:
-    # #         parameters:
-    # #           shared_buffers: "64MB"
-    # #       resources:
-    # #         requests:
-    # #           memory: "512Mi"
-    # #         limits:
-    # #           memory: "512Mi"
-    # #       storage:
-    # #         size: 1Gi
+    # cnpg DB cluster request
+    # extraManifests:
+    #   - apiVersion: postgresql.cnpg.io/v1
+    #     kind: Cluster
+    #     metadata:
+    #       name: db
+    #     spec:
+    #       instances: 1
+    #       bootstrap:
+    #         initdb:
+    #           database: n8n
+    #           owner: n8n
+    #       postgresql:
+    #         parameters:
+    #           shared_buffers: "64MB"
+    #       resources:
+    #         requests:
+    #           memory: "512Mi"
+    #         limits:
+    #           memory: "512Mi"
+    #       storage:
+    #         size: 1Gi
