@@ -5,9 +5,11 @@ kind: ScrapeConfig
 metadata:
   name: &name traefik
 spec:
-  staticConfigs: [targets: ["traefik.${SECRET_DOMAIN}"]]
+  staticConfigs:
+    - targets:
+        - traefik.network.svc.cluster.local:8082
+  scheme: HTTP
   metricsPath: /metrics
-  scheme: HTTPS
   honorTimestamps: true
   relabelings:
     - action: replace
