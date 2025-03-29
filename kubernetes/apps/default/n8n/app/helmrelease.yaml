@@ -33,11 +33,11 @@ spec:
       repository: docker.n8n.io/n8nio/n8n
       tag: latest
 
-    # persistence:
-    #   enabled: true
-    #   accessMode: ReadWriteMany
-    #   size: 5Gi
-    #   storageClass: csi-driver-nfs
+    persistence:
+      enabled: true
+      accessMode: ReadWriteMany
+      size: 5Gi
+      storageClass: data-nfs
 
     replicaCount: 1
     podAnnotations:
@@ -94,33 +94,33 @@ spec:
               port: 6379
 
       extraEnv: &extraEnv
-        # - name: N8N_ENCRYPTION_KEY
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: n8n-secret
-        #       key: N8N_ENCRYPTION_KEY
+        - name: N8N_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: N8N_ENCRYPTION_KEY
         - name: N8N_RUNNERS_ENABLED
           value: true
-        # - name: DB_POSTGRESDB_DATABASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: n8n-secret
-        #       key: DB_POSTGRESDB_DATABASE
-        # - name: DB_POSTGRESDB_HOST
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: n8n-secret
-        #       key: DB_POSTGRESDB_HOST
-        # - name: DB_POSTGRESDB_USER
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: n8n-secret
-        #       key: DB_POSTGRESDB_USER
-        # - name: DB_POSTGRESDB_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: n8n-secret
-        #       key: DB_POSTGRESDB_PASSWORD
+        - name: DB_POSTGRESDB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_DATABASE
+        - name: DB_POSTGRESDB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_HOST
+        - name: DB_POSTGRESDB_USER
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_USER
+        - name: DB_POSTGRESDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secret
+              key: DB_POSTGRESDB_PASSWORD
 
       resources:
         limits:
