@@ -19,7 +19,7 @@ spec:
       services:
         - kind: Service
           name: n8n
-          port: 3000
+          port: 5678
           # sticky:
           #   cookie:
           #     httpOnly: true
