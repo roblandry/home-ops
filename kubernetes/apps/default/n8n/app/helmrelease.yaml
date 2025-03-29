@@ -9,7 +9,7 @@ spec:
   type: oci
   interval: 30m
   timeout: 3m
-  url: oci://8gears.container-registry.com/library/n8n
+  url: oci://8gears.container-registry.com/library
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
