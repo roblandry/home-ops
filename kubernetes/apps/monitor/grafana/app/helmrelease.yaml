@@ -72,41 +72,36 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
         reporting_enabled: false
-      # auth:
-      #   oauth_auto_login: true
-      #   signout_redirect_url: https://${HOSTNAME}/application/o/grafana/end-session/
-      #   oauth_allow_insecure_email_lookup: true
-      auth.basic:
-        enabled: false
+
+      auth:
+        disable_login_form: true
+        disable_signout_menu: true
+
       auth.anonymous:
         enabled: true
-        # org_id: 1
-        # org_role: Viewer
-      # auth.generic_oauth:
-      #   enabled: true
-      #   name: ${HOSTNAME}
-      #   icon: signin
-      #   auth_url: https://${AUTH_HOSTNAME}/application/o/authorize/
-      #   token_url: https://${AUTH_HOSTNAME}/application/o/token/
-      #   api_url: https://${AUTH_HOSTNAME}/application/o/userinfo/
-      #   scopes: openid email profile
-      #   use_pkce: true
-      #   skip_org_role_sync: true
-      # auth.generic_oauth.group_mapping:
-      #   role_attribute_path: |
-      #     contains(groups[*], 'infrastructure') && 'Admin' || 'Viewer'
-      #   org_id: 1
+        org_name: Main Org.
+        org_role: Admin
+
+      security:
+        allow_embedding: true
+        cookie_secure: true
+        content_security_policy: true
+        disable_gravatar: true
+
       log:
         mode: console
       news:
         news_feed_enabled: false
+
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
         plugins: /var/lib/grafana/plugins
         provisioning: /etc/grafana/provisioning
+
       server:
         root_url: https://grafana.${SECRET_DOMAIN}
+
     plugins:
       - pr0ps-trackmap-panel
       - grafana-clock-panel
