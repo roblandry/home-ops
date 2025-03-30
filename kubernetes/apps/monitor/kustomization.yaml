@@ -13,5 +13,5 @@ resources:
   - ./kubernetes-dashboard/ks.yaml
   - ./loki/ks.yaml
   - ./thanos/ks.yaml
-  # - ./unpoller/ks.yaml
+  - ./unpoller/ks.yaml
   - ./vector/ks.yaml
