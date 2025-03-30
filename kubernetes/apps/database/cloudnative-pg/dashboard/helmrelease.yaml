@@ -1,0 +1,35 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: cloudnative-pg-dashboards
+  namespace: database
+spec:
+  url: https://cloudnative-pg.github.io/grafana-dashboards
+  interval: 1h
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cloudnative-pg-dashboard
+spec:
+  chart:
+    spec:
+      chart: cluster
+      version: 0.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: cloudnative-pg-dashboards
+        namespace: database
+  maxHistory: 3
+  interval: 30m
+  uninstall:
+    keepHistory: false
+  values:
+    grafanaDashboard:
+      namespace: database
+      annotations:
+        grafana_folder: Storage

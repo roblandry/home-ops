@@ -1,0 +1,81 @@
+---
+# CNPG Cluster using NFS with Init Container to fix permissions
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-16
+  namespace: database
+spec:
+  instances: 3
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
+  enableSuperuserAccess: true
+  primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
+  storage:
+    size: 20Gi
+    storageClass: data-nfs
+  postgresql:
+    shared_preload_libraries: ["vectors.so"]
+    parameters:
+      max_connections: "300"
+      work_mem: 64MB
+      shared_buffers: 128MB
+      timezone: "${CONFIG_TIMEZONE}"
+  superuserSecret:
+    name: cloudnative-pg-secret
+  monitoring:
+    enablePodMonitor: true
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 2Gi
+  backup:
+    retentionPolicy: "7d"
+    barmanObjectStore:
+      destinationPath: s3://postgres-backup-bucket/
+      endpointURL: http://${SETTINGS_NAS_IP}:3900
+      serverName: postgres-16
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      data:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: s3-access-key
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: s3-secret-key
+  initContainers:
+    - name: fix-permissions
+      image: busybox
+      command: ["sh", "-c", "chown -R 70:70 /var/lib/postgresql/data"]
+      volumeMounts:
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data
+  # Required to match initContainer mount to main container volume name
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: data-nfs
+        resources:
+          requests:
+            storage: 20Gi
+
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       destinationPath: s3://cloudnative-pg/
+  #       endpointURL: https://s3.${PRIVATE_DOMAIN}
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-secret
+  #           key: s3-access-key
+  #         secretAccessKey:
+  #           name: cloudnative-pg-secret
+  #           key: s3-secret-key
