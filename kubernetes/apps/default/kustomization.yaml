@@ -10,4 +10,3 @@ resources:
   - ./echo/ks.yaml
   - ./homepage/ks.yaml
   - ./n8n/ks.yaml
-  - ./test/ks.yaml
