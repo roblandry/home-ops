@@ -40,6 +40,8 @@ spec:
     valuesKey: UP_UNIFI_CONFIG
     targetPath: upConfig
   values:
+    podAnnotations:
+      secret.reloader.stakater.com/reload: &secret unpoller-secret
     prometheus:
       enabled: true
     dashboards:
