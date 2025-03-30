@@ -257,18 +257,18 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
           datasource: Prometheus
-        ingress-nginx:  # -- I Dont use this -- #
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        ingress-nginx-request-handling-performance:  # -- I Dont use this -- #
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
-        speedtest-exporter-hub:  # -- I Dont use this -- #
-          # renovate: depName="Speedtest-Exporter"
-          gnetId: 13665
-          revision: 4
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
+        # ingress-nginx:  # -- I Dont use this -- #
+        #   url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+        #   datasource: Prometheus
+        # ingress-nginx-request-handling-performance:  # -- I Dont use this -- #
+        #   url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+        #   datasource: Prometheus
+        # speedtest-exporter-hub:  # -- I Dont use this -- #
+        #   # renovate: depName="Speedtest-Exporter"
+        #   gnetId: 13665
+        #   revision: 4
+        #   datasource:
+        #     - {name: DS_PROMETHEUS, value: Prometheus}
         external-dns:
           # renovate: depName="External-DNS"
           gnetId: 15038
@@ -307,29 +307,29 @@ spec:
           gnetId: 17346
           revision: 9
           datasource: Prometheus
-        haproxy:  # -- I Dont use this -- #
-          # renovate: depName="HAProxy"
-          gnetId: 12693
-          revision: 8
-          datasource: Prometheus
+        # haproxy:  # -- I Dont use this -- #
+        #   # renovate: depName="HAProxy"
+        #   gnetId: 12693
+        #   revision: 8
+        #   datasource: Prometheus
       storage:
-        minio-dashboard:  # -- I Dont use this -- #
-          # renovate: depName="Minio"
-          gnetId: 13502
-          revision: 26
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        smartctl:  # -- I Dont use this -- #
-          # renovate: depname="Smartctl"
-          gnetId: 22604
-          revision: 2
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        zfs:  # -- I Dont use this -- #
-          # renovate: depName="ZFS"
-          gnetId: 7845
-          revision: 4
-          datasource: Prometheus
+        # minio-dashboard:  # -- I Dont use this -- #
+        #   # renovate: depName="Minio"
+        #   gnetId: 13502
+        #   revision: 26
+        #   datasource:
+        #     - {name: DS_PROMETHEUS, value: Prometheus}
+        # smartctl:  # -- I Dont use this -- #
+        #   # renovate: depname="Smartctl"
+        #   gnetId: 22604
+        #   revision: 2
+        #   datasource:
+        #     - {name: DS_PROMETHEUS, value: Prometheus}
+        # zfs:  # -- I Dont use this -- #
+        #   # renovate: depName="ZFS"
+        #   gnetId: 7845
+        #   revision: 4
+        #   datasource: Prometheus
         volsync:  # -- This app isnt quite working -- #
           # renovate: depName="Volsync"
           gnetId: 21356
@@ -348,9 +348,9 @@ spec:
           gnetId: 1860
           revision: 37
           datasource: Prometheus
-        nut:  # -- I Dont use this -- #
-          # renovate: depName="NUT"
-          gnetId: 15406
-          revision: 2
-          datasource:
-            - {name: DS_GRAFANACLOUD-DENYAGO-PROM, value: Prometheus}
+        # nut:  # -- I Dont use this -- #
+        #   # renovate: depName="NUT"
+        #   gnetId: 15406
+        #   revision: 2
+        #   datasource:
+        #     - {name: DS_GRAFANACLOUD-DENYAGO-PROM, value: Prometheus}
