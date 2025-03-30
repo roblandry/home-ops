@@ -23,7 +23,7 @@ spec:
         - name: network-error-pages@kubernetescrd
         - name: network-internal-only@kubernetescrd
         - name: network-default-middlewares@kubernetescrd
-        - name: network-middlewares-authentik@kubernetescrd
+        # - name: network-middlewares-authentik@kubernetescrd
       services:
         - kind: Service
           name: n8n
