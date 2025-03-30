@@ -37,24 +37,24 @@ spec:
       memory: 2Gi
   # postgresUID: 99
   # postgresGID: 100
-  # backup:
-  #   retentionPolicy: 7d
-  #   barmanObjectStore:
-  #     data:
-  #       compression: bzip2
-  #     wal:
-  #       compression: bzip2
-  #       maxParallel: 4
-  #     destinationPath: s3://cloudnative-pg/
-  #     endpointURL: https://s3.${PRIVATE_DOMAIN}
-  #     serverName: &currentCluster postgres-16-v1
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: cloudnative-pg-secret
-  #         key: s3-access-key
-  #       secretAccessKey:
-  #         name: cloudnative-pg-secret
-  #         key: s3-secret-key
+  backup:
+    retentionPolicy: "7d"
+    barmanObjectStore:
+      destinationPath: s3://postgres-backup-bucket/
+      endpointURL: http://${SETTINGS_NAS_IP}:3900
+      serverName: postgres-16
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      data:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: s3-access-key
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: s3-secret-key
 
   # externalClusters:
   #   - name: *previousCluster
