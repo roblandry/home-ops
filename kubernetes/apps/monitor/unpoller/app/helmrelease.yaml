@@ -48,7 +48,7 @@ spec:
       create: false
       grafana:
         create: false
-      #   url: "http://grafana.monitor.svc.cluster.local"
+        url: "http://grafana.monitor.svc.cluster.local"
       #   secret:
       #     existingSecretName: "grafana-auth"
       #     usernameKey: "admin-user"
