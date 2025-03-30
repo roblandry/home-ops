@@ -46,8 +46,8 @@ spec:
       enabled: true
     dashboards:
       create: false
-      # grafana:
-      #   create: true
+      grafana:
+        create: false
       #   url: "http://grafana.monitor.svc.cluster.local"
       #   secret:
       #     existingSecretName: "grafana-auth"
