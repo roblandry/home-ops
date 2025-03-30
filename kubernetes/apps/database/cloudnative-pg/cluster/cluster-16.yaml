@@ -1,5 +1,6 @@
 ---
-# CNPG Cluster using NFS with Init Container to fix permissions
+## yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/cluster_v1.json
+# yaml-language-server: $schema=/workspaces/home-ops/cnpg-cluster-schema.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -49,23 +50,16 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: s3-secret-key
-  initContainers:
-    - name: fix-permissions
-      image: busybox
-      command: ["sh", "-c", "chown -R 70:70 /var/lib/postgresql/data"]
-      volumeMounts:
-        - name: pgdata
-          mountPath: /var/lib/postgresql/data
-  # Required to match initContainer mount to main container volume name
-  volumeClaimTemplates:
-    - metadata:
-        name: pgdata
-      spec:
-        accessModes: [ "ReadWriteMany" ]
-        storageClassName: data-nfs
-        resources:
-          requests:
-            storage: 20Gi
+  podTemplate:
+    initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 70:70 /var/lib/postgresql/data"]
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: pgdata
+            mountPath: /var/lib/postgresql/data
 
   # externalClusters:
   #   - name: *previousCluster
