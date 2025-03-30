@@ -202,6 +202,8 @@ spec:
             options:
               path: /var/lib/grafana/dashboards/system
     dashboards:
+      # K8S Dashboard EN 20250125 15661 rev2
+      #
       kubernetes:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
@@ -255,7 +257,19 @@ spec:
             - {name: DS_PROMETHEUS, value: Prometheus}
       networking:
         cert-manager:
-          url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
+          # renovate: depName="Cert-manager-Kubernetes"
+          # url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
+          gnetId: 20842
+          revision: 3
+          datasource: Prometheus
+        cilium-overview:
+          # renovate: depName="Cilium v1.11 Hubble Metrics"
+          gnetId: 15515
+          revision: 1
+          datasource: Prometheus
+        cilium-hubble-flows:
+          gnetId: 16966
+          revision: 1
           datasource: Prometheus
         # ingress-nginx:  # -- I Dont use this -- #
         #   url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
@@ -277,32 +291,32 @@ spec:
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
-        unifi-client-dpi:  # -- I Dont use this -- #
+        unifi-client-dpi:
           # renovate: depName="Unifi Client DPI"
           gnetId: 11310
           revision: 9
           datasource: Prometheus
-        unifi-usw-insights:  # -- I Dont use this -- #
+        unifi-usw-insights:
           # renovate: depName="Unifi USW"
           gnetId: 11312
           revision: 9
           datasource: Prometheus
-        unifi-cg-insights:  # -- I Dont use this -- #
+        unifi-cg-insights:
           # renovate: depName="Unifi CG"
           gnetId: 11313
           revision: 9
           datasource: Prometheus
-        unifi-uap-insights:  # -- I Dont use this -- #
+        unifi-uap-insights:
           # renovate: depName="Unifi UAP"
           gnetId: 11314
           revision: 10
           datasource: Prometheus
-        unifi-client-insights:  # -- I Dont use this -- #
+        unifi-client-insights:
           # renovate: depName="Unifi Client"
           gnetId: 11315
           revision: 9
           datasource: Prometheus
-        traefik:  # -- This isnt working and im not sure why -- #
+        traefik:
           # renovate: depName="Traefik"
           gnetId: 17346
           revision: 9
@@ -330,6 +344,11 @@ spec:
         #   gnetId: 7845
         #   revision: 4
         #   datasource: Prometheus
+        openebs:
+          # renovate: depName="1 OpenEBS Dashboard"
+          gnetID: 12171
+          revision: 2
+          datasource: Prometheus
         volsync:  # -- This app isnt quite working -- #
           # renovate: depName="Volsync"
           gnetId: 21356
