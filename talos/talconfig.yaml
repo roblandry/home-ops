@@ -58,8 +58,27 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.0.10.129"
-  - hostname: "node03"
-    ipAddress: "10.0.10.122"
+  # - hostname: "node03"
+  #   ipAddress: "10.0.10.122"
+  #   installDisk: "/dev/sda"
+  #   machineSpec:
+  #     secureboot: false
+  #   talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+  #   controlPlane: true
+  #   networkInterfaces:
+  #     - deviceSelector:
+  #         hardwareAddr: "94:c6:91:1a:dd:f3"
+  #       dhcp: false
+  #       addresses:
+  #         - "10.0.10.122/24"
+  #       routes:
+  #         - network: "0.0.0.0/0"
+  #           gateway: "10.0.10.1"
+  #       mtu: 1500
+  #       vip:
+  #         ip: "10.0.10.129"
+  - hostname: "node04"
+    ipAddress: "10.0.10.123"
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
@@ -67,36 +86,16 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "94:c6:91:1a:dd:f3"
+          hardwareAddr: "52:54:00:dd:18:72"
         dhcp: false
         addresses:
-          - "10.0.10.122/24"
+          - "10.0.10.123/24"
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.10.1"
         mtu: 1500
         vip:
           ip: "10.0.10.129"
-  # - hostname: "node04"
-  #   ipAddress: "10.0.10.123"
-  #   installDiskSelector:
-  #     serial: ""
-  #   machineSpec:
-  #     secureboot: false
-  #   talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
-  #   controlPlane: true
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: ""
-  #       dhcp: false
-  #       addresses:
-  #         - "10.0.10.123/24"
-  #       routes:
-  #         - network: "0.0.0.0/0"
-  #           gateway: "10.0.10.1"
-  #       mtu: 1500
-  #       vip:
-  #         ip: "10.0.10.129"
 
 # Global patches
 patches:
