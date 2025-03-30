@@ -14,7 +14,7 @@ spec:
   primaryUpdateMethod: switchover
   storage:
     size: 20Gi
-    storageClass: data-nfs
+    storageClass: openebs-hostpath
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
@@ -50,16 +50,6 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: s3-secret-key
-  podTemplate:
-    initContainers:
-      - name: fix-permissions
-        image: busybox
-        command: ["sh", "-c", "chown -R 70:70 /var/lib/postgresql/data"]
-        securityContext:
-          runAsUser: 0
-        volumeMounts:
-          - name: pgdata
-            mountPath: /var/lib/postgresql/data
 
   # externalClusters:
   #   - name: *previousCluster
