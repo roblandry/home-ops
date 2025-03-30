@@ -67,12 +67,12 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 200Mi
-                limits:
-                  memory: 1000Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                memory: 1000Mi
 
     persistence:
       config:
@@ -83,6 +83,7 @@ spec:
 
     service:
       main:
+        controller: main
         ports:
           http:
             port: *port
