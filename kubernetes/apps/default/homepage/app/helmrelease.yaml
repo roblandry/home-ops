@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/gethomepage/homepage
               tag: v1.1.1
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CONFIG_TIMEZONE}
             envFrom:
               - secretRef:
                   name: *secret
