@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg
       namespace: database
-    - name: openebs
+    - name: openebs-diskpools
       namespace: storage
     # - name: csi-driver-nfs
     #   namespace: storage
