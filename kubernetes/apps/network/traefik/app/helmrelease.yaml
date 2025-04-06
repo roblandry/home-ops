@@ -27,6 +27,10 @@ spec:
         name: traefik
         namespace: network
       interval: 5m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     image:
       tag: "v3"
