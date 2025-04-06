@@ -24,11 +24,11 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:0a:2b:ea"
+          hardwareAddr: "bc:24:11:f0:55:76"
         dhcp: false
         addresses:
           - "10.0.10.120/24"
@@ -40,15 +40,14 @@ nodes:
           ip: "10.0.10.129"
   - hostname: "node02"
     ipAddress: "10.0.10.121"
-    installDiskSelector:
-      serial: "50026B7685514CD8"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "84:47:09:0a:be:ab"
+          hardwareAddr: "bc:24:11:c9:f5:bb"
         dhcp: false
         addresses:
           - "10.0.10.121/24"
@@ -58,38 +57,19 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.0.10.129"
-  # - hostname: "node03"
-  #   ipAddress: "10.0.10.122"
-  #   installDisk: "/dev/sda"
-  #   machineSpec:
-  #     secureboot: false
-  #   talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
-  #   controlPlane: true
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "94:c6:91:1a:dd:f3"
-  #       dhcp: false
-  #       addresses:
-  #         - "10.0.10.122/24"
-  #       routes:
-  #         - network: "0.0.0.0/0"
-  #           gateway: "10.0.10.1"
-  #       mtu: 1500
-  #       vip:
-  #         ip: "10.0.10.129"
-  - hostname: "node04"
-    ipAddress: "10.0.10.123"
+  - hostname: "node03"
+    ipAddress: "10.0.10.122"
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "52:54:00:dd:18:72"
+          hardwareAddr: "bc:24:11:bc:69:61"
         dhcp: false
         addresses:
-          - "10.0.10.123/24"
+          - "10.0.10.122/24"
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.10.1"
