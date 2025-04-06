@@ -1,0 +1,29 @@
+apiVersion: openebs.io/v1alpha1
+kind: MayastorPool
+metadata:
+  name: pool-node01
+  namespace: mayastor
+spec:
+  node: node01
+  disks:
+    - /dev/sdb
+---
+apiVersion: openebs.io/v1alpha1
+kind: MayastorPool
+metadata:
+  name: pool-node02
+  namespace: mayastor
+spec:
+  node: node02
+  disks:
+    - /dev/sdb
+---
+apiVersion: openebs.io/v1alpha1
+kind: MayastorPool
+metadata:
+  name: pool-node03
+  namespace: mayastor
+spec:
+  node: node03
+  disks:
+    - /dev/sdb
