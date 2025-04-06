@@ -57,7 +57,7 @@ spec:
     lvm-localpv:
       enabled: false
     mayastor:
-      enabled: false
+      enabled: true
     engines:
       local:
         lvm:
