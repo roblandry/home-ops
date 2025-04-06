@@ -39,6 +39,8 @@ spec:
   dependsOn:
     - name: openebs
       namespace: storage
+    - name: loki-secret
+      namespace: monitor
     # - name: rook-ceph-cluster
     #   namespace: rook-ceph
     # - name: vector-agent
