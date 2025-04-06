@@ -26,6 +26,7 @@ spec:
         name: mayastor
         namespace: storage
   install:
+    crds: Create
     remediation:
       retries: 3
   upgrade:
