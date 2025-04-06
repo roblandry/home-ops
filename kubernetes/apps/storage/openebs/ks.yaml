@@ -62,3 +62,7 @@ spec:
   dependsOn:
     - name: mayastor-operator
       namespace: storage
+  healthChecks:
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: mayastorpools.openebs.io
