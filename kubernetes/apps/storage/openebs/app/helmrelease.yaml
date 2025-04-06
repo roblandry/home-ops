@@ -25,11 +25,9 @@ spec:
         name: openebs
         namespace: storage
   install:
-    crds: Create
     remediation:
       retries: 3
   upgrade:
-    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       strategy: rollback

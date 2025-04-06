@@ -29,6 +29,25 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: mayastor-operator
+  namespace: &namespace storage
+spec:
+  interval: 30m
+  path: ./kubernetes/apps/storage/openebs/mayastor
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  dependsOn:
+    - name: openebs
+      namespace: storage
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: mayastor-pools
   namespace: &namespace storage
 spec:
@@ -41,5 +60,5 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   dependsOn:
-    - name: openebs
+    - name: mayastor-operator
       namespace: storage
