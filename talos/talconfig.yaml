@@ -38,6 +38,14 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.0.10.129"
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+    patches:
+      - "@./patches/storage/mayastor.yaml"
+
   - hostname: "node02"
     ipAddress: "10.0.10.121"
     installDisk: "/dev/sda"
@@ -57,6 +65,14 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.0.10.129"
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+    patches:
+      - "@./patches/storage/mayastor.yaml"
+
   - hostname: "node03"
     ipAddress: "10.0.10.122"
     installDisk: "/dev/sda"
@@ -76,6 +92,13 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.0.10.129"
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+    patches:
+      - "@./patches/storage/mayastor.yaml"
 
 # Global patches
 patches:
