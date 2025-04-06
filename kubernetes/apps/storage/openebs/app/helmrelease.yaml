@@ -57,7 +57,19 @@ spec:
     lvm-localpv:
       enabled: false
     mayastor:
-      enabled: false
+      enabled: true
+      mayastor:
+        image:
+          registry: quay.io/openebs
+        mayastorPool:
+          poolName: mayastorpool
+          storageClass: openebs-mayastor
+          blockDevice:
+            devicePath: /dev/sdb
+            blockSize: 4k
+        mayastorVolume:
+          replicaCount: 3
+          storageClass: openebs-mayastor
     engines:
       local:
         lvm:
