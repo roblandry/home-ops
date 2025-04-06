@@ -33,7 +33,7 @@ metadata:
   namespace: &namespace storage
 spec:
   interval: 30m
-  path: ./kubernetes/apps/storage/mayastor-pools
+  path: ./kubernetes/apps/storage/mayastor/mayastor-pools
   prune: true
   sourceRef:
     kind: GitRepository
