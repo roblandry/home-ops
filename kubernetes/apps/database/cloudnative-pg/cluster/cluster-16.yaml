@@ -13,8 +13,8 @@ spec:
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
   storage:
-    size: 20Gi
-    storageClass: openebs-hostpath
+    size: 40Gi
+    storageClass: mayastor-single-replica
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:

@@ -33,7 +33,6 @@ spec:
       retries: 3
   values:
     localpv-provisioner:
-      # enabled: false
       localpv:
         image:
           registry: quay.io/
