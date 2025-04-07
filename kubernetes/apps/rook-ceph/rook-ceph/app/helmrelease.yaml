@@ -36,6 +36,8 @@ spec:
       enabled: true
 
     csi:
+      enableRbdDriver: true
+
       csiAddons:
         enabled: true
 
