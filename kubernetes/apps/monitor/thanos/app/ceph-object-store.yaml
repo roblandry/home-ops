@@ -12,7 +12,6 @@ spec:
       size: 1
   preservePoolsOnDelete: true
   gateway:
-    type: s3
     port: 80
     instances: 1
     insecurePort: 80
