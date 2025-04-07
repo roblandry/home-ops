@@ -32,6 +32,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    storegateway:
+      persistence:
+        enabled: true
+        storageClass: ceph-block
+        size: 10Gi
     objstoreConfig:
       create: false
       name: thanos-objectstore-secret
