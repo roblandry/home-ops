@@ -9,11 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: csi-driver-nfs
-  #     namespace: storage
-  #   - name: kube-prometheus-stack
-  #     namespace: monitor
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/monitor/loki/app
   postBuild:
