@@ -14,4 +14,3 @@ spec:
   gateway:
     port: 80
     instances: 1
-    insecurePort: 80
