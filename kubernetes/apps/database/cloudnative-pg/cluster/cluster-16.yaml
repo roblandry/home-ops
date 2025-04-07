@@ -14,7 +14,7 @@ spec:
   primaryUpdateMethod: switchover
   storage:
     size: 40Gi
-    storageClass: mayastor-single-replica
+    storageClass: ceph-block
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
