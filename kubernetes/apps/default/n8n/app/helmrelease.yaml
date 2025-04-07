@@ -79,7 +79,7 @@ spec:
         enabled: true
         accessMode: ReadWriteMany
         size: 5Gi
-        storageClass: data-nfs
+        storageClass: ceph-block
 
     service:
       main:
