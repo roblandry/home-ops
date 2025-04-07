@@ -55,13 +55,13 @@ spec:
     lvm-localpv:
       enabled: false
     mayastor:
-      enabled: true
-      csi:
-        node:
-          initContainers:
-            enabled: false
-      etcd:
-        clusterDomain: cluster.local
+      enabled: false
+      # csi:
+      #   node:
+      #     initContainers:
+      #       enabled: false
+      # etcd:
+      #   clusterDomain: cluster.local
     engines:
       local:
         lvm:
@@ -70,5 +70,5 @@ spec:
           enabled: false
       replicated:
         mayastor:
-          enabled: true
+          enabled: false
 

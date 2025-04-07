@@ -43,8 +43,8 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/qemu-guest-agent
-    patches:
-      - "@./patches/storage/mayastor.yaml"
+    # patches:
+    #   - "@./patches/storage/mayastor.yaml"
 
   - hostname: "node02"
     ipAddress: "10.0.10.121"
@@ -70,8 +70,8 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/qemu-guest-agent
-    patches:
-      - "@./patches/storage/mayastor.yaml"
+    # patches:
+    #   - "@./patches/storage/mayastor.yaml"
 
   - hostname: "node03"
     ipAddress: "10.0.10.122"
@@ -97,8 +97,8 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/qemu-guest-agent
-    patches:
-      - "@./patches/storage/mayastor.yaml"
+    # patches:
+    #   - "@./patches/storage/mayastor.yaml"
 
 # Global patches
 patches:
