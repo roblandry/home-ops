@@ -37,8 +37,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: openebs
-      namespace: storage
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: loki-secret
       namespace: monitor
     # - name: rook-ceph-cluster
