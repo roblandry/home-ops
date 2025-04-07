@@ -3,6 +3,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./ceph-bucket-claim.yaml
+  - ./ceph-object-store.yaml
   - ./helmrelease.yaml
   - ./ingressRoute.yaml
   - ./secret.sops.yaml

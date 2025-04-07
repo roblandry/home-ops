@@ -1,0 +1,18 @@
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStore
+metadata:
+  name: thanos-store
+  namespace: rook-ceph
+spec:
+  metadataPool:
+    replicated:
+      size: 1
+  dataPool:
+    replicated:
+      size: 1
+  preservePoolsOnDelete: true
+  gateway:
+    type: s3
+    port: 3900
+    instances: 1
+    insecurePort: 3900

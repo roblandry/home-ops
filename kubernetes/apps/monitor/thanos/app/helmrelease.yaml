@@ -38,9 +38,12 @@ spec:
         storageClass: ceph-block
         size: 10Gi
     objstoreConfig:
+      # create: false
+      # name: thanos-objectstore-secret
+      # key: objstore.yaml
       create: false
-      name: thanos-objectstore-secret
-      key: objstore.yaml
+      name: thanos-bucket
+      key: .aws
     additionalEndpoints:
       - dnssrv+_grpc._tcp.kube-prometheus-stack-thanos-discovery.monitor.svc.cluster.local
     additionalReplicaLabels: ["__replica__"]
