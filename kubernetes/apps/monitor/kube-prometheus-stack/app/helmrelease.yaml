@@ -148,7 +148,8 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: data-nfs
+              storageClassName: ceph-block  # or ceph-filesystem
+              accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
                   storage: 10Gi
