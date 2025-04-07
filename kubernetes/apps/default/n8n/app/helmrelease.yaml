@@ -79,7 +79,7 @@ spec:
         enabled: true
         accessMode: ReadWriteMany
         size: 5Gi
-        storageClass: ceph-block
+        storageClass: ceph-filesystem
 
     service:
       main:
