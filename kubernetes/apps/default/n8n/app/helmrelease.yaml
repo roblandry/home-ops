@@ -80,6 +80,7 @@ spec:
         accessMode: ReadWriteMany
         size: 5Gi
         storageClass: ceph-filesystem
+        mountPath: /config
 
     service:
       main:
