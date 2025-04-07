@@ -50,7 +50,7 @@ spec:
         - --downsampling.disable
       persistence:
         enabled: true
-        storageClass: "data-nfs"
+        storageClass: ceph-block  # or ceph-filesystem if you need RWX
         size: 15Gi
     query:
       extraArgs: # --alert.query-url=http://thanos.${PUBLIC_DOMAIN}

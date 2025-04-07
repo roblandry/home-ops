@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: csi-driver-nfs
-      namespace: storage
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: kube-prometheus-stack
       namespace: monitor
   interval: 30m

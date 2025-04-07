@@ -36,10 +36,8 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: monitor
-    - name: csi-driver-nfs
-      namespace: storage
-    # - name: onepassword-store
-    #   namespace: security
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/monitor/kube-prometheus-stack/app
   postBuild:
