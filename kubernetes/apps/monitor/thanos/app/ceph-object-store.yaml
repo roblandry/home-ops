@@ -13,6 +13,6 @@ spec:
   preservePoolsOnDelete: true
   gateway:
     type: s3
-    port: 3900
+    port: 80
     instances: 1
-    insecurePort: 3900
+    insecurePort: 80
