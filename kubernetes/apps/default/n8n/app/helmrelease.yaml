@@ -17,11 +17,11 @@ spec:
           secret.reloader.stakater.com/reload: &secret n8n-secret
         initContainers:
           00-fix-perms:
-            image: busybox
+            image:
+              repository: busybox
+              tag: latest
+              pullPolicy: IfNotPresent
             command: ["sh", "-c", "chown -R 1000:1000 /config"]
-            volumeMounts:
-              - name: config
-                mountPath: /config
           01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
