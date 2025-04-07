@@ -32,7 +32,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    storegateway:
+    storeGateway:
       persistence:
         enabled: true
         storageClass: ceph-block
