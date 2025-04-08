@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - dashboard
   - middlewares
-  # - routes
+  - routes
   - auth.sops.yaml
   - helmrelease.yaml
   - rbac.yaml

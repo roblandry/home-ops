@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: apps
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 81
+      targetPort: 81
+  externalName: ${SETTINGS_NAS_IP}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: apps-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`apps.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: apps
+          port: 81
+      middlewares:
+        - name: internal-auth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
