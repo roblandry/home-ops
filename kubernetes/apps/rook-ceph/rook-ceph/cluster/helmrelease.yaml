@@ -41,7 +41,13 @@ spec:
       dashboard:
         ingressClassName: traefik
         annotations:
-          hajimari.io/icon: fa6-solid:chess-rook
+          gethomepage.dev/app: "rook-ceph"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Rook-Ceph"
+          gethomepage.dev/description: "Rook-Ceph Dashboard"
+          gethomepage.dev/href: "https://rook.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Kubernetes"
+          gethomepage.dev/icon: "sh-ceph.png"
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: /
