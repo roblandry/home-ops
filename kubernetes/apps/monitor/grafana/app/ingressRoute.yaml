@@ -23,10 +23,7 @@ spec:
     - kind: Rule
       match: "Host(`grafana.${SECRET_DOMAIN}`)"
       middlewares:
-        - name: network-error-pages@kubernetescrd
-        - name: network-internal-only@kubernetescrd
-        - name: network-default-middlewares@kubernetescrd
-        - name: network-middlewares-authentik@kubernetescrd
+        - name: network-internal-auth-middlewares@kubernetescrd
       services:
         - kind: Service
           name: grafana

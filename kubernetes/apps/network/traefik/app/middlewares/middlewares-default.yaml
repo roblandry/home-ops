@@ -2,15 +2,57 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: default-middlewares
+  name: internal-auth-middlewares
   namespace: network
 spec:
   chain:
     middlewares:
+      - name: authentik
+      - name: error-pages
+      - name: internal-only
       - name: default-headers
-      # - name: authelia
       - name: compress-gzip
-      # - name: error-pages-middleware@docker
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: internal-noauth-middlewares
+  namespace: network
+spec:
+  chain:
+    middlewares:
+      - name: error-pages
+      - name: internal-only
+      - name: default-headers
+      - name: compress-gzip
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: external-auth-middlewares
+  namespace: network
+spec:
+  chain:
+    middlewares:
+      - name: authentik
+      - name: error-pages
+      - name: default-headers
+      - name: compress-gzip
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: external-noauth-middlewares
+  namespace: network
+spec:
+  chain:
+    middlewares:
+      - name: error-pages
+      - name: default-headers
+      - name: compress-gzip
 
 ---
 apiVersion: traefik.io/v1alpha1
