@@ -77,7 +77,7 @@ spec:
           insecure: true
       schemaConfig:
         configs:
-          - from: "2024-04-01" # quote
+          - from: "2025-04-07"
             store: tsdb
             object_store: s3
             schema: v13
