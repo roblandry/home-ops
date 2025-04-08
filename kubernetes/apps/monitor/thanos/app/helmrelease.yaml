@@ -61,8 +61,8 @@ spec:
         storageClass: ceph-block  # or ceph-filesystem if you need RWX
         size: 15Gi
     query:
-      extraArgs: # --alert.query-url=http://thanos.${PUBLIC_DOMAIN}
-        - "--alert.query-url=http://thanos.${PUBLIC_DOMAIN}"
+      extraArgs: # --alert.query-url=http://thanos.${SECRET_DOMAIN}
+        - "--alert.query-url=http://thanos.${SECRET_DOMAIN}"
     queryFrontend:
       enabled: true
       # ingress:
