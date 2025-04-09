@@ -63,6 +63,7 @@ spec:
         existingClaim: mealie-import
         globalMounts:
           - path: /import
+            readOnly: true
 
     service:
       main:
