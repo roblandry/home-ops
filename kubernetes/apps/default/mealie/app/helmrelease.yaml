@@ -23,7 +23,8 @@ spec:
         initContainers:
           copy-import:
             image:
-              repository: bysybox:latest
+              repository: busybox
+              tag: latest
             command:
               - sh
               - -c
