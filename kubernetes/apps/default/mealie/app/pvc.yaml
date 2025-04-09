@@ -1,12 +1,27 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mealie-import-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadOnlyMany
+  nfs:
+    server: ${SETTINGS_NAS_IP}
+    path: /mnt/user/appdata/mealie
+  persistentVolumeReclaimPolicy: Retain
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mealie-import
   namespace: default
 spec:
+  volumeName: mealie-import-pv
   accessModes:
     - ReadOnlyMany
-  storageClassName: copy-data
   resources:
     requests:
       storage: 1Gi
