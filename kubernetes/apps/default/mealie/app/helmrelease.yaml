@@ -63,7 +63,6 @@ spec:
       import:
         enabled: true
         type: nfs
-        accessMode: ReadOnlyMany
         server: ${SETTINGS_NAS_IP}
         path: /mnt/user/appdata/mealie
 
