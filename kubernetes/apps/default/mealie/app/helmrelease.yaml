@@ -20,19 +20,18 @@ spec:
     controllers:
       main:
 
-        initContainers:
-          copy-import:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                echo "Copying files from /import to /app/data..."
-                ls -la /
-                ls -la /import
-                cp -rv /import/. /app/data/
+        # Copy files from docker host
+        # initContainers:
+        #   copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /app/data..."
+        #         cp -rv /import/. /app/data/
 
         strategy: Recreate
         containers:
@@ -41,6 +40,9 @@ spec:
               repository: ghcr.io/mealie-recipes/mealie
               tag: latest
               pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: mealie-secrets
             env:
               BASE_URL: https://food.${SECRET_DOMAIN}
               ALLOW_SIGNUP: false
@@ -60,11 +62,12 @@ spec:
         globalMounts:
           - path: /app/data
 
-      import:
-        enabled: true
-        type: nfs
-        server: ${SETTINGS_NAS_IP}
-        path: /mnt/user/appdata/mealie
+      # Copy files from docker host
+      # import:
+      #   enabled: true
+      #   type: nfs
+      #   server: ${SETTINGS_NAS_IP}
+      #   path: /mnt/user/appdata/mealie
 
     service:
       main:
@@ -73,19 +76,3 @@ spec:
           http:
             port: 9000
 
-    # ingress:
-    #   main:
-    #     enabled: true
-    #     className: traefik
-    #     annotations: {}
-    #     hosts:
-    #       - host: "food.${SECRET_DOMAIN}"
-    #         paths:
-    #           - path: /
-    #             pathType: Prefix
-    #             service:
-    #               name: main
-    #               port: 9000
-    #     tls:
-    #       - hosts:
-    #           - "food.${SECRET_DOMAIN}"
