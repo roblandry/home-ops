@@ -36,12 +36,14 @@ spec:
               WEB_CONCURRENCY: 1
 
     persistence:
-      data:
+      config:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: ceph-block
+        globalMounts:
+          - path: /app/data
 
     service:
       main:
