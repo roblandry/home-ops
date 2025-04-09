@@ -32,7 +32,7 @@ spec:
                 echo "Copying files from /import to /app/data..."
                 ls -la /
                 ls -la /import
-                cp -rv /import/* /app/data/
+                cp -rv /import/. /app/data/
 
         strategy: Recreate
         containers:
@@ -62,10 +62,10 @@ spec:
 
       import:
         enabled: true
-        existingClaim: mealie-import
-        globalMounts:
-          - path: /import
-            readOnly: true
+        type: nfs
+        accessMode: ReadOnlyMany
+        server: ${SETTINGS_NAS_IP}
+        path: /mnt/user/appdata/mealie
 
     service:
       main:
