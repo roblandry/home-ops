@@ -9,4 +9,5 @@ components:
 resources:
   - ./echo/ks.yaml
   - ./homepage/ks.yaml
+  - ./mealie/ks.yaml
   - ./n8n/ks.yaml
