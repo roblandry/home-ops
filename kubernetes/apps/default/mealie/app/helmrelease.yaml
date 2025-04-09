@@ -34,12 +34,14 @@ spec:
               WORKERS_PER_CORE: 1
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
-        persistence:
-          data:
-            enabled: true
-            accessMode: ReadWriteOnce
-            size: 5Gi
-            storageClass: ceph-block
+
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ceph-block
 
     service:
       main:
