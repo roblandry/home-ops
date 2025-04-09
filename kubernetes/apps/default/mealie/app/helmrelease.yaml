@@ -17,7 +17,6 @@ spec:
     remediation:
       retries: 3
   values:
-    # https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
     controllers:
       main:
         strategy: Recreate
@@ -32,12 +31,19 @@ spec:
               ALLOW_SIGNUP: false
               API_DOCS: false
               TZ: ${CONFIG_TIMEZONE}
-              # Default Values
               WORKERS_PER_CORE: 1
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
+        persistence:
+          data:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 5Gi
+            storageClass: ceph-block
+
     service:
       main:
+        controller: main
         ports:
           http:
             port: 9000
@@ -46,11 +52,7 @@ spec:
       main:
         enabled: true
         className: traefik
-        annotations:
-          #nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.networking.svc.cluster.local/oauth2/auth"
-          #nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}/oauth2/sign_in"
-          # external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
-          # hajimari.io/enable: "true"
+        annotations: {}
         hosts:
           - host: "food.${SECRET_DOMAIN}"
             paths:
@@ -58,13 +60,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: 9000
         tls:
           - hosts:
               - "food.${SECRET_DOMAIN}"
-
-    persistence:
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 5Gi
-      storageClass: ceph-block
