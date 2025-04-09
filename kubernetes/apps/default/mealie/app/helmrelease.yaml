@@ -19,6 +19,17 @@ spec:
   values:
     controllers:
       main:
+
+        initContainers:
+          copy-import:
+            image: busybox
+            command:
+              - sh
+              - -c
+              - |
+                echo "Copying files from /import to /app/data..."
+                cp -rv /import/* /app/data/
+
         strategy: Recreate
         containers:
           main:
@@ -44,6 +55,12 @@ spec:
         storageClass: ceph-block
         globalMounts:
           - path: /app/data
+
+      import:
+        enabled: true
+        existingClaim: mealie-import
+        globalMounts:
+          - path: /import
 
     service:
       main:
