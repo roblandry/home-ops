@@ -30,6 +30,8 @@ spec:
               - -c
               - |
                 echo "Copying files from /import to /app/data..."
+                ls -la /
+                ls -la /import
                 cp -rv /import/* /app/data/
 
         strategy: Recreate
