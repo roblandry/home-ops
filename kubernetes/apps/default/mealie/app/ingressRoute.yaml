@@ -1,0 +1,27 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mealie
+  namespace: default
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "food.${SECRET_DOMAIN}"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`food.${SECRET_DOMAIN}`)"
+      middlewares:
+        - name: network-external-noauth-middlewares@kubernetescrd
+      services:
+        - kind: Service
+          name: mealie
+          port: 9000
+          # sticky:
+          #   cookie:
+          #     httpOnly: true
+          #     secure: true
+          #     sameSite: none
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
