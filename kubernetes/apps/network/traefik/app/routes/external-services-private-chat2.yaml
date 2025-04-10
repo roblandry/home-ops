@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: chat2
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 3080
+      targetPort: 3080
+  externalName: ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: chat2-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`chat2.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: chat2
+          port: 3080
+      middlewares:
+        - name: internal-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"

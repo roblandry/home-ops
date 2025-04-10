@@ -86,7 +86,7 @@ spec:
     #   headers:
     #     # customResponseHeaders:
     #     #   X-Forwarded-Proto: "https,wss"
-    #     #   server: "landry.me"
+    #     #   server: "${SECRET_DOMAIN}"
     #     customRequestHeaders:
     #       X-Forwarded-Proto: https
 

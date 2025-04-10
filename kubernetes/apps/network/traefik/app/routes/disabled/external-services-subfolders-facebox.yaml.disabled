@@ -1,0 +1,31 @@
+# DOES NOT WORK
+http:
+
+  #--------------------------------** ROUTERS **--------------------------------##
+  routers:
+    facebox:
+      entryPoints:
+        - websecure
+      middlewares:
+        - internal-only@file
+        - default-headers@file
+        # - error-pages-middleware@docker
+        # - middlewares-authentik@file
+      rule: Host(`apps.${SECRET_DOMAIN}`) && PathPrefix(`/facebox`)
+      service: facebox
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: ${SECRET_DOMAIN}
+            sans:
+              - '*.${SECRET_DOMAIN}'
+
+  #--------------------------------** SERVICES **-------------------------------##
+  services:
+    facebox:
+      loadBalancer:
+        servers:
+          - url: http://10.0.10.2:8084
+
+  #------------------------------** MIDDLEWARES **------------------------------##
+  # middlewares:

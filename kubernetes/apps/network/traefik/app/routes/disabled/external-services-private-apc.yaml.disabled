@@ -1,0 +1,31 @@
+# Doesnt work due to http://10.0.1.20/NMC/K700X9tw4WWksZpXAsicig/webserv.htm
+# /NMC/XXX/ is not real
+http:
+
+  #--------------------------------** ROUTERS **--------------------------------##
+  routers:
+    apc:
+      entryPoints:
+        - websecure
+      rule: 'Host(`apc.${SECRET_DOMAIN}`)'
+      service: apc
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: ${SECRET_DOMAIN}
+            sans:
+              - "*.${SECRET_DOMAIN}"
+      middlewares:
+        - internal-only@file
+        # - error-pages-middleware@docker
+        # - default-headers@file
+
+  #--------------------------------** SERVICES **-------------------------------##
+  services:
+    apc:
+      loadBalancer:
+        servers:
+          - url: http://10.0.1.20:80
+
+  #------------------------------** MIDDLEWARES **------------------------------##
+  # middlewares:

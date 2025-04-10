@@ -1,0 +1,29 @@
+# http:
+
+#   #--------------------------------** ROUTERS **--------------------------------##
+#   routers:
+#     proxmox3:
+#       entryPoints:
+#         - websecure
+#       middlewares:
+#         - internal-only@file
+#         - error-pages-middleware@docker
+#         - default-headers@file
+#       rule: Host(`pve3.${SECRET_DOMAIN}`)
+#       service: proxmox3
+#       tls:
+#         certResolver: letsencrypt
+#         domains:
+#           - main: ${SECRET_DOMAIN}
+#             sans:
+#               - '*.${SECRET_DOMAIN}'
+
+#   #--------------------------------** SERVICES **-------------------------------##
+#   services:
+#     proxmox3:
+#       loadBalancer:
+#         servers:
+#           - url: https://10.0.5.51:8006
+
+#   #------------------------------** MIDDLEWARES **------------------------------##
+#   # middlewares:

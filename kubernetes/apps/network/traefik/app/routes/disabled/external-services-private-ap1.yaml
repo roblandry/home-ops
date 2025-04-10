@@ -1,0 +1,34 @@
+# SETTINGS_AP1_IP - NOT USED
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: ap1
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 8443
+      targetPort: 8443
+  externalName: ${SETTINGS_AP1_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ap1-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`ap1.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: ap1
+          port: 8443
+      middlewares:
+        - name: internal-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"

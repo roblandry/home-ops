@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: nextcloud
+spec:
+  type: ExternalName
+  ports:
+    - name: https
+      port: 4443
+      targetPort: 4443
+  externalName: ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cloud.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: nextcloud
+          port: 4443
+      middlewares:
+        - name: external-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"

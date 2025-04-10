@@ -1,0 +1,24 @@
+http:
+
+  #--------------------------------** ROUTERS **--------------------------------##
+  routers:
+    gatus:
+      entryPoints:
+        - websecure
+      middlewares:
+        - internal-only@file
+        - error-pages-middleware@docker
+        - middlewares-authentik@file
+        - default-headers@file
+      rule: Host(`status.${SECRET_DOMAIN}`)
+      service: gatus
+
+  #--------------------------------** SERVICES **-------------------------------##
+  services:
+    gatus:
+      loadBalancer:
+        servers:
+          - url: http://10.0.10.2:8086
+
+  #------------------------------** MIDDLEWARES **------------------------------##
+  # middlewares:

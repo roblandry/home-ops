@@ -1,0 +1,34 @@
+# SETTINGS_SEARCH_IP
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: searxng
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  externalName: ${SETTINGS_SEARCH_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: searxng-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`search.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: searxng
+          port: 8080
+      middlewares:
+        - name: external-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"

@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: photoprism
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 2342
+      targetPort: 2342
+  externalName: ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: photoprism-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`photoprism.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: photoprism
+          port: 2342
+      middlewares:
+        - name: internal-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"

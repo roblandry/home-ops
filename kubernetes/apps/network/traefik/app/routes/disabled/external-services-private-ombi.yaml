@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: ombi
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 3579
+      targetPort: 3579
+  externalName: ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ombi-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`ombi.${SECRET_DOMAIN}`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: ombi
+          port: 3579
+      middlewares:
+        - name: internal-noauth-middlewares
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-production-tls"
