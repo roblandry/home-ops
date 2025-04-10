@@ -27,6 +27,7 @@ spec:
       services:
         - name: sabnzbd
           port: 8081
+          path: /sabnzbd
       middlewares:
         - name: internal-auth-middlewares
   tls:

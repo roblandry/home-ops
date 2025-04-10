@@ -27,6 +27,7 @@ spec:
       services:
         - name: radarr
           port: 7878
+          path: /radarr
       middlewares:
         - name: internal-auth-middlewares
   tls:

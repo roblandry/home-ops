@@ -27,6 +27,7 @@ spec:
       services:
         - name: bazarr
           port: 6767
+          path: /bazarr
       middlewares:
         - name: internal-auth-middlewares
   tls:

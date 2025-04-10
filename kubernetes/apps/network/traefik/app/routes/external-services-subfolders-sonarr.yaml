@@ -27,6 +27,7 @@ spec:
       services:
         - name: sonarr
           port: 8989
+          path: /sonarr
       middlewares:
         - name: internal-auth-middlewares
   tls:

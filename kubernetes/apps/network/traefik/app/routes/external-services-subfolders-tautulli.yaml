@@ -27,6 +27,7 @@ spec:
       services:
         - name: tautulli
           port: 8182
+          path: /tautulli
       middlewares:
         - name: internal-auth-middlewares
   tls:

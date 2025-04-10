@@ -27,6 +27,7 @@ spec:
       services:
         - name: lidarr
           port: 8686
+          path: /lidarr
       middlewares:
         - name: internal-auth-middlewares
   tls:
