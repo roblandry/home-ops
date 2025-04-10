@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: apps
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: apps-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "apps.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "apps"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "apps"
+    gethomepage.dev/description: "Personal Apps"
+    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/icon: "organizr.png"
 spec:
   entryPoints:
     - websecure

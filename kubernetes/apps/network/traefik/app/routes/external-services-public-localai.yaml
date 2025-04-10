@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: localai
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: localai-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "ai.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "localai"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "localai"
+    gethomepage.dev/description: "LocalAI"
+    gethomepage.dev/href: "https://ai.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "localai.png"
 spec:
   entryPoints:
     - websecure

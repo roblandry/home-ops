@@ -19,6 +19,19 @@ kind: IngressRoute
 metadata:
   name: prowlarr-ingress
   namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "apps.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "prowlarr"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "prowlarr"
+    gethomepage.dev/description: "Indexer Manager"
+    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/prowlarr"
+    gethomepage.dev/group: "Media Organization"
+    gethomepage.dev/icon: "prowlarr.png"
+    # gethomepage.dev/widget.type: "prowlarr"
+    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/prowlarr"
+    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PROWLARR_KEY}"
 spec:
   entryPoints:
     - websecure

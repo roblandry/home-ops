@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: obico
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: obico-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "obi.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "obico"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "obico"
+    gethomepage.dev/description: "Obico - 3D Printer Monitoring"
+    gethomepage.dev/href: "https://obi.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Other"
+    gethomepage.dev/icon: "obico.png"
 spec:
   entryPoints:
     - websecure

@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: calibre-web
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,21 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: calibre-web-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "calibre-web.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "calibre-web"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "calibre-web"
+    gethomepage.dev/description: "Calibre Web - E-book Library"
+    gethomepage.dev/href: "https://calibre-web.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media Organization"
+    gethomepage.dev/icon: "calibre-web.png"
+    # gethomepage.dev/widget.type: "calibreweb"
+    # gethomepage.dev/widget.url: "http://calibre-web.${SECRET_DOMAIN}"
+    # gethomepage.dev/widget.username:
+    # gethomepage.dev/widget.password:
 spec:
   entryPoints:
     - websecure

@@ -5,6 +5,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: proxmox2
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -18,6 +19,21 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: proxmox2-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "pve2.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "proxmox2"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "proxmox2"
+    gethomepage.dev/description: "Proxmox Cluster"
+    gethomepage.dev/href: "https://pve2.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/icon: "proxmox.png"
+    # gethomepage.dev/widget.type: "proxmox"
+    # gethomepage.dev/widget.url: "http://pve2.${SECRET_DOMAIN}"
+    # gethomepage.dev/widget.username: "${HOMEPAGE_VAR_PVE2_USER}"
+    # gethomepage.dev/widget.password: "${HOMEPAGE_VAR_PVE2_PASS}"
 spec:
   entryPoints:
     - websecure

@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: webtrees
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: webtrees-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "tree.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "webtrees"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "webtrees"
+    gethomepage.dev/description: "Family Tree Software"
+    gethomepage.dev/href: "https://tree.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Office"
+    gethomepage.dev/icon: https://raw.githubusercontent.com/fisharebest/webtrees/main/public/favicon-192.png
 spec:
   entryPoints:
     - websecure

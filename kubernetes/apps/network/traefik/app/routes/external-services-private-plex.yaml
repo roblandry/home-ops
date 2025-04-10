@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: plex
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,20 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: plex-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "plex.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "plex"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "plex"
+    gethomepage.dev/description: "Plex Media Server"
+    gethomepage.dev/href: "https://plex.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "plex.png"
+    gethomepage.dev/widget.type: "plex"
+    gethomepage.dev/widget.url: "http://plex.${SECRET_DOMAIN}"
+    gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PLEX_KEY}"
 spec:
   entryPoints:
     - websecure

@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: photoprism
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,21 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: photoprism-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "photoprism.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "photoprism"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "photoprism"
+    gethomepage.dev/description: "PhotoPrism - AI-Powered Photo Management"
+    gethomepage.dev/href: "https://photoprism.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "photoprism.png"
+    # gethomepage.dev/widget.type: "photoprism"
+    # gethomepage.dev/widget.url: "http://photoprism.${SECRET_DOMAIN}"
+    # gethomepage.dev/widget.username: "${HOMEPAGE_VAR_PHOTOPRISM_USERNAME}"
+    # gethomepage.dev/widget.password: "${HOMEPAGE_VAR_PHOTOPRISM_PASSWORD}"
 spec:
   entryPoints:
     - websecure

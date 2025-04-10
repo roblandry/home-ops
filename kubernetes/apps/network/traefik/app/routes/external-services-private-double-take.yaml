@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: double-take
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: double-take-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "dt.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "double-take"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "double-take"
+    gethomepage.dev/description: "Double Take - NVR"
+    gethomepage.dev/href: "https://dt.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "NVR"
+    gethomepage.dev/icon: "double-take.png"
 spec:
   entryPoints:
     - websecure

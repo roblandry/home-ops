@@ -1,45 +1,46 @@
+# SETTINGS_KVM1_IP
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
 kind: Service
 apiVersion: v1
 metadata:
-  name: maybefinance
+  name: kvm2
   namespace: network
 spec:
   type: ExternalName
   ports:
     - name: http
-      port: 3000
-      targetPort: 3000
-  externalName: ${SETTINGS_NAS_IP}
+      port: 443
+      targetPort: 443
+  externalName: ${SETTINGS_KVM2_IP}
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: maybefinance-ingress
+  name: kvm2-ingress
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "bills2.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/hostname: "kvm2.${SECRET_DOMAIN}"
     kubernetes.io/ingress.class: traefik
-    gethomepage.dev/app: "maybefinance"
+    gethomepage.dev/app: "kvm2"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "maybefinance"
-    gethomepage.dev/description: "MaybeFinance - Personal Finance"
-    gethomepage.dev/href: "https://bills2.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Office"
-    gethomepage.dev/icon: "maybefinance.png"
+    gethomepage.dev/name: "kvm2"
+    gethomepage.dev/description: "PiKVM Management Interface"
+    gethomepage.dev/href: "https://kvm2.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/icon: "pikvm.png"
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`bills2.${SECRET_DOMAIN}`)
+    - match: Host(`kvm2.${SECRET_DOMAIN}`)
       kind: Rule
       priority: 1
       services:
-        - name: maybefinance
-          port: 3000
+        - name: kvm2
+          port: 443
       middlewares:
-        - name: internal-auth-middlewares
+        - name: internal-noauth-middlewares
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"

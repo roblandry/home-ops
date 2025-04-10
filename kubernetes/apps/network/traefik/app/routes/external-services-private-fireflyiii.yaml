@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: fireflyiii
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,6 +18,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: fireflyiii-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "bills.${SECRET_DOMAIN}"
+    kubernetes.io/ingress.class: traefik
+    gethomepage.dev/app: "fireflyiii"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "fireflyiii"
+    gethomepage.dev/description: "Personal Finance Manager"
+    gethomepage.dev/href: "https://bills.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Office"
+    gethomepage.dev/icon: https://raw.githubusercontent.com/MattFaz/unraid_templates/main/images/fireflyiii-logo.png
 spec:
   entryPoints:
     - websecure
