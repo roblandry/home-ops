@@ -27,8 +27,16 @@ spec:
       services:
         - name: radarr
           port: 7878
-          path: /radarr
       middlewares:
         - name: internal-auth-middlewares
+        - name: radarr-addprefix
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: radarr-addprefix
+spec:
+  addPrefix:
+    prefix: /radarr
