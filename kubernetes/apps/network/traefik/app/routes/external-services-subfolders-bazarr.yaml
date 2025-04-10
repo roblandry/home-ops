@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: bazarr
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,13 +18,13 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: bazarr-ingress
+  namespace: network
 spec:
   entryPoints:
     - websecure
   routes:
     - match: Host(`apps.${SECRET_DOMAIN}`) && PathPrefix(`/bazarr`)
       kind: Rule
-      priority: 1
       services:
         - name: bazarr
           port: 6767

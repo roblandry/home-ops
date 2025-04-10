@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: transmission
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,18 +18,18 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: transmission-ingress
+  namespace: network
 spec:
   entryPoints:
     - websecure
   routes:
     - match: Host(`apps.${SECRET_DOMAIN}`) && PathPrefix(`/transmission`)
       kind: Rule
-      priority: 1
       services:
         - name: transmission
           port: 9091
       middlewares:
-        - name: internal-auth-middlewares
+        - name: internal-noauth-middlewares
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
 

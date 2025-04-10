@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: prowlarr
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -17,13 +18,13 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: prowlarr-ingress
+  namespace: network
 spec:
   entryPoints:
     - websecure
   routes:
     - match: Host(`apps.${SECRET_DOMAIN}`) && PathPrefix(`/prowlarr`)
       kind: Rule
-      priority: 1
       services:
         - name: prowlarr
           port: 9696

@@ -112,7 +112,7 @@ spec:
     customResponseHeaders:
       X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
       server: ""
-      X-Forwarded-Proto: "https,wss"
+      X-Forwarded-Proto: "https"
     hostsProxyHeaders:
       - "X-Forwarded-Host"
 

@@ -31,11 +31,6 @@ spec:
           port: 80
           scheme: http
           passHostHeader: true
-          # sticky:
-          #   cookie:
-          #     httpOnly: true
-          #     secure: true
-          #     sameSite: none
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
 

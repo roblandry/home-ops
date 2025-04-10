@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sonarr
+  namespace: network
 spec:
   type: ExternalName
   ports:
@@ -28,9 +29,8 @@ spec:
         - name: sonarr
           port: 8989
       middlewares:
-        # - name: internal-auth-middlewares
-        - name: error-pages
-        - name: internal-only
+        - name: internal-auth-middlewares
+        # - name: error-pages
+        # - name: internal-only
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
-
