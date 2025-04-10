@@ -28,6 +28,11 @@ spec:
       services:
         - name: radarr
           port: 7878
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
       middlewares:
         - name: internal-auth-middlewares
   tls:
