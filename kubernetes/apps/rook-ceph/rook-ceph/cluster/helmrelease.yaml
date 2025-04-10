@@ -46,7 +46,7 @@ spec:
           gethomepage.dev/name: "Rook-Ceph"
           gethomepage.dev/description: "Rook-Ceph Dashboard"
           gethomepage.dev/href: "https://rook.${SECRET_DOMAIN}"
-          gethomepage.dev/group: "Kubernetes"
+          gethomepage.dev/group: "Storage"
           gethomepage.dev/icon: "sh-ceph.png"
         host:
           name: "rook.${SECRET_DOMAIN}"

@@ -11,7 +11,7 @@ metadata:
     gethomepage.dev/name: "n8n"
     gethomepage.dev/description: "An extendable workflow automation tool"
     gethomepage.dev/href: "https://n8n.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Kubernetes"
+    gethomepage.dev/group: "Automation"
     gethomepage.dev/icon: "sh-n8n.png"
 spec:
   entryPoints:
