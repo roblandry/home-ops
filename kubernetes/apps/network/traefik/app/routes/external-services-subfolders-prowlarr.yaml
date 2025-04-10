@@ -29,14 +29,5 @@ spec:
           port: 9696
       middlewares:
         - name: internal-auth-middlewares
-        - name: prowlarr-addprefix
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: prowlarr-addprefix
-spec:
-  addPrefix:
-    prefix: /prowlarr

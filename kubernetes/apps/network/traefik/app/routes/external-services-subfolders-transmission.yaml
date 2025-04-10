@@ -29,14 +29,6 @@ spec:
           port: 9091
       middlewares:
         - name: internal-auth-middlewares
-        - name: transmission-addprefix
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: transmission-addprefix
-spec:
-  addPrefix:
-    prefix: /transmission
+

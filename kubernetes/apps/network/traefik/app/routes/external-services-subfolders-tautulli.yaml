@@ -29,14 +29,6 @@ spec:
           port: 8182
       middlewares:
         - name: internal-auth-middlewares
-        - name: tautulli-addprefix
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: tautulli-addprefix
-spec:
-  addPrefix:
-    prefix: /tautulli
+
