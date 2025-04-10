@@ -23,8 +23,8 @@ spec:
     - name: http
       port: 8989
       targetPort: 8989
-  selector: {}
-  type: ClusterIP
+  # selector: {}
+  # type: ClusterIP
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
 # kind: Service
@@ -56,14 +56,14 @@ spec:
           port: 8989
       middlewares:
         - name: internal-auth-middlewares
-        - name: sonarr-addprefix
+        # - name: sonarr-addprefix
   tls:
     secretName: "${SECRET_DOMAIN/./-}-production-tls"
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: sonarr-addprefix
-spec:
-  addPrefix:
-    prefix: /sonarr
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: sonarr-addprefix
+# spec:
+#   addPrefix:
+#     prefix: /sonarr
