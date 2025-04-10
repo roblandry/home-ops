@@ -25,7 +25,7 @@ metadata:
     gethomepage.dev/app: "overseerr"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "overseerr"
-    gethomepage.dev/description: "Recipe Manager & Meal Planner"
+    gethomepage.dev/description: "Find Movies and TV Shows"
     gethomepage.dev/href: "https://find.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Media"
     gethomepage.dev/icon: "overseerr.png"

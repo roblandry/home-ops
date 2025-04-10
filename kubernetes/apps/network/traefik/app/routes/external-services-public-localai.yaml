@@ -28,7 +28,7 @@ metadata:
     gethomepage.dev/description: "LocalAI"
     gethomepage.dev/href: "https://ai.${SECRET_DOMAIN}"
     gethomepage.dev/group: "AI"
-    gethomepage.dev/icon: "localai.png"
+    gethomepage.dev/icon: "openai.png"
 spec:
   entryPoints:
     - websecure

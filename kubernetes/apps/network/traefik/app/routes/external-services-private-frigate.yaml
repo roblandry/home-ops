@@ -27,7 +27,7 @@ metadata:
     gethomepage.dev/name: "frigate"
     gethomepage.dev/description: "Frigate NVR"
     gethomepage.dev/href: "https://frigate.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Other"
+    gethomepage.dev/group: "NVR"
     gethomepage.dev/icon: "frigate.png"
 spec:
   entryPoints:
