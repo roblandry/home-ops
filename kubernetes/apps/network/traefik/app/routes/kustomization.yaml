@@ -12,7 +12,6 @@ resources:
   - external-services-private-fireflyiii.yaml
   - external-services-private-frigate.yaml
   - external-services-private-kvm1.yaml
-  - external-services-private-log.yaml
   - external-services-private-maybefinance.yaml
   - external-services-private-obico.yaml
   - external-services-private-oods.yaml
