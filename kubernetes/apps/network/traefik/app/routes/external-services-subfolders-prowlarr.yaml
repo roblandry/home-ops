@@ -28,6 +28,11 @@ spec:
       services:
         - name: prowlarr
           port: 9696
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
       middlewares:
         - name: internal-auth-middlewares
   tls:

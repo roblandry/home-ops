@@ -28,6 +28,11 @@ spec:
       services:
         - name: lidarr
           port: 8686
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
       middlewares:
         - name: internal-auth-middlewares
   tls:

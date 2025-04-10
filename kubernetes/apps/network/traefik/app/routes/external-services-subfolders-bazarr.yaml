@@ -28,6 +28,11 @@ spec:
       services:
         - name: bazarr
           port: 6767
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
       middlewares:
         - name: internal-auth-middlewares
   tls:
