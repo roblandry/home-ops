@@ -18,7 +18,7 @@ resources:
   # - ./external-secrets.yaml
   # - ./grafana.yaml
   # - ./homepage.yaml
-  # - ./ingress-nginx.yaml
+  - ./ingress-nginx.yaml
   # - ./jetstack.yaml
   # - ./k8s-at-home-charts.yaml
   # - ./k8s-gateway.yaml
