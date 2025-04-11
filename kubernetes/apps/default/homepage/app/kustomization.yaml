@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   - ./configmap.yaml
   - ./helmrelease.yaml
-  - ./ingressRoute.yaml
+  # - ./ingressRoute.yaml
   - ./rbac.yaml
   - ./secret.sops.yaml

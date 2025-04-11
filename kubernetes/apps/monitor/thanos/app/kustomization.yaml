@@ -6,5 +6,5 @@ resources:
   # - ./ceph-bucket-claim.yaml
   # - ./ceph-object-store.yaml
   - ./helmrelease.yaml
-  - ./ingressRoute.yaml
+  # - ./ingressRoute.yaml
   - ./secret.sops.yaml

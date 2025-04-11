@@ -63,6 +63,37 @@ spec:
     #     gethomepage.dev/icon: grafana.svg
     #   ingressClassName: traefik
     #   hosts: ["${HOSTNAME}"]
+
+    ingress:
+      className: internal
+      annotations:
+        # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        gethomepage.dev/app: "grafana"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Grafana"
+        gethomepage.dev/description: "The open and composable observability and data visualization platform"
+        gethomepage.dev/href: "https://grafana.${SECRET_DOMAIN}"
+        gethomepage.dev/group: "Kubernetes"
+        gethomepage.dev/icon: "sh-grafana.png"
+        # gethomepage.dev/widget.type: grafana
+        # gethomepage.dev/widget.url: "https://grafana.${SECRET_DOMAIN}"
+        # gethomepage.dev/widget.username: ""
+        # gethomepage.dev/widget.password: ""
+      hosts:
+        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: app
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
+
+
     env:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
     envFromSecrets:

@@ -70,6 +70,31 @@ spec:
       #   ingressClassName: traefik
       #   hosts:
       #     - "thanos.${SECRET_DOMAIN}"
+
+    ingress:
+      className: internal
+      annotations:
+        # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        gethomepage.dev/app: "thanos"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Thanos"
+        gethomepage.dev/description: "A highly available, long-term storage and querying system for Prometheus metrics"
+        gethomepage.dev/href: "https://thanos.${SECRET_DOMAIN}"
+        gethomepage.dev/group: "Kubernetes"
+        gethomepage.dev/icon: "si-thanos"
+      hosts:
+        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: app
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
     # rule:
     #   enabled: true
     #   extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]

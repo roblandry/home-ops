@@ -41,7 +41,16 @@ spec:
             port: 8443
     ingress:
       app:
-        className: traefik
+        className: internal
+        annotations:
+          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          gethomepage.dev/app: "kubernetes-dashboard-web"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Kubernetes dashboard"
+          gethomepage.dev/description: "A web-based Kubernetes user interface"
+          gethomepage.dev/href: "https://kdash.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Kubernetes"
+          gethomepage.dev/icon: "si-kubernetes"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -53,5 +62,7 @@ spec:
         tls:
           - hosts:
               - *host
-    serviceAccount:  # @schema additionalProperties: false
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
+    serviceAccount:
       name: "admin-user"

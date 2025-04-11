@@ -12,7 +12,7 @@ spec:
   interval: 30m
   values:
     controllers:
-      main:
+      app:
         annotations:
           secret.reloader.stakater.com/reload: &secret n8n-secret
         initContainers:
@@ -31,7 +31,7 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/n8n-io/n8n
               tag: 1.85.4
@@ -82,13 +82,13 @@ spec:
         storageClass: ceph-filesystem
 
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: *port
     # ingress:
-    #   main:
+    #   app:
     #     enabled: true
     #     className: private
     #     annotations:
@@ -101,6 +101,30 @@ spec:
     #         paths:
     #           - path: /
     #             service:
-    #               name: main
+    #               name: app
     #               port: http
     #     tls: [hosts: [*host]]
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          gethomepage.dev/app: "n8n"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "n8n"
+          gethomepage.dev/description: "An extendable workflow automation tool"
+          gethomepage.dev/href: "https://n8n.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Automation"
+          gethomepage.dev/icon: "sh-n8n.png"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"

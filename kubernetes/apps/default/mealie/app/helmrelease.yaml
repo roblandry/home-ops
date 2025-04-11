@@ -52,6 +52,35 @@ spec:
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
 
+    ingress:
+      app:
+        className: internal
+        annotations:
+          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          gethomepage.dev/app: "mealie"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "mealie"
+          gethomepage.dev/description: "Recipe Manager & Meal Planner"
+          gethomepage.dev/href: "https://food.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Other"
+          gethomepage.dev/icon: "mealie.png"
+          gethomepage.dev/widget.type: "mealie"
+          gethomepage.dev/widget.url: "http://food.${SECRET_DOMAIN}"
+          gethomepage.dev/widget.version: "2"
+          gethomepage.dev/widget.key: "${HOMEPAGE_VAR_MEALIE_KEY}"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
     persistence:
       config:
         enabled: true

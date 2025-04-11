@@ -4,7 +4,7 @@ metadata:
   name: thanos
   namespace: monitor
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "kdash.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/hostname: "thanos.${SECRET_DOMAIN}"
     gethomepage.dev/app: "thanos"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Thanos"

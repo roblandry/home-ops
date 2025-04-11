@@ -10,6 +10,6 @@ resources:
   - ./authentik/ks.yaml
   - ./error-pages/ks.yaml
   - ./external/ks.yaml
-  # - ./internal/ks.yaml
-  - ./k8s-gateway/ks.yaml
-  - ./traefik/ks.yaml
+  - ./internal/ks.yaml
+  # - ./k8s-gateway/ks.yaml
+  # - ./traefik/ks.yaml

@@ -39,7 +39,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: traefik
+        ingressClassName: internal
         annotations:
           gethomepage.dev/app: "rook-ceph"
           gethomepage.dev/enabled: "true"
@@ -49,8 +49,14 @@ spec:
           gethomepage.dev/group: "Storage"
           gethomepage.dev/icon: "sh-ceph.png"
         host:
-          name: "rook.${SECRET_DOMAIN}"
+          name: &host "rook.${SECRET_DOMAIN}"
           path: /
+
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
     toolbox:
       enabled: true
 
