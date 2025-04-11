@@ -55,7 +55,7 @@ spec:
     logs:
       general:
         format: json
-        level: WARN
+        level: DEBUG
       access:
         enabled: true
         format: json

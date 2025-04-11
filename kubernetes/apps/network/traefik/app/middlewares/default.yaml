@@ -7,7 +7,7 @@ metadata:
 spec:
   chain:
     middlewares:
-      - name: authentik
+      # - name: authentik
       - name: error-pages
       - name: internal-only
       - name: default-headers
