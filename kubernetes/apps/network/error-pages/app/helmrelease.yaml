@@ -51,6 +51,7 @@ spec:
       limits:
         memory: 250Mi
     ingress:
+      enabled: true
       className: external
       annotations:
         external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
