@@ -8,7 +8,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: main-template
+    name: app-template
   interval: 30m
   values:
     controllers:

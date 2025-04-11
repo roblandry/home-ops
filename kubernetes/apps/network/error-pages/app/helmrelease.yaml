@@ -27,9 +27,9 @@ spec:
         name: k8s-at-home-charts
         namespace: network
       interval: 5m
-  dependsOn:
-    - name: traefik
-      namespace: network
+  # dependsOn:
+  #   - name: traefik
+  #     namespace: network
   install:
     createNamespace: true
     remediation:

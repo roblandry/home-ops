@@ -35,9 +35,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: traefik
-      namespace: network
+  # dependsOn:
+  #   - name: traefik
+  #     namespace: network
   values:
     global:
       nodeSelector:
