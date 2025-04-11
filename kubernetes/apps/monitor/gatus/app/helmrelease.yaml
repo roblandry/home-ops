@@ -128,8 +128,6 @@ spec:
               - *host
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
-
-
     serviceAccount:
       create: true
       name: gatus
