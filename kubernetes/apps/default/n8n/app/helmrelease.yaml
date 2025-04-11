@@ -8,11 +8,11 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: main-template
   interval: 30m
   values:
     controllers:
-      app:
+      main:
         annotations:
           secret.reloader.stakater.com/reload: &secret n8n-secret
         initContainers:
@@ -31,7 +31,7 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
         containers:
-          app:
+          main:
             image:
               repository: ghcr.io/n8n-io/n8n
               tag: 1.85.4
@@ -82,13 +82,13 @@ spec:
         storageClass: ceph-filesystem
 
     service:
-      app:
-        controller: app
+      main:
+        controller: main
         ports:
           http:
             port: *port
     # ingress:
-    #   app:
+    #   main:
     #     enabled: true
     #     className: private
     #     annotations:
@@ -101,11 +101,11 @@ spec:
     #         paths:
     #           - path: /
     #             service:
-    #               name: app
+    #               name: main
     #               port: http
     #     tls: [hosts: [*host]]
     ingress:
-      app:
+      main:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
@@ -122,7 +122,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: app
+                  identifier: main
                   port: http
         tls:
           - hosts:
