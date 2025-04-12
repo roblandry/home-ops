@@ -251,7 +251,7 @@ spec:
             region: us-east-1
         ingress:
           enabled: true
-          ingressClassName: traefik
+          ingressClassName: internal
           host:
             name: "rgw.${SECRET_DOMAIN}"
             path: /
