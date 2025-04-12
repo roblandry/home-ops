@@ -39,6 +39,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        className: internal
         annotations:
           # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           gethomepage.dev/app: "kubernetes-dashboard-web"
@@ -53,9 +54,8 @@ spec:
           - &host "kdash.${SECRET_DOMAIN}"
 
         tls:
-          - hosts:
-              - *host
-            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+          enabled: true
+          secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
     serviceAccount:
       name: "admin-user"
@@ -116,7 +116,7 @@ spec:
       # labels: {}
       # annotations: {}
       # # Common priority class used for all deployed resources
-      # priorityClassName: null
+      # priorityClassName: nullhttps://kdash.landrys.io/
       # settings:
       #   ## Global dashboard settings
       #   global:
