@@ -3,13 +3,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN}
+  # annotations:
+    # external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN}
 spec:
   type: LoadBalancer
-  externalIPs:
-    - 10.0.10.125
-  externalTrafficPolicy: Local
+  # externalIPs:
+    # - 10.0.10.125
+  # externalTrafficPolicy: Local
   ports:
     - name: postgres
       port: 5432
