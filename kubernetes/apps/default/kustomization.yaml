@@ -8,6 +8,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./echo/ks.yaml
-  - ./homepage/ks.yaml
-  - ./mealie/ks.yaml
-  - ./n8n/ks.yaml
+  # - ./homepage/ks.yaml
+  # - ./mealie/ks.yaml
+  # - ./n8n/ks.yaml
