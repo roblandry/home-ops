@@ -14,4 +14,4 @@ resources:
   - ./loki/ks.yaml
   - ./thanos/ks.yaml
   - ./unpoller/ks.yaml
-  - ./vector/ks.yaml
+  # - ./vector/ks.yaml
