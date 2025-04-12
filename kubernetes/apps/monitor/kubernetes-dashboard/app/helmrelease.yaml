@@ -36,6 +36,7 @@ spec:
     service:
       app:
         controller: *app
+        type: NodePort
         ports:
           http:
             port: 8443
