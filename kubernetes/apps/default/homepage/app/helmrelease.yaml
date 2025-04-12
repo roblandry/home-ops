@@ -50,8 +50,8 @@ spec:
             port: 3000
     ingress:
       app:
-        # className: internal
-        ingressClassName: internal
+        className: internal
+        # ingressClassName: internal
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           # gateway.networking.k8s.io/hostname: "homepage.${SECRET_DOMAIN}"
