@@ -42,15 +42,16 @@ spec:
                 memory: 2G
     service:
       app:
-        annotations:
-          ingress.k8s.io/class: internal
+        # annotations:
+          # ingress.k8s.io/class: internal
         controller: *app
         ports:
           http:
             port: 3000
     ingress:
       app:
-        className: internal
+        # className: internal
+        ingressClassName: internal
         annotations:
         #   external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           gateway.networking.k8s.io/hostname: "homepage.${SECRET_DOMAIN}"
