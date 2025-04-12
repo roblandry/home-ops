@@ -52,6 +52,17 @@ spec:
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
 
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 9000
+            targetPort: 9000
+          # websocket:
+          #   enabled: true
+          #   port: 3012
+
     ingress:
       main:
         className: internal
@@ -98,10 +109,4 @@ spec:
       #   server: ${SETTINGS_NAS_IP}
       #   path: /mnt/user/appdata/mealie
 
-    service:
-      main:
-        controller: main
-        ports:
-          http:
-            port: 9000
 
