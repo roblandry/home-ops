@@ -21,17 +21,17 @@ spec:
       main:
 
         # Copy files from docker host
-        # initContainers:
-        #   copy-import:
-        #     image:
-        #       repository: busybox
-        #       tag: latest
-        #     command:
-        #       - sh
-        #       - -c
-        #       - |
-        #         echo "Copying files from /import to /app/data..."
-        #         cp -rv /import/. /app/data/
+        initContainers:
+          copy-import:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                echo "Copying files from /import to /app/data..."
+                cp -rv /import/. /app/data/
 
         strategy: Recreate
         containers:
@@ -65,9 +65,9 @@ spec:
 
     ingress:
       main:
-        className: internal
+        className: external
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           gethomepage.dev/app: "mealie"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "mealie"
@@ -103,10 +103,10 @@ spec:
           - path: /app/data
 
       # Copy files from docker host
-      # import:
-      #   enabled: true
-      #   type: nfs
-      #   server: ${SETTINGS_NAS_IP}
-      #   path: /mnt/user/appdata/mealie
+      import:
+        enabled: true
+        type: nfs
+        server: ${SETTINGS_NAS_IP}
+        path: /mnt/user/appdata/mealie
 
 
