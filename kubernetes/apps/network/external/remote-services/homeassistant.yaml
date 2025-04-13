@@ -1,0 +1,79 @@
+# SETTINGS_HASS_IP
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: homeassistant
+  namespace: network
+spec:
+  type: ExternalName
+  ports:
+    - name: http
+      port: 8123
+      targetPort: 8123
+  externalName: ${SETTINGS_HASS_IP}
+# ---
+# # yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: homeassistant-ingress
+#   namespace: network
+#   annotations:
+#     external-dns.alpha.kubernetes.io/hostname: "hass.${SECRET_DOMAIN}"
+#     kubernetes.io/ingress.class: traefik
+#     gethomepage.dev/app: "homeassistant"
+#     gethomepage.dev/enabled: "true"
+#     gethomepage.dev/name: "Home Assistant"
+#     gethomepage.dev/description: "Home Automation System"
+#     gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
+#     gethomepage.dev/group: "Automation"
+#     gethomepage.dev/icon: "home-assistant.png"
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`hass.${SECRET_DOMAIN}`)
+#       kind: Rule
+#       priority: 1
+#       services:
+#         - name: homeassistant
+#           port: 8123
+#       middlewares:
+#         - name: external-auth-middlewares
+#   tls:
+#     secretName: "${SECRET_DOMAIN/./-}-production-tls"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homeassistant-ingress
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+    gethomepage.dev/app: "homeassistant"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Home Assistant"
+    gethomepage.dev/description: "Home Automation System"
+    gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Automation"
+    gethomepage.dev/icon: "home-assistant.png"
+spec:
+  ingressClassName: external
+  rules:
+    - host: "hass.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: homeassistant
+              port:
+                number: 8123
+  tls:
+    - hosts:
+        - "hass.${SECRET_DOMAIN}"
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"
