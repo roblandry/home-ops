@@ -6,22 +6,35 @@ metadata:
   name: remote-internal-apps
   namespace: network
 spec:
-  type: ExternalName
+  # type: ExternalName
   ports:
     - name: http
       port: 81
       targetPort: 81
-  externalName: ${SETTINGS_NAS_IP}
+  # externalName: ${SETTINGS_NAS_IP}
   # selector: {}
   # externalIPs:
   #   - ${SETTINGS_NAS_IP}
+
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpoints.json
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: remote-internal-apps
+  namespace: network
+subsets:
+- addresses:
+  - ip: ${SETTINGS_NAS_IP}
+  ports:
+  - port: 81
 
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps-ingress
+  name: remote-internal-apps
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
