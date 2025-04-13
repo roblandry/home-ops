@@ -54,27 +54,6 @@ spec:
       autoMount: true
     initChownData:
       enabled: false
-    # ingress:
-    #   enabled: true
-    #   annotations:
-    #     gethomepage.dev/enabled: "true"
-    #     gethomepage.dev/group: Infrastructure
-    #     gethomepage.dev/name: Grafana
-    #     gethomepage.dev/icon: grafana.svg
-    #   ingressClassName: traefik
-    #   hosts: ["${HOSTNAME}"]
-
-    # ingress:
-    #   enabled:	false
-    #   annotations: {}
-    #   labels:	{}
-    #   path:	/
-    #   pathType: Prefix
-    #   hosts: ["chart-example.local"]
-    #   extraPaths: []
-    #   tls: []
-    #   ingressClassName:
-
     ingress:
       enabled: true
       ingressClassName: internal
@@ -93,18 +72,10 @@ spec:
         # gethomepage.dev/widget.password: ""
       hosts:
         - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-          # paths:
-          #   - path: /
-          #     pathType: Prefix
-          #     service:
-          #       identifier: app
-          #       port: http
       tls:
         - hosts:
             - *host
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
-
-
 
     env:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
