@@ -41,7 +41,7 @@ spec:
       dashboard:
         ingressClassName: internal
         annotations:
-          gethomepage.dev/app: "rook-ceph"
+          gethomepage.dev/app: "rook-ceph-mgr-dashboard"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Rook-Ceph"
           gethomepage.dev/description: "Rook-Ceph Dashboard"
