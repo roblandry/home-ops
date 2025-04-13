@@ -83,12 +83,8 @@ spec:
 
       storage:
         useAllNodes: true
-        useAllDevices: false
-        # deviceFilter: sdb
-        devices:
-          - name: sdb
-            config:
-              osdsPerDevice: "1"
+        useAllDevices: true
+        deviceFilter: sdb
 
         config:
           osdsPerDevice: "1"
