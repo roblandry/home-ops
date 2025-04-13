@@ -58,13 +58,13 @@ spec:
         ports:
           http:
             port: 9000
-            targetPort: 9000
           # websocket:
           #   enabled: true
           #   port: 3012
 
     ingress:
       main:
+        enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
