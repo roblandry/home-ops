@@ -6,15 +6,15 @@ metadata:
   name: remote-internal-apps
   namespace: network
 spec:
-  type: ExternalName
+  # type: ExternalName
   ports:
     - name: http
       port: 81
       targetPort: 81
-  externalName: ${SETTINGS_NAS_IP}
-  # selector: {}
-  # externalIPs:
-    # - ${SETTINGS_NAS_IP}
+  # externalName: ${SETTINGS_NAS_IP}
+  selector: {}
+  externalIPs:
+    - ${SETTINGS_NAS_IP}
 
 
 # ---
