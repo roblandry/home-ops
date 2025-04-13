@@ -24,7 +24,7 @@ resources:
   # - ./k8s-gateway.yaml
   # - ./kubernetes-dashboard.yaml
 
-  # - ./kubernetes-csi-addons.yaml
+  - ./kubernetes-csi-addons.yaml
 
   # gatus
   - ./kiwigrid.yaml
