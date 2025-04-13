@@ -67,7 +67,7 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "sh-authentik.png"
         hosts:
-          - host: &host "auth.${SECRET_DOMAIN}"
+          - &host "auth.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
