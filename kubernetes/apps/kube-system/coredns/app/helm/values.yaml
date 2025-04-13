@@ -38,6 +38,13 @@ servers:
       - name: loop
       - name: reload
       - name: loadbalance
+      # Forward all .lan queries to Pi-hole VIP (10.0.10.50)
+      - name: forward
+        parameters: .lan 10.0.10.50  # Pi-hole IP
+      # Rewrite rule for any .lan domain to resolve to the same domain
+      - name: rewrite
+        configBlock: |-
+          name regex ^([a-zA-Z0-9-]+)\.lan$ ${1}.lan
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
