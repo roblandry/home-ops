@@ -116,21 +116,9 @@ spec:
     #             requests:
     #               storage: 1Gi
     prometheus:
-      # ingress:
-      #   enabled: true
-      #   ingressClassName: traefik
-      #   annotations:
-      #     gethomepage.dev/enabled: "true"
-      #     gethomepage.dev/group: Infrastructure
-      #     gethomepage.dev/name: Prometheus
-      #     gethomepage.dev/icon: prometheus.svg
-      #     gethomepage.dev/pod-selector: app.kubernetes.io/name=prometheus
-      #     gethomepage.dev/widget.type: prometheus
-      #     gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitor:9090
-      #   pathType: Prefix
-      #   hosts: ["promethius.${SECRET_DOMAIN}"]
       ingress:
-        className: internal
+        enabled: true
+        ingressClassName: internal
         annotations:
           # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           gethomepage.dev/app: "prometheus"
@@ -142,12 +130,6 @@ spec:
           gethomepage.dev/icon: "sh-prometheus.png"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
         tls:
           - hosts:
               - *host
