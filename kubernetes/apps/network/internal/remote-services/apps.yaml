@@ -6,15 +6,15 @@ metadata:
   name: remote-internal-apps
   namespace: network
 spec:
-  # type: ExternalName
+  type: ExternalName
   ports:
     - name: http
       port: 81
       targetPort: 81
-  # externalName: ${SETTINGS_NAS_IP}
-  selector: {}
-  externalIPs:
-    - ${SETTINGS_NAS_IP}
+  externalName: ${SETTINGS_NAS_IP}
+  # selector: {}
+  # externalIPs:
+    # - ${SETTINGS_NAS_IP}
 
 
 # ---
@@ -74,7 +74,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: apps
+              name: remote-internal-apps
               port:
                 number: 81
   tls:
