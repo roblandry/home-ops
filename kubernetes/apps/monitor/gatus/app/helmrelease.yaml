@@ -116,7 +116,7 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "sh-gatus.png"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "status.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
