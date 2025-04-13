@@ -6,18 +6,18 @@ metadata:
   name: remote-internal-apps
   namespace: network
 spec:
-  # type: ExternalName
-  type: ClusterIP
+  type: ExternalName
+  # type: ClusterIP
   ports:
     - name: http
       port: 81
       targetPort: 81
-  # externalName: ${SETTINGS_NAS_IP}
+  externalName: ${SETTINGS_NAS_NAME}
   # selector: {}
   # externalIPs:
   #   - ${SETTINGS_NAS_IP}
 
----
+# ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 # apiVersion: v1
 # kind: Endpoints
@@ -29,19 +29,19 @@ spec:
 #   - ip: ${SETTINGS_NAS_IP}
 #   ports:
 #   - port: 81
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
-metadata:
-  name: remote-internal-apps
-  namespace: network
-  labels:
-    kubernetes.io/service-name: remote-internal-apps
-addressType: IPv4
-ports:
-  - port: 81
-endpoints:
-  - addresses:
-    - ${SETTINGS_NAS_IP}
+# apiVersion: discovery.k8s.io/v1
+# kind: EndpointSlice
+# metadata:
+#   name: remote-internal-apps
+#   namespace: network
+#   labels:
+#     kubernetes.io/service-name: remote-internal-apps
+# addressType: IPv4
+# ports:
+#   - port: 81
+# endpoints:
+#   - addresses:
+#     - ${SETTINGS_NAS_IP}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
