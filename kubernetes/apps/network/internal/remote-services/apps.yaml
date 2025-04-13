@@ -17,18 +17,30 @@ spec:
   #   - ${SETTINGS_NAS_IP}
 
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpoints.json
-apiVersion: v1
-kind: Endpoints
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+# apiVersion: v1
+# kind: Endpoints
+# metadata:
+#   name: remote-internal-apps
+#   namespace: network
+# subsets:
+# - addresses:
+#   - ip: ${SETTINGS_NAS_IP}
+#   ports:
+#   - port: 81
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
   name: remote-internal-apps
   namespace: network
-subsets:
-- addresses:
-  - ip: ${SETTINGS_NAS_IP}
-  ports:
+  labels:
+    kubernetes.io/service-name: remote-internal-apps
+addressType: IPv4
+ports:
   - port: 81
-
+endpoints:
+  - addresses:
+    - ${SETTINGS_NAS_IP}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
