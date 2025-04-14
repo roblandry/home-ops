@@ -68,6 +68,7 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/custom-http-errors: "401,403,404,500,501,502,503,504,505,506,507,508,510,511"
           gethomepage.dev/app: "mealie"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "mealie"
