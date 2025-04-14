@@ -66,10 +66,8 @@ spec:
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
-      controller:
-        config:
-          custom-http-errors: >-
-            401,403,404,500,501,502,503,504,505,506,507,508,510,511
+        custom-http-errors: >-
+          401,403,404,500,501,502,503,504,505,506,507,508,510,511
       defaultBackend:
         enabled: true
         image:
