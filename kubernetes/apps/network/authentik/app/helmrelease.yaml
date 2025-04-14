@@ -83,10 +83,10 @@ spec:
       log_level: debug
       redis:
         host: dragonfly.database.svc.cluster.local
-      # outposts:
-      #   embedded:
-      #     ingress:
-      #       enabled: false
+      outposts:
+        embedded:
+          ingress:
+            enabled: false
 
     # redis:
     #   enabled: true
