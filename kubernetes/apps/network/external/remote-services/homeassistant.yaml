@@ -1,4 +1,3 @@
-# SETTINGS_HASS_IP
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
 kind: Service
@@ -18,7 +17,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-external-homeassistant-ingress
+  name: remote-external-homeassistant
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
@@ -39,7 +38,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: homeassistant
+              name: remote-external-homeassistant
               port:
                 number: 8123
   tls:
