@@ -25,8 +25,8 @@ spec:
         kind: HelmRepository
         name: stevehipwell
         namespace: monitor
-  dependsOn:
-    - name: kube-prometheus-stack
+  # dependsOn:
+  #   - name: kube-prometheus-stack
   interval: 30m
   maxHistory: 3
   uninstall:
