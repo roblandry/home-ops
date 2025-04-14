@@ -37,6 +37,7 @@ spec:
       name: kube-state-metrics-config
       valuesKey: kube-state-metrics.yaml
   values:
+    # yaml-language-server: $schema=https://raw.githubusercontent.com/prometheus-community/helm-charts/refs/tags/kube-prometheus-stack-70.4.2/charts/prometheus/values.schema.json
     crds:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
@@ -130,7 +131,7 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "sh-prometheus.png"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
