@@ -86,7 +86,7 @@ spec:
       outposts:
         embedded:
           ingress:
-            enabled: false
+            enabled: true
 
     # redis:
     #   enabled: true
