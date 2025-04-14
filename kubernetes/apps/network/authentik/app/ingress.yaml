@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host auth.${SECRET_DOMAIN}
+    - host: &host ak-outpost.${SECRET_DOMAIN}
       http:
         paths:
           - path: /outpost.goauthentik.io
