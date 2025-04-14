@@ -3,6 +3,10 @@ kind: Ingress
 metadata:
   name: ak-outpost-authentik-embedded-outpost
   namespace: network
+  labels:
+    app.kubernetes.io/instance: authentik-embedded-outpost
+    app.kubernetes.io/managed-by: goauthentik.io
+    app.kubernetes.io/name: authentik-proxy
 spec:
   tls:
     - hosts:
