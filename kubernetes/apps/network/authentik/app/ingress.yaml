@@ -3,13 +3,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: authentik-embedded-outpost
+  name: authentik-internal
   namespace: network
   # labels:
   #   app.kubernetes.io/instance: authentik-embedded-outpost
   #   app.kubernetes.io/managed-by: goauthentik.io
   #   app.kubernetes.io/name: authentik-embedded-outpost
 spec:
+  ingressClassName: internal
   rules:
     - host: &host auth.${SECRET_DOMAIN}
       http:
@@ -30,10 +31,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: authentik-proxy
+  name: authentik-external
   namespace: network
-spec:
-  ingressClassName: external
   annotations:
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     gethomepage.dev/app: "authentik"
@@ -43,8 +42,19 @@ spec:
     gethomepage.dev/href: "https://auth.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Kubernetes"
     gethomepage.dev/icon: "sh-authentik.png"
-  hosts:
-    - &host "auth.${SECRET_DOMAIN}"
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host auth.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: authentik-server
+                port:
+                  number: 443
   tls:
     - hosts:
         - *host
