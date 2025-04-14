@@ -42,10 +42,10 @@ spec:
       pspEnabled: false
     persistence:
       enabled: true
-      storageClass: rook-ceph-block
+      storageClass: ceph-filesystem
       size: 15Gi
-      # accessModes:
-      #   - ReadWriteMany
+      accessModes:
+        - ReadWriteMany
     testFramework:
       enabled: false
     imageRenderer:
