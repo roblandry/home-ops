@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+# yaml-language-server: $schema: https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -7,8 +7,11 @@ metadata:
   namespace: network
   labels:
     app.kubernetes.io/instance: authentik-embedded-outpost
-    app.kubernetes.io/managed-by: goauthentik.io
-    app.kubernetes.io/name: authentik-embedded-outpost
+    # app.kubernetes.io/managed-by: goauthentik.io
+    app.kubernetes.io/name: authentik-proxy
+    goauthentik.io/outpost-name: authentik-embedded-outpost
+    goauthentik.io/outpost-type: proxy
+    goauthentik.io/outpost-version: 2025.2.4
 spec:
   ingressClassName: internal
   rules:
@@ -27,7 +30,7 @@ spec:
         - *host
       secretName: "${SECRET_DOMAIN/./-}-production-tls"
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+# yaml-language-server: $schema: https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
