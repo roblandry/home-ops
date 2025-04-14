@@ -1,7 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ak-outpost-authentik-embedded-outpost
+  # name: ak-outpost-authentik-embedded-outpost
+  name: authentik-proxy
   namespace: network
   labels:
     app.kubernetes.io/instance: authentik-embedded-outpost
