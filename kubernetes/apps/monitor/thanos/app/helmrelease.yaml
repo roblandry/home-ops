@@ -85,7 +85,7 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "si-thanos"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
