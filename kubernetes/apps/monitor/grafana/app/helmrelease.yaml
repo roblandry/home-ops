@@ -44,8 +44,8 @@ spec:
       enabled: true
       storageClass: rook-ceph-block
       size: 15Gi
-      accessModes:
-        - ReadWriteMany
+      # accessModes:
+      #   - ReadWriteMany
     testFramework:
       enabled: false
     imageRenderer:
