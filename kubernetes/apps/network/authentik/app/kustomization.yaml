@@ -8,3 +8,5 @@ resources:
   - helmrelease.yaml
   # - ingressRoute.yaml
   # - volsync.yaml
+patchesStrategicMerge:
+  - ingress-patch.yaml
