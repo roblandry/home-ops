@@ -56,9 +56,9 @@ spec:
           envFrom: *envFrom
       ingress:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           gethomepage.dev/app: "authentik"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Authentik"
