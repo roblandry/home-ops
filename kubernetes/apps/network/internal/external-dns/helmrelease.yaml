@@ -46,10 +46,10 @@ spec:
     sources: ["service", "ingress"]
     # txtPrefix: k8s.
     # txtOwnerId: default
-    domainFilters: [".lan"]
+    domainFilters: ["${SECRET_LOCAL_DOMAIN}"]
     forwardDNS:
       enabled: true
-      forwardTo: "10.0.10.1"
+      forwardTo: "${SETTINGS_UNIFI_IP}"
     serviceMonitor:
       enabled: true
     # podAnnotations:
