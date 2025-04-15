@@ -55,7 +55,7 @@ spec:
           image: ghcr.io/onedr0p/postgres-init:17.4
           envFrom: *envFrom
       ingress:
-        enabled: false
+        enabled: true
         ingressClassName: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
