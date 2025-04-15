@@ -38,7 +38,7 @@ spec:
       # - --crd-source-kind=DNSEndpoint
       # - --events
       # - --ignore-ingress-tls-spec
-      - --dns-namespace=kube-system
+      # - --dns-namespace=kube-system
       # - --sources=ingress,service
       # - --domain-filters="${SECRET_DOMAIN}"
       - --ingress-class=internal
