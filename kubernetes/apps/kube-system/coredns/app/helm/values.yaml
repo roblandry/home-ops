@@ -38,20 +38,20 @@ servers:
       - name: loop
       - name: reload
       - name: loadbalance
-  # # Forward all .lan addresses to Pi-hole VIP (10.0.10.50)
-  # - zones:
-  #     - zone: lan
-  #       scheme: dns://
-  #       use_tcp: true
-  #   port: 53
-  #   plugins:
-  #     # Forward all .lan queries to Pi-hole VIP (10.0.10.50)
-  #     - name: forward
-  #       parameters: . 10.0.10.50  # Pi-hole IP
-  #     # Rewrite rule for any .lan domain to resolve to the same domain
-  #     - name: rewrite
-  #       configBlock: |-
-  #         name regex ^([a-zA-Z0-9-]+)\.lan$ ${1}.lan
+  # Forward all .lan addresses to Unifi
+  - zones:
+      - zone: lan
+        scheme: dns://
+        use_tcp: true
+    port: 53
+    plugins:
+      # Forward all .lan queries to Unifi
+      - name: forward
+        parameters: . ${SETTINGS_UNIFI_IP}
+      # Rewrite rule for any .lan domain to resolve to the same domain
+      - name: rewrite
+        configBlock: |-
+          name regex ^([a-zA-Z0-9-]+)\.lan$ ${1}.lan
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
