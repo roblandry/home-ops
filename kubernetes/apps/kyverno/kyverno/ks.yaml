@@ -34,6 +34,10 @@ spec:
       namespace: *namespace
   interval: 30m
   path: ./kubernetes/apps/kyverno/kyverno/policies
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
