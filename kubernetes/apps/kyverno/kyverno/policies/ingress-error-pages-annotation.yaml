@@ -25,5 +25,5 @@ spec:
           metadata:
             annotations:
               +(nginx.ingress.kubernetes.io/custom-http-errors): |-
-                "403,404,500,501,502,503"
+                403,404,500,501,502,503
   background: true
