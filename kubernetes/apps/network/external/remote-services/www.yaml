@@ -3,45 +3,54 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-www
   namespace: network
 spec:
   type: ExternalName
   ports:
-    - name: http
-      port: 8123
-      targetPort: 8123
-  externalName: ${SETTINGS_HASS_NAME}
+    - name: https
+      port: 442
+      targetPort: 442
+  externalName: ${SETTINGS_NAS_NAME}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-www
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "homeassistant"
+    gethomepage.dev/app: "www"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Home Assistant"
-    gethomepage.dev/description: "Home Automation System"
-    gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Automation"
-    gethomepage.dev/icon: "home-assistant.png"
+    gethomepage.dev/name: "www"
+    gethomepage.dev/description: "Personal Website"
+    gethomepage.dev/href: "https://www.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Web"
+    gethomepage.dev/icon: "wordpress.png"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "hass.${SECRET_DOMAIN}"
-      http:
+    - host: "${SECRET_DOMAIN}"
+      http: &backend
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-external-homeassistant
+              name: remote-external-www
               port:
-                number: 8123
+                number: 442
+    - host: &host "www.${SECRET_DOMAIN}"
+      http: *backend
+    - host: "code.${SECRET_DOMAIN}"
+      http: *backend
+    - host: "family.${SECRET_DOMAIN}"
+      http: *backend
+    - host: "payback.${SECRET_DOMAIN}"
+      http: *backend
+
   tls:
     - hosts:
         - *host

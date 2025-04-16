@@ -3,45 +3,48 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-nextcloud
   namespace: network
 spec:
   type: ExternalName
   ports:
-    - name: http
-      port: 8123
-      targetPort: 8123
-  externalName: ${SETTINGS_HASS_NAME}
+    - name: https
+      port: 4443
+      targetPort: 4443
+  externalName: ${SETTINGS_NAS_NAME}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-nextcloud
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "homeassistant"
+    gethomepage.dev/app: "nextcloud"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Home Assistant"
-    gethomepage.dev/description: "Home Automation System"
-    gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Automation"
-    gethomepage.dev/icon: "home-assistant.png"
+    gethomepage.dev/name: "nextcloud"
+    gethomepage.dev/description: "Personal Cloud Storage"
+    gethomepage.dev/href: "https://cloud.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Office"
+    gethomepage.dev/icon: "nextcloud.png"
+    # gethomepage.dev/widget.type: "nextcloud"
+    # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
+    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "hass.${SECRET_DOMAIN}"
+    - host: &host "cloud.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-external-homeassistant
+              name: remote-external-nextcloud
               port:
-                number: 8123
+                number: 4443
   tls:
     - hosts:
         - *host

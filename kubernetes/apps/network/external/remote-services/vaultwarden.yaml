@@ -3,45 +3,45 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-vaultwarden
   namespace: network
 spec:
   type: ExternalName
   ports:
     - name: http
-      port: 8123
-      targetPort: 8123
-  externalName: ${SETTINGS_HASS_NAME}
+      port: 4743
+      targetPort: 4743
+  externalName: ${SETTINGS_NAS_NAME}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-external-homeassistant
+  name: remote-external-vaultwarden
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "homeassistant"
+    gethomepage.dev/app: "vaultwarden"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Home Assistant"
-    gethomepage.dev/description: "Home Automation System"
-    gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Automation"
-    gethomepage.dev/icon: "home-assistant.png"
+    gethomepage.dev/name: "vaultwarden"
+    gethomepage.dev/description: "Password Manager"
+    gethomepage.dev/href: "https://pass.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Services"
+    gethomepage.dev/icon: "bitwarden.png"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "hass.${SECRET_DOMAIN}"
+    - host: &host "pass.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-external-homeassistant
+              name: remote-external-vaultwarden
               port:
-                number: 8123
+                number: 4743
   tls:
     - hosts:
         - *host
