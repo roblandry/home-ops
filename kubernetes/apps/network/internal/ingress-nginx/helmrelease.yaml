@@ -24,6 +24,7 @@ spec:
   values:
     fullnameOverride: internal-ingress-nginx
     controller:
+      allow-snippet-annotations: true
       service:
         annotations:
           lbipam.cilium.io/ips: "10.0.10.128"
