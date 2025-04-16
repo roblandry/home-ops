@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/kyverno.io/clusterpolicy_v1.json
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: ingress-error-pages-annotation
+  annotations:
+    policies.kyverno.io/title: Error-page ingress annotation
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/description: >-
+      This policy creates an error-pages annotations on ingresses. When
+      the `error-pages.home.arpa/enabled` annotation is `true` it
+      applies the nginx auth annotations for use with tarampampam/error-pages.
+spec:
+  rules:
+    - name: auth
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                error-pages.home.arpa/enabled: "true"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(nginx.ingress.kubernetes.io/custom-http-errors): |-
+                "401,403,404,500,501,502,503,504,505,506,507,508,510,511"
