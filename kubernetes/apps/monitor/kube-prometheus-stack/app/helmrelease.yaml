@@ -123,6 +123,7 @@ spec:
         annotations:
           # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           error-pages.home.arpa/enabled: "true"
+          authentik.home.arpa/enabled: "true"
           gethomepage.dev/app: "prometheus"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Prometheus"
@@ -131,7 +132,7 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "sh-prometheus.png"
         hosts:
-          - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - &host "prometheus.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
