@@ -6,7 +6,7 @@ resources:
   - externalsecret.yaml
   # - postgres-db.yaml
   - helmrelease.yaml
-  # - ingress.yaml
+  - ingress.yaml
   # - volsync.yaml
 # patchesStrategicMerge:
 #   - ingress-patch.yaml
