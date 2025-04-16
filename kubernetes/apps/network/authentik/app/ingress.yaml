@@ -1,34 +1,39 @@
-# ---
-# # yaml-language-server: $schema: https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ak-outpost-authentik-embedded-outpost
-#   namespace: network
-#   labels:
-#     app.kubernetes.io/instance: authentik-embedded-outpost
-#     # app.kubernetes.io/managed-by: goauthentik.io
-#     app.kubernetes.io/name: authentik-proxy
-#     goauthentik.io/outpost-name: authentik-embedded-outpost
-#     goauthentik.io/outpost-type: proxy
-#     goauthentik.io/outpost-version: 2025.2.4
-# spec:
-#   ingressClassName: internal
-#   rules:
-#     - host: &host auth.${SECRET_DOMAIN}
-#       http:
-#         paths:
-#           - path: /outpost.goauthentik.io
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: ak-outpost-authentik-embedded-outpost
-#                 port:
-#                   number: 9000
-#   tls:
-#     - hosts:
-#         - *host
-#       secretName: "${SECRET_DOMAIN/./-}-production-tls"
+---
+# yaml-language-server: $schema: https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ak-outpost-authentik-embedded-outpost
+  namespace: network
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
+    traefik.ingress.kubernetes.io/affinity: "true"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  labels:
+    app.kubernetes.io/instance: authentik-embedded-outpost
+    app.kubernetes.io/managed-by: goauthentik.io
+    app.kubernetes.io/name: authentik-proxy
+    goauthentik.io/outpost-name: authentik-embedded-outpost
+    goauthentik.io/outpost-type: proxy
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host auth.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /outpost.goauthentik.io
+            pathType: Prefix
+            backend:
+              service:
+                name: ak-outpost-authentik-embedded-outpost
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - *host
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"
 ---
 # yaml-language-server: $schema: https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -45,6 +50,16 @@ metadata:
     gethomepage.dev/href: "https://auth.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Kubernetes"
     gethomepage.dev/icon: "sh-authentik.png"
+    meta.helm.sh/release-name: authentik
+    meta.helm.sh/release-namespace: network
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/part-of: authentik
+    helm.toolkit.fluxcd.io/name: authentik
+    helm.toolkit.fluxcd.io/namespace: network
 spec:
   ingressClassName: external
   rules:
