@@ -18,7 +18,7 @@ metadata:
     goauthentik.io/outpost-name: authentik-embedded-outpost
     goauthentik.io/outpost-type: proxy
 spec:
-  ingressClassName: external
+  ingressClassName: internal
   rules:
     - host: &host auth.${SECRET_DOMAIN}
       http:
