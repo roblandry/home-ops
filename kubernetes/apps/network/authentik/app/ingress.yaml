@@ -61,7 +61,7 @@ metadata:
     helm.toolkit.fluxcd.io/name: authentik
     helm.toolkit.fluxcd.io/namespace: network
 spec:
-  ingressClassName: external
+  ingressClassName: internal
   rules:
     - host: &host auth.${SECRET_DOMAIN}
       http:
