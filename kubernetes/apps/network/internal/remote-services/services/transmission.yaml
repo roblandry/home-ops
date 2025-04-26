@@ -45,9 +45,9 @@ metadata:
     gethomepage.dev/group: "Downloads"
     gethomepage.dev/icon: "transmission.png"
     gethomepage.dev/widget.type: "transmission"
-    gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/transmission"
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:9091
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_TRANSMISSION_USER}"
-    gethomepage.dev/widget.password: "${HOMEPAGE_VAR_TRANSMISSION_PASS}"
+    gethomepage.dev/widget.password: "${quote}${HOMEPAGE_VAR_TRANSMISSION_PASS}${quote}"
     gethomepage.dev/widget.rpcUrl: "/transmission/"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:9091
 spec:

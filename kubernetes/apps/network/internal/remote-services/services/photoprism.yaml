@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/group: "Media"
     gethomepage.dev/icon: "photoprism.png"
     gethomepage.dev/widget.type: "photoprism"
-    gethomepage.dev/widget.url: "https://photoprism.${SECRET_DOMAIN}"
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:2342
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_PHOTOPRISM_USERNAME}"
     gethomepage.dev/widget.password: "${quote}${HOMEPAGE_VAR_PHOTOPRISM_PASSWORD}${quote}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:2342

@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "prowlarr.png"
     gethomepage.dev/widget.type: "prowlarr"
-    gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/prowlarr"
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:9696
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PROWLARR_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:9696
 spec:

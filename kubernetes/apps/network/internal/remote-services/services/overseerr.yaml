@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/group: "Media"
     gethomepage.dev/icon: "overseerr.png"
     gethomepage.dev/widget.type: "overseerr"
-    gethomepage.dev/widget.url: "http://find.${SECRET_DOMAIN}"
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:5055
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_OVERSEERR_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:5055
 spec:
