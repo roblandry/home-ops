@@ -51,11 +51,18 @@ spec:
           name: cloudnative-pg-secret
           key: s3-secret-key
 
+  # bootstrap:
+  #   recovery:
+  #     source: clusterBackup
+
   # externalClusters:
-  #   - name: *previousCluster
+  #   - name: clusterBackup
   #     barmanObjectStore:
-  #       destinationPath: s3://cloudnative-pg/
-  #       endpointURL: https://s3.${PRIVATE_DOMAIN}
+  #       destinationPath: s3://cnpg-bucket/
+  #       endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+  #       wal:
+  #         maxParallel: 4
+  #       serverName: postgres-16
   #       s3Credentials:
   #         accessKeyId:
   #           name: cloudnative-pg-secret
@@ -63,22 +70,3 @@ spec:
   #         secretAccessKey:
   #           name: cloudnative-pg-secret
   #           key: s3-secret-key
-  bootstrap:
-    recovery:
-      source: clusterBackup
-
-  externalClusters:
-    - name: clusterBackup
-      barmanObjectStore:
-        destinationPath: s3://cnpg-bucket/
-        endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-        wal:
-          maxParallel: 4
-        serverName: postgres-16
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-secret
-            key: s3-access-key
-          secretAccessKey:
-            name: cloudnative-pg-secret
-            key: s3-secret-key
