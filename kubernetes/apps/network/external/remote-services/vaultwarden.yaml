@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-external-vaultwarden
+  namespace: network
+spec:
+  ports:
+    - port: 4743
+      protocol: TCP
+      targetPort: 4743
+      name: https
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: remote-external-vaultwarden
+  namespace: network
+  labels:
+    kubernetes.io/service-name: remote-external-vaultwarden
+addressType: IPv4
+ports:
+  - port: 4743
+endpoints:
+  - addresses:
+    - ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-external-vaultwarden
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    error-pages.home.arpa/enabled: "true"
+    gethomepage.dev/app: "vaultwarden"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "vaultwarden"
+    gethomepage.dev/description: "Password Manager"
+    gethomepage.dev/href: "https://pass.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Services"
+    gethomepage.dev/icon: "bitwarden.png"
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host "pass.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-external-vaultwarden
+              port:
+                number: 4743
+  tls:
+    - hosts:
+        - *host
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"

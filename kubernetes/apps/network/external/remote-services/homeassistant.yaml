@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-external-homeassistant
+  namespace: network
+spec:
+  ports:
+    - port: 8123
+      protocol: TCP
+      targetPort: 8123
+      name: http
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: remote-external-homeassistant
+  namespace: network
+  labels:
+    kubernetes.io/service-name: remote-external-homeassistant
+addressType: IPv4
+ports:
+  - port: 8123
+endpoints:
+  - addresses:
+    - ${SETTINGS_HASS_IP}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-external-homeassistant
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    error-pages.home.arpa/enabled: "true"
+    gethomepage.dev/app: "homeassistant"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Home Assistant"
+    gethomepage.dev/description: "Home Automation System"
+    gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Automation"
+    gethomepage.dev/icon: "home-assistant.png"
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host "hass.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-external-homeassistant
+              port:
+                number: 8123
+  tls:
+    - hosts:
+        - *host
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"

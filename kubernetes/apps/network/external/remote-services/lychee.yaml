@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-external-lychee
+  namespace: network
+spec:
+  ports:
+    - port: 90
+      protocol: TCP
+      targetPort: 90
+      name: http
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: remote-external-lychee
+  namespace: network
+  labels:
+    kubernetes.io/service-name: remote-external-lychee
+addressType: IPv4
+ports:
+  - port: 90
+endpoints:
+  - addresses:
+    - ${SETTINGS_NAS_IP}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-external-lychee
+  namespace: network
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    error-pages.home.arpa/enabled: "true"
+    gethomepage.dev/app: "lychee"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "lychee"
+    gethomepage.dev/description: "Lychee Photo Management"
+    gethomepage.dev/href: "https://photos.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "lychee.png"
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host "photos.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-external-lychee
+              port:
+                number: 90
+  tls:
+    - hosts:
+        - *host
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"
