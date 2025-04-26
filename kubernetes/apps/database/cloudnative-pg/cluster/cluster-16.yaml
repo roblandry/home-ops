@@ -63,9 +63,9 @@ spec:
   #         secretAccessKey:
   #           name: cloudnative-pg-secret
   #           key: s3-secret-key
-  # bootstrap:
-  #   recovery:
-  #     source: clusterBackup
+  bootstrap:
+    recovery:
+      source: clusterBackup
 
   externalClusters:
     - name: clusterBackup
