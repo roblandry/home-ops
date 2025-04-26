@@ -10,7 +10,7 @@ spec:
     - port: 4743
       protocol: TCP
       targetPort: 4743
-      name: https
+      name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://pass.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "bitwarden.png"
-    gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4743
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:4743
 spec:
   ingressClassName: external
   rules:
