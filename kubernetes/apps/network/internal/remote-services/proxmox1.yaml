@@ -11,7 +11,7 @@ spec:
     - port: 8006
       protocol: TCP
       targetPort: 8006
-      name: http
+      name: https
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
@@ -49,7 +49,10 @@ metadata:
     # gethomepage.dev/widget.url: "http://pve1.${SECRET_DOMAIN}"
     # gethomepage.dev/widget.username: "${HOMEPAGE_VAR_PVE1_USER}"
     # gethomepage.dev/widget.password: "${HOMEPAGE_VAR_PVE1_PASS}"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8006
+    gethomepage.dev/siteMonitor: https://${SETTINGS_PVE1_IP}:8006
+    nginx.ingress.kubernetes.io/secure-backends: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-verify: "false"  # Disable SSL verification
 spec:
   ingressClassName: internal
   rules:

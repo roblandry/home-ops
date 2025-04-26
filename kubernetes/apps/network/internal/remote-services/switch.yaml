@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/href: "https://switch.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "cisco.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:80
+    gethomepage.dev/siteMonitor: http://${SETTINGS_SWITCH_IP}:80
 spec:
   ingressClassName: internal
   rules:

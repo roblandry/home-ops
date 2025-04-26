@@ -1,3 +1,5 @@
+# TODO: Has issue
+
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
 kind: Service
@@ -48,6 +50,9 @@ metadata:
     # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
     # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
     gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4443
+    nginx.ingress.kubernetes.io/secure-backends: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-verify: "false"
 spec:
   ingressClassName: external
   rules:
