@@ -35,8 +35,8 @@ spec:
   backup:
     retentionPolicy: "7d"
     barmanObjectStore:
-      destinationPath: s3://postgres-backup-bucket/
-      endpointURL: http://${SETTINGS_NAS_IP}:3900
+      destinationPath: s3://cnpg-bucket/
+      endpointURL: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc:80
       serverName: postgres-16
       wal:
         compression: bzip2
