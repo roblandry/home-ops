@@ -4,3 +4,34 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./apps.yaml
+  - ./bazarr.yaml
+  - ./calibre-web.yaml
+  - ./calibre.yaml
+  - ./chat.yaml
+  - ./chat2.yaml
+  - ./double-take.yaml
+  - ./fireflyiii.yaml
+  - ./frigate.yaml
+  - ./kvm1.yaml
+  - ./kvm2.yaml
+  - ./lidarr.yaml
+  - ./maybefinance.yaml
+  - ./obico.yaml
+  - ./oods.yaml
+  - ./overseerr.yaml
+  - ./photoprism.yaml
+  - ./plex.yaml
+  - ./prowlarr.yaml
+  - ./proxmox.yaml
+  - ./proxmox1.yaml
+  - ./proxmox2.yaml
+  - ./proxmox3.yaml
+  - ./radarr.yaml
+  - ./readarr.yaml
+  - ./sabnzbd.yaml
+  - ./sonarr.yaml
+  - ./switch.yaml
+  - ./tautulli.yaml
+  - ./transmission.yaml
+  - ./unifi.yaml
+  - ./unraid.yaml

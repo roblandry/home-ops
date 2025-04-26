@@ -1,28 +1,28 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-plex
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 32400
       protocol: TCP
-      targetPort: 81
+      targetPort: 32400
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-plex
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-plex
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 32400
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,34 +31,37 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-plex
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    # gethomepage.dev/app: "plex"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "plex"
+    gethomepage.dev/description: "Plex Media Server"
+    gethomepage.dev/href: "https://plex.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "plex.png"
+    gethomepage.dev/widget.type: "plex"
+    gethomepage.dev/widget.url: "http://plex.${SECRET_DOMAIN}"
+    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PLEX_KEY}"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:32400
 spec:
   ingressClassName: internal
   rules:
-    - host: "apps.${SECRET_DOMAIN}"
+    - host: "plex.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-plex
               port:
-                number: 81
+                number: 32400
   tls:
     - hosts:
-        - "apps.${SECRET_DOMAIN}"
+        - "plex.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"

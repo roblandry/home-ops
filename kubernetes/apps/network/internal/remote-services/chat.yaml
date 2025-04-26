@@ -1,28 +1,28 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-chat
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 3000
       protocol: TCP
-      targetPort: 81
+      targetPort: 3000
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-chat
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-chat
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 3000
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,34 +31,34 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-chat
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    # gethomepage.dev/app: "chat"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "chat"
+    gethomepage.dev/description: "OpenAI Chat"
+    gethomepage.dev/href: "https://chat.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "openai.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:3000
 spec:
   ingressClassName: internal
   rules:
-    - host: "apps.${SECRET_DOMAIN}"
+    - host: "chat.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-chat
               port:
-                number: 81
+                number: 3000
   tls:
     - hosts:
-        - "apps.${SECRET_DOMAIN}"
+        - "chat.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"

@@ -1,28 +1,28 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-transmission
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 9091
       protocol: TCP
-      targetPort: 81
+      targetPort: 9091
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-transmission
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-transmission
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 9091
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,33 +31,38 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-transmission
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    # gethomepage.dev/app: "transmission"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "transmission"
+    gethomepage.dev/description: "Subtitle Manager"
+    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/transmission"
+    gethomepage.dev/group: "Downloads"
+    gethomepage.dev/icon: "transmission.png"
+    # gethomepage.dev/widget.type: "transmission"
+    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/transmission"
+    # gethomepage.dev/widget.username: "${HOMEPAGE_VAR_TRANSMISSION_USER}"
+    # gethomepage.dev/widget.password: "${HOMEPAGE_VAR_TRANSMISSION_PASS}"
+    # gethomepage.dev/widget.rpcUrl: "/transmission/"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:9091
 spec:
   ingressClassName: internal
   rules:
     - host: "apps.${SECRET_DOMAIN}"
       http:
         paths:
-        - path: /
+        - path: /transmission
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-transmission
               port:
-                number: 81
+                number: 9091
   tls:
     - hosts:
         - "apps.${SECRET_DOMAIN}"

@@ -1,28 +1,28 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-readarr
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 8787
       protocol: TCP
-      targetPort: 81
+      targetPort: 8787
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-readarr
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-readarr
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 8787
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,33 +31,36 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-readarr
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    authentik.home.arpa/enabled: "true"
+    # gethomepage.dev/app: "readarr"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "readarr"
+    gethomepage.dev/description: "Book Manager"
+    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/readarr"
+    gethomepage.dev/group: "Media Organization"
+    gethomepage.dev/icon: "readarr.png"
+    # gethomepage.dev/widget.type: "readarr"
+    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/readarr"
+    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_READARR_KEY}"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8787
 spec:
   ingressClassName: internal
   rules:
     - host: "apps.${SECRET_DOMAIN}"
       http:
         paths:
-        - path: /
+        - path: /readarr
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-readarr
               port:
-                number: 81
+                number: 8787
   tls:
     - hosts:
         - "apps.${SECRET_DOMAIN}"

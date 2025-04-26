@@ -1,28 +1,28 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-calibre
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 8070
       protocol: TCP
-      targetPort: 81
+      targetPort: 8070
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-calibre
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-calibre
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 8070
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,34 +31,34 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-calibre
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    authentik.home.arpa/enabled: "true"
+    # gethomepage.dev/app: "calibre"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "calibre"
+    gethomepage.dev/description: "Calibre - E-book Library"
+    gethomepage.dev/href: "https://calibre.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Media Organization"
+    gethomepage.dev/icon: "calibre.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8070
 spec:
   ingressClassName: internal
   rules:
-    - host: "apps.${SECRET_DOMAIN}"
+    - host: "calibre.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-calibre
               port:
-                number: 81
+                number: 8070
   tls:
     - hosts:
-        - "apps.${SECRET_DOMAIN}"
+        - "calibre.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"

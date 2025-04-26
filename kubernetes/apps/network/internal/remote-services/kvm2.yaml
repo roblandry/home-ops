@@ -1,28 +1,29 @@
+# SETTINGS_KVM1_IP
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-kvm2
   namespace: network
 spec:
   ports:
-    - port: 81
+    - port: 443
       protocol: TCP
-      targetPort: 81
+      targetPort: 443
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-kvm2
   namespace: network
   labels:
-    kubernetes.io/service-name: remote-internal-apps
+    kubernetes.io/service-name: remote-internal-kvm2
 addressType: IPv4
 ports:
-  - port: 81
+  - port: 443
 endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
@@ -31,34 +32,34 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-apps
+  name: remote-internal-kvm2
   namespace: network
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    gethomepage.dev/app: "apps"
+    # gethomepage.dev/app: "kvm2"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "apps"
-    gethomepage.dev/description: "Personal Apps"
-    gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "Web"
-    gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:81
+    gethomepage.dev/name: "kvm2"
+    gethomepage.dev/description: "PiKVM Management Interface"
+    gethomepage.dev/href: "https://kvm2.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/icon: "pikvm.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:443
 spec:
   ingressClassName: internal
   rules:
-    - host: "apps.${SECRET_DOMAIN}"
+    - host: "kvm2.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-apps
+              name: remote-internal-kvm2
               port:
-                number: 81
+                number: 443
   tls:
     - hosts:
-        - "apps.${SECRET_DOMAIN}"
+        - "kvm2.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"
