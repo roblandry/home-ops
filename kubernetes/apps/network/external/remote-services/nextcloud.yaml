@@ -37,7 +37,7 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "nextcloud"
+    # gethomepage.dev/app: "nextcloud"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "nextcloud"
     gethomepage.dev/description: "Personal Cloud Storage"

@@ -37,13 +37,14 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "docspell"
+    # gethomepage.dev/app: "docspell"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "docspell"
     gethomepage.dev/description: "Document Management System"
     gethomepage.dev/href: "https://docs.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Office"
     gethomepage.dev/icon: "docspell.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:7880
 spec:
   ingressClassName: external
   rules:

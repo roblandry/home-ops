@@ -38,7 +38,7 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    gethomepage.dev/app: "searxng"
+    # gethomepage.dev/app: "searxng"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "searxng"
     gethomepage.dev/description: "SearxNG"
