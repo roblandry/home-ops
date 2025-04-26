@@ -36,7 +36,7 @@ spec:
     retentionPolicy: "7d"
     barmanObjectStore:
       destinationPath: s3://cnpg-bucket/
-      endpointURL: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
       serverName: postgres-16
       # wal:
       #   compression: bzip2
