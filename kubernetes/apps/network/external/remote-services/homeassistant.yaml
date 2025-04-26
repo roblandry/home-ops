@@ -44,6 +44,7 @@ metadata:
     gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Automation"
     gethomepage.dev/icon: "home-assistant.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_HASS_IP}:8123
 spec:
   ingressClassName: external
   rules:

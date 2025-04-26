@@ -44,6 +44,7 @@ metadata:
     gethomepage.dev/href: "https://photos.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Media"
     gethomepage.dev/icon: "lychee.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:90
 spec:
   ingressClassName: external
   rules:

@@ -44,6 +44,7 @@ metadata:
     gethomepage.dev/href: "https://pass.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "bitwarden.png"
+    gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4743
 spec:
   ingressClassName: external
   rules:

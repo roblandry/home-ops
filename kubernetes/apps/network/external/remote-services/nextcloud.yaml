@@ -47,6 +47,7 @@ metadata:
     # gethomepage.dev/widget.type: "nextcloud"
     # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
     # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
+    gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4443
 spec:
   ingressClassName: external
   rules:

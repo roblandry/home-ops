@@ -44,6 +44,7 @@ metadata:
     gethomepage.dev/href: "https://www.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Web"
     gethomepage.dev/icon: "wordpress.png"
+    gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:442
 spec:
   ingressClassName: external
   rules:

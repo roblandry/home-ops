@@ -45,6 +45,7 @@ metadata:
     gethomepage.dev/href: "https://search.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "searxng.png"
+    gethomepage.dev/siteMonitor: http://${SETTINGS_SEARCH_IP}:8080
 spec:
   ingressClassName: external
   rules:
