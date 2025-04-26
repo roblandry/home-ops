@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "radarr.png"
     gethomepage.dev/widget.type: "radarr"
-    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:7878
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:7878/radarr
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_RADARR_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:7878
 spec:

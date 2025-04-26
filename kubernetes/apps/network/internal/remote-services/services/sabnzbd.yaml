@@ -47,7 +47,7 @@ metadata:
     gethomepage.dev/group: "Downloads"
     gethomepage.dev/icon: "sabnzbd.png"
     gethomepage.dev/widget.type: "sabnzbd"
-    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:8081
+    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:8081/sabnzbd
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_SABNZBD_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8081
 spec:
