@@ -38,9 +38,9 @@ spec:
       destinationPath: s3://cnpg-bucket/
       endpointURL: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc:80
       serverName: postgres-16
-      wal:
-        compression: bzip2
-        maxParallel: 4
+      # wal:
+      #   compression: bzip2
+      #   maxParallel: 4
       data:
         compression: bzip2
       s3Credentials:
