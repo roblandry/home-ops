@@ -1,19 +1,5 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-
-# kind: Service
-# apiVersion: v1
-# metadata:
-#   name: remote-internal-apps
-#   namespace: network
-# spec:
-#   type: ExternalName
-#   ports:
-#     - name: http
-#       port: 81
-#       targetPort: 81
-#   externalName: ${SETTINGS_NAS_NAME}
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -26,6 +12,7 @@ spec:
       targetPort: 81
       name: http
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
