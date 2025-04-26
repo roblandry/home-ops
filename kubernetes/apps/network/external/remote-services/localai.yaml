@@ -27,38 +27,6 @@ endpoints:
   - addresses:
     - ${SETTINGS_NAS_IP}
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/traefik-v3.json
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: localai-ingress
-  namespace: network
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-    kubernetes.io/ingress.class: traefik
-    gethomepage.dev/app: "localai"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "localai"
-    gethomepage.dev/description: "LocalAI"
-    gethomepage.dev/href: "https://ai.${SECRET_DOMAIN}"
-    gethomepage.dev/group: "AI"
-    gethomepage.dev/icon: "openai.png"
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`ai.${SECRET_DOMAIN}`)
-      kind: Rule
-      priority: 1
-      services:
-        - name: localai
-          port: 8082
-      middlewares:
-        - name: external-noauth-middlewares
-  tls:
-    secretName: "${SECRET_DOMAIN/./-}-production-tls"
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -67,6 +35,7 @@ metadata:
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     gethomepage.dev/app: "localai"
     gethomepage.dev/enabled: "true"
