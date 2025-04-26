@@ -74,6 +74,7 @@ spec:
         endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
         wal:
           maxParallel: 4
+        serverName: postgres-16
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg-secret
