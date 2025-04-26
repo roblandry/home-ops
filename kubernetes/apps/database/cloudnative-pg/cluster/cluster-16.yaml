@@ -64,7 +64,6 @@ spec:
   #           name: cloudnative-pg-secret
   #           key: s3-secret-key
   bootstrap:
-    initdb: false
     recovery:
       source: clusterBackup
 
