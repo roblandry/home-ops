@@ -44,9 +44,9 @@ metadata:
     gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/tautulli"
     gethomepage.dev/group: "Media"
     gethomepage.dev/icon: "tautulli.png"
-    # gethomepage.dev/widget.type: "tautulli"
-    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/tautulli"
-    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_TAUTULLI_KEY}"
+    gethomepage.dev/widget.type: "tautulli"
+    gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/tautulli"
+    gethomepage.dev/widget.key: "${HOMEPAGE_VAR_TAUTULLI_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8182
 spec:
   ingressClassName: internal

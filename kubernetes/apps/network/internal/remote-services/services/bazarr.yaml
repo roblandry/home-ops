@@ -44,9 +44,9 @@ metadata:
     gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/bazarr"
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "bazarr.png"
-    # gethomepage.dev/widget.type: "bazarr"
-    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/bazarr"
-    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_BAZARR_KEY}"
+    gethomepage.dev/widget.type: "bazarr"
+    gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/bazarr"
+    gethomepage.dev/widget.key: "${HOMEPAGE_VAR_BAZARR_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:6767
 spec:
   ingressClassName: internal

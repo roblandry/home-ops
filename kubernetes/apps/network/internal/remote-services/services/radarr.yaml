@@ -44,9 +44,9 @@ metadata:
     gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}/radarr"
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "radarr.png"
-    # gethomepage.dev/widget.type: "radarr"
-    # gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/radarr"
-    # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_RADARR_KEY}"
+    gethomepage.dev/widget.type: "radarr"
+    gethomepage.dev/widget.url: "http://apps.${SECRET_DOMAIN}/radarr"
+    gethomepage.dev/widget.key: "${HOMEPAGE_VAR_RADARR_KEY}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:7878
 spec:
   ingressClassName: internal

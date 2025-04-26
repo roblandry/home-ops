@@ -45,10 +45,10 @@ metadata:
     gethomepage.dev/href: "https://unifi.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "unifi.png"
-    # gethomepage.dev/widget.type: "unifi"
-    # gethomepage.dev/widget.url: "http://unifi.${SECRET_DOMAIN}"
-    # gethomepage.dev/widget.username: "${HOMEPAGE_VAR_UNIFI_USER}"
-    # gethomepage.dev/widget.password: "${HOMEPAGE_VAR_UNIFI_PASS}"
+    gethomepage.dev/widget.type: "unifi"
+    gethomepage.dev/widget.url: "http://unifi.${SECRET_DOMAIN}"
+    gethomepage.dev/widget.username: "${HOMEPAGE_VAR_UNIFI_USER}"
+    gethomepage.dev/widget.password: "${HOMEPAGE_VAR_UNIFI_PASS}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_UNIFI_IP}:80
 spec:
   ingressClassName: internal
