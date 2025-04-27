@@ -17,7 +17,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: mariadb-crds
+      chart: mariadb-operator-crds
       version: 0.38.1
       sourceRef:
         kind: HelmRepository
