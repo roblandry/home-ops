@@ -30,8 +30,8 @@ spec:
               - sh
               - -c
               - |
-                echo "Copying files from /import to /app/data..."
-                cp -rv /import/. /app/data/
+                echo "Copying files from /import to /config..."
+                cp -rv /import/. /config/
 
         strategy: Recreate
         containers:
@@ -107,8 +107,8 @@ spec:
       # # Copy files from docker host
       import:
         enabled: true
-        # type: nfs
-        # server: ${SETTINGS_NAS_IP}
-        # path: /mnt/user/appdata/mealie
-        type: persistentVolumeClaim
-        existingClaim: mealie-config
+        # type: persistentVolumeClaim
+        # existingClaim: mealie-config
+        type: nfs
+        server: ${SETTINGS_NAS_IP}
+        path: /mnt/user/appdata/mealie
