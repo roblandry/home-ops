@@ -97,18 +97,18 @@ spec:
       config:
         enabled: true
         type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
         existingClaim: mealie
+        # accessMode: ReadWriteOnce
         # size: 5Gi
         # storageClass: ceph-block
-        globalMounts:
-          - path: /app/data
+        # globalMounts:
+        #   - path: /app/data
 
       # # Copy files from docker host
       import:
-        # enabled: true
+        enabled: true
         # type: nfs
         # server: ${SETTINGS_NAS_IP}
         # path: /mnt/user/appdata/mealie
-        persistentVolumeClaim:
-          claimName: mealie-config
+        type: persistentVolumeClaim
+        existingClaim: mealie-config
