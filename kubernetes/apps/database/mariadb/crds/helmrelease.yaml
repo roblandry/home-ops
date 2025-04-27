@@ -23,7 +23,7 @@ spec:
         kind: HelmRepository
         name: mariadb-operator
         namespace: database
-  interval: 30m
+  interval: 5m
   maxHistory: 3
   uninstall:
     keepHistory: false
