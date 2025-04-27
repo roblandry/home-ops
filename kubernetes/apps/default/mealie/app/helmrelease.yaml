@@ -31,7 +31,8 @@ spec:
               - -c
               - |
                 echo "Copying files from /import to /config..."
-                cp -rv /import/. /config/
+                rm -rf /app/data/*
+                cp -rv /import/. /app/data/
 
         strategy: Recreate
         containers:
@@ -101,8 +102,8 @@ spec:
         # accessMode: ReadWriteOnce
         # size: 5Gi
         # storageClass: ceph-block
-        # globalMounts:
-        #   - path: /app/data
+        globalMounts:
+          - path: /app/data
 
       # Copy files from docker host
       import:
