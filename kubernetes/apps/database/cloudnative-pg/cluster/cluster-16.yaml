@@ -1,6 +1,6 @@
 ---
 ## yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/cluster_v1.json
-# yaml-language-server: $schema=/workspaces/home-ops/cnpg-cluster-schema.json
+# yaml-language-server: $schema=../../../../../cnpg-cluster-schema.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:

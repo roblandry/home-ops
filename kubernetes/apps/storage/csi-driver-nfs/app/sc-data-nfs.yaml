@@ -10,7 +10,7 @@ parameters:
   server: ${SETTINGS_NAS_IP}
   share: ${SETTINGS_NAS_PATH}/data
 mountOptions:
-  - nfsvers=3
+  - nfsvers=4.1
   - hard
   - noatime
   - nolock
