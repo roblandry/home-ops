@@ -41,7 +41,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "PiHole [2]"
     gethomepage.dev/description: "DNS Server"
-    gethomepage.dev/href: "https://pihole2.${SECRET_DOMAIN}/admin"
+    gethomepage.dev/href: "http://${SETTINGS_PIHOLE2_IP}/admin"
     gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "pi-hole.png"
     gethomepage.dev/widget.type: "pihole"
