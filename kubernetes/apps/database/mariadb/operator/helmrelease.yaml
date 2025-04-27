@@ -1,0 +1,186 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: mariadb-operator
+  namespace: database
+spec:
+  url: https://helm.mariadb.com/mariadb-operator
+  interval: 1h
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mariadb-operator
+spec:
+  chart:
+    spec:
+      chart: mariadb-operator
+      version: 0.38.1
+      sourceRef:
+        kind: HelmRepository
+        name: mariadb-operator
+        namespace: database
+  interval: 30m
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
+  values:
+    # affinity: {}
+    # certController:
+      # affinity: {}
+      # caLifetime: "26280h"
+      # certLifetime: "2160h"
+      # enabled: "true"
+      # extrArgs: []
+      # extraVolumeMounts: []
+      # extraVolumes: []
+      # ha:
+        # enabled: "false"
+        # replicas: 3
+      # image:
+        # pullPolicy: "IfNotPresent"
+        # repository: "docker-registry3.mariadb.com/mariadb-operator/mariadb-operator"
+        # tag: ""
+      # imagePullSecrets: []
+      # nodeSelector: {}
+      # pdb:
+        # enabled: false
+        # maxUnavailable: 1
+      # podAnnotations: {}
+      # podSecurityContext: {}
+      # priorityClassName: ""
+      # renewBeforePercentage: 33
+      # requeueDuration: "5m"
+      # resources: {}
+      # securityContext: {}
+      # serviceAccount:
+        # annotations: {}
+        # automount: true
+        # enabled: true
+        # extraLabels: {}
+        # name: ""
+      # serviceMonitor:
+        # additionalLabels: {}
+        # enabled: true
+        # interval: "30s"
+        # metricRelabelings: []
+        # relabelings: []
+        # scrapeTimeout: "25s"
+      # tolerations: []
+      # topologySpreadConstraints: []
+    # clusterName: "cluster.local"
+    # config:
+      # exporterImage: "prom/mysqld-exporter:v0.15.1"
+      # exporterMaxscaleImage: "docker-registry2.mariadb.com/mariadb/maxscale-prometheus-exporter-ubi:v0.0.1"
+      # galeraLibPath: "/usr/lib/galera/libgalera_smm.so"
+      # mariadbDefaultVersion: "11.4"
+      # mariadbImage: "docker-registry1.mariadb.com/library/mariadb:11.4.5"
+      # maxscaleImage: "docker-registry2.mariadb.com/mariadb/maxscale:23.08.5"
+    crds:
+      enabled: true
+    # currentNamespaceOnly: false
+    # extrArgs: []
+    # extraEnv: []
+    # extraEnvFrom: []
+    # extraVolumeMounts: []
+    # extraVolumes: []
+    # fullnameOverride: ""
+    # ha:
+      # enabled: false
+      # replicas: 3
+    # image:
+      # pullPolicy: "IfNotPresent"
+      # repository: "docker-registry3.mariadb.com/mariadb-operator/mariadb-operator"
+      # tag: ""
+    # imagePullSecrets: []
+    # logLevel: "INFO"
+    metrics:
+      enabled: true
+      # serviceMonitor:
+        # additionalLabels: {}
+        # enabled: true
+        # interval: "30s"
+        # metricRelabelings: []
+        # relabelings: []
+        # scrapeTimeout: "25s"
+    # nameOverride: ""
+    # nodeSelector: {}
+    # pdb:
+      # enabled: false
+      # maxUnavailable: 1
+    # podAnnotations: {}
+    # podSecurityContext: {}
+    # pprof.enabled: false
+    # pprof.port: 6060
+    # priorityClassName: ""
+    # rbac:
+      # aggregation:
+      #   enabled: true
+      # enabled: true
+    # resources: {}
+    # securityContext: {}
+    # serviceAccount:
+      # annotations: {}
+      # automount: true
+      # enabled: true
+      # extraLabels: {}
+      # name: ""
+    # tolerations: []
+    # topologySpreadConstraints: []
+    # webhook:
+      # affinity: {}
+      # annotations: {}
+      # cert:
+      #   ca:
+      #     key: ""
+      #     path: ""
+      #   certManager:
+      #     duration: ""
+      #     enabled: false
+      #     issuerRef: {}
+      #     renewBefore: ""
+      #     revisionHistoryLimit: 3
+      #   path: "/tmp/k8s-webhook-server/serving-certs"
+      #   secretAnnotations: {}
+      #   secretLabels: {}
+      # enabled: true
+      # extrArgs: []
+      # extraVolumeMounts: []
+      # extraVolumes: []
+      # ha:
+      #   enabled: false
+      #   replicas: 3
+      # hostNetwork: false
+      # image:
+      #   pullPolicy: "IfNotPresent"
+      #   repository: "docker-registry3.mariadb.com/mariadb-operator/mariadb-operator"
+      #   tag: ""
+      # imagePullSecrets: []
+      # nodeSelector: {}
+      # pdb:
+      #   enabled: false
+      #   maxUnavailable: 1
+      # podAnnotations: {}
+      # podSecurityContext: {}
+      # port: 9443
+      # priorityClassName: ""
+      # resources: {}
+      # securityContext: {}
+      # serviceAccount:
+      #   annotations: {}
+      #   automount: true
+      #   enabled: true
+      #   extraLabels: {}
+      #   name: ""
+      # serviceMonitor:
+      #   additionalLabels: {}
+      #   enabled: true
+      #   interval: "30s"
+      #   metricRelabelings: []
+      #   relabelings: []
+      #   scrapeTimeout: "25s"
+      # tolerations: []
+      # topologySpreadConstraints: []
