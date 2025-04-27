@@ -1,0 +1,63 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+spec:
+  rootPasswordSecretKeyRef:
+    name: mariadb-root
+    key: password
+    generate: true
+
+  username: mariadb
+  passwordSecretKeyRef:
+    name: mariadb-password
+    key: password
+    generate: true
+  database: mariadb
+
+  storage:
+    storageClassName: ceph-block
+    size: 10Gi
+
+  replicas: 3
+
+  galera:
+    enabled: true
+
+  service:
+    type: ClusterIP
+  connection:
+    secretName: mariadb-conn
+    secretTemplate:
+      key: dsn
+  primaryService:
+    type: ClusterIP
+  primaryConnection:
+    secretName: mariadb-conn-primary
+    secretTemplate:
+      key: dsn
+  secondaryService:
+    type: ClusterIP
+  secondaryConnection:
+    secretName: mariadb-conn-secondary
+    secretTemplate:
+      key: dsn
+
+  updateStrategy:
+    type: ReplicasFirstPrimaryLast
+
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    innodb_buffer_pool_size=1024M
+    max_allowed_packet=256M
+
+  metrics:
+    passwordSecretKeyRef:
+      name: mariadb-metrics
+      key: password
+      generate: true
+    enabled: true
