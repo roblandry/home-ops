@@ -76,54 +76,7 @@ data:
     gateway: true
 
   services.yaml: |
-    - Infrastructure:
-      - APC:
-          # href: https://apc.{{HOMEPAGE_VAR_OLD_DOMAIN}}
-          href: http://{{HOMEPAGE_VAR_IP_APCUPS}}
-          icon: apc.png
-          description: APC UPS
-          ping: http://{{HOMEPAGE_VAR_IP_APCUPS}}  # add to env
-    - Services:
-      - PiHole:
-          href: http://{{HOMEPAGE_VAR_IP_PIHOLE}}/admin
-          icon: pi-hole.png
-          description: PiHole DNS
-          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE}}
-          widget:
-              type: pihole
-              url: *url
-              version: 6
-              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
-      - PiHole1:
-          href: http://{{HOMEPAGE_VAR_IP_PIHOLE1}}/admin
-          icon: pi-hole.png
-          description: PiHole DNS
-          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE1}}
-          widget:
-              type: pihole
-              url: *url
-              version: 6
-              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
-      - PiHole2:
-          href: http://{{HOMEPAGE_VAR_IP_PIHOLE2}}/admin
-          icon: pi-hole.png
-          description: PiHole DNS
-          ping: &url http://{{HOMEPAGE_VAR_IP_PIHOLE2}}
-          widget:
-              type: pihole
-              url: *url
-              version: 6
-              key: '{{HOMEPAGE_VAR_PIHOLE_TOKEN}}'
-      - Portainer:
-          href: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
-          icon: portainer.png
-          description: Docker Container Management
-          # ping: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
-          widget:
-              type: portainer
-              url: http://{{HOMEPAGE_VAR_IP_UNRAID}}:9000
-              env: 1
-              key: {{HOMEPAGE_VAR_PORTAINER_TOKEN}}
+
     - Automation:
       - Rosie [Valetudo]:
           href: http://{{HOMEPAGE_VAR_IP_VALETUDO1}}
