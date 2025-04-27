@@ -47,7 +47,7 @@ metadata:
     gethomepage.dev/widget.type: "pihole"
     gethomepage.dev/widget.url: http://${SETTINGS_PIHOLE2_IP}:80
     gethomepage.dev/widget.version: "6"
-    gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PIHOLE2_TOKEN}"
+    gethomepage.dev/widget.key: "${quote}${HOMEPAGE_VAR_PIHOLE_TOKEN}${quote}"
     gethomepage.dev/siteMonitor: http://${SETTINGS_PIHOLE2_IP}:80
 spec:
   ingressClassName: internal
