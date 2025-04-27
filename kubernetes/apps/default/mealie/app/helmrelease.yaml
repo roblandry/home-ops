@@ -20,19 +20,19 @@ spec:
     controllers:
       main:
 
-        # Copy files from docker host
-        initContainers:
-          copy-import:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                echo "Copying files from /import to /config..."
-                rm -rf /app/data/*
-                cp -rv /import/. /app/data/
+        # # Copy files from docker host
+        # initContainers:
+        #   copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /config..."
+        #         # rm -rf /app/data/*
+        #         cp -rv /import/. /app/data/
 
         strategy: Recreate
         containers:
@@ -105,11 +105,11 @@ spec:
         globalMounts:
           - path: /app/data
 
-      # Copy files from docker host
-      import:
-        enabled: true
-        # type: persistentVolumeClaim
-        # existingClaim: mealie-config
-        type: nfs
-        server: ${SETTINGS_NAS_IP}
-        path: /mnt/user/appdata/mealie
+      # # Copy files from docker host
+      # import:
+      #   enabled: true
+      #   # type: persistentVolumeClaim
+      #   # existingClaim: mealie-config
+      #   type: nfs
+      #   server: ${SETTINGS_NAS_IP}
+      #   path: /mnt/user/appdata/mealie
