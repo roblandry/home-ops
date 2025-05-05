@@ -12,6 +12,11 @@ spec:
   timeout: 3m
 ---
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
+#
+# TODO: Add reloader for external-secrets
+#         annotations:
+#           secret.reloader.stakater.com/reload: &secret thanos-objectstore-secret
+#
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
