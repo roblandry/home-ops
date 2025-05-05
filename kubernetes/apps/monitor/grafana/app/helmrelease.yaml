@@ -289,12 +289,12 @@ spec:
           gnetId: 16966
           revision: 1
           datasource: Prometheus
-        # ingress-nginx:  # -- I Dont use this -- #
-        #   url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-        #   datasource: Prometheus
-        # ingress-nginx-request-handling-performance:  # -- I Dont use this -- #
-        #   url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-        #   datasource: Prometheus
+        ingress-nginx:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+          datasource: Prometheus
+        ingress-nginx-request-handling-performance:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          datasource: Prometheus
         # speedtest-exporter-hub:  # -- I Dont use this -- #
         #   # renovate: depName="Speedtest-Exporter"
         #   gnetId: 13665
@@ -334,11 +334,11 @@ spec:
           gnetId: 11315
           revision: 9
           datasource: Prometheus
-        traefik:
-          # renovate: depName="Traefik"
-          gnetId: 17346
-          revision: 9
-          datasource: Prometheus
+        # traefik:
+        #   # renovate: depName="Traefik"
+        #   gnetId: 17346
+        #   revision: 9
+        #   datasource: Prometheus
         # haproxy:  # -- I Dont use this -- #
         #   # renovate: depName="HAProxy"
         #   gnetId: 12693
