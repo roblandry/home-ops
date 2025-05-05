@@ -45,6 +45,9 @@ spec:
         # gethomepage.dev/icon: "si-thanos"
       hosts:
         - host: &host "pgadmin.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
         - hosts:
             - *host
