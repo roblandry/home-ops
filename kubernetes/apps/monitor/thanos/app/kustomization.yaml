@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   # - ./ceph-bucket-claim.yaml
   # - ./ceph-object-store.yaml
+  - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./ingressRoute.yaml
-  - ./secret.sops.yaml
+  # - ./secret.sops.yaml
