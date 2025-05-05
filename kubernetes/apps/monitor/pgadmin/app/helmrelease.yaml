@@ -44,7 +44,7 @@ spec:
         # gethomepage.dev/group: "Kubernetes"
         # gethomepage.dev/icon: "si-thanos"
       hosts:
-        host: &host "pgadmin.${SECRET_DOMAIN}"
+        - host: &host "pgadmin.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
