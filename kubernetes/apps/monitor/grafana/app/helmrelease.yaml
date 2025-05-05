@@ -312,15 +312,15 @@ spec:
         unifi-client-dpi:
           # renovate: depName="Unifi Client DPI"
           gnetId: 11310
-          revision: 9
+          revision: 5
           datasource: Prometheus
         unifi-usw-insights:
           # renovate: depName="Unifi USW"
           gnetId: 11312
           revision: 9
           datasource: Prometheus
-        unifi-cg-insights:
-          # renovate: depName="Unifi CG"
+        unifi-usg-insights:
+          # renovate: depName="Unifi USG"
           gnetId: 11313
           revision: 9
           datasource: Prometheus
