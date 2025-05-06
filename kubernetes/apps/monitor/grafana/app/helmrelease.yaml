@@ -41,8 +41,8 @@ spec:
     rbac:
       pspEnabled: false
     persistence:
-      enabled: true
-      existingClaim: mealie
+      enabled: false
+      # existingClaim: mealie
       # storageClass: ceph-filesystem
       # size: 15Gi
       # accessModes:
