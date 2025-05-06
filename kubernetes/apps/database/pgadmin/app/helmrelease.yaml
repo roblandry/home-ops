@@ -45,9 +45,13 @@ spec:
         add:
           - NET_ADMIN
           - NET_RAW
-    envFrom:
-      - secretRef:
-          name: *secret
+    env:
+      email: "${SECRET_EMAIL}"
+      password:
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: password
     ingress:
       enabled: true
       ingressClassName: internal
