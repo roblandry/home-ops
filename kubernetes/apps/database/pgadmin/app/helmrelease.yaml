@@ -36,9 +36,9 @@ spec:
     # pgadmin upgrades get stuck on the PV if we use RollingUpdate
     strategy:
       type: Recreate
-    existingSecret: &secret pgadmin-secret
+    # existingSecret: &secret pgadmin-secret
     podAnnotations:
-      secret.reloader.stakater.com/reload: *secret
+      secret.reloader.stakater.com/reload: &secret pgadmin-secret
     containerSecurityContext:
       privileged: true
       capabilities:
@@ -50,11 +50,11 @@ spec:
       #   value: ""
       - name: email
         value: "${SECRET_EMAIL}"
-      # - name: password
-      #   valueFrom:
-      #     secretKeyRef:
-      #       name: *secret
-      #       key: password
+      - name: password
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: password
     ingress:
       enabled: true
       ingressClassName: internal
