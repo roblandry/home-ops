@@ -269,14 +269,14 @@ spec:
         wireguard:
           url: https://raw.githubusercontent.com/tuladhar/wireguard-connectivity-monitoring/main/wireguard-grafana-dashboard.json
           datasource: Prometheus
-      opnsense:
-        node-exporter-freebsd:
-          # renovate: depName="Node Exporter FreeBSD"
-          gnetId: 4260
-          revision: 15
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
+      # opnsense:
+      #   node-exporter-freebsd:
+      #     # renovate: depName="Node Exporter FreeBSD"
+      #     gnetId: 4260
+      #     revision: 15
+      #     datasource:
+      #       - name: DS_PROMETHEUS
+      #         value: Prometheus
       storage:
         # minio:
         #   # renovate: depName="MinIO"
