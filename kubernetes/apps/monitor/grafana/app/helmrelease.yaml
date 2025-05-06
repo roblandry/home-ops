@@ -411,8 +411,8 @@ spec:
             - *host
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
     persistence:
-      enabled: true
-      existingClaim: *app
+      enabled: false
+      # existingClaim: *app
     testFramework:
       enabled: false
     topologySpreadConstraints:
