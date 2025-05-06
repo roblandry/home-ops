@@ -48,7 +48,7 @@ spec:
     service:
       app:
         controller: vector-aggregator
-        type: LoadBalancer
+        type: ClusterIP
         ports:
           http:
             primary: true
