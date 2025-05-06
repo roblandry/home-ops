@@ -8,7 +8,7 @@ resources:
   # - ./externalsecret.yaml
   - ./helmrelease.yaml
   # - ./ingressRoute.yaml
-  - ./scrapeconfigs
+  # - ./scrapeconfigs
 configMapGenerator:
   - name: kube-state-metrics-config
     files:
