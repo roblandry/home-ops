@@ -45,8 +45,6 @@ spec:
         add:
           - NET_ADMIN
           - NET_RAW
-    env:
-      email: "${SECRET_EMAIL}"
     envFrom:
       - secretRef:
           name: *secret
