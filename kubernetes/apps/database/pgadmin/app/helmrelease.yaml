@@ -46,15 +46,15 @@ spec:
           - NET_ADMIN
           - NET_RAW
     env:
-      - name: contextPath
-        value: ""
+      # - name: contextPath
+      #   value: ""
       - name: email
         value: "${SECRET_EMAIL}"
-      - name: password
-        valueFrom:
-          secretKeyRef:
-            name: *secret
-            key: password
+      # - name: password
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: *secret
+      #       key: password
     ingress:
       enabled: true
       ingressClassName: internal
