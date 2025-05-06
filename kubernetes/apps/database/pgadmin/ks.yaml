@@ -14,7 +14,7 @@ spec:
   #     namespace: rook-ceph
   #   - name: kube-prometheus-stack
   #     namespace: monitor
-  interval: 30m
+  interval: 5m
   path: ./kubernetes/apps/database/pgadmin/app
   postBuild:
     substituteFrom:
