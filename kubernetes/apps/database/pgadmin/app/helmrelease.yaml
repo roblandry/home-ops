@@ -46,9 +46,11 @@ spec:
           - NET_ADMIN
           - NET_RAW
     env:
-      - name: PGADMIN_DEFAULT_EMAIL
+      - name: contextPath
+        value: ""
+      - name: email
         value: "${SECRET_EMAIL}"
-      - name: PGADMIN_DEFAULT_PASSWORD
+      - name: password
         valueFrom:
           secretKeyRef:
             name: *secret
