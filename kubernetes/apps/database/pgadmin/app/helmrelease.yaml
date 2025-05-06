@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: dpage/pgadmin4
-              tag: "8.12"
+              tag: "9.3"
             env:
               PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
               PGADMIN_DISABLE_POSTFIX: "true"
@@ -110,6 +110,12 @@ spec:
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
+      pgpass:
+        type: secret
+        name: pgadmin-secret
+        globalMounts:
+          - path: /pgadmin4/pgpass
+            subPath: pgpass
       # local-config:
       #   type: secret
       #   name: pgadmin-secret
