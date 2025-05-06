@@ -29,6 +29,29 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      registry: docker.io
+      repository: dpage/pgadmin4
+      tag: "9.3"
+    # pgadmin upgrades get stuck on the PV if we use RollingUpdate
+    strategy:
+      type: Recreate
+    existingSecret: &secret pgadmin-secret
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+    containerSecurityContext:
+      privileged: true
+      capabilities:
+        add:
+          - NET_ADMIN
+          - NET_RAW
+    env:
+      email: "${SECRET_EMAIL}"
+      password:
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: password
     ingress:
       enabled: true
       ingressClassName: internal
@@ -36,13 +59,13 @@ spec:
         # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         error-pages.home.arpa/enabled: "true"
         authentik.home.arpa/enabled: "true"
-        # gethomepage.dev/app: "thanos"
-        # gethomepage.dev/enabled: "true"
-        # gethomepage.dev/name: "Thanos"
-        # gethomepage.dev/description: "A highly available, long-term storage and querying system for Prometheus metrics"
-        # gethomepage.dev/href: "https://thanos.${SECRET_DOMAIN}"
-        # gethomepage.dev/group: "Kubernetes"
-        # gethomepage.dev/icon: "si-thanos"
+        gethomepage.dev/app: "pgadmin"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "PGAdmin (PostgreSQL)"
+        gethomepage.dev/description: "A web-based database management tool for PostgreSQL"
+        gethomepage.dev/href: "https://pgadmin.${SECRET_DOMAIN}"
+        gethomepage.dev/group: "Kubernetes"
+        gethomepage.dev/icon: "si-adminer"
       hosts:
         - host: &host "pgadmin.${SECRET_DOMAIN}"
           paths:
@@ -52,3 +75,15 @@ spec:
         - hosts:
             - *host
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
+    persistentVolume:
+      enabled: true
+      storageClass: ceph-block
+      accessModes:
+        - ReadWriteOnce
+      size: 200Mi
+    resources:
+      requests:
+        cpu: 15m
+        memory: 420M
+      limits:
+        memory: 420M
