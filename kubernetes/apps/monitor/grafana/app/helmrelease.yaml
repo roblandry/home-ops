@@ -17,6 +17,7 @@ kind: HelmRelease
 metadata:
   name: &app grafana
 spec:
+  interval: 30m
   chart:
     spec:
       chart: grafana
@@ -25,8 +26,13 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: monitor
-  interval: 30m
-  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   uninstall:
     keepHistory: false
   values:
@@ -38,28 +44,350 @@ spec:
         envFrom:
           - secretRef:
               name: *secret
-    rbac:
-      pspEnabled: false
-    persistence:
-      enabled: true
-      existingClaim: *app
-      # storageClass: ceph-filesystem
-      # size: 15Gi
-      # accessModes:
-      #   - ReadWriteMany
-    testFramework:
-      enabled: false
-    imageRenderer:
-      enabled: false
+    replicas: 1
+    envFromSecrets:
+      - name: *secret
+    env:
+      # No telemetry
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: false
+      GF_ANALYTICS_REPORTING_ENABLED: false
+      GF_EXPLORE_ENABLED: true
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_LOG_FILTERS: rendering:debug
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
+      GF_DATE_FORMATS_FULL_DATE: "DD/MM/YYYY hh:mm:ss"
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+      # VAR_BLOCKY_URL: "http://blocky.network-system.svc.cluster.local:4000"
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+        check_for_plugin_updates: false
+        reporting_enabled: false
+      # auth:
+      #   oauth_auto_login: false
+      #   oauth_allow_insecure_email_lookup: true
+      # auth.anonymous:
+      #   enabled: false
+      #   # org_id: 1
+      #   # org_role: View
+      # auth.basic:
+      #   enabled: true
+      # auth.generic_oauth:
+      #   enabled: true
+      #   name: Authelia
+      #   icon: signin
+      #   scopes: openid profile email groups
+      #   empty_scopes: false
+      #   login_attribute_path: preferred_username
+      #   groups_attribute_path: groups
+      #   name_attribute_path: name
+      #   use_pkce: true
+      # auth.generic_oauth.group_mapping:
+      #   org_id: 1
+      #   role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
+      auth:
+        disable_login_form: true
+        disable_signout_menu: true
+      auth.anonymous:
+        enabled: true
+        org_name: Main Org.
+        org_role: Admin
+      news:
+        news_feed_enabled: false
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: default
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+          - name: flux
+            orgId: 1
+            folder: Flux
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/flux
+          # - name: homelab
+          #   orgId: 1
+          #   folder: Homelab
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/homelab
+          - name: kubernetes
+            orgId: 1
+            folder: Kubernetes
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+          - name: networking
+            orgId: 1
+            folder: Networking
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/networking
+          - name: storage
+            orgId: 1
+            folder: Storage
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/storage
+          - name: unifi
+            orgId: 1
+            folder: Unifi
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/unifi
+          # - name: kepler
+          #   orgId: 1
+          #   folder: Kepler
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/kepler
+          # - name: opnsense
+          #   orgId: 1
+          #   folder: Opnsense
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/opnsense
+          - name: logs
+            orgId: 1
+            folder: Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/logs
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        deleteDatasources:
+          - name: Prometheus
+            orgId: 1
+          - name: Loki
+            orgId: 1
+          - name: Alertmanager
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            uid: prometheus
+            access: proxy
+            url: http://thanos-query.monitor.svc.cluster.local:10902/
+            jsonData:
+              prometheusType: Thanos
+              timeInterval: 1m
+            isDefault: true
+          - name: Loki
+            type: loki
+            uid: loki
+            access: proxy
+            url: http://loki-gateway.monitor.svc.cluster.local
+            jsonData:
+              maxLines: 250
+          # - name: Alertmanager
+          #   type: alertmanager
+          #   uid: alertmanager
+          #   access: proxy
+          #   url: http://alertmanager-operated.observability.svc.cluster.local:9093
+          #   jsonData:
+          #     implementation: prometheus
+    isDefault: true
+    dashboards:
+      default:
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
+        node-exporter-full:
+          # renovate: depName="Node Exporter Full"
+          gnetId: 1860
+          revision: 40
+          datasource: Prometheus
+        proxmox-prometheus:
+          # renovate: depName="Proxmox via Prometheus"
+          gnetId: 10347
+          revision: 5
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+      networking:
+        blackbox-exporter:
+          # renovate: depName="Blackbox Exporter"
+          gnetId: 16124
+          revision: 4
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        cloudflared:
+          # renovate: depName="Cloudflare Tunnels (cloudflared)"
+          gnetId: 17457
+          revision: 6
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        external-dns:
+          # renovate: depName="External-dns"
+          gnetId: 15038
+          revision: 3
+          datasource: Prometheus
+        nginx:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+          datasource: Prometheus
+        nginx-request-handling-performance:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          datasource: Prometheus
+        speedtest-exporter:
+          # renovate: depName="Speedtest Exporter"
+          gnetId: 13665
+          revision: 4
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        wireguard:
+          url: https://raw.githubusercontent.com/tuladhar/wireguard-connectivity-monitoring/main/wireguard-grafana-dashboard.json
+          datasource: Prometheus
+      opnsense:
+        node-exporter-freebsd:
+          # renovate: depName="Node Exporter FreeBSD"
+          gnetId: 4260
+          revision: 15
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+      storage:
+        # minio:
+        #   # renovate: depName="MinIO"
+        #   gnetId: 13502
+        #   revision: 26
+        #   datasource:
+        #     - name: DS_PROMETHEUS
+        #       value: Prometheus
+        dragonfly:
+          url: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/heads/main/monitoring/grafana-dashboard.json
+          datasource: Prometheus
+        openebs:
+          # renovate: depName="1 OpenEBS Dashboard"
+          gnetID: 12171
+          revision: 2
+          datasource: Prometheus
+        volsync:  # -- This app isnt quite working -- #
+          # renovate: depName="Volsync"
+          gnetId: 21356
+          revision: 3
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: ".*-rdst"}
+      # kepler:
+      #   kepler:
+      #     url: https://raw.githubusercontent.com/sustainable-computing-io/kepler/refs/heads/main/grafana-dashboards/Kepler-Exporter.json
+      #     datasource: Prometheus
+      flux:
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+          datasource: Prometheus
+      kubernetes:
+        kubernetes-api-server:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+          datasource: Prometheus
+        kubernetes-coredns:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+          datasource: Prometheus
+        kubernetes-global:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+          datasource: Prometheus
+        kubernetes-namespaces:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+          datasource: Prometheus
+        kubernetes-nodes:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+          datasource: Prometheus
+        kubernetes-pods:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+          datasource: Prometheus
+      unifi:
+        unifi-insights:
+          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
+          gnetId: 11315
+          revision: 9
+          datasource: Prometheus
+        unifi-network-sites:
+          # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
+          gnetId: 11311
+          revision: 5
+          datasource: Prometheus
+        unifi-uap:
+          # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
+          gnetId: 11314
+          revision: 10
+          datasource: Prometheus
+        unifi-usw:
+          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
+          gnetId: 11312
+          revision: 9
+          datasource: Prometheus
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+        labelValue: ""
+        label: grafana_dashboard
+        folderAnnotation: grafana_folder
+        provider:
+          disableDelete: true
+          foldersFromFilesStructure: true
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+        labelValue: ""
+    plugins:
+      # Plugins
+      - grafana-clock-panel
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - vonage-status-panel
+      # Datasources
+      - netdatacloud-netdata-datasource
+      - pixie-pixie-datasource
+      - grafana-googlesheets-datasource
+      - grafana-mqtt-datasource
+      - grafana-strava-datasource
+      - grafana-github-datasource
+      - isovalent-hubble-datasource
+      - redis-datasource
+      - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.10.0/victorialogs-datasource-v0.10.0.zip;victorialogs-datasource
+      - https://github.com/VictoriaMetrics/victoriametrics-datasource/releases/download/v0.10.3/victoriametrics-datasource-v0.10.3.zip;victoriametrics-datasource
     serviceMonitor:
       enabled: true
-    serviceAccount:
-      autoMount: true
-    initChownData:
-      enabled: false
     ingress:
       enabled: true
-      ingressClassName: internal
       annotations:
         # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         error-pages.home.arpa/enabled: "true"
@@ -75,313 +403,22 @@ spec:
         # gethomepage.dev/widget.url: "https://grafana.${SECRET_DOMAIN}"
         # gethomepage.dev/widget.username: ""
         # gethomepage.dev/widget.password: ""
+      ingressClassName: internal
       hosts:
         - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
-    env:
-      GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
-    envFromSecrets:
-      - name: *secret
-    grafana.ini:
-      analytics:
-        check_for_updates: false
-        check_for_plugin_updates: false
-        reporting_enabled: false
-      auth:
-        disable_login_form: true
-        disable_signout_menu: true
-      auth.anonymous:
-        enabled: true
-        org_name: Main Org.
-        org_role: Admin
-      security:
-        allow_embedding: true
-        cookie_secure: true
-        content_security_policy: true
-        disable_gravatar: true
-      log:
-        mode: console
-      news:
-        news_feed_enabled: false
-      paths:
-        data: /var/lib/grafana/data
-        logs: /var/log/grafana
-        plugins: /var/lib/grafana/plugins
-        provisioning: /etc/grafana/provisioning
-      server:
-        root_url: https://grafana.${SECRET_DOMAIN}
-    plugins:
-      - pr0ps-trackmap-panel
-      - grafana-clock-panel
-      - grafana-piechart-panel
-      - grafana-worldmap-panel
-      - natel-discrete-panel
-      - natel-plotly-panel
-      - vonage-status-panel
-      - https://github.com/panodata/panodata-map-panel/releases/download/0.16.0/panodata-map-panel-0.16.0.zip;grafana-worldmap-panel-ng
-      - redis-datasource
-    sidecar:
-      datasources:
-        enabled: true
-        searchNamespace: ALL
-        initDatasources: true
-        labelValue: ""
-      dashboards:
-        enabled: true
-        labelValue: ""
-        label: grafana_dashboard
-        folderAnnotation: grafana_folder
-        searchNamespace: ALL
-        provider:
-          disableDelete: true
-          foldersFromFilesStructure: false
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        # list of datasources that should be deleted from the database
-        deleteDatasources:
-          - name: Loki
-            orgId: 1
-          - name: Alertmanager
-            orgId: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            access: proxy
-            url: http://thanos-query.monitor.svc.cluster.local:10902/
-            # url: http://kube-prometheus-stack-prometheus.monitor.svc.cluster.local:9090/
-            isDefault: true
-            jsonData:
-              timeInterval: 30s
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://loki-gateway.monitor.svc.cluster.local
-            jsonData:
-              maxLines: 1000
-          # - name: Alertmanager
-          #   type: alertmanager
-          #   access: proxy
-          #   url: http://alertmanager.monitor.svc.cluster.local:9093
-          #   jsonData:
-          #     implementation: prometheus
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-          - name: "default"
-            disableDeletion: false
-            editable: true
-            folder: ""
-            options:
-              path: /var/lib/grafana/dashboards/default
-            orgId: 1
-            type: file
-          - name: "storage"
-            disableDeletion: false
-            editable: true
-            folder: "Storage"
-            options:
-              path: /var/lib/grafana/dashboards/database
-            orgId: 1
-            type: file
-          - name: "kubernetes"
-            disableDeletion: false
-            editable: true
-            folder: "Kubernetes"
-            options:
-              path: /var/lib/grafana/dashboards/kubernetes
-            orgId: 1
-            type: file
-          - name: "networking"
-            disableDeletion: false
-            editable: true
-            folder: "Networking"
-            options:
-              path: /var/lib/grafana/dashboards/networking
-            orgId: 1
-            type: file
-          - name: "system"
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            folder: "System"
-            options:
-              path: /var/lib/grafana/dashboards/system
-              orgId: 1
-              type: file
-    dashboards:
-      # K8S Dashboard EN 20250125 15661 rev2
-      #
-      kubernetes:
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
-          datasource: Prometheus
-        api-server:
-          # renovate: depName="Kubernetes / System / API Server"
-          gnetId: 15761
-          revision: 19
-          datasource: Prometheus
-        coredns:
-          # renovate: depName="Kubernetes / System / CoreDNS"
-          gnetId: 15762
-          revision: 20
-          datasource: Prometheus
-        global:
-          # renovate: depName="Kubernetes / Views / Global"
-          gnetId: 15757
-          revision: 43
-          datasource: Prometheus
-        namespaces:
-          # renovate: depName="Kubernetes / Views / Namespaces"
-          gnetId: 15758
-          revision: 42
-          datasource: Prometheus
-        nodes:
-          # renovate: depName="Kubernetes / Views / Nodes"
-          gnetId: 15759
-          revision: 35
-          datasource: Prometheus
-        pods:
-          # renovate: depName="Kubernetes / Views / Pods"
-          gnetId: 15760
-          revision: 36
-          datasource: Prometheus
-        volumes:
-          # renovate: depName="K8s / Storage / Volumes / Cluster"
-          gnetId: 11454
-          revision: 14
-          datasource: Prometheus
-        nfd:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
-        spegel:
-          # renovate: depName="Spegel"
-          gnetId: 18089
-          revision: 1
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-      networking:
-        cert-manager:
-          # renovate: depName="Cert-manager-Kubernetes"
-          # url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
-          gnetId: 20842
-          revision: 3
-          datasource: Prometheus
-        cilium-overview:
-          # renovate: depName="Cilium v1.11 Hubble Metrics"
-          gnetId: 15515
-          revision: 1
-          datasource: Prometheus
-        cilium-hubble-flows:
-          gnetId: 16966
-          revision: 1
-          datasource: Prometheus
-        ingress-nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        ingress-nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
-        # speedtest-exporter-hub:  # -- I Dont use this -- #
-        #   # renovate: depName="Speedtest-Exporter"
-        #   gnetId: 13665
-        #   revision: 4
-        #   datasource:
-        #     - {name: DS_PROMETHEUS, value: Prometheus}
-        external-dns:
-          # renovate: depName="External-DNS"
-          gnetId: 15038
-          revision: 3
-          datasource: Prometheus
-        external-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
-        unifi-client-dpi:
-          # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
-          gnetId: 11310
-          revision: 5
-          datasource: Prometheus
-        unifi-usw-insights:
-          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
-          gnetId: 11312
-          revision: 9
-          datasource: Prometheus
-        unifi-usg-insights:
-          # renovate: depName="UniFi-Poller: USG Insights - Prometheus"
-          gnetId: 11313
-          revision: 9
-          datasource: Prometheus
-        unifi-uap-insights:
-          # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
-          gnetId: 11314
-          revision: 10
-          datasource: Prometheus
-        unifi-client-insights:
-          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
-          gnetId: 11315
-          revision: 9
-          datasource: Prometheus
-        # traefik:
-        #   # renovate: depName="Traefik"
-        #   gnetId: 17346
-        #   revision: 9
-        #   datasource: Prometheus
-        # haproxy:  # -- I Dont use this -- #
-        #   # renovate: depName="HAProxy"
-        #   gnetId: 12693
-        #   revision: 8
-        #   datasource: Prometheus
-      storage:
-        # minio-dashboard:  # -- I Dont use this -- #
-        #   # renovate: depName="Minio"
-        #   gnetId: 13502
-        #   revision: 26
-        #   datasource:
-        #     - {name: DS_PROMETHEUS, value: Prometheus}
-        # smartctl:  # -- I Dont use this -- #
-        #   # renovate: depname="Smartctl"
-        #   gnetId: 22604
-        #   revision: 2
-        #   datasource:
-        #     - {name: DS_PROMETHEUS, value: Prometheus}
-        # zfs:  # -- I Dont use this -- #
-        #   # renovate: depName="ZFS"
-        #   gnetId: 7845
-        #   revision: 4
-        #   datasource: Prometheus
-        openebs:
-          # renovate: depName="1 OpenEBS Dashboard"
-          gnetID: 12171
-          revision: 2
-          datasource: Prometheus
-        volsync:  # -- This app isnt quite working -- #
-          # renovate: depName="Volsync"
-          gnetId: 21356
-          revision: 3
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-            - {name: VAR_REPLICATIONDESTNAME, value: ".*-rdst"}
-      system:
-        node-exporter:  # -- I Dont use this -- #
-          # renovate: depName="Node Exporter"
-          gnetId: 11074
-          revision: 9
-          datasource: Prometheus
-        node-exporter-full:  # -- I Dont use this -- #
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 37
-          datasource: Prometheus
-        # nut:  # -- I Dont use this -- #
-        #   # renovate: depName="NUT"
-        #   gnetId: 15406
-        #   revision: 2
-        #   datasource:
-        #     - {name: DS_GRAFANACLOUD-DENYAGO-PROM, value: Prometheus}
+    persistence:
+      enabled: true
+      existingClaim: *app
+    testFramework:
+      enabled: false
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: grafana
