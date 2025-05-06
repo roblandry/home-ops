@@ -56,7 +56,7 @@ spec:
       annotations:
         # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         error-pages.home.arpa/enabled: "true"
-        authentik.home.arpa/enabled: "true"
+        # authentik.home.arpa/enabled: "true"
         gethomepage.dev/app: "pgadmin"
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "PGAdmin (PostgreSQL)"
