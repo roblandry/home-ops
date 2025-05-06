@@ -47,11 +47,9 @@ spec:
           - NET_RAW
     env:
       email: "${SECRET_EMAIL}"
-      password:
-        valueFrom:
-          secretKeyRef:
-            name: *secret
-            key: password
+    envFrom:
+      - secretRef:
+          name: *secret
     ingress:
       enabled: true
       ingressClassName: internal
