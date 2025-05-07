@@ -23,7 +23,7 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-          secret.reloader.stakater.com/reload: &secret homepage-secrets
+          secret.reloader.stakater.com/reload: &secret homepage-secret
         containers:
           app:
             image:
