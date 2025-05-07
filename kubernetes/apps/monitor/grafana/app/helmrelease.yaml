@@ -221,12 +221,12 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        node-exporter-full:
+        node-exporter-full:  # --- NO DATA --- #
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
           revision: 40
           datasource: Prometheus
-        proxmox-prometheus:
+        proxmox-prometheus:  # --- NO DATA --- #
           # renovate: depName="Proxmox via Prometheus"
           gnetId: 10347
           revision: 5
@@ -237,7 +237,7 @@ spec:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
       networking:
-        blackbox-exporter:
+        blackbox-exporter:  # --- NO DATA --- #
           # renovate: depName="Blackbox Exporter"
           gnetId: 16124
           revision: 4
@@ -262,14 +262,14 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-        speedtest-exporter:
+        speedtest-exporter:  # --- NO DATA --- #
           # renovate: depName="Speedtest Exporter"
           gnetId: 13665
           revision: 4
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
-        wireguard:
+        wireguard:  # --- NO DATA --- #
           url: https://raw.githubusercontent.com/tuladhar/wireguard-connectivity-monitoring/main/wireguard-grafana-dashboard.json
           datasource: Prometheus
       # opnsense:
@@ -354,7 +354,7 @@ spec:
           gnetId: 11312
           revision: 9
           datasource: Prometheus
-        unifi-client-dpi:
+        unifi-client-dpi:  # --- NO DATA --- #
           # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
           gnetId: 11310
           revision: 5
