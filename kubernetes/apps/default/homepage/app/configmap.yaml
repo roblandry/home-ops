@@ -20,16 +20,23 @@ data:
       # - Outlook:
       #   - icon: microsoft-office.png
       #     href: 'https://outlook.com'
-    - Online Media:
-      - YouTube:
-        - icon: youtube.png
-          href: 'https://youtube.com/feed/subscriptions'
-      # - Spotify:
-      #   - icon: spotify.png
-      #     href: 'http://open.spotify.com'
-      - Youtube Music:
-        - icon: youtube-music.svg
-          href: 'https://music.youtube.com'
+    - Kubernetes:
+      - Kubesearch:
+        - icon: kubernetes.png
+          href: 'https://kubesearch.dev/'
+      - Grafana Dashboards:
+        - icon: grafana.png
+          href: 'https://grafana.com/grafana/dashboards/'
+    # - Online Media:
+    #   - YouTube:
+    #     - icon: youtube.png
+    #       href: 'https://youtube.com/feed/subscriptions'
+    #   # - Spotify:
+    #   #   - icon: spotify.png
+    #   #     href: 'http://open.spotify.com'
+    #   - Youtube Music:
+    #     - icon: youtube-music.svg
+    #       href: 'https://music.youtube.com'
     # - Reading:
       # - Beyond:
       #   - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
