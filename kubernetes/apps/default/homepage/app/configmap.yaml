@@ -17,9 +17,6 @@ data:
       - Google Calendar:
         - icon: google-calendar.png
           href: 'https://calendar.google.com'
-      # - Outlook:
-      #   - icon: microsoft-office.png
-      #     href: 'https://outlook.com'
     - Kubernetes:
       - Kubesearch:
         - icon: kubernetes.png
@@ -29,27 +26,7 @@ data:
           href: 'https://grafana.com/grafana/dashboards/'
       - bjw-s Helm Charts:
         - icon: helm.png
-          href: 'https://bjw-s-labs.github.io/helm-charts/docs/''
-    # - Online Media:
-    #   - YouTube:
-    #     - icon: youtube.png
-    #       href: 'https://youtube.com/feed/subscriptions'
-    #   # - Spotify:
-    #   #   - icon: spotify.png
-    #   #     href: 'http://open.spotify.com'
-    #   - Youtube Music:
-    #     - icon: youtube-music.svg
-    #       href: 'https://music.youtube.com'
-    # - Reading:
-    #   - Beyond:
-    #     - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
-    #       href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
-    #   - Western Subaru Club:
-    #       - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/wsc.png
-    #         href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
-    #   - Reddit:
-    #     - icon: reddit.png
-    #       href: 'https://reddit.com'
+          href: 'https://bjw-s-labs.github.io/helm-charts/docs/'
     - Unifi:
       - Site Manager:
         - icon: unifi.png
