@@ -39,7 +39,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
+    namespace: flux-system
   retryInterval: 1m
   timeout: 3m
   targetNamespace: *namespace
