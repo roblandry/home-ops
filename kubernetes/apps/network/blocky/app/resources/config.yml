@@ -7,28 +7,16 @@ blocking:
     ads:
       # PiHole default
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-      # via onedr0p
-      # - https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt
-      # This list is now empty, but the oisd.nl team has their own source:
       - https://big.oisd.nl/domainswild
-      # trying to block iOS game ads
-      # - https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt
-    youtube:
-      - |
-        youtube.com
-        www.youtube.com
-        m.youtube.com
-        youtubei.googleapis.com
-        youtube.googleapis.com
-        www.youtube-nocookie.com
-
+    porn:
+      - https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
   allowlists:
     ads:
       - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
   clientGroupsBlock:
     default:
       - ads
-      - youtube
+      - porn
 
 caching:
   minTime: 15m
@@ -36,7 +24,7 @@ caching:
   prefetchExpires: 2h
 
 clientLookup:
-  upstream: tcp+udp:10.0.0.254
+  upstream: tcp+udp:10.0.10.1
 
 log:
   level: info
