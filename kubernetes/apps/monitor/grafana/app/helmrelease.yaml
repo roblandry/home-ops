@@ -60,7 +60,7 @@ spec:
       GF_DATE_FORMATS_FULL_DATE: "DD/MM/YYYY hh:mm:ss"
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
-      # VAR_BLOCKY_URL: "http://blocky.network-system.svc.cluster.local:4000"
+      VAR_BLOCKY_URL: "http://blocky.network.svc.cluster.local:4000"
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -269,9 +269,6 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
-        wireguard:  # --- NO DATA --- #
-          url: https://raw.githubusercontent.com/tuladhar/wireguard-connectivity-monitoring/main/wireguard-grafana-dashboard.json
-          datasource: Prometheus
       # opnsense:
       #   node-exporter-freebsd:
       #     # renovate: depName="Node Exporter FreeBSD"
@@ -353,11 +350,6 @@ spec:
           # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
           gnetId: 11312
           revision: 9
-          datasource: Prometheus
-        unifi-client-dpi:  # --- NO DATA --- #
-          # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
-          gnetId: 11310
-          revision: 5
           datasource: Prometheus
     sidecar:
       dashboards:
