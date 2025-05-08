@@ -1,0 +1,48 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app blocky
+  namespace: &namespace network
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  interval: 30m
+  path: ./kubernetes/apps/network/blocky/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  retryInterval: 1m
+  timeout: 3m
+  targetNamespace: *namespace
+  # postBuild:
+  #   substitute:
+  #     APP: *app
+  # components:
+  #   - ../../../../../shared/components/gatus/guarded
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app blocky-frontend
+  namespace: &namespace network
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  interval: 30m
+  path: ./kubernetes/apps/network/blocky/frontend
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  retryInterval: 1m
+  timeout: 3m
+  targetNamespace: *namespace
+  # postBuild:
+  #   substitute:
+  #     APP: *app
