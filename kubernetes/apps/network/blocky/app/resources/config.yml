@@ -1,4 +1,10 @@
 ---
+customDNS:
+  customTTL: 1h
+  mapping:
+    ${SECRET_DOMAIN}: 10.0.10.127
+    ${SECRET_DEV_DOMAIN}: 10.0.10.127
+
 blocking:
   loading:
     downloads:
