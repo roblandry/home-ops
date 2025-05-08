@@ -8,7 +8,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./authentik/ks.yaml
-  # - ./error-pages/ks.yaml
+  - ./blocky/ks.yaml
   - ./external/ks.yaml
   - ./internal/ks.yaml
-  # - ./traefik/ks.yaml
