@@ -41,15 +41,15 @@ data:
     #     - icon: youtube-music.svg
     #       href: 'https://music.youtube.com'
     # - Reading:
-      # - Beyond:
-      #   - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
-      #     href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
-      # - Western Subaru Club:
-      #     - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/wsc.png
-      #       href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
-      # - Reddit:
-      #   - icon: reddit.png
-      #     href: 'https://reddit.com'
+    #   - Beyond:
+    #     - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/beyond.png
+    #       href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
+    #   - Western Subaru Club:
+    #       - icon: https://raw.githubusercontent.com/roblandry/kluster-template/main/.docs/icons/wsc.png
+    #         href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
+    #   - Reddit:
+    #     - icon: reddit.png
+    #       href: 'https://reddit.com'
     - Unifi:
       - Site Manager:
         - icon: unifi.png
