@@ -256,6 +256,11 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
+        blocky:
+          # renovate: depName="blocky4"
+          gnetId: 13768
+          revision: 6
+          datasource: Prometheus
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
