@@ -61,8 +61,8 @@ data:
 
     mode: cluster
     ingress: true
-    traefik: true
-    gateway: true
+    # traefik: true
+    # gateway: true
 
   services.yaml: |
 
