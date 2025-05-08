@@ -11,17 +11,20 @@ blocking:
   denylists:
     ads:
       # PiHole default
-      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      # - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
       - https://big.oisd.nl/domainswild
-    porn:
-      - https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
-  allowlists:
-    ads:
-      - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+    nsfw:
+      # - https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
+      - https://nsfw.oisd.nl/domainswild
+  # allowlists:
+  #   ads:
+  #     - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
   clientGroupsBlock:
     default:
       - ads
-      - porn
+      - nsfw
+    adults:
+      - ads
 
 caching:
   minTime: 15m
@@ -30,6 +33,11 @@ caching:
 
 clientLookup:
   upstream: tcp+udp:10.0.10.1
+  clients:
+    adults:
+      - 10.0.10.60 # ASUS-TUF-Dash-F15-FX517ZR
+      - 10.0.10.80 # ROB-s-Z-Fold6
+      - 10.0.10.90 # Ashley-s-Z-Flip6
 
 log:
   level: info
