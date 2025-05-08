@@ -27,6 +27,9 @@ data:
       - Grafana Dashboards:
         - icon: grafana.png
           href: 'https://grafana.com/grafana/dashboards/'
+      - bjw-s Helm Charts:
+        - icon: helm.png
+          href: 'https://bjw-s-labs.github.io/helm-charts/docs/''
     # - Online Media:
     #   - YouTube:
     #     - icon: youtube.png
