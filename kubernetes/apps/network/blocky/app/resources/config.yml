@@ -13,8 +13,6 @@ blocking:
       # PiHole default
       # - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
       - https://big.oisd.nl/domainswild
-    nsfw:
-      # - https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
       - https://nsfw.oisd.nl/domainswild
   allowlists:
     nsfw-allow:
@@ -22,10 +20,9 @@ blocking:
   clientGroupsBlock:
     default:
       - ads
-      - nsfw
     adults:
-      - ads
       - nsfw-allow
+      - ads
 
 caching:
   minTime: 15m
