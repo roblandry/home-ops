@@ -20,19 +20,19 @@
       controllers:
         main:
 
-          # Copy files from docker host
-          initContainers:
-            copy-import:
-              image:
-                repository: busybox
-                tag: latest
-              command:
-                - sh
-                - -c
-                - |
-                  echo "Copying files from /import to /config..."
-                  # rm -rf /config/*
-                  cp -rv /import/. /config/
+          # # Copy files from docker host
+          # initContainers:
+          #   copy-import:
+          #     image:
+          #       repository: busybox
+          #       tag: latest
+          #     command:
+          #       - sh
+          #       - -c
+          #       - |
+          #         echo "Copying files from /import to /config..."
+          #         # rm -rf /config/*
+          #         cp -rv /import/. /config/
 
           strategy: Recreate
           containers:
@@ -74,13 +74,13 @@
             # gethomepage.dev/widget.type: "nextcloud"
             # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
             # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
-            gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4443
+            # gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4443
             nginx.ingress.kubernetes.io/secure-backends: "false"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             nginx.ingress.kubernetes.io/ssl-verify: "false"
 
           hosts:
-            - host: &host "nextcloud.${SECRET_DOMAIN}"
+            - host: &host "cloud.${SECRET_DOMAIN}"
               paths:
                 - path: /
                   pathType: Prefix
@@ -111,11 +111,11 @@
           server: ${SETTINGS_NAS_IP}
           path: /mnt/user/NextCloud
 
-        # Copy files from docker host
-        import:
-          enabled: true
-          # type: persistentVolumeClaim
-          # existingClaim: nextcloud-config
-          type: nfs
-          server: ${SETTINGS_NAS_IP}
-          path: /mnt/user/appdata/nextcloud
+        # # Copy files from docker host
+        # import:
+        #   enabled: true
+        #   # type: persistentVolumeClaim
+        #   # existingClaim: nextcloud-config
+        #   type: nfs
+        #   server: ${SETTINGS_NAS_IP}
+        #   path: /mnt/user/appdata/nextcloud
