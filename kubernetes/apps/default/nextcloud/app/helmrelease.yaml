@@ -32,7 +32,7 @@
                 - |
                   echo "Copying files from /import to /config..."
                   # rm -rf /config/*
-                  cp -rv /import/. /data/
+                  cp -rv /import/. /config/
 
           strategy: Recreate
           containers:
