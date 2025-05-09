@@ -1,73 +1,43 @@
-# ---
-# # yaml-language-server: $schema=https://crd.movishell.pl/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: &app dragonfly-operator
-#   namespace: &namespace database
-# spec:
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   interval: 30m
-#   path: ./kubernetes/apps/database/dragonfly/operator
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#     namespace: flux-system
-#   targetNamespace: *namespace
-#   wait: true
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app dragonfly
+  name: &app dragonfly-operator
   namespace: &namespace database
 spec:
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: external-secrets-stores
-  path: ./kubernetes/apps/database/dragonfly/app
+  interval: 10m
+  path: ./kubernetes/apps/database/dragonfly/operator
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+
 ---
-# yaml-language-server: $schema=https://crd.movishell.pl/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app dragonfly-cluster
   namespace: &namespace database
 spec:
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: dragonfly
-      namespace: *namespace
-    # - name: onepassword-store
-    #   namespace: security
-  healthCheckExprs:
-    - apiVersion: dragonflydb.io/v1alpha1
-      kind: Dragonfly
-      current: status.phase == 'ready'
-  interval: 30m
+  interval: 10m
   path: ./kubernetes/apps/database/dragonfly/cluster
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
   wait: true
+  dependsOn:
+    - name: dragonfly-operator
