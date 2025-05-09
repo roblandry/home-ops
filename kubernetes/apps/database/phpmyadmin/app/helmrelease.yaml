@@ -9,7 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-    namespace: flux-system
   maxHistory: 2
   install:
     createNamespace: true
@@ -33,6 +32,7 @@ spec:
               tag: 5.2.2-apache
             env:
               PMA_ARBITRARY: 1
+              PMA_HOST: mariadb.database.svc.cluster.local
             resources:
               requests:
                 cpu: 30m
