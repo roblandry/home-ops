@@ -48,7 +48,7 @@
                 TZ: ${CONFIG_TIMEZONE}
                 PUID: 99
                 PGID: 100
-                UMASK: "022"
+                UMASK: "0022"
 
       service:
         main:
