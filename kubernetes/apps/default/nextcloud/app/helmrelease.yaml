@@ -39,7 +39,7 @@
             main:
               image:
                 repository: lscr.io/linuxserver/nextcloud
-                tag: 29.0.7
+                tag: 31.0.4
                 pullPolicy: IfNotPresent
               # envFrom:
               #   - secretRef:
