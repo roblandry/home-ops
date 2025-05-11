@@ -39,7 +39,7 @@
             main:
               image:
                 repository: lscr.io/linuxserver/nextcloud
-                tag: 31.0.4
+                tag: 30.0.10
                 pullPolicy: IfNotPresent
               # envFrom:
               #   - secretRef:
@@ -48,7 +48,7 @@
                 TZ: ${CONFIG_TIMEZONE}
                 PUID: 99
                 PGID: 100
-                UMASK: 022
+                UMASK: "022"
 
       service:
         main:
