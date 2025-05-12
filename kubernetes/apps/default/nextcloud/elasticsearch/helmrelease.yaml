@@ -51,17 +51,19 @@ spec:
               discovery.type: "single-node"
               ES_JAVA_OPTS: "-Xms512m -Xmx512m"
               path.repo: "/usr/share/elasticsearch/data/snapshot"
+              # PUID: 99
+              # PGID: 100
             envFrom:
               - secretRef:
                   name: nextcloud-elasticsearch
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 99
-        runAsGroup: 100
-        fsGroup: 100
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 99
+    #     runAsGroup: 100
+    #     fsGroup: 100
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: elasticsearch
