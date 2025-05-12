@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/pod.json
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb-to-postgres-migration
+  namespace: services
+spec:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    secret.reloader.stakater.com/reload: &secret mariadb-to-postgres-migration-secrets
+  initContainers:
+    - name: 01-init-db
+      image: ghcr.io/onedr0p/postgres-init:16.0
+      pullPolicy: IfNotPresent
+      envFrom:
+        - secretRef:
+            name: *secret
+  containers:
+    - name: pgloader
+      image: dimitri/pgloader:latest
+      pullPolicy: IfNotPresent
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Starting migration from MariaDB to PostgreSQL..."
+
+          # Run pgloader to migrate from MariaDB to PostgreSQL
+          pgloader mysql://$MARIADB_USER:$MARIADB_PASS@$MARIADB_HOST/$MARIADB_DBNAME \
+            postgresql://$INIT_POSTGRES_USER:$INIT_POSTGRES_PASS@$INIT_POSTGRES_HOST/$INIT_POSTGRES_DBNAME
+
+          echo "Migration completed."
+      envFrom:
+        - secretRef:
+            name: *secret
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "500m"
+        limits:
+          memory: "512Mi"
+          cpu: "1000m"
+  restartPolicy: Never
