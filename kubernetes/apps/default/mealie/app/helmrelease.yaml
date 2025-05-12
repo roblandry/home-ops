@@ -53,6 +53,15 @@ spec:
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
 
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 99
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+
     service:
       main:
         controller: main
