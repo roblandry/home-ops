@@ -62,16 +62,3 @@ spec:
       key: password
       generate: true
     enabled: true
-
-  initContainers:
-    - name: mariadb-init
-      image: busybox
-      command:
-        - sh
-        - -c
-        - |
-          # Removing any ib_logfile* files that might cause startup issues
-          rm -f /var/lib/mysql/ib_logfile*
-      volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: storage
