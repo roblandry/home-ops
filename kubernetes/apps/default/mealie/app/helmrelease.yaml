@@ -20,19 +20,20 @@ spec:
     controllers:
       main:
 
-        # # Copy files from docker host
-        # initContainers:
-        #   copy-import:
-        #     image:
-        #       repository: busybox
-        #       tag: latest
-        #     command:
-        #       - sh
-        #       - -c
-        #       - |
-        #         echo "Copying files from /import to /config..."
-        #         # rm -rf /app/data/*
-        #         cp -rv /import/. /app/data/
+        # Copy files from docker host
+        initContainers:
+          copy-import:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                #echo "Copying files from /import to /config..."
+                # rm -rf /app/data/*
+                #cp -rv /import/. /app/data/
+                chown -R 99:100 /app/data
 
         strategy: Recreate
         containers:
