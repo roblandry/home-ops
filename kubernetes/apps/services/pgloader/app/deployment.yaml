@@ -35,12 +35,12 @@ spec:
       volumeMounts:
         - name: config-volume
           mountPath: /tmp/myload
-          volumes:
-            - name: config-volume
-              configMap:
-                name: myload
-                items:
-                  - key: my.load
-                    path: my.load
+      volumes:
+        - name: config-volume
+          configMap:
+            name: myload
+            items:
+              - key: my.load
+                path: my.load
       restartPolicy: Never
       backoffLimit: 4
