@@ -20,20 +20,23 @@ spec:
     controllers:
       main:
 
-        # Copy files from docker host
-        initContainers:
-          copy-import:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                #echo "Copying files from /import to /config..."
-                # rm -rf /app/data/*
-                #cp -rv /import/. /app/data/
-                chown -R 99:100 /app/data
+        # # Copy files from docker host
+        # initContainers:
+        #   copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /app/data..."
+        #         # rm -rf /app/data/*
+        #         cp -rv /import/. /app/data/
+        #         # chown -R 99:100 /app/data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
 
         strategy: Recreate
         containers:
@@ -54,14 +57,14 @@ spec:
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
 
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 99
-    #     runAsGroup: 100
-    #     fsGroup: 100
-    #     fsGroupChangePolicy: OnRootMismatch
-    #     seccompProfile: { type: RuntimeDefault }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 99
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
 
     service:
       main:
@@ -69,9 +72,6 @@ spec:
         ports:
           http:
             port: 9000
-          # websocket:
-          #   enabled: true
-          #   port: 3012
 
     ingress:
       main:
@@ -106,20 +106,13 @@ spec:
 
     persistence:
       config:
-        # enabled: true
-        # type: persistentVolumeClaim
         existingClaim: mealie
-        # accessMode: ReadWriteOnce
-        # size: 5Gi
-        # storageClass: ceph-block
         globalMounts:
           - path: /app/data
 
       # # Copy files from docker host
       # import:
       #   enabled: true
-      #   # type: persistentVolumeClaim
-      #   # existingClaim: mealie-config
       #   type: nfs
       #   server: ${SETTINGS_NAS_IP}
       #   path: /mnt/user/appdata/mealie
