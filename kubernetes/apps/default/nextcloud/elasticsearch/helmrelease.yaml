@@ -24,7 +24,7 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-          secret.reloader.stakater.com/reload: &secret nextcloud-onlyoffice
+          secret.reloader.stakater.com/reload: &secret nextcloud-elasticsearch
         containers:
           main:
             image:
@@ -54,7 +54,7 @@ spec:
               path.repo: "/usr/share/elasticsearch/data/snapshot"
             envFrom:
               - secretRef:
-                  name: nextcloud-elasticsearch
+                  name: *secret
     service:
       main:
         controller: main
