@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/configmap.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myload
+data:
+  my.load: |-
+    load database
+      from mysql://$MARIADB_USER:$MARIADB_PASS@$MARIADB_HOST/$MARIADB_DBNAME
+      into postgresql://$INIT_POSTGRES_USER:$INIT_POSTGRES_PASS@$INIT_POSTGRES_HOST/$INIT_POSTGRES_DBNAME
+
+    WITH workers = 4, concurrency = 2, create no indexes, multiple readers per thread, rows per range = 10000
+
+    CAST type int when (= 11 precision) to "integer" drop typemod
+
+    ALTER SCHEMA 'nextcloud' RENAME TO 'public';

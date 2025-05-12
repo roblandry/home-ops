@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/job.json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pgloader
+  namespace: services
+spec:
+  template:
+    spec:
+      annotations:
+        reloader.stakater.com/auto: "true"
+        secret.reloader.stakater.com/reload: &secret mariadb-to-postgres-migration-secrets
+      # initContainers:
+      #   - name: 01-init-db
+      #     image: ghcr.io/onedr0p/postgres-init:16
+      #     pullPolicy: IfNotPresent
+      #     envFrom:
+      #       - secretRef:
+      #           name: *secret
+      containers:
+        - name: pgloader
+          image: ghrc.io/dimitri/pgloader
+          command: ["pgloader", "--verbose", "--debug", "/tmp/myload/my.load"]
+          envFrom:
+            - secretRef:
+                name: *secret
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1000m"
+      volumeMounts:
+        - name: config-volume
+          mountPath: /tmp/myload
+          volumes:
+            - name: config-volume
+              configMap:
+                name: myload
+                items:
+                  - key: my.load
+                    path: my.load
+    restartPolicy: Never
+    backoffLimit: 4
