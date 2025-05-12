@@ -20,7 +20,7 @@ spec:
       #           name: *secret
       containers:
         - name: pgloader
-          image: ghrc.io/dimitri/pgloader
+          image: dimitri/pgloader:latest
           command: ["pgloader", "--verbose", "--debug", "/tmp/myload/my.load"]
           envFrom:
             - secretRef:
