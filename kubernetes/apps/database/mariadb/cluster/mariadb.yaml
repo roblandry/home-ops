@@ -4,6 +4,21 @@ metadata:
   name: mariadb
   namespace: database
 spec:
+
+  initContainers:
+    - name: mariadb-init
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - |
+          # Removing any ib_logfile* files that might cause startup issues
+          # rm -f /var/lib/mysql/ib_logfile*
+          ls -la /var/lib/mysql/
+      volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: storage
+
   rootPasswordSecretKeyRef:
     name: mariadb-root
     key: password
