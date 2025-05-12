@@ -111,6 +111,11 @@ spec:
         existingClaim: mealie
         globalMounts:
           - path: /app/data
+      nltk-data:
+        type: emptyDir
+        sizeLimit: 500Mi
+        globalMounts:
+          - path: /nltk_data
 
       # # Copy files from docker host
       # import:
