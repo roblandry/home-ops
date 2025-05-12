@@ -27,27 +27,27 @@ spec:
           reloader.stakater.com/auto: "true"
           secret.reloader.stakater.com/reload: &secret nextcloud-onlyoffice
 
-        initContainers:
-          00-copy-import:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                echo "Copying files from /import to /config..."
-                # rm -rf /app/data/*
-                cp -rv /import/. /var/www/onlyoffice/Data
+        # initContainers:
+        #   00-copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /config..."
+        #         # rm -rf /app/data/*
+        #         cp -rv /import/. /var/www/onlyoffice/Data
 
-          01-init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: *secret
+        #   01-init-db:
+        #     image:
+        #       repository: ghcr.io/onedr0p/postgres-init
+        #       tag: 16
+        #       pullPolicy: IfNotPresent
+        #     envFrom:
+        #       - secretRef:
+        #           name: *secret
 
         containers:
           main:
@@ -85,28 +85,11 @@ spec:
     #     fsGroupChangePolicy: OnRootMismatch
     #     seccompProfile: { type: RuntimeDefault }
     service:
-      app:
-        controller: onlyoffice
+      main:
+        controller: main
         ports:
           http:
             port: 80
-
-    # ingress:
-    #   app:
-    #     className: internal
-    #     # annotations:
-    #       # external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-    #     hosts:
-    #       - host: &host "onlyoffice-nextcloud.${SECRET_DOMAIN}"
-    #         paths:
-    #           - path: /
-    #             service:
-    #               identifier: app
-    #               port: http
-    #     tls:
-    #       - hosts:
-    #           - *host
-    #         secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
     persistence:
       config:
@@ -114,9 +97,9 @@ spec:
         globalMounts:
           - path: /var/www/onlyoffice/Data
 
-      # Copy files from docker host
-      import:
-        enabled: true
-        type: nfs
-        server: ${SETTINGS_NAS_IP}
-        path: /mnt/user/appdata/onlyoffice/DocumentServer/Data
+      # # Copy files from docker host
+      # import:
+      #   enabled: true
+      #   type: nfs
+      #   server: ${SETTINGS_NAS_IP}
+      #   path: /mnt/user/appdata/onlyoffice/DocumentServer/Data
