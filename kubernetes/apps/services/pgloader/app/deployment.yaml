@@ -42,5 +42,5 @@ spec:
                 items:
                   - key: my.load
                     path: my.load
-    restartPolicy: Never
-    backoffLimit: 4
+      restartPolicy: Never
+      backoffLimit: 4
