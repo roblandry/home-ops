@@ -35,6 +35,7 @@ spec:
       volumeMounts:
         - name: config-volume
           mountPath: /tmp/myload
+          subPath: my.load
       volumes:
         - name: config-volume
           configMap:
