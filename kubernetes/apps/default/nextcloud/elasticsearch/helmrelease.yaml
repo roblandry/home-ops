@@ -21,11 +21,12 @@ spec:
     keepHistory: false
   values:
     controllers:
-      elasticsearch:
+      main:
         annotations:
           reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: &secret nextcloud-onlyoffice
         containers:
-          elasticsearch:
+          main:
             image:
               repository: elasticsearch
               tag: 8.18.0@sha256:658ea54de8d38c9ee69389e7fe226d6fd589816d7ed7f7cc911017ed646216d5
@@ -51,43 +52,15 @@ spec:
               discovery.type: "single-node"
               ES_JAVA_OPTS: "-Xms512m -Xmx512m"
               path.repo: "/usr/share/elasticsearch/data/snapshot"
-              # PUID: 99
-              # PGID: 100
             envFrom:
               - secretRef:
                   name: nextcloud-elasticsearch
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 99
-    #     runAsGroup: 100
-    #     fsGroup: 100
-    #     fsGroupChangePolicy: OnRootMismatch
-    #     seccompProfile: { type: RuntimeDefault }
     service:
-      app:
-        controller: elasticsearch
+      main:
+        controller: main
         ports:
           http:
             port: 9200
-
-    ingress:
-      app:
-        className: internal
-        # annotations:
-          # external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: &host "elasticsearch-nextcloud.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-            secretName: "${SECRET_DOMAIN/./-}-production-tls"
-
     persistence:
       config:
         existingClaim: nextcloud-elasticsearch
