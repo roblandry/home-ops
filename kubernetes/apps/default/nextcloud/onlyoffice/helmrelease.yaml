@@ -84,11 +84,6 @@ spec:
       main:
         enabled: true
         className: internal
-        annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/secure-backends: "false"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          nginx.ingress.kubernetes.io/ssl-verify: "false"
         hosts:
           - host: &host "oo.${SECRET_DOMAIN}"
             paths:
@@ -97,11 +92,6 @@ spec:
                 service:
                   identifier: main
                   port: http
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: https
         tls:
           - hosts:
               - *host
