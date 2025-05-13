@@ -21,7 +21,7 @@ spec:
       containers:
         - name: pgloader
           image: dimitri/pgloader:latest
-          command: ["/bin/sh", "-c", "ls -la /tmp/myload/ && cat /tmp/myload/my.load"]
+          command: ["pgloader", "--verbose", "--debug", "/tmp/myload/my.load"]
           envFrom:
             - secretRef:
                 name: *secret
