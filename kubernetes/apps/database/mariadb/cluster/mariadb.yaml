@@ -41,7 +41,7 @@ spec:
 
   storage:
     storageClassName: ceph-block
-    size: 10Gi
+    size: 20Gi
 
   replicas: 3
 
