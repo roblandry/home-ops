@@ -10,7 +10,13 @@ data:
       from mysql://${MARIADB_USER}:${MARIADB_PASS}@${MARIADB_HOST}/${MARIADB_DBNAME}
       into postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
-    WITH workers = 2, concurrency = 1, prefetch rows = 10, create no indexes, multiple readers per thread, rows per range = 100
+    WITH
+      workers = 2,
+      concurrency = 1,
+      prefetch rows = 10,
+      create no indexes,
+      multiple readers per thread,
+      rows per range = 10
 
     CAST type int when (= 11 precision) to "integer" drop typemod
 
