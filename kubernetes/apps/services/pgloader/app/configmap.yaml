@@ -13,7 +13,6 @@ data:
     WITH
       workers = 4,
       concurrency = 2,
-      create no indexes,
       multiple readers per thread,
       rows per range = 1000,
       batch size = 15MB,
