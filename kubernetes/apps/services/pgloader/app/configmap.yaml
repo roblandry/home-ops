@@ -11,9 +11,12 @@ data:
       into postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
     WITH
-      batch size = 15MB,
-      prefetch rows = 8000,
-      create no indexes
+      workers = 4,
+      concurrency = 2,
+      create no indexes,
+      multiple readers per thread,
+      rows per range = 1000
+
 
     CAST type int when (= 11 precision) to "integer" drop typemod
 
