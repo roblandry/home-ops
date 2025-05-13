@@ -11,7 +11,7 @@ data:
       into postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
     WITH
-      workers = 2,
+      workers = 1,
       concurrency = 1,
       prefetch rows = 10,
       create no indexes,
