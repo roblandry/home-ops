@@ -57,6 +57,11 @@ spec:
             - /bin/bash
             - -c
             - |
+              # Install SQLite3 runtime libraries
+              apt-get update && apt-get install -y \
+                libsqlite3-0 \
+              && rm -rf /var/lib/apt/lists/*
+
               # Copy the pgloader binary from the initContainer and execute migration
               cp /tmp/pgloader/pgloader /root/pgloader
               /root/pgloader --verbose --debug /tmp/myload/my.load
