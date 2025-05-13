@@ -21,10 +21,10 @@ spec:
       containers:
         - name: pgloader
           image: dimitri/pgloader:latest
-          command: ["/bin/sh", "-c", "envsubst < /tmp/myload/my.load | pgloader --verbose --debug"]
-          envFrom:
-            - secretRef:
-                name: *secret
+          command: ["pgloader", "--verbose", "--debug", "/tmp/myload/my.load"]
+          # envFrom:
+          #   - secretRef:
+          #       name: *secret
           resources:
             requests:
               memory: "2Gi"
