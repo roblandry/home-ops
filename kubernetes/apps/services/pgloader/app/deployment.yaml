@@ -21,7 +21,7 @@ spec:
       containers:
         - name: pgloader
           image: dimitri/pgloader:latest
-          command: ["cat", "/tmp/myload"]
+          command: ["ls", "-la", "/tmp/myload/" , "&&", "cat", "/tmp/myload/my.load"]
           envFrom:
             - secretRef:
                 name: *secret
@@ -35,7 +35,6 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /tmp/myload
-              subPath: my.load
       volumes:
         - name: config-volume
           configMap:
