@@ -27,18 +27,18 @@ spec:
           echo "Starting migration from MariaDB to PostgreSQL..."
 
           # Run pgloader to migrate from MariaDB to PostgreSQL
-          pgloader --verbose -- debug mysql://$MARIADB_USER:$MARIADB_PASS@$MARIADB_HOST/$MARIADB_DBNAME \
-            postgresql://$INIT_POSTGRES_USER:$INIT_POSTGRES_PASS@$INIT_POSTGRES_HOST/$INIT_POSTGRES_DBNAME
+          pgloader --verbose -- debug mysql://${MARIADB_USER}:${MARIADB_PASS}@${MARIADB_HOST}/${MARIADB_DBNAME} \
+            postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
           echo "Migration completed."
-      envFrom:
-        - secretRef:
-            name: *secret
+      # envFrom:
+      #   - secretRef:
+      #       name: *secret
       resources:
         requests:
-          memory: "2Gi"
+          memory: "5Gi"
           cpu: "500m"
         limits:
-          memory: "4Gi"
+          memory: "10Gi"
           cpu: "1000m"
   restartPolicy: Never
