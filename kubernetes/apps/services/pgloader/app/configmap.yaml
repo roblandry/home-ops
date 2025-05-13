@@ -20,7 +20,7 @@ data:
 
     CAST type int when (= 11 precision) to "integer" drop typemod
 
-    ALTER SCHEMA 'nextcloud' RENAME TO 'public';
+    ALTER SCHEMA 'lychee' RENAME TO 'public';
 
 # WITH
 #   workers = 1,
