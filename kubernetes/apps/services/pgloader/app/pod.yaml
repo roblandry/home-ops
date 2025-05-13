@@ -27,7 +27,7 @@ spec:
           echo "Starting migration from MariaDB to PostgreSQL..."
 
           # Run pgloader to migrate from MariaDB to PostgreSQL
-          pgloader --verbose -- debug mysql://${MARIADB_USER}:${MARIADB_PASS}@${MARIADB_HOST}/${MARIADB_DBNAME} \
+          pgloader --verbose --debug mysql://${MARIADB_USER}:${MARIADB_PASS}@${MARIADB_HOST}/${MARIADB_DBNAME} \
             postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
           echo "Migration completed."
