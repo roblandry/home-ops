@@ -17,9 +17,7 @@ data:
       multiple readers per thread,
       rows per range = 1000,
       batch size = 15MB,
-      prefetch rows = 8000,
-      mysql-read-timeout = 300,
-      mysql-connect-timeout = 300
+      prefetch rows = 8000
 
     CAST type int when (= 11 precision) to "integer" drop typemod
 
