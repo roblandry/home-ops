@@ -44,17 +44,17 @@ spec:
               # Clone pgloader repo and build it
               git clone https://github.com/dimitri/pgloader.git
               cd pgloader
-              make DYNSIZE=10240 pgloader
+              make DYNSIZE=20480 pgloader
 
               # Run pgloader after building
               cp build/bin/pgloader /root/pgloader
               /root/pgloader --verbose --debug /tmp/myload/my.load
           resources:
             requests:
-              memory: "10Gi"
+              memory: "16Gi"
               cpu: "1"
             limits:
-              memory: "20Gi"
+              memory: "24Gi"
               cpu: "2"
           volumeMounts:
             - name: config-volume
