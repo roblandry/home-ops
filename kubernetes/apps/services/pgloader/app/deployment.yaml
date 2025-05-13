@@ -6,6 +6,9 @@ metadata:
   name: pgloader
   namespace: services
 spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 0
   template:
     spec:
       annotations:
@@ -27,11 +30,11 @@ spec:
           #       name: *secret
           resources:
             requests:
-              memory: "2Gi"
-              cpu: "500m"
+              memory: "8Gi"
+              cpu: "1"
             limits:
-              memory: "4Gi"
-              cpu: "1000m"
+              memory: "16Gi"
+              cpu: "2"
           volumeMounts:
             - name: config-volume
               mountPath: /tmp/myload
@@ -43,4 +46,3 @@ spec:
               - key: my.load
                 path: my.load
       restartPolicy: Never
-      backoffLimit: 4
