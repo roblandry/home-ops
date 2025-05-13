@@ -10,8 +10,6 @@ data:
       from mysql://${MARIADB_USER}:${MARIADB_PASS}@${MARIADB_HOST}/${MARIADB_DBNAME}
       into postgresql://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}/${INIT_POSTGRES_DBNAME}
 
-    WITH create no indexes
-
     CAST type int when (= 11 precision) to "integer" drop typemod
 
     ALTER SCHEMA 'nextcloud' RENAME TO 'public';
