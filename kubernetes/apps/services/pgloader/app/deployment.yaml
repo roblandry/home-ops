@@ -14,20 +14,52 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
         secret.reloader.stakater.com/reload: &secret mariadb-to-postgres-migration-secrets
-      # initContainers:
-      #   - name: 01-init-db
-      #     image: ghcr.io/onedr0p/postgres-init:16
-      #     pullPolicy: IfNotPresent
-      #     envFrom:
-      #       - secretRef:
-      #           name: *secret
+      initContainers:
+        # - name: 01-init-db
+        #   image: ghcr.io/onedr0p/postgres-init:16
+        #   pullPolicy: IfNotPresent
+        #   envFrom:
+        #     - secretRef:
+        #         name: *secret
+        - name: pgloader-builder
+          image: ubuntu:20.04
+          command:
+            - /bin/bash
+            - -c
+            - |
+              apt-get update && apt-get install -y \
+                git \
+                sbcl \
+                unzip \
+                libsqlite3-dev \
+                make \
+                curl \
+                gawk \
+                freetds-dev \
+                libzip-dev \
+              && rm -rf /var/lib/apt/lists/*
+
+              # Clone pgloader repo and build it
+              git clone https://github.com/dimitri/pgloader.git
+              cd pgloader
+              make DYNSIZE=10240 pgloader
+
+              # Copy the compiled binary to a shared volume
+              cp build/bin/pgloader /tmp/pgloader/pgloader
+          volumeMounts:
+            - name: pgloader-bin
+              mountPath: /tmp/pgloader
+
       containers:
         - name: pgloader
-          image: dimitri/pgloader:latest
-          command: ["pgloader", "--verbose", "--debug", "/tmp/myload/my.load"]
-          # envFrom:
-          #   - secretRef:
-          #       name: *secret
+          image: ubuntu:20.04
+          command:
+            - /bin/bash
+            - -c
+            - |
+              # Copy the pgloader binary from the initContainer and execute migration
+              cp /tmp/pgloader/pgloader /root/pgloader
+              /root/pgloader --verbose --debug /tmp/myload/my.load
           resources:
             requests:
               memory: "10Gi"
@@ -36,9 +68,13 @@ spec:
               memory: "20Gi"
               cpu: "2"
           volumeMounts:
+            - name: pgloader-bin
+              mountPath: /tmp/pgloader
             - name: config-volume
               mountPath: /tmp/myload
       volumes:
+        - name: pgloader-bin
+          emptyDir: {}
         - name: config-volume
           configMap:
             name: myload
