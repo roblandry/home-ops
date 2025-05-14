@@ -8,9 +8,9 @@ metadata:
   namespace: network
 spec:
   ports:
-    - port: 443
+    - port: 80
       protocol: TCP
-      targetPort: 443
+      targetPort: 80
       name: http
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
@@ -23,7 +23,7 @@ metadata:
     kubernetes.io/service-name: remote-internal-kvm2
 addressType: IPv4
 ports:
-  - port: 443
+  - port: 80
 endpoints:
   - addresses:
     - ${SETTINGS_KVM2_IP}
@@ -46,9 +46,6 @@ metadata:
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "pikvm.png"
     gethomepage.dev/siteMonitor: https://${SETTINGS_KVM1_IP}:443
-    nginx.ingress.kubernetes.io/secure-backends: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/ssl-verify: "false"
 spec:
   ingressClassName: internal
   rules:
@@ -61,7 +58,7 @@ spec:
             service:
               name: remote-internal-kvm2
               port:
-                number: 443
+                number: 80
   tls:
     - hosts:
         - "kvm2.${SECRET_DOMAIN}"
