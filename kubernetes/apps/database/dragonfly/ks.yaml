@@ -31,8 +31,19 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus
   interval: 10m
   path: ./kubernetes/apps/database/dragonfly/cluster
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+    substitute:
+      APP: redis
+      GATUS_GROUP: *namespace
+      GATUS_URL: tcp://dragonfly.database.svc.cluster.local:6379
+      GATUS_CONDITION: "[CONNECTED] == true"
   prune: true
   sourceRef:
     kind: GitRepository

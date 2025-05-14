@@ -49,7 +49,7 @@ spec:
         kind: Secret
     substitute:
       APP: postgres
-      GATUS_GROUP: Database
+      GATUS_GROUP: *namespace
       GATUS_URL: tcp://postgres-16-rw.database.svc.cluster.local:5432
       GATUS_CONDITION: "[CONNECTED] == true"
   prune: true

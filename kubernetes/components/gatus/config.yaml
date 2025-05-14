@@ -1,13 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/service.json
 # VARS:
-#   APP
-#   GATUS_GROUP
-#   GATUS_URL or
-#     GATUS_SUBDOMAIN/APP
-#     SECRET_DOMAIN
-#     GATUS_PATH
-#   GATUS_DNS/LB_BLOCKY_ADDR
-#   GATUS_CONDITION/GATUS_STATUS
+#   APP:
+#   GATUS_GROUP:
+#   GATUS_URL: or
+#     GATUS_SUBDOMAIN:/APP
+#     GATUS_PATH:
+#   GATUS_DNS:/LB_BLOCKY_ADDR
+#   GATUS_CONDITION:/GATUS_STATUS:
 endpoints:
   - name: "${APP}"
     group: "${GATUS_GROUP:=Default}"
