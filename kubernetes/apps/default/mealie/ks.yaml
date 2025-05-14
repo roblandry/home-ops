@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/gatus
   interval: 1h
   path: ./kubernetes/apps/default/mealie/app
   postBuild:
@@ -22,6 +23,8 @@ spec:
       # GATUS_PATH: /web/index.html
       # VOLSYNC_CACHE_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 5Gi
+      GATUS_GROUP: *namespace
+      GATUS_SUBDOMAIN: food
   prune: true
   retryInterval: 2m
   sourceRef:
