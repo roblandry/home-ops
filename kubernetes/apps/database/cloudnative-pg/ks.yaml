@@ -29,17 +29,13 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus
   dependsOn:
     - name: cloudnative-pg
       namespace: database
-    - name: rook-ceph
-      namespace: rook-ceph
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    # - name: csi-driver-nfs
-    #   namespace: storage
-    # - name: onepassword-store
-    #   namespace: security
   healthCheckExprs:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
@@ -51,6 +47,11 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+    substitute:
+      APP: Postgres
+      GATUS_GROUP: Database
+      GATUS_URL: tcp://postgres-16-rw.database.svc.cluster.local:5432
+      GATUS_CONDITION: "[CONNECTED] == true"
   prune: true
   sourceRef:
     kind: GitRepository
