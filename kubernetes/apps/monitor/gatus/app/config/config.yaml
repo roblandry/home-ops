@@ -13,7 +13,7 @@
 #       success-threshold: 3
 connectivity:
   checker:
-    target: ${SECRET_PIHOLE_IP}:53
+    target: ${LB_BLOCKY_ADDR}:53
     interval: 1m
 endpoints:
   - name: Status
@@ -24,7 +24,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     client:
-      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
+      dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
     conditions:
       - "[STATUS] == 200"
     alerts:
@@ -42,34 +42,34 @@ endpoints:
     alerts:
       - type: pushover
         send-on-resolved: true
-  - name: Flux webhook
-    group: Services
-    url: https://flux-receiver.${SECRET_DOMAIN}
-    interval: 1m
-    ui:
-      hide-hostname: true
-      hide-url: true
-    client:
-      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
-    conditions:
-      - "[STATUS] == 404"
-    alerts:
-      - type: pushover
-        send-on-resolved: true
-  - name: Unraid
-    group: Services
-    url: https://unraid.${SECRET_DOMAIN}
-    interval: 1m
-    ui:
-      hide-hostname: true
-      hide-url: true
-    client:
-      dns-resolver: tcp://${SECRET_PIHOLE_IP}:53
-    conditions:
-      - "[STATUS] == 200"
-    alerts:
-      - type: pushover
-        send-on-resolved: true
+  # - name: Flux webhook
+  #   group: Services
+  #   url: https://flux-receiver.${SECRET_DOMAIN}
+  #   interval: 1m
+  #   ui:
+  #     hide-hostname: true
+  #     hide-url: true
+  #   client:
+  #     dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
+  #   conditions:
+  #     - "[STATUS] == 404"
+  #   alerts:
+  #     - type: pushover
+  #       send-on-resolved: true
+  # - name: Unraid
+  #   group: Services
+  #   url: https://unraid.${SECRET_DOMAIN}
+  #   interval: 1m
+  #   ui:
+  #     hide-hostname: true
+  #     hide-url: true
+  #   client:
+  #     dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
+  #   conditions:
+  #     - "[STATUS] == 200"
+  #   alerts:
+  #     - type: pushover
+  #       send-on-resolved: true
 
 metrics: true
 storage:
