@@ -30,18 +30,18 @@ endpoints:
     alerts:
       - type: pushover
         send-on-resolved: true
-  - name: Redis
-    group: Services
-    url: tcp://dragonfly.database.svc.cluster.local:6379
-    interval: 1m
-    ui:
-      hide-url: true
-      hide-hostname: true
-    conditions:
-      - "[CONNECTED] == true"
-    alerts:
-      - type: pushover
-        send-on-resolved: true
+  # - name: Redis
+  #   group: Services
+  #   url: tcp://dragonfly.database.svc.cluster.local:6379
+  #   interval: 1m
+  #   ui:
+  #     hide-url: true
+  #     hide-hostname: true
+  #   conditions:
+  #     - "[CONNECTED] == true"
+  #   alerts:
+  #     - type: pushover
+  #       send-on-resolved: true
   # - name: Flux webhook
   #   group: Services
   #   url: https://flux-receiver.${SECRET_DOMAIN}
