@@ -65,3 +65,28 @@ spec:
     - hosts:
         - "unraid.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/configmap.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: remote-internal-unraid-gatus
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |
+    endpoints:
+      - name: Unraid
+        group: remote-internal
+        url: https://${SETTINGS_NAS_IP}:8443
+        interval: 1m
+        ui:
+          hide-url: true
+          hide-hostname: true
+        client:
+          dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
+          insecure: true
+        conditions:
+          - "[STATUS] == 200"
+        alerts:
+          - type: pushover
