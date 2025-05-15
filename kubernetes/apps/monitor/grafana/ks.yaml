@@ -25,7 +25,8 @@ spec:
       APP: *app
       # VOLSYNC_CAPACITY: 15Gi
       # # VOLSYNC_STORAGECLASS: ceph-filesystem
-      namespace: *namespace
+      GATUS_GROUP: *namespace
+      GATUS_URL: http://grafana.monitor.svc.cluster.local
   prune: true
   sourceRef:
     kind: GitRepository
