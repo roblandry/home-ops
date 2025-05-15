@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -18,6 +20,11 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+    substitute:
+      APP: garage
+      GATUS_GROUP: *namespace
+      GATUS_URL: https://${SETTINGS_NAS_IP}:3900
+      GATUS_STATUS: "403"
   prune: true
   retryInterval: 2m
   sourceRef:

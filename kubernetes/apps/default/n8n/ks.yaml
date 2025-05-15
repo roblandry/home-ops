@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus
   interval: 1h
   path: ./kubernetes/apps/default/n8n/app
   dependsOn:
@@ -18,6 +20,9 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+    substitute:
+      APP: *app
+      GATUS_GROUP: *namespace
   prune: true
   retryInterval: 2m
   sourceRef:

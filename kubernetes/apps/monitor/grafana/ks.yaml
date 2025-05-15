@@ -9,23 +9,23 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # components:
+  components:
   #   - ../../../../components/volsync
+    - ../../../../components/gatus
   dependsOn:
     - name: postgres-cluster
       namespace: database
-    # - name: onepassword-store
-    #   namespace: security
   interval: 30m
   path: ./kubernetes/apps/monitor/grafana/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-    # substitute:
-    #   APP: *app
-    #   VOLSYNC_CAPACITY: 15Gi
-    #   # VOLSYNC_STORAGECLASS: ceph-filesystem
+    substitute:
+      APP: *app
+      # VOLSYNC_CAPACITY: 15Gi
+      # # VOLSYNC_STORAGECLASS: ceph-filesystem
+      namespace: *namespace
   prune: true
   sourceRef:
     kind: GitRepository
