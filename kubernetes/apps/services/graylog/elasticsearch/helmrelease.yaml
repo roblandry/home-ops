@@ -68,9 +68,6 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
-          volumeMounts:
-            - name: my-volume
-              mountPath: /app/data
     service:
       main:
         controller: main
