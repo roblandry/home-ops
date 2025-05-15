@@ -25,19 +25,19 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
           secret.reloader.stakater.com/reload: &secret graylog-elasticsearch
-        initContainers:
-          00-chown-data:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                chown -R 1000:1000 /usr/share/elasticsearch/data
-            securityContext:
-              runAsUser: 0
-              allowPrivilegeEscalation: true
+        # initContainers:
+        #   00-chown-data:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         chown -R 1000:1000 /usr/share/elasticsearch/data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
         containers:
           main:
             image:
@@ -82,5 +82,5 @@ spec:
           main:
             main:
               - path: /usr/share/elasticsearch/data
-            00-chown-data:
-              - path: /usr/share/elasticsearch/data
+            # 00-chown-data:
+            #   - path: /usr/share/elasticsearch/data

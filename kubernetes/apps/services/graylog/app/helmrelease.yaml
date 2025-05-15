@@ -21,20 +21,20 @@ spec:
       main:
         annotations:
           secret.reloader.stakater.com/reload: &secret graylog-secrets
-        initContainers:
-          00-chown-data:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                rm -rf /usr/share/graylog/data/journal/
-                chown -R 1100:1100 /usr/share/graylog/data/journal
-            securityContext:
-              runAsUser: 0
-              allowPrivilegeEscalation: true
+        # initContainers:
+        #   00-chown-data:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         rm -rf /usr/share/graylog/data/journal/
+        #         chown -R 1100:1100 /usr/share/graylog/data/journal
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
         strategy: Recreate
         containers:
           main:
@@ -86,13 +86,13 @@ spec:
           # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           # error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
-          # gethomepage.dev/app: *app
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/name: *app
-          # gethomepage.dev/description: "A simple admin web UI for graylog, a self-hosted, S3-compatible, distributed object storage service."
-          # gethomepage.dev/href: "https://graylog.${SECRET_DOMAIN}"
-          # gethomepage.dev/group: "Storage"
-          # gethomepage.dev/icon: "graylog.png"
+          gethomepage.dev/app: *app
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: *app
+          gethomepage.dev/description: "Graylog is a powerful Security Information and Event Management (SIEM) solution and log analytics platform that centralizes, secures, and monitors machine-generated data across diverse sources."
+          gethomepage.dev/href: "https://log.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Services"
+          gethomepage.dev/icon: "graylog.png"
         hosts:
           - host: &host "log.${SECRET_DOMAIN}"
             paths:
@@ -112,5 +112,5 @@ spec:
           main:
             main:
               - path: /usr/share/graylog/data/journal
-            00-chown-data:
-              - path: /usr/share/graylog/data/journal
+            # 00-chown-data:
+            #   - path: /usr/share/graylog/data/journal
