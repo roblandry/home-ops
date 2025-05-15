@@ -20,6 +20,20 @@ spec:
     controllers:
       main:
 
+        # Silence error by creating garage.toml
+        initContainers:
+          init:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                echo "Creating /etc/garage.toml..."
+                touch /etc/garage.toml
+                # chown -R 99:100 /app/data
+
         strategy: Recreate
         containers:
           main:
@@ -73,9 +87,12 @@ spec:
               - *host
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
-    # persistence:
-    #   config:
-    #     enabled: true
-    #     type: nfs
-    #     server: ${SETTINGS_NAS_IP}
-    #     path: /mnt/user/kubernetes/garagehq/config/garage.toml
+    persistence:
+      # config:
+      #   enabled: true
+      #   type: nfs
+      #   server: ${SETTINGS_NAS_IP}
+      #   path: /mnt/user/kubernetes/garagehq/config/garage.toml
+      config:
+        enabled: true
+        type: emptyDir
