@@ -34,6 +34,7 @@ spec:
                 touch /config/garage.toml
                 echo 'rpc_public_addr = "${SECRET_NAS_IP}:3901"' > /config/garage.toml
                 cat /config/garage.toml
+                env
                 # chown -R 99:100 /app/data
 
         strategy: Recreate
