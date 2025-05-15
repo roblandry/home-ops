@@ -54,26 +54,18 @@ spec:
     service:
       main:
         controller: main
-        # type: NodePort
-        # annotations:
-        #   io.cilium/lb-ipam-ips: ${LB_GRAYLOG_ADDR}
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_GRAYLOG_ADDR}
         ports:
           http:
             port: 9000
-      syslog:
-        controller: main
-        # type: NodePort
-        ports:
           syslog-tcp:
             port: 1514
             protocol: TCP
           syslog-udp:
             port: 1514
             protocol: UDP
-      gelf:
-        controller: main
-        # type: NodePort
-        ports:
           gelf-tcp:
             port: 12201
             protocol: TCP
