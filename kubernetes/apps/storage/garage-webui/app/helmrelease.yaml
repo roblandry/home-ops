@@ -30,8 +30,8 @@ spec:
               - sh
               - -c
               - |
-                echo "Creating /etc/garage.toml..."
-                touch /etc/garage.toml
+                echo "Creating /config/garage.toml..."
+                touch /config/garage.toml
                 # chown -R 99:100 /app/data
 
         strategy: Recreate
@@ -45,7 +45,7 @@ spec:
               - secretRef:
                   name: garage-webui-secret
             env:
-              # CONFIG_PATH: /config/garage.toml
+              CONFIG_PATH: /config/garage.toml
               # BASE_PATH:
               API_BASE_URL: "http://${SECRET_NAS_IP}:3903"
               # API_ADMIN_KEY: SECRET
