@@ -21,25 +21,25 @@ spec:
       main:
         annotations:
           secret.reloader.stakater.com/reload: &secret garage-secrets
-          configmap.reloader.stakater.com/reload: &configmap garage-configmap
+          # configmap.reloader.stakater.com/reload: &configmap garage-configmap
 
-        # Silence error by creating garage.toml
-        initContainers:
-          init:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                # echo "Creating /config/garage.toml..."
-                # touch /config/garage.toml
-                # echo 'rpc_public_addr = "${SECRET_NAS_IP}:3901"' > /config/garage.toml
-                ls -la /config/
-                cat /config/garage.toml
-                # env
-                # chown -R 99:100 /app/data
+        # # Silence error by creating garage.toml
+        # initContainers:
+        #   init:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         # echo "Creating /config/garage.toml..."
+        #         # touch /config/garage.toml
+        #         # echo 'rpc_public_addr = "${SETTINGS_NAS_IP}:3901"' > /config/garage.toml
+        #         ls -la /config/
+        #         cat /config/garage.toml
+        #         # env
+        #         # chown -R 99:100 /app/data
 
         strategy: Recreate
         containers:
@@ -48,16 +48,16 @@ spec:
               repository: khairul169/garage-webui
               tag: 1.0.9@sha256:2458eae506bb39b3f800f9d4270ea618c5c595cb03ff05d9a057a8af938cbc6d
               pullPolicy: IfNotPresent
-            # envFrom:
-            #   - secretRef:
-            #       name: garage-webui-secret
+            envFrom:
+              - secretRef:
+                  name: *secret
             env:
-              CONFIG_PATH: /config/garage.toml
+              # CONFIG_PATH: /config/garage.toml
               # BASE_PATH:
-              # API_BASE_URL: "http://${SECRET_NAS_IP}:3903"
+              API_BASE_URL: "http://${SETTINGS_NAS_IP}:3903"
               # API_ADMIN_KEY: SECRET
               # S3_REGION:
-              # S3_ENDPOINT_URL: "http://${SECRET_NAS_IP}:3900"
+              S3_ENDPOINT_URL: "http://${SETTINGS_NAS_IP}:3900"
 
     service:
       main:
@@ -94,19 +94,19 @@ spec:
               - *host
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
-    persistence:
-      # config:
-      #   enabled: true
-      #   type: nfs
-      #   server: ${SETTINGS_NAS_IP}
-      #   path: /mnt/user/kubernetes/garagehq/config/garage.toml
-      # config:
-      #   enabled: true
-      #   type: emptyDir
-      config:
-        type: configMap
-        name: garage-configmap
-        globalMounts:
-          - path: /config/garage.toml
-            subPath: garage.toml
-            readOnly: true
+    # persistence:
+    #   # config:
+    #   #   enabled: true
+    #   #   type: nfs
+    #   #   server: ${SETTINGS_NAS_IP}
+    #   #   path: /mnt/user/kubernetes/garagehq/config/garage.toml
+    #   # config:
+    #   #   enabled: true
+    #   #   type: emptyDir
+    #   config:
+    #     type: configMap
+    #     name: garage-configmap
+    #     globalMounts:
+    #       - path: /config/garage.toml
+    #         subPath: garage.toml
+    #         readOnly: true
