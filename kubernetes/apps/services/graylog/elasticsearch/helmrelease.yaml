@@ -82,3 +82,5 @@ spec:
           main:
             main:
               - path: /usr/share/elasticsearch/data
+            00-chown-data:
+              - path: /usr/share/elasticsearch/data
