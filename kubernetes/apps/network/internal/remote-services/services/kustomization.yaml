@@ -21,9 +21,6 @@ resources:
   - ./oods.yaml
   - ./overseerr.yaml
   - ./photoprism.yaml
-  - ./pihole.yaml
-  - ./pihole1.yaml
-  - ./pihole2.yaml
   - ./plex.yaml
   - ./prowlarr.yaml
   - ./proxmox.yaml
