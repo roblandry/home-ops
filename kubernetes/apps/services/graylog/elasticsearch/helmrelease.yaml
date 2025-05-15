@@ -1,0 +1,81 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app graylog-elasticsearch
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: uninstall
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: &secret graylog-elasticsearch
+        # initContainers:
+        #   00-chown-data:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         chown -R 1000:1000 /usr/share/elasticsearch/data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
+        containers:
+          main:
+            image:
+              repository: elasticsearch
+              tag: 8.18.0@sha256:658ea54de8d38c9ee69389e7fe226d6fd589816d7ed7f7cc911017ed646216d5
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                memory: 4096Mi
+            probes:
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              xpack.security.enabled: "false"
+              discovery.type: "single-node"
+              ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+              path.repo: "/usr/share/elasticsearch/data/snapshot"
+            envFrom:
+              - secretRef:
+                  name: *secret
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 9200
+    persistence:
+      config:
+        existingClaim: graylog-elasticsearch
+        globalMounts:
+          - path: /usr/share/elasticsearch/data
