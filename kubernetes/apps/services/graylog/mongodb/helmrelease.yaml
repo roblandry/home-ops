@@ -35,5 +35,7 @@ spec:
     persistence:
       data:
         existingClaim: graylog-mongodb
-        globalMounts:
-          - path: /data/db
+        advancedMounts:
+          main:
+            main:
+              - path: /data/db

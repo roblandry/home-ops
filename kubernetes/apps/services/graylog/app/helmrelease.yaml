@@ -94,5 +94,7 @@ spec:
     persistence:
       config:
         existingClaim: graylog
-        globalMounts:
-          - path: /usr/share/graylog/data/journal
+        advancedMounts:
+          main:
+            main:
+              - path: /usr/share/graylog/data/journal
