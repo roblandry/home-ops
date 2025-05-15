@@ -21,6 +21,19 @@ spec:
       main:
         annotations:
           secret.reloader.stakater.com/reload: &secret graylog-secrets
+        initContainers:
+          00-chown-data:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                chown -R 1000:1000 /usr/share/graylog/data/journal
+            securityContext:
+              runAsUser: 0
+              allowPrivilegeEscalation: true
         strategy: Recreate
         containers:
           main:
@@ -97,4 +110,6 @@ spec:
         advancedMounts:
           main:
             main:
+              - path: /usr/share/graylog/data/journal
+            00-chown-data:
               - path: /usr/share/graylog/data/journal
