@@ -9,9 +9,12 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-
   interval: 1h
   path: ./kubernetes/apps/storage/garage-webui/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
