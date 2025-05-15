@@ -26,7 +26,7 @@ spec:
       # VOLSYNC_CAPACITY: 15Gi
       # # VOLSYNC_STORAGECLASS: ceph-filesystem
       GATUS_GROUP: *namespace
-      GATUS_URL: tcp://grafana.monitor.svc.cluster.local
+      GATUS_URL: tcp://grafana.monitor.svc.cluster.local:80
       GATUS_CONDITION: "[CONNECTED] == true"
   prune: true
   sourceRef:
