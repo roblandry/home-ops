@@ -25,19 +25,19 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
           secret.reloader.stakater.com/reload: &secret graylog-elasticsearch
-        initContainers:
-          00-clean-data:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                rm -rf /usr/share/elasticsearch/data
-            securityContext:
-              runAsUser: 0
-              allowPrivilegeEscalation: true
+        # initContainers:
+        #   00-clean-data:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         rm -rf /usr/share/elasticsearch/data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
         containers:
           main:
             image:
