@@ -30,6 +30,7 @@ spec:
               - sh
               - -c
               - |
+                rm -rf /usr/share/graylog/data/journal/
                 chown -R 1100:1100 /usr/share/graylog/data/journal
             securityContext:
               runAsUser: 0
