@@ -5,9 +5,3 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-# configMapGenerator:
-#   - name: garage-configmap
-#     files:
-#       - ./config/config.yaml
-# generatorOptions:
-#   disableNameSuffixHash: true
