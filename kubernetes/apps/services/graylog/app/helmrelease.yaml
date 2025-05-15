@@ -54,7 +54,7 @@ spec:
     service:
       main:
         controller: main
-        type: NodePort
+        # type: NodePort
         # annotations:
         #   io.cilium/lb-ipam-ips: ${LB_GRAYLOG_ADDR}
         ports:
@@ -62,7 +62,7 @@ spec:
             port: 9000
       syslog:
         controller: main
-        type: NodePort
+        # type: NodePort
         ports:
           syslog-tcp:
             port: 1514
@@ -72,7 +72,7 @@ spec:
             protocol: UDP
       gelf:
         controller: main
-        type: NodePort
+        # type: NodePort
         ports:
           gelf-tcp:
             port: 12201
