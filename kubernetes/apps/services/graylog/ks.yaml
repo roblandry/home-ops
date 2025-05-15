@@ -30,6 +30,7 @@ spec:
     substitute:
       APP: *app
       GATUS_GROUP: *namespace
+      GATUS_SUBDOMAIN: log
       VOLSYNC_CAPACITY: 10Gi
   prune: true
   retryInterval: 2m
