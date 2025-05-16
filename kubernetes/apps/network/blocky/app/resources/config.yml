@@ -1,8 +1,8 @@
 ---
 conditional:
   mapping:
-    ${SECRET_DOMAIN}: 10.0.10.127
-    ${SECRET_DEV_DOMAIN}: 10.0.10.127
+    ${SECRET_DOMAIN}: ${LB_GATEWAY_ADDR}
+    ${SECRET_DEV_DOMAIN}: ${LB_GATEWAY_ADDR}
 
 blocking:
   loading:
@@ -31,13 +31,12 @@ caching:
   prefetchExpires: 2h
 
 clientLookup:
-  upstream: tcp+udp:10.0.10.1
+  upstream: tcp+udp:${SETTINGS_UNIFI_10_IP}
   clients:
     adults:
-      - 10.0.10.60 # ASUS-TUF-Dash-F15-FX517ZR
-      - 10.0.10.80 # ROB-s-Z-Fold6
-      - 10.0.10.90 # Ashley-s-Z-Flip6
-
+      - ${DEVICE_ASUS_TUF}  # ASUS-TUF-Dash-F15-FX517ZR
+      - ${DEVICE_Z_FOLD6}   # ROB-s-Z-Fold6
+      - ${DEVICE_Z_FLIP6}   # Ashley-s-Z-Flip6
 log:
   level: info
 
@@ -53,6 +52,7 @@ upstreams:
   groups:
     default:
       - 1.1.1.1:53
+      - ${LB_GATEWAY_ADDR}:53
       #- tcp-tls:one.one.one.one
       #- tcp-tls:dns.quad9.net
       #- https://cloudflare-dns.com/dns-query
