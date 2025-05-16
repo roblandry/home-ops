@@ -97,7 +97,12 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hosts: ["alerts.${SECRET_DOMAIN}"]
+        hosts:
+          - &host "alerts.${SECRET_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
