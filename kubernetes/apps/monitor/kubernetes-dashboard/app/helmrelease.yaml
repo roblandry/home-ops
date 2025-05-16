@@ -36,13 +36,13 @@ spec:
     app:
       mode: dashboard
 
-      annotations:
-        secret.reloader.stakater.com/reload: &secret kubernetes-dashboard-secret
+      # annotations:
+      #   secret.reloader.stakater.com/reload: &secret kubernetes-dashboard-secret
 
-      csrf-key:
-        enabled: true
-        secretName: *secret
-        secretKey: password
+      # csrf-key:
+      #   enabled: true
+      #   secretName: *secret
+      #   secretKey: password
 
       ingress:
         enabled: true
@@ -66,4 +66,4 @@ spec:
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
     serviceAccount:
-      name: "admin-user"
+      name: "kubernetes-dashboard-admin-user"
