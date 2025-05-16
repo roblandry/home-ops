@@ -93,29 +93,23 @@ spec:
       #     multicluster:
       #       etcd:
       #         enabled: true
-    # alertmanager:
-    #   ingress:
-    #     enabled: true
-    #     ingressClassName: private
-    #     annotations:
-    #       gethomepage.dev/enabled: "true"
-    #       gethomepage.dev/group: Infrastructure
-    #       gethomepage.dev/name: Alert Manager
-    #       gethomepage.dev/icon: alertmanager.svg
-    #       gethomepage.dev/pod-selector: app.kubernetes.io/name=alertmanager
-    #     hosts: ["alerts.${SECRET_DOMAIN}"]
-    #   alertmanagerSpec:
-    #     alertmanagerConfiguration:
-    #       name: alertmanager
-    #       global:
-    #         resolveTimeout: 5m
-    #     storage:
-    #       volumeClaimTemplate:
-    #         spec:
-    #           storageClassName: csi-driver-nfs
-    #           resources:
-    #             requests:
-    #               storage: 1Gi
+    alertmanager:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts: ["alerts.${SECRET_DOMAIN}"]
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
+        # storage:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: csi-driver-nfs
+        #       resources:
+        #         requests:
+        #           storage: 1Gi
     prometheus:
       ingress:
         enabled: true
