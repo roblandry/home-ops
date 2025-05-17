@@ -50,7 +50,7 @@ spec:
               # GRAYLOG_ROOT_PASSWORD_SHA2: ENV
               GRAYLOG_HTTP_EXTERNAL_URI: http://${LB_GRAYLOG_ADDR}:9000/
               GRAYLOG_MONGODB_URI: mongodb://graylog-mongodb.services.svc.cluster.local:27017/graylog
-              GRAYLOG_ELASTICSEARCH_HOSTS: http://graylog-elasticsearch.services.svc.cluster.local:9200
+              GRAYLOG_ELASTICSEARCH_HOSTS: http://graylog-datanode.services.svc.cluster.local:9200
     service:
       main:
         controller: main
