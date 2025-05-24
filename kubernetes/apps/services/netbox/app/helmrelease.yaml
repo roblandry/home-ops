@@ -41,7 +41,7 @@ spec:
     dateTimeFormat: "j. F, Y g:i a"
     shortDateTimeFormat: "j.m.Y H:i"
     storages:
-      default:
+      services:
         BACKEND: "storages.backends.s3.S3Storage"
         OPTIONS:
           AWS_STORAGE_BUCKET_NAME: "netbox-bucket"
@@ -115,11 +115,11 @@ spec:
     worker:
       enabled: false
   valuesFrom:
-    - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
+    - targetPath: storages.services.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
       name: *secret
       valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: storages.default.OPTIONS.AWS_SECRET_ACCESS_KEY
+    - targetPath: storages.services.OPTIONS.AWS_SECRET_ACCESS_KEY
       kind: Secret
       name: *secret
       valuesKey: AWS_SECRET_ACCESS_KEY
