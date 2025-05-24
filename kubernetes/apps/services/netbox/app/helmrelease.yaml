@@ -70,7 +70,8 @@ spec:
       username: netbox
       existingSecretName: *secret
       existingSecretKey: "NETBOX_PG_PASS"
-    # email:
+    email:
+      existingSecretName: *secret
     #   server: smtp-relay.networking.svc.cluster.local
     #   port: 2525
     #   from: netbox@${SECRET_DOMAIN}
