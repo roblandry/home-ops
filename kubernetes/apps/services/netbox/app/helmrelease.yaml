@@ -47,7 +47,7 @@ spec:
           AWS_STORAGE_BUCKET_NAME: "netbox"
           AWS_S3_ENDPOINT_URL: "http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc"
           # AWS_S3_REGION_NAME: "us-east-1"
-    existingSecret: netbox-secret
+    existingSecret: *secret
     metricsEnabled: true
     postgresql:
       enabled: false
@@ -108,7 +108,7 @@ spec:
           secretName: "${SECRET_DOMAIN/./-}-production-tls"
     extraConfig:
       - secret:
-          secretName: netbox-secret
+          secretName: *secret
     housekeeping:
       enabled: false
     worker:
@@ -116,9 +116,9 @@ spec:
   valuesFrom:
     - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
-      name: netbox-secret
+      name: *secret
       valuesKey: AWS_ACCESS_KEY_ID
     - targetPath: storages.default.OPTIONS.AWS_SECRET_ACCESS_KEY
       kind: Secret
-      name: netbox-secret
+      name: *secret
       valuesKey: AWS_SECRET_ACCESS_KEY
