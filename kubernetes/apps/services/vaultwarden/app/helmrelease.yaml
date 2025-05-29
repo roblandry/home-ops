@@ -22,22 +22,22 @@ spec:
         annotations:
           secret.reloader.stakater.com/reload: &secret vaultwarden-secrets
 
-        # Copy files from docker host
-        initContainers:
-          copy-import:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                echo "Copying files from /import to /data..."
-                cp -rv /import/. /data/
-                # chown -R 99:100 /data
-            securityContext:
-              runAsUser: 0
-              allowPrivilegeEscalation: true
+        # # Copy files from docker host
+        # initContainers:
+        #   copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /data..."
+        #         cp -rv /import/. /data/
+        #         # chown -R 99:100 /data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
 
         strategy: Recreate
         containers:
@@ -94,9 +94,9 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /data
-      # Copy files from docker host
-      import:
-        enabled: true
-        type: nfs
-        server: ${SETTINGS_NAS_IP}
-        path: /mnt/user/appdata/vaultwarden
+      # # Copy files from docker host
+      # import:
+      #   enabled: true
+      #   type: nfs
+      #   server: ${SETTINGS_NAS_IP}
+      #   path: /mnt/user/appdata/vaultwarden
