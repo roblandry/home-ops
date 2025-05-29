@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/gatus
   dependsOn:
     - name: volsync
       namespace: storage
@@ -24,6 +25,8 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_CACHE_CAPACITY: 500Mi
+      GATUS_GROUP: *namespace
+      GATUS_SUBDOMAIN: pass
   prune: true
   retryInterval: 2m
   sourceRef:
