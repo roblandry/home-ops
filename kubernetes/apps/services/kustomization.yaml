@@ -10,3 +10,4 @@ resources:
   - ./graylog/ks.yaml
   - ./netbox/ks.yaml
   - ./pgloader/ks.yaml
+  - ./vaultwarden/ks.yaml

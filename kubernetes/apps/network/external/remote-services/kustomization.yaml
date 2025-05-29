@@ -9,5 +9,5 @@ resources:
   - ./lychee.yaml
   # - ./nextcloud.yaml
   - ./searxng.yaml
-  - ./vaultwarden.yaml
+  # - ./vaultwarden.yaml
   - ./www.yaml
