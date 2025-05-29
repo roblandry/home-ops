@@ -111,7 +111,7 @@ spec:
         advancedMounts:
           main:
             main:
-              - path: /etc/netbox/config
+              - path: /config
                 subPath: config
               - path: /opt/netbox/netbox/media
                 subPath: media
