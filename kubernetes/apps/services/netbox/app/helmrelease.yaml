@@ -21,7 +21,7 @@ spec:
       main:
         annotations:
           secret.reloader.stakater.com/reload: &secret netbox-secrets
-        initContainers:
+        # initContainers:
         #   00-chown-data:
         #     image:
         #       repository: busybox
@@ -35,14 +35,14 @@ spec:
         #     securityContext:
         #       runAsUser: 0
         #       allowPrivilegeEscalation: true
-          01-init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: *secret
+        #   01-init-db:
+        #     image:
+        #       repository: ghcr.io/onedr0p/postgres-init
+        #       tag: 16
+        #       pullPolicy: IfNotPresent
+        #     envFrom:
+        #       - secretRef:
+        #           name: *secret
         strategy: Recreate
         containers:
           main:
