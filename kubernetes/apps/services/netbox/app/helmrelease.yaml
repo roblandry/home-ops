@@ -72,6 +72,7 @@ spec:
               REDIS_INSECURE_SKIP_TLS_VERIFY: "True"
               # REDIS_CACHE_SENTINELS:
               REDIS_CACHE_DATABASE: netbox_cache
+              DB_WAIT_DEBUG: 1
     service:
       main:
         controller: main
