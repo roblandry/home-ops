@@ -8,5 +8,5 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./graylog/ks.yaml
-  - ./netbox/ks.yaml
+  # - ./netbox/ks.yaml
   - ./pgloader/ks.yaml
