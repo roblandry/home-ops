@@ -54,7 +54,7 @@ spec:
               - secretRef:
                   name: *secret
             env:
-              # ALLOWED_HOSTS: localhost ::1 127.0.0.1.)
+              ALLOWED_HOSTS: netbox.${SECRET_DOMAIN} localhost ::1 127.0.0.1
               DB_HOST: postgres-16-rw.database.svc.cluster.local
               # DB_PORT:
               # DB_SSLMODE: prefer
