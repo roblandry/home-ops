@@ -112,12 +112,12 @@ spec:
           main:
             main:
               - path: /etc/netbox/config
-                subPath: /config/config
+                subPath: config
               - path: /opt/netbox/netbox/media
-                subPath: /config/media
+                subPath: media
               - path: /opt/netbox/netbox/reports
-                subPath: /config/reports
+                subPath: reports
               - path: /opt/netbox/netbox/scripts
-                subPath: /config/scripts
+                subPath: scripts
             # 00-chown-data:
             #   - path: /usr/share/netbox/data/journal
