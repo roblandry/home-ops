@@ -9,12 +9,20 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/services/netbox/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 10Gi
   prune: true
   retryInterval: 2m
   sourceRef:
