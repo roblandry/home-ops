@@ -25,7 +25,7 @@ ports:
   - port: 7880
 endpoints:
   - addresses:
-    - ${SETTINGS_NAS_IP}
+    - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://docs.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Office"
     gethomepage.dev/icon: "docspell.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:7880
+    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:7880
 spec:
   ingressClassName: external
   rules:

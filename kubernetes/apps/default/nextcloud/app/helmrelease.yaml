@@ -74,7 +74,7 @@
             # gethomepage.dev/widget.type: "nextcloud"
             # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
             # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
-            # gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:4443
+            # gethomepage.dev/siteMonitor: https://zeus.nas.home.internal:4443
             nginx.ingress.kubernetes.io/secure-backends: "false"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             nginx.ingress.kubernetes.io/ssl-verify: "false"
@@ -108,7 +108,7 @@
           # type: persistentVolumeClaim
           # existingClaim: nextcloud-config
           type: nfs
-          server: ${SETTINGS_NAS_IP}
+          server: zeus.nas.home.internal
           path: /mnt/user/NextCloud
 
         # # Copy files from docker host
@@ -117,5 +117,5 @@
         #   # type: persistentVolumeClaim
         #   # existingClaim: nextcloud-config
         #   type: nfs
-        #   server: ${SETTINGS_NAS_IP}
+        #   server: zeus.nas.home.internal
         #   path: /mnt/user/appdata/nextcloud

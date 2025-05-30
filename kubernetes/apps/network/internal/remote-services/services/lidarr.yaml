@@ -25,7 +25,7 @@ ports:
   - port: 8686
 endpoints:
   - addresses:
-    - ${SETTINGS_NAS_IP}
+    - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -45,9 +45,9 @@ metadata:
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "lidarr.png"
     gethomepage.dev/widget.type: "lidarr"
-    gethomepage.dev/widget.url: http://${SETTINGS_NAS_IP}:8686/lidarr
+    gethomepage.dev/widget.url: http://zeus.nas.home.internal:8686/lidarr
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_LIDARR_KEY}"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8686
+    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:8686
 spec:
   ingressClassName: internal
   rules:

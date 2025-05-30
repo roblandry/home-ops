@@ -25,7 +25,7 @@ ports:
   - port: 8070
 endpoints:
   - addresses:
-    - ${SETTINGS_NAS_IP}
+    - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://calibre.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Media Organization"
     gethomepage.dev/icon: "calibre.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_NAS_IP}:8070
+    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:8070
 spec:
   ingressClassName: internal
   rules:

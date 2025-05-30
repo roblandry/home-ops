@@ -25,7 +25,7 @@ ports:
   - port: 442
 endpoints:
   - addresses:
-    - ${SETTINGS_NAS_IP}
+    - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://www.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Web"
     gethomepage.dev/icon: "wordpress.png"
-    gethomepage.dev/siteMonitor: https://${SETTINGS_NAS_IP}:442
+    gethomepage.dev/siteMonitor: https://zeus.nas.home.internal:442
 spec:
   ingressClassName: external
   rules:

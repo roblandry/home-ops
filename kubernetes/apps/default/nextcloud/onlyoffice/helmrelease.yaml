@@ -105,5 +105,5 @@ spec:
       # import:
       #   enabled: true
       #   type: nfs
-      #   server: ${SETTINGS_NAS_IP}
+      #   server: zeus.nas.home.internal
       #   path: /mnt/user/appdata/onlyoffice/DocumentServer/Data

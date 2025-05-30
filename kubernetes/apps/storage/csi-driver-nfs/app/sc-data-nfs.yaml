@@ -7,7 +7,7 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: ${SETTINGS_NAS_IP}
+  server: zeus.nas.home.internal
   share: ${SETTINGS_NAS_PATH}/data
 mountOptions:
   - nfsvers=4.1
