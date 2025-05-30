@@ -38,20 +38,20 @@ servers:
       - name: loop
       - name: reload
       - name: loadbalance
-  # # Forward all .lan addresses to Unifi
-  # - zones:
-  #     - zone: lan
-  #       scheme: dns://
-  #       use_tcp: true
-  #   port: 53
-  #   plugins:
-  #     # Forward all .lan queries to Unifi
-  #     - name: forward
-  #       parameters: . ${SETTINGS_UNIFI_IP}
-  #     # Rewrite rule for any .lan domain to resolve to the same domain
-  #     - name: rewrite
-  #       configBlock: |-
-  #         name regex ^([a-zA-Z0-9-]+)\.lan$ ${1}.lan
+  # Forward all .internal addresses to Unifi
+  - zones:
+      - zone: internal
+        scheme: dns://
+        use_tcp: true
+    port: 53
+    plugins:
+      # Forward all .internal queries to Unifi
+      - name: forward
+        parameters: . 10.0.10.1
+      # Rewrite rule for any .internal domain to resolve to the same domain
+      - name: rewrite
+        configBlock: |-
+          name regex ^([a-zA-Z0-9-]+)\.internal$ ${1}.internal
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
