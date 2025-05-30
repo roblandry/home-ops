@@ -1,0 +1,122 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-3.7.3/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app plantit
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      main:
+
+        # # Copy files from docker host
+        # initContainers:
+        #   copy-import:
+        #     image:
+        #       repository: busybox
+        #       tag: latest
+        #     command:
+        #       - sh
+        #       - -c
+        #       - |
+        #         echo "Copying files from /import to /app/data..."
+        #         # rm -rf /app/data/*
+        #         cp -rv /import/. /app/data/
+        #         # chown -R 99:100 /app/data
+        #     securityContext:
+        #       runAsUser: 0
+        #       allowPrivilegeEscalation: true
+
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: msdeluise/plant-it-server
+              tag: 0.10.0@sha256:23ddf8660087d6b9f5dbdca2ca09817b84db45cb2d9d6e2e0176e70f514629e7
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: plantit-secrets
+            env:
+              MYSQL_HOST: mariadb.database.svc.cluster.local
+              MYSQL_PORT: 3306
+              JWT_EXP: 1
+              USERS_LIMIT: -1
+              UPLOAD_DIR: /upload-dir
+              API_PORT: 8080
+              LOG_LEVEL: DEBUG
+              ALLOWED_ORIGINS: "*"
+              CACHE_TTL: 86400
+              CACHE_HOST: dragonfly.database.svc.cluster.local
+              CACHE_PORT: 6379
+
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 99
+    #     runAsGroup: 100
+    #     fsGroup: 100
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     seccompProfile: { type: RuntimeDefault }
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      main:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          error-pages.home.arpa/enabled: "true"
+          gethomepage.dev/app: "plantit"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "plantit"
+          gethomepage.dev/description: "Recipe Manager & Meal Planner"
+          gethomepage.dev/href: "https://plant.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Other"
+          gethomepage.dev/icon: "plantit.png"
+          # gethomepage.dev/widget.type: "plantit"
+          # gethomepage.dev/widget.url: "http://plant.${SECRET_DOMAIN}"
+          # gethomepage.dev/widget.version: "2"
+          # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_MEALIE_KEY}"
+        hosts:
+          - host: &host "plant.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
+    persistence:
+      config:
+        existingClaim: plantit
+        globalMounts:
+          - path: /upload-dir
+
+      # # Copy files from docker host
+      # import:
+      #   enabled: true
+      #   type: nfs
+      #   server: zeus.nas.home.internal
+      #   path: /mnt/user/appdata/plantit

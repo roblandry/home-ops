@@ -12,3 +12,4 @@ resources:
   - ./mealie/ks.yaml
   - ./n8n/ks.yaml
   - ./nextcloud/ks.yaml
+  - ./plantit/ks.yaml
