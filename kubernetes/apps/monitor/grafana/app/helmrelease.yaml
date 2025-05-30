@@ -237,7 +237,7 @@ spec:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
       networking:
-        blackbox-exporter:  # --- NO DATA --- #
+        blackbox-exporter:
           # renovate: depName="Blackbox Exporter"
           gnetId: 16124
           revision: 4
@@ -300,13 +300,28 @@ spec:
           gnetID: 12171
           revision: 2
           datasource: Prometheus
-        volsync:  # -- This app isnt quite working -- #
+        volsync:
           # renovate: depName="Volsync"
           gnetId: 21356
           revision: 3
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
             - {name: VAR_REPLICATIONDESTNAME, value: ".*-rdst"}
+        ceph-cluster:
+          # renovate: depName="Ceph Cluster"
+          gnetID: 2842
+          revision: 18
+          datasource: Prometheus
+        ceph-osd:
+          # renovate: depName="Ceph - OSD (Single)"
+          gnetID: 5336
+          revision: 9
+          datasource: Prometheus
+        ceph-pools:
+          # renovate: depName="Ceph - Pools"
+          gnetID: 5342
+          revision: 9
+          datasource: Prometheus
       # kepler:
       #   kepler:
       #     url: https://raw.githubusercontent.com/sustainable-computing-io/kepler/refs/heads/main/grafana-dashboards/Kepler-Exporter.json
