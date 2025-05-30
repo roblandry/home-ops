@@ -26,7 +26,7 @@ ports:
   - port: 80
 endpoints:
   - addresses:
-    - ${SETTINGS_SWITCH_IP}
+    - cisco.sw.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/href: "https://switch.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "cisco.png"
-    # gethomepage.dev/siteMonitor: http://${SETTINGS_SWITCH_IP}:80
+    # gethomepage.dev/siteMonitor: http://cisco.sw.home.internal:80
 spec:
   ingressClassName: internal
   rules:

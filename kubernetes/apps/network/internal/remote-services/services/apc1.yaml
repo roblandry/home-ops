@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://apc1.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "apc.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_APC1_IP}:80
+    gethomepage.dev/siteMonitor: http://apc01.rack.home.internal:80
 spec:
   ingressClassName: internal
   rules:

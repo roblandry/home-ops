@@ -26,7 +26,7 @@ ports:
   - port: 80
 endpoints:
   - addresses:
-    - ${SETTINGS_KVM2_IP}
+    - pikvm.rack.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/href: "https://kvm2.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "pikvm.png"
-    gethomepage.dev/siteMonitor: https://${SETTINGS_KVM1_IP}:443
+    gethomepage.dev/siteMonitor: https://pikvm.rack.home.internal:443
 spec:
   ingressClassName: internal
   rules:

@@ -26,7 +26,7 @@ ports:
   - port: 443
 endpoints:
   - addresses:
-    - ${SETTINGS_KVM1_IP}
+    - idrac.rack.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -45,7 +45,7 @@ metadata:
     gethomepage.dev/href: "https://kvm1.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "idrac.png"
-    gethomepage.dev/siteMonitor: https://${SETTINGS_KVM1_IP}:443
+    gethomepage.dev/siteMonitor: https://idrac.rack.home.internal:443
     nginx.ingress.kubernetes.io/secure-backends: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-verify: "false"

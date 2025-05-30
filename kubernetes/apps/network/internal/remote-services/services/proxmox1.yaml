@@ -26,7 +26,7 @@ ports:
   - port: 8006
 endpoints:
   - addresses:
-    - ${SETTINGS_PVE1_IP}
+    - nuc01.rack.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -46,10 +46,10 @@ metadata:
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "proxmox.png"
     gethomepage.dev/widget.type: "proxmox"
-    gethomepage.dev/widget.url: https://${SETTINGS_PVE1_IP}:8006
+    gethomepage.dev/widget.url: https://nuc01.rack.home.internal:8006
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_PVE_USER}"
     gethomepage.dev/widget.password: "${HOMEPAGE_VAR_PVE_PASS}"
-    gethomepage.dev/siteMonitor: https://${SETTINGS_PVE1_IP}:8006
+    gethomepage.dev/siteMonitor: https://nuc01.rack.home.internal:8006
     nginx.ingress.kubernetes.io/secure-backends: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-verify: "false"

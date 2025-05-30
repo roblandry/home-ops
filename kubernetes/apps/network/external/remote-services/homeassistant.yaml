@@ -25,7 +25,7 @@ ports:
   - port: 8123
 endpoints:
   - addresses:
-    - ${SETTINGS_HASS_IP}
+    - hass.svr.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -44,7 +44,7 @@ metadata:
     gethomepage.dev/href: "https://hass.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Automation"
     gethomepage.dev/icon: "home-assistant.png"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_HASS_IP}:8123
+    gethomepage.dev/siteMonitor: http://hass.svr.home.internal:8123
 spec:
   ingressClassName: external
   rules:

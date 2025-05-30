@@ -26,7 +26,7 @@ ports:
   - port: 80
 endpoints:
   - addresses:
-    - ${SETTINGS_UNIFI_IP}
+    - 10.0.10.1
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -46,10 +46,10 @@ metadata:
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "unifi.png"
     gethomepage.dev/widget.type: "unifi"
-    gethomepage.dev/widget.url: http://${SETTINGS_UNIFI_IP}:80
+    gethomepage.dev/widget.url: http://10.0.10.1:80
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_UNIFI_USER}"
     gethomepage.dev/widget.password: "${quote}${HOMEPAGE_VAR_UNIFI_PASS}${quote}"
-    gethomepage.dev/siteMonitor: http://${SETTINGS_UNIFI_IP}:80
+    gethomepage.dev/siteMonitor: http://10.0.10.1:80
 spec:
   ingressClassName: internal
   rules:
