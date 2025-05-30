@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-  #   - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/gatus
   dependsOn:
     - name: postgres-cluster
@@ -24,7 +24,7 @@ spec:
     substitute:
       APP: *app
       # VOLSYNC_CAPACITY: 15Gi
-      # # VOLSYNC_STORAGECLASS: ceph-filesystem
+      # VOLSYNC_STORAGECLASS: ceph-filesystem
       GATUS_GROUP: *namespace
       GATUS_URL: tcp://grafana.monitor.svc.cluster.local:80
       GATUS_CONDITION: "[CONNECTED] == true"
