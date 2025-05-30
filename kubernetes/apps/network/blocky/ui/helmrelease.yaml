@@ -51,7 +51,7 @@ spec:
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Blocky UI"
-          gethomepage.dev/description: "A lightweight, network-wide DNS proxy and ad-blocker designed to run on local networks, written in Go"
+          gethomepage.dev/description: "A modern web interface for managing and controlling your Blocky DNS server."
           gethomepage.dev/href: "https://blockyui.${SECRET_DOMAIN}"
           gethomepage.dev/group: "Services"
           gethomepage.dev/icon: "sh-blocky.png"
