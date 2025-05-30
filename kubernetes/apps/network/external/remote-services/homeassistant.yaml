@@ -11,21 +11,23 @@ spec:
       protocol: TCP
       targetPort: 8123
       name: http
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
-metadata:
-  name: remote-external-homeassistant
-  namespace: network
-  labels:
-    kubernetes.io/service-name: remote-external-homeassistant
-addressType: IPv4
-ports:
-  - port: 8123
-endpoints:
-  - addresses:
-    - hass.svr.home.internal
+  type: ExternalName
+  externalName: hass.svr.home.internal
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+# apiVersion: discovery.k8s.io/v1
+# kind: EndpointSlice
+# metadata:
+#   name: remote-external-homeassistant
+#   namespace: network
+#   labels:
+#     kubernetes.io/service-name: remote-external-homeassistant
+# addressType: IPv4
+# ports:
+#   - port: 8123
+# endpoints:
+#   - addresses:
+#     - hass.svr.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
