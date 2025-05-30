@@ -6,4 +6,3 @@ resources:
   - ./helmrelease.yaml
   - ./sc-config-nfs.yaml
   - ./sc-data-nfs.yaml
-

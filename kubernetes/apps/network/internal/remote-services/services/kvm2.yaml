@@ -1,4 +1,3 @@
-# SETTINGS_KVM1_IP
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
 kind: Service
@@ -12,21 +11,23 @@ spec:
       protocol: TCP
       targetPort: 80
       name: http
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
-metadata:
-  name: remote-internal-kvm2
-  namespace: network
-  labels:
-    kubernetes.io/service-name: remote-internal-kvm2
-addressType: IPv4
-ports:
-  - port: 80
-endpoints:
-  - addresses:
-    - pikvm.rack.home.internal
+  type: ExternalName
+  externalName: pikvm.rack.home.internal
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+# apiVersion: discovery.k8s.io/v1
+# kind: EndpointSlice
+# metadata:
+#   name: remote-internal-kvm2
+#   namespace: network
+#   labels:
+#     kubernetes.io/service-name: remote-internal-kvm2
+# addressType: IPv4
+# ports:
+#   - port: 80
+# endpoints:
+#   - addresses:
+#     - pikvm.rack.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
