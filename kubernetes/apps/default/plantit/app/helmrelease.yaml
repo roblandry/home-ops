@@ -75,6 +75,8 @@ spec:
         controller: main
         ports:
           http:
+            port: 3000
+          swagger:
             port: 8080
 
     ingress:
@@ -103,6 +105,13 @@ spec:
                 service:
                   identifier: main
                   port: http
+          - host: &host "plants.${SECRET_DOMAIN}"
+            paths:
+              - path: /api/swagger-ui/index.html
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: swagger
         tls:
           - hosts:
               - *host
