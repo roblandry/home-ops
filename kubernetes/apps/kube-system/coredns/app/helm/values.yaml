@@ -39,16 +39,15 @@ servers:
       - name: reload
       - name: loadbalance
   # Forward all .internal addresses to Unifi
+  #   this is only used for in cluster lookups
   - zones:
       - zone: internal
         scheme: dns://
         use_tcp: true
     port: 53
     plugins:
-      # Forward all .internal queries to Unifi
       - name: forward
         parameters: . 10.0.10.1
-      # Rewrite rule for any .internal domain to resolve to the same domain
       - name: rewrite
         configBlock: |-
           name regex ^([a-zA-Z0-9-]+)\.internal$ ${1}.internal
