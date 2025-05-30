@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app blocky-frontend
+  name: &app blocky-ui
   namespace: network
 spec:
   interval: 30m
@@ -19,7 +19,7 @@ spec:
       retries: 3
   values:
     controllers:
-      blocky-frontend:
+      blocky-ui:
         replicas: 1
         strategy: RollingUpdate
         annotations:
@@ -27,8 +27,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/mozart409/blocky-frontend
-              tag: v0.2.2
+              repository: gabrielduartem/blocky-ui
+              tag: 1.0.4@sha256:fd6491df36c69d3350862c2f58b1b6c00fd1620e07159b7c837b1b76a17250d1
             env:
               - name: API_URL
                 value: http://blocky.network.svc.cluster.local:4000
@@ -43,7 +43,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8002
+            port: 3000
     ingress:
       app:
         className: internal
@@ -52,13 +52,13 @@ spec:
           # error-pages.home.arpa/enabled: "true"
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Blocky Frontend"
+          gethomepage.dev/name: "Blocky UI"
           gethomepage.dev/description: "A lightweight, network-wide DNS proxy and ad-blocker designed to run on local networks, written in Go"
-          gethomepage.dev/href: "https://blockyfront.${SECRET_DOMAIN}"
+          gethomepage.dev/href: "https://blockyui.${SECRET_DOMAIN}"
           gethomepage.dev/group: "Services"
           gethomepage.dev/icon: "sh-blocky.png"
         hosts:
-          - host: &host "blockyfront.${SECRET_DOMAIN}"
+          - host: &host "blockyui.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -69,27 +69,11 @@ spec:
           - hosts:
               - *host
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
-    persistence:
-      srv-env:
-        enabled: true
-        type: configMap
-        name: blocky-frontend
-        advancedMounts:
-          blocky-frontend:
-            app:
-              - path: "/srv/.env"
-                readOnly: true
-                subPath: env
-              - path: "/app/.env"
-                readOnly: true
-                subPath: env
-              - path: "/root/.env"
-                readOnly: true
-                subPath: env
-    serviceAccount:
-      create: true
-      name: *app
-    serviceMonitor:
-      app:
-        enabled: false
-        serviceName: *app
+
+    # serviceAccount:
+    #   create: true
+    #   name: *app
+    # serviceMonitor:
+    #   app:
+    #     enabled: false
+    #     serviceName: *app
