@@ -107,7 +107,7 @@ spec:
                   port: http
           - host: &host "plants.${SECRET_DOMAIN}"
             paths:
-              - path: /api/swagger-ui/index.html
+              - path: /
                 pathType: Prefix
                 service:
                   identifier: main
