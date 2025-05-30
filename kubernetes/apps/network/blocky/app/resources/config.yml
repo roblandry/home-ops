@@ -3,6 +3,7 @@ conditional:
   mapping:
     ${SECRET_DOMAIN}: 10.0.10.127
     ${SECRET_DEV_DOMAIN}: 10.0.10.127
+    home.lan: 10.0.10.1
 
 blocking:
   loading:
