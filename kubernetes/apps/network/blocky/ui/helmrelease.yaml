@@ -30,10 +30,8 @@ spec:
               repository: gabrielduartem/blocky-ui
               tag: 1.0.4@sha256:fd6491df36c69d3350862c2f58b1b6c00fd1620e07159b7c837b1b76a17250d1
             env:
-              - name: API_URL
+              - name: BLOCKY_API_URL
                 value: http://blocky.network.svc.cluster.local:4000
-              - name: NODE_ENV
-                value: production
             probes:
               liveness: &probes
                 enabled: false
