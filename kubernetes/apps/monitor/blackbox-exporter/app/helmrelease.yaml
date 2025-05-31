@@ -82,40 +82,51 @@ spec:
         interval: 1m
         scrapeTimeout: 30s
       targets:
-        # PiKVM
-        - module: http_2xx
-          name: pikvm-http
-          url: "http://pikvm.bjw-s.internal"
-        - module: icmp
-          name: pikvm-icmp
-          url: pikvm.bjw-s.internal
+        # # PiKVM
+        # - module: http_2xx
+        #   name: pikvm-http
+        #   url: "http://pikvm.bjw-s.internal"
+        # - module: icmp
+        #   name: pikvm-icmp
+        #   url: pikvm.bjw-s.internal
 
         # Robot vacuums
         - module: icmp
-          name: valetudo-living-room-icmp
-          url: livingroom-vacuum.bjw-s.internal
+          name: dirty-harry2-icmp
+          url: dh2.vac.home.internal
         - module: http_2xx
-          name: valetudo-living-room-http
-          url: "http://livingroom-vacuum.bjw-s.internal"
+          name: dirty-harry2-http
+          url: "http://dh2.vac.home.internal"
 
-        # Wallmount tablets
-        - module: http_2xx
-          name: hallway-tablet-http
-          url: "http://hallway-tablet.bjw-s.internal:2323"
         - module: icmp
-          name: hallway-tablet-icmp
-          url: hallway-tablet.bjw-s.internal
+          name: rosie-icmp
+          url: rosie.vac.home.internal
         - module: http_2xx
-          name: garage-tablet-http
-          url: "http://garage-tablet.bjw-s.internal:2323"
-        - module: icmp
-          name: garage-tablet-icmp
-          url: garage-tablet.bjw-s.internal
+          name: rosie-http
+          url: "http://rosie.vac.home.internal"
+
+        # # Wallmount tablets
+        # - module: http_2xx
+        #   name: hallway-tablet-http
+        #   url: "http://hallway-tablet.bjw-s.internal:2323"
+        # - module: icmp
+        #   name: hallway-tablet-icmp
+        #   url: hallway-tablet.bjw-s.internal
+        # - module: http_2xx
+        #   name: garage-tablet-http
+        #   url: "http://garage-tablet.bjw-s.internal:2323"
+        # - module: icmp
+        #   name: garage-tablet-icmp
+        #   url: garage-tablet.bjw-s.internal
 
         # Other devices
         - module: icmp
           name: zigbee-controller-icmp
-          url: downstairs-hallway-zigbee-adapter.bjw-s.internal
+          url: tube.zigbee.internal
+
+        - module: icmp
+          name: zwave-controller-icmp
+          url: tube.zwave.internal
 
         - module: icmp
           name: ping-cloudflare
