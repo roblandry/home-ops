@@ -126,8 +126,8 @@ spec:
         storageClass: ceph-block
     gateway:
       replicas: 3
-      image:
-        registry: ghcr.io
+      # image:
+      #   registry: ghcr.io
       ingress:
         enabled: true
         ingressClassName: internal
