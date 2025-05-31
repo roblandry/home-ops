@@ -6,7 +6,7 @@ cluster:
       enable-aggregator-routing: true
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
       feature-gates: MutatingAdmissionPolicy=true
-      oidc-issuer-url: https://auth.landry.me/application/o/kube-apiserver/.well-known/openid-configuration
+      oidc-issuer-url: https://auth.landry.me/application/o/kube-apiserver/
       oidc-client-id: kube-apiserver
       oidc-username-claim: email
       oidc-groups-claim: groups
