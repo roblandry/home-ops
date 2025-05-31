@@ -217,8 +217,8 @@ spec:
       hosts:
         - host: &host "lamp.${SECRET_DOMAIN}"
           paths:
-            path: /
-            type: ImplementationSpecific
+            - path: /
+              type: ImplementationSpecific
       tls:
         - hosts:
             - *host
