@@ -216,6 +216,9 @@ spec:
       ingressClassName: internal
       hosts:
         - host: &host "lamp.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              type: Prefix
       tls:
         - hosts:
             - *host
