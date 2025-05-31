@@ -122,11 +122,11 @@ spec:
         # Other devices
         - module: icmp
           name: zigbee-controller-icmp
-          url: tube.zigbee.internal
+          url: tube.zigbee.home.internal
 
         - module: icmp
           name: zwave-controller-icmp
-          url: tube.zwave.internal
+          url: tube.zwave.home.internal
 
         - module: icmp
           name: ping-cloudflare
