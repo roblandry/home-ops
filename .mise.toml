@@ -31,5 +31,5 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 "aqua:yannh/kubeconform" = "0.7.0"
 # My Tools
 "aqua:kubecolor/kubecolor" = "0.5.1"
-"aqua:aws/aws-cli" = "2.27.11"
+"aqua:aws/aws-cli" = "2.27.26"
 "aqua:int128/kubelogin" = "1.32.4"
