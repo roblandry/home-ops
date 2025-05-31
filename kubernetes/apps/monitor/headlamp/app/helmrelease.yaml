@@ -214,7 +214,11 @@ spec:
         gethomepage.dev/group: "Kubernetes"
         gethomepage.dev/icon: "sh-headlamp.png"
       ingressClassName: internal
-      hosts: [ host: &host "lamp.${SECRET_DOMAIN}" ]
+      hosts:
+        - host: &host "lamp.${SECRET_DOMAIN}"
+          paths:
+            path: /
+            type: ImplementationSpecific
       tls:
         - hosts:
             - *host
