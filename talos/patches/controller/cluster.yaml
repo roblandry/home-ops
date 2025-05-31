@@ -4,6 +4,12 @@ cluster:
     extraArgs:
       # https://kubernetes.io/docs/tasks/extend-kubernetes/configure-aggregation-layer/
       enable-aggregator-routing: true
+      runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      feature-gates: MutatingAdmissionPolicy=true
+      oidc-issuer-url: https://auth.landry.me/application/o/kube-apiserver/.well-known/openid-configuration
+      oidc-client-id: kube-apiserver
+      oidc-username-claim: email
+      oidc-groups-claim: groups
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
