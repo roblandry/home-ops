@@ -1,6 +1,0 @@
-{
-    "vscode-kubernetes.kubectl-path-linux": "/home/vscode/.local/share/mise/installs/aqua-kubernetes-kubectl/latest/kubectl",
-    "vscode-kubernetes.helm-path-linux": "/home/vscode/.local/share/mise/installs/aqua-helm-helm/latest/linux-amd64/helm",
-    "sops.binPath": "/home/vscode/.local/share/mise/installs/aqua-getsops-sops/latest/sops",
-    "sops.defaults.ageKeyFile": "/workspaces/home-ops/age.key"
-}
