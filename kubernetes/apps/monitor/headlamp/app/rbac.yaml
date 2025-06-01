@@ -36,7 +36,7 @@ metadata:
   name: admin-user-clusterrolebinding
 roleRef:
   kind: ClusterRole
-  name: kube-apiserver
+  name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
 subjects:
   - kind: User
