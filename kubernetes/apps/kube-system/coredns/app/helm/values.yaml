@@ -32,30 +32,39 @@ servers:
           pods insecure
           fallthrough in-addr.arpa ip6.arpa
       - name: forward
-        # parameters: . /etc/resolv.conf
-        configBlock: |-
-          forward ${SECRET_DOMAIN} 10.0.10.125
-          forward ${SECRET_DEV_DOMAIN} 10.0.10.125
-          forward internal 10.0.10.1
-          forward . /etc/resolv.conf
+        parameters: . /etc/resolv.conf
       - name: cache
         parameters: 30
       - name: loop
       - name: reload
       - name: loadbalance
-  # # Forward all .internal addresses to Unifi
-  # #   this is only used for in cluster lookups
-  # - zones:
-  #     - zone: internal
-  #       scheme: dns://
-  #       use_tcp: true
-  #   port: 53
-  #   plugins:
-  #     - name: forward
-  #       parameters: . 10.0.10.1
-  #     - name: rewrite
-  #       configBlock: |-
-  #         name regex ^([a-zA-Z0-9-]+)\.internal$ ${1}.internal
+  # FQDN zone → Blocky
+  - zones:
+      - zone: ${SECRET_DOMAIN}
+        scheme: dns://
+        use_tcp: true
+    port: 53
+    plugins:
+      - name: forward
+        parameters: . 10.0.10.125
+  # FQDN zone → Blocky
+  - zones:
+      - zone: ${SECRET_DEV_DOMAIN}
+        scheme: dns://
+        use_tcp: true
+    port: 53
+    plugins:
+      - name: forward
+        parameters: . 10.0.10.125
+  # internal zone → Unifi router
+  - zones:
+      - zone: internal
+        scheme: dns://
+        use_tcp: true
+    port: 53
+    plugins:
+      - name: forward
+        parameters: . 10.0.10.1
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
