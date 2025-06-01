@@ -114,7 +114,8 @@ spec:
       # pluginsDir: "/headlamp/plugins"
       # watchPlugins: false
       # # Extra arguments that can be given to the container. See charts/headlamp/README.md for more information.
-      # extraArgs: []
+      extraArgs:
+        - --trace-backend=none
 
     # -- An optional list of environment variables
     # env:
