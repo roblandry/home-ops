@@ -1,5 +1,5 @@
 ---
-### Token Auth
+# Headlamp backend access via service account token (fallback)
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -29,11 +29,11 @@ subjects:
     name: *name
     namespace: monitor
 ---
-# OIDC login from command line
+# OIDC user access for Headlamp Web and CLI
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: admin-user-clusterrolebinding
+  name: oidc-user-cluster-admin
 roleRef:
   kind: ClusterRole
   name: cluster-admin
