@@ -9,22 +9,22 @@ blocking:
   loading:
     downloads:
       timeout: 30s
-  # denylists:
-  #   ads:
-  #     # PiHole default
-  #     # - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-  #     - https://big.oisd.nl/domainswild
-  #     - https://nsfw.oisd.nl/domainswild
-  #   nsfw-allow:
-  #     - https://big.oisd.nl/domainswild
-  # allowlists:
-  #   nsfw-allow:
-  #     - https://nsfw.oisd.nl/domainswild
-  # clientGroupsBlock:
-  #   default:
-  #     - ads
-  #   adults:
-  #     - nsfw-allow
+  denylists:
+    ads:
+      # PiHole default
+      # - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - https://big.oisd.nl/domainswild
+      - https://nsfw.oisd.nl/domainswild
+    nsfw-allow:
+      - https://big.oisd.nl/domainswild
+  allowlists:
+    nsfw-allow:
+      - https://nsfw.oisd.nl/domainswild
+  clientGroupsBlock:
+    default:
+      - ads
+    adults:
+      - nsfw-allow
 
 caching:
   minTime: 15m
