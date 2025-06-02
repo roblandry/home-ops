@@ -76,7 +76,6 @@ spec:
       app:
         className: internal
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
           gethomepage.dev/app: *app
@@ -116,9 +115,4 @@ spec:
         globalMounts:
           - path: /pgadmin4/pgpass
             subPath: pgpass
-      # local-config:
-      #   type: secret
-      #   name: pgadmin-secret
-      #   globalMounts:
-      #     - path: /pgadmin4/config_local.py
-      #       subPath: config_local.py
+

@@ -13,21 +13,6 @@ spec:
       name: http
   type: ExternalName
   externalName: zeus.nas.home.internal
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-internal-readarr
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-internal-readarr
-# addressType: IPv4
-# ports:
-#   - port: 8787
-# endpoints:
-#   - addresses:
-#     - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -36,10 +21,8 @@ metadata:
   name: remote-internal-readarr
   namespace: network
   annotations:
-    # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     authentik.home.arpa/enabled: "true"
-    # gethomepage.dev/app: "readarr"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "readarr"
     gethomepage.dev/description: "Book Manager"

@@ -7,7 +7,5 @@ resources:
   - ./homeassistant.yaml
   - ./localai.yaml
   - ./lychee.yaml
-  # - ./nextcloud.yaml
   - ./searxng.yaml
-  # - ./vaultwarden.yaml
   - ./www.yaml

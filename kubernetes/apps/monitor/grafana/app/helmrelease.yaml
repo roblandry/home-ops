@@ -66,28 +66,6 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
         reporting_enabled: false
-      # auth:
-      #   oauth_auto_login: false
-      #   oauth_allow_insecure_email_lookup: true
-      # auth.anonymous:
-      #   enabled: false
-      #   # org_id: 1
-      #   # org_role: View
-      # auth.basic:
-      #   enabled: true
-      # auth.generic_oauth:
-      #   enabled: true
-      #   name: Authelia
-      #   icon: signin
-      #   scopes: openid profile email groups
-      #   empty_scopes: false
-      #   login_attribute_path: preferred_username
-      #   groups_attribute_path: groups
-      #   name_attribute_path: name
-      #   use_pkce: true
-      # auth.generic_oauth.group_mapping:
-      #   org_id: 1
-      #   role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
       auth:
         disable_login_form: true
         disable_signout_menu: true
@@ -157,22 +135,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/unifi
-          # - name: kepler
-          #   orgId: 1
-          #   folder: Kepler
-          #   type: file
-          #   disableDeletion: false
-          #   editable: true
-          #   options:
-          #     path: /var/lib/grafana/dashboards/kepler
-          # - name: opnsense
-          #   orgId: 1
-          #   folder: Opnsense
-          #   type: file
-          #   disableDeletion: false
-          #   editable: true
-          #   options:
-          #     path: /var/lib/grafana/dashboards/opnsense
           - name: logs
             orgId: 1
             folder: Logs
@@ -276,22 +238,7 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
-      # opnsense:
-      #   node-exporter-freebsd:
-      #     # renovate: depName="Node Exporter FreeBSD"
-      #     gnetId: 4260
-      #     revision: 15
-      #     datasource:
-      #       - name: DS_PROMETHEUS
-      #         value: Prometheus
       storage:
-        # minio:
-        #   # renovate: depName="MinIO"
-        #   gnetId: 13502
-        #   revision: 26
-        #   datasource:
-        #     - name: DS_PROMETHEUS
-        #       value: Prometheus
         dragonfly:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/heads/main/monitoring/grafana-dashboard.json
           datasource: Prometheus
@@ -322,10 +269,6 @@ spec:
           gnetID: 5342
           revision: 9
           datasource: Prometheus
-      # kepler:
-      #   kepler:
-      #     url: https://raw.githubusercontent.com/sustainable-computing-io/kepler/refs/heads/main/grafana-dashboards/Kepler-Exporter.json
-      #     datasource: Prometheus
       flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
@@ -411,9 +354,8 @@ spec:
     ingress:
       enabled: true
       annotations:
-        # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         error-pages.home.arpa/enabled: "true"
-        # authentik.home.arpa/enabled: "true"
+        authentik.home.arpa/enabled: "true"
         gethomepage.dev/app: *app
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "Grafana"

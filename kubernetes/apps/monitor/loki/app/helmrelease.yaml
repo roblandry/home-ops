@@ -39,14 +39,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    # - name: loki-secret
-    #   namespace: monitor
-    # - name: rook-ceph-cluster
-    #   namespace: rook-ceph
-    # - name: vector-agent
-    #   namespace: observability
-    # - name: vector-aggregator
-    #   namespace: observability
   valuesFrom:
     - targetPath: loki.storage.s3.accessKeyId
       kind: Secret

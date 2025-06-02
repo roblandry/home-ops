@@ -23,8 +23,6 @@ spec:
         kind: Secret
     substitute:
       APP: *app
-      # VOLSYNC_CAPACITY: 15Gi
-      # VOLSYNC_STORAGECLASS: ceph-filesystem
       GATUS_GROUP: *namespace
       GATUS_URL: tcp://grafana.monitor.svc.cluster.local:80
       GATUS_CONDITION: "[CONNECTED] == true"

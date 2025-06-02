@@ -30,47 +30,6 @@ endpoints:
     alerts:
       - type: pushover
         send-on-resolved: true
-  # - name: Redis
-  #   group: Services
-  #   url: tcp://dragonfly.database.svc.cluster.local:6379
-  #   interval: 1m
-  #   ui:
-  #     hide-url: true
-  #     hide-hostname: true
-  #   conditions:
-  #     - "[CONNECTED] == true"
-  #   alerts:
-  #     - type: pushover
-  #       send-on-resolved: true
-  # - name: Flux webhook
-  #   group: Services
-  #   url: https://flux-receiver.${SECRET_DOMAIN}
-  #   interval: 1m
-  #   ui:
-  #     hide-hostname: true
-  #     hide-url: true
-  #   client:
-  #     dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
-  #   conditions:
-  #     - "[STATUS] == 404"
-  #   alerts:
-  #     - type: pushover
-  #       send-on-resolved: true
-  # - name: Unraid
-  #   group: Services
-  #   url: https://unraid.${SECRET_DOMAIN}
-  #   interval: 1m
-  #   ui:
-  #     hide-hostname: true
-  #     hide-url: true
-  #   client:
-  #     dns-resolver: tcp://${LB_BLOCKY_ADDR}:53
-  #   conditions:
-  #     - "[STATUS] == 200"
-  #   alerts:
-  #     - type: pushover
-  #       send-on-resolved: true
-
 metrics: true
 storage:
   type: postgres

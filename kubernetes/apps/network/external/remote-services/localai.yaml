@@ -13,21 +13,6 @@ spec:
       name: http
   type: ExternalName
   externalName: zeus.nas.home.internal
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-external-localai
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-external-localai
-# addressType: IPv4
-# ports:
-#   - port: 8082
-# endpoints:
-#   - addresses:
-#     - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -39,7 +24,6 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
-    # gethomepage.dev/app: "localai"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "localai"
     gethomepage.dev/description: "LocalAI"

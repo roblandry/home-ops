@@ -49,11 +49,6 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
-            # env:
-            #   DB_HOST: postgres-16-rw.database.svc.cluster.local
-            #   SIGNUPS_ALLOWED: "false"
-            #   INVITATIONS_ALLOWED: "true"
-            #   WEBSOCKET_ENABLED: "true"
 
     service:
       main:

@@ -41,9 +41,6 @@
                 repository: lscr.io/linuxserver/nextcloud
                 tag: 31.0.5
                 pullPolicy: IfNotPresent
-              # envFrom:
-              #   - secretRef:
-              #       name: nextcloud-secrets
               env:
                 TZ: ${CONFIG_TIMEZONE}
                 PUID: 99
@@ -94,19 +91,12 @@
 
       persistence:
         config:
-          # enabled: true
-          # type: persistentVolumeClaim
           existingClaim: nextcloud
-          # accessMode: ReadWriteOnce
-          # size: 5Gi
-          # storageClass: ceph-block
           globalMounts:
             - path: /config
 
         data:
           enabled: true
-          # type: persistentVolumeClaim
-          # existingClaim: nextcloud-config
           type: nfs
           server: zeus.nas.home.internal
           path: /mnt/user/NextCloud
@@ -114,8 +104,6 @@
         # # Copy files from docker host
         # import:
         #   enabled: true
-        #   # type: persistentVolumeClaim
-        #   # existingClaim: nextcloud-config
         #   type: nfs
         #   server: zeus.nas.home.internal
         #   path: /mnt/user/appdata/nextcloud

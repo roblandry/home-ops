@@ -13,21 +13,6 @@ spec:
       name: http
   type: ExternalName
   externalName: cisco.sw.home.internal
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-internal-switch
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-internal-switch
-# addressType: IPv4
-# ports:
-#   - port: 80
-# endpoints:
-#   - addresses:
-#     - cisco.sw.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -36,17 +21,15 @@ metadata:
   name: remote-internal-switch
   namespace: network
   annotations:
-    # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    # gethomepage.dev/app: "switch"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "switch"
     gethomepage.dev/description: "Cisco POE Switch Management Interface"
     gethomepage.dev/href: "https://switch.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "cisco.png"
-    # gethomepage.dev/siteMonitor: http://cisco.sw.home.internal:80
+    gethomepage.dev/siteMonitor: http://cisco.sw.home.internal:80
 spec:
   ingressClassName: internal
   rules:

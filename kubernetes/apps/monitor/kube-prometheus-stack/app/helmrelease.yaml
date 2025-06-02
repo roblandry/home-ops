@@ -1,14 +1,3 @@
-# ---
-# # yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
-# apiVersion: source.toolkit.fluxcd.io/v1
-# kind: HelmRepository
-# metadata:
-#   name: prometheus-community
-#   namespace: monitor
-# spec:
-#   url: https://prometheus-community.github.io/helm-charts
-#   interval: 1h
-#   timeout: 3m
 ---
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -86,13 +75,7 @@ spec:
     grafana:
       enabled: false
       forceDeployDashboards: false
-      # sidecar:
-      #   dashboards:
-      #     annotations:
-      #       grafana_folder: Kubernetes
-      #     multicluster:
-      #       etcd:
-      #         enabled: true
+
     alertmanager:
       ingress:
         enabled: true
@@ -108,19 +91,12 @@ spec:
           name: alertmanager
           global:
             resolveTimeout: 5m
-        # storage:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: csi-driver-nfs
-        #       resources:
-        #         requests:
-        #           storage: 1Gi
+
     prometheus:
       ingress:
         enabled: true
         ingressClassName: internal
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           error-pages.home.arpa/enabled: "true"
           authentik.home.arpa/enabled: "true"
           gethomepage.dev/app: "prometheus"
@@ -156,7 +132,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block  # or ceph-filesystem
+              storageClassName: ceph-block
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:

@@ -99,8 +99,6 @@ spec:
     ingress:
       app:
         className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -111,7 +109,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: blocky-configmap # overriden by kustomizeconfig
+        name: blocky-configmap
         globalMounts:
           - path: /app/config.yml
             subPath: config.yml

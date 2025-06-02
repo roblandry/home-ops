@@ -10,9 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  # dependsOn:
-  #   - name: core-rook-ceph-cluster
-  #   - name: volsync
   path: ./kubernetes/apps/network/authentik/app
   postBuild:
     substituteFrom:

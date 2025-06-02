@@ -80,13 +80,3 @@ spec:
       log_level: debug
       redis:
         host: dragonfly.database.svc.cluster.local
-      # outposts:
-      #   embedded:
-      #     ingress:
-      #       enabled: false
-
-    # redis:
-    #   enabled: true
-    #   image:
-    #     repository: library/redis
-    #     tag: 7.4.2

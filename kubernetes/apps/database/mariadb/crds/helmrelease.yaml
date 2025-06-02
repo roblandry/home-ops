@@ -1,13 +1,3 @@
-# ---
-# # yaml-language-server: $schema=https://crd.movishell.pl/source.toolkit.fluxcd.io/helmrepository_v1.json
-# apiVersion: source.toolkit.fluxcd.io/v1
-# kind: HelmRepository
-# metadata:
-#   name: mariadb-operator
-#   namespace: database
-# spec:
-#   url: https://helm.mariadb.com/mariadb-operator
-#   interval: 1h
 ---
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2

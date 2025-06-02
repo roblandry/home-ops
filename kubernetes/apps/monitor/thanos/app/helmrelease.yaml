@@ -46,9 +46,6 @@ spec:
       create: false
       name: thanos-objectstore-secret
       key: objstore.yaml
-      # create: false
-      # name: thanos-bucket
-      # key: .aws
     additionalEndpoints:
       - dnssrv+_grpc._tcp.kube-prometheus-stack-thanos-discovery.monitor.svc.cluster.local
     additionalReplicaLabels: ["__replica__"]
@@ -63,24 +60,17 @@ spec:
         - --downsampling.disable
       persistence:
         enabled: true
-        storageClass: ceph-block  # or ceph-filesystem if you need RWX
+        storageClass: ceph-block
         size: 15Gi
     query:
-      extraArgs: # --alert.query-url=http://thanos.${SECRET_DOMAIN}
+      extraArgs:
         - "--alert.query-url=http://thanos.${SECRET_DOMAIN}"
     queryFrontend:
       enabled: true
-      # ingress:
-      #   enabled: true
-      #   ingressClassName: traefik
-      #   hosts:
-      #     - "thanos.${SECRET_DOMAIN}"
-
       ingress:
         enabled: true
         ingressClassName: internal
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           error-pages.home.arpa/enabled: "true"
           authentik.home.arpa/enabled: "true"
           gethomepage.dev/app: "thanos"

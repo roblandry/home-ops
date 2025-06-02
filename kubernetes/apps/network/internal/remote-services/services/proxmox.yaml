@@ -13,21 +13,6 @@ spec:
       name: https
   type: ExternalName
   externalName: pve.svr.home.internal
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-internal-proxmox
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-internal-proxmox
-# addressType: IPv4
-# ports:
-#   - port: 8006
-# endpoints:
-#   - addresses:
-#     - pve.svr.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -36,10 +21,8 @@ metadata:
   name: remote-internal-proxmox
   namespace: network
   annotations:
-    # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
     error-pages.home.arpa/enabled: "true"
     # authentik.home.arpa/enabled: "true"
-    # gethomepage.dev/app: "proxmox"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "proxmox"
     gethomepage.dev/description: "Proxmox Cluster"

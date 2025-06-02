@@ -13,21 +13,6 @@ spec:
       name: http
   type: ExternalName
   externalName: zeus.nas.home.internal
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-internal-oods
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-internal-oods
-# addressType: IPv4
-# ports:
-#   - port: 8075
-# endpoints:
-#   - addresses:
-#     - zeus.nas.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -35,18 +20,6 @@ kind: Ingress
 metadata:
   name: remote-internal-oods
   namespace: network
-  annotations:
-    # external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-    # error-pages.home.arpa/enabled: "true"
-    # authentik.home.arpa/enabled: "true"
-    # gethomepage.dev/app: "oods"
-    # gethomepage.dev/enabled: "true"
-    # gethomepage.dev/name: "oods"
-    # gethomepage.dev/description: "Recipe Manager & Meal Planner"
-    # gethomepage.dev/href: "https://oods.${SECRET_DOMAIN}"
-    # gethomepage.dev/group: "Other"
-    # gethomepage.dev/icon: "oods.png"
-    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:8075
 spec:
   ingressClassName: internal
   rules:
