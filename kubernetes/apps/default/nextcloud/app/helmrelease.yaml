@@ -98,7 +98,7 @@
         data:
           enabled: true
           type: nfs
-          server: zeus.nas.home.internal
+          server: 10.0.10.2
           path: /mnt/user/NextCloud
 
         # # Copy files from docker host
