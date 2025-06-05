@@ -32,3 +32,12 @@ tasks:
     preconditions:
       - test -f {{.KUBECONFIG}}
       - which flux
+
+  generate:deps:
+    desc: Generate Mermaid dependency graph and check for cycles
+    cmds:
+      - python3 scripts/generate_deps.py
+    # sources:
+    #   - kubernetes/apps/**/*.yaml
+    # generates:
+    #   - DEPENDENCIES.md

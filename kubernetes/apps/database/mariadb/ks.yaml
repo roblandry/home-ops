@@ -61,6 +61,8 @@ spec:
   dependsOn:
     - name: mariadb-operator
       namespace: *namespace
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   # healthCheckExprs:
   #   - apiVersion: dragonflydb.io/v1alpha1
   #     kind: Dragonfly

@@ -13,14 +13,14 @@ spec:
     - ../../../../components/volsync
     - ../../../../components/gatus
   dependsOn:
-    - name: external-secrets
+    - name: external-secrets-stores
       namespace: external-secrets
     - name: graylog-elasticsearch
       namespace: services
+    - name: graylog-mongodb
+      namespace: services
     - name: volsync
       namespace: storage
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/services/graylog/app
   postBuild:
@@ -56,8 +56,8 @@ spec:
   dependsOn:
     - name: volsync
       namespace: storage
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/apps/services/graylog/elasticsearch
   interval: 1h
   postBuild:
@@ -91,8 +91,6 @@ spec:
   dependsOn:
     - name: volsync
       namespace: storage
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   path: ./kubernetes/apps/services/graylog/mongodb
   interval: 1h
   postBuild:

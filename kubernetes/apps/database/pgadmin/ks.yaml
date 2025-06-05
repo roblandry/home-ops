@@ -9,11 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: rook-ceph-cluster
-  #     namespace: rook-ceph
-  #   - name: kube-prometheus-stack
-  #     namespace: monitor
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
   interval: 5m
   path: ./kubernetes/apps/database/pgadmin/app
   postBuild:

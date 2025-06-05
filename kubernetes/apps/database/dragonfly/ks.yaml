@@ -31,6 +31,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: dragonfly-operator
+      namespace: database
   components:
     - ../../../../components/gatus
   interval: 10m
@@ -50,5 +53,4 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: true
-  dependsOn:
-    - name: dragonfly-operator
+

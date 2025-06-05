@@ -64,6 +64,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
   interval: 1h
   path: ./kubernetes/apps/network/internal/remote-services/secrets
   prune: true
@@ -88,9 +91,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/network/internal/remote-services/services
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   postBuild:
     substitute:
       quote: '"'

@@ -55,6 +55,8 @@ spec:
       namespace: storage
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/apps/default/nextcloud/elasticsearch
   interval: 1h
   postBuild:
@@ -90,6 +92,8 @@ spec:
       namespace: storage
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/apps/default/nextcloud/onlyoffice
   interval: 1h
   postBuild:
