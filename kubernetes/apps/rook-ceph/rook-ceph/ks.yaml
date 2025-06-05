@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app rook-ceph
+  name: &app rook-ceph-operator
   namespace: &namespace rook-ceph
 spec:
   targetNamespace: *namespace
@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/apps/rook-ceph/rook-ceph/app
+  path: ./kubernetes/apps/rook-ceph/rook-ceph/operator
   prune: false
   sourceRef:
     kind: GitRepository
@@ -35,6 +35,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: rook-ceph-operator
+      namespace: rook-ceph
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   postBuild:
     substituteFrom:

@@ -81,10 +81,10 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - &host "alerts.${SECRET_DOMAIN}"
+          - &host1 "alerts.${SECRET_DOMAIN}"
         tls:
           - hosts:
-              - *host
+              - *host1
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
       alertmanagerSpec:
         alertmanagerConfiguration:
@@ -107,10 +107,10 @@ spec:
           gethomepage.dev/group: "Kubernetes"
           gethomepage.dev/icon: "sh-prometheus.png"
         hosts:
-          - &host "prometheus.${SECRET_DOMAIN}"
+          - &host2 "prometheus.${SECRET_DOMAIN}"
         tls:
           - hosts:
-              - *host
+              - *host2
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
       prometheusSpec:

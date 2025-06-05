@@ -98,14 +98,14 @@ spec:
           # gethomepage.dev/widget.version: "2"
           # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_MEALIE_KEY}"
         hosts:
-          - host: &host "plant.${SECRET_DOMAIN}"
+          - host: &host1 "plant.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   identifier: main
                   port: http
-          - host: &host "plants.${SECRET_DOMAIN}"
+          - host: &host2 "plants.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -114,7 +114,8 @@ spec:
                   port: swagger
         tls:
           - hosts:
-              - *host
+              - *host1
+              - *host2
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
 
     persistence:
