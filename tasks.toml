@@ -1,0 +1,7 @@
+[tasks.render-mermaid]
+description = "Render Mermaid diagrams to PNG"
+command = "mmdc"
+args = [
+  "-i", "dependencies/DEPENDENCIES.md",
+  "-o", "dependencies/DEPENDENCIES.png"
+]

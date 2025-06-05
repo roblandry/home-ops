@@ -35,7 +35,11 @@ tasks:
 
   generate:deps:
     desc: Generate Mermaid dependency graph and check for cycles
+    env:
+      PUPPETEER_EXECUTABLE_PATH: ~/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome
     cmds:
+      - pnpm add -D @mermaid-js/mermaid-cli
+      - pnpm dlx puppeteer@23.11.1 browsers install chrome
       - python3 scripts/generate_deps.py
     # sources:
     #   - kubernetes/apps/**/*.yaml

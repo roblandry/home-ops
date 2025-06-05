@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
-import yaml, os
+import yaml
+import os
+import subprocess
+import shutil
 from collections import defaultdict
-# from graphviz import Digraph
 
+# Directories and files used throughout the script
 BASE_DIR = "kubernetes/apps"
-OUTPUT_FILE = "DEPENDENCIES.md"
-SUMMARY_FILE = "DEPENDENCIES-SUMMARY.md"
+DEPENDENCIES_DIR = "dependencies"
+OUTPUT_FILE = f"{DEPENDENCIES_DIR}/DEPENDENCIES-full.md"
+SUMMARY_FILE = f"{DEPENDENCIES_DIR}/DEPENDENCIES-SUMMARY.md"
 
+# Environment variables for headless Chrome used by mermaid CLI
+env = os.environ.copy()
+env["PUPPETEER_EXECUTABLE_PATH"] = os.path.expanduser(
+    "~/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome"
+)
+env["CHROME_DEVEL_SANDBOX"] = "/opt/google/chrome/chrome-sandbox"
+
+# Core data structures
 graph = defaultdict(set)
 nodes = set()
 
@@ -14,9 +26,11 @@ external_secret_apps = {}
 sops_apps = set()
 warnings = []
 ks_path_map = {}  # path -> (name, namespace, dependsOn)
+empty_namespaces = []
 
 
 def safe_load(path):
+    """Safely load YAML documents from a file."""
     try:
         with open(path) as f:
             return list(yaml.safe_load_all(f))
@@ -25,15 +39,17 @@ def safe_load(path):
 
 
 def infer_app_id_from_path(path):
+    """Infer app ID from a file path by isolating the relative path under 'apps'."""
     parts = path.replace("\\", "/").split("/")
     if "apps" not in parts:
         return None
     idx = parts.index("apps")
-    rel_parts = parts[idx + 1:]  # everything after "apps"
+    rel_parts = parts[idx + 1 :]
     return "/".join(rel_parts[:]) if rel_parts else None
 
 
 def parse_file(path):
+    """Parse a YAML file looking for Kustomization definitions and build the graph."""
     docs = safe_load(path)
     for doc in docs:
         if not isinstance(doc, dict):
@@ -42,9 +58,24 @@ def parse_file(path):
         kind = doc.get("kind")
         metadata = doc.get("metadata", {})
         name = metadata.get("name")
-        namespace = metadata.get("namespace", "default")
-        if not name:
+        namespace = metadata.get("namespace")
+
+        if not kind == "Kustomization" or not name:
             continue
+
+        if not namespace:
+            rel_path = os.path.relpath(os.path.dirname(path), BASE_DIR)
+            rel_path_norm = os.path.normpath(rel_path)
+
+            matched_namespace = None
+            for ks_path, (_, ks_ns, _) in ks_path_map.items():
+                if rel_path_norm == ks_path or rel_path_norm.startswith(
+                    f"{ks_path}{os.sep}"
+                ):
+                    matched_namespace = ks_ns
+                    break
+
+            namespace = matched_namespace or "default"
 
         full_id = f"{namespace}/{name}"
         nodes.add(full_id)
@@ -59,7 +90,7 @@ def parse_file(path):
 
 
 def detect_secret_files():
-    print("\n🔍 Detecting secret files...")
+    """Identify which apps are using sops or external secrets."""
     for root, _, files in os.walk(BASE_DIR):
         if ".private" in root.split(os.sep):
             continue
@@ -80,7 +111,7 @@ def detect_secret_files():
 
 
 def collect_ks_blocks():
-    print("🔍 Getting Kustomization dependsOn blocks...")
+    """Populate ks_path_map from ks.yaml files for namespace inference."""
     for root, _, files in os.walk(BASE_DIR):
         if ".private" in root.split(os.sep):
             continue
@@ -94,7 +125,14 @@ def collect_ks_blocks():
                             if isinstance(doc, dict):
                                 path = doc.get("spec", {}).get("path", "")
                                 name = doc.get("metadata", {}).get("name")
-                                namespace = doc.get("metadata", {}).get("namespace", "default")
+                                namespace = doc.get("metadata", {}).get("namespace")
+                                if not namespace:
+                                    inferred = infer_app_id_from_path(ks_path)
+                                    namespace = (
+                                        inferred.split("/")[0]
+                                        if inferred and "/" in inferred
+                                        else "default"
+                                    )
                                 if not name or not path:
                                     continue
                                 full_path = os.path.normpath(path)
@@ -105,7 +143,7 @@ def collect_ks_blocks():
 
 
 def check_ks_includes():
-    print("🔍 Checking external-secrets-stores inclusion in ks.yaml...")
+    """Verify that externalsecret.yaml files are included in appropriate ks.yaml files."""
     for app_id, ext_path in external_secret_apps.items():
         ext_folder = os.path.normpath(os.path.dirname(ext_path))
 
@@ -116,17 +154,24 @@ def check_ks_includes():
             if ext_folder == ks_path:
                 included = True
                 for dep in depends:
-                    if dep.get("name") == "external-secrets-stores" and dep.get("namespace") == "external-secrets":
+                    if (
+                        dep.get("name") == "external-secrets-stores"
+                        and dep.get("namespace") == "external-secrets"
+                    ):
                         has_dep_block = True
 
         if not included:
-            warnings.append(f"{app_id} externalsecret.yaml NOT included in any ks.yaml (path mismatch)")
+            warnings.append(
+                f"{app_id} externalsecret.yaml NOT included in any ks.yaml (path mismatch)"
+            )
         elif not has_dep_block:
-            warnings.append(f"{app_id} externalsecret.yaml missing dependsOn: external-secrets-stores")
+            warnings.append(
+                f"{app_id} externalsecret.yaml missing dependsOn: external-secrets-stores"
+            )
 
 
 def find_cycles(graph):
-    print("🔍 Detecting circular dependencies...")
+    """Detect circular dependencies in the graph."""
     visited = set()
     rec_stack = set()
     cycles = []
@@ -154,15 +199,100 @@ def find_cycles(graph):
 
 
 def write_mermaid(graph):
+    """Write the full dependency graph to a Mermaid file."""
     with open(OUTPUT_FILE, "w") as f:
+        f.write("```mermaid\n")
         f.write("---\nconfig:\n  layout: elk\n---\n")
         f.write("flowchart LR\n\n")
         for src in sorted(graph.keys()):
             for dst in sorted(graph[src]):
                 f.write(f"  {src} --> {dst}\n")
+        f.write("```\n")
+
+
+def write_namespace_files(graph):
+    """Generate individual Mermaid files per namespace with internal and cross-namespace dependencies."""
+    namespace_nodes = defaultdict(set)
+    for node in nodes:
+        if "/" in node:
+            ns, _ = node.split("/", 1)
+            namespace_nodes[ns].add(node)
+
+    for ns in sorted(namespace_nodes.keys()):
+        ns_nodes = namespace_nodes[ns]
+        intra_edges = []
+        cross_edges = []
+
+        for src in graph:
+            for dst in graph[src]:
+                if src in ns_nodes and dst in ns_nodes:
+                    intra_edges.append((src, dst))
+                elif src in ns_nodes or dst in ns_nodes:
+                    cross_edges.append((src, dst))
+
+        if not intra_edges and not cross_edges:
+            print(
+                f"📭 No dependencies found in namespace '{ns}', skipping file creation."
+            )
+            empty_namespaces.append(ns)
+            continue
+
+        filename = f"{DEPENDENCIES_DIR}/DEPENDENCIES-{ns}.md"
+        with open(filename, "w") as f:
+            f.write("```mermaid\n")
+            f.write("---\nconfig:\n  layout: elk\n---\n")
+            f.write("flowchart LR\n\n")
+            if intra_edges:
+                f.write(f'  subgraph "ns: {ns}"\n')
+                for src, dst in sorted(intra_edges):
+                    f.write(f"    {src} --> {dst}\n")
+                f.write("  end\n")
+            for src, dst in sorted(cross_edges):
+                f.write(f"  {src} --> {dst}\n")
+            f.write("```\n")
+
+
+def render_mermaid_pngs():
+    """Render all generated Mermaid markdown files into PNG images using Mermaid CLI."""
+    full_deps_dir = os.path.abspath(DEPENDENCIES_DIR)
+
+    for filename in os.listdir(full_deps_dir):
+        if not filename.startswith("DEPENDENCIES") or not filename.endswith(".md"):
+            continue
+        if "SUMMARY" in filename:
+            continue  # Skip summary file
+
+        md_path = os.path.join(full_deps_dir, filename)
+        png_path = md_path.replace(".md", ".png")
+
+        cmd = ["pnpm", "mmdc", "--input", md_path, "-o", png_path, "-t", "neutral"]
+        try:
+            if os.path.exists(png_path):
+                os.remove(png_path)
+            subprocess.run(cmd, check=True, env=env)
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Failed to render {png_path}: {e}")
+
+
+def fix_png_suffix_issue():
+    """Fix files rendered with unexpected '-1.png' suffixes from Mermaid CLI."""
+    print("🔧 Fixing -1.png suffix issue...")
+    for filename in os.listdir(DEPENDENCIES_DIR):
+        if filename.endswith("-1.png"):
+            original = filename.replace("-1.png", ".png")
+            original_path = os.path.join(DEPENDENCIES_DIR, original)
+            current_path = os.path.join(DEPENDENCIES_DIR, filename)
+
+            if not os.path.exists(original_path):
+                shutil.move(current_path, original_path)
+            else:
+                print(
+                    f"⚠️ Cannot rename {filename} to {original}, target already exists."
+                )
 
 
 def write_summary():
+    """Write the summary of SOPS and ExternalSecrets usage, circular dependencies, and skipped namespaces."""
     with open(SUMMARY_FILE, "w") as f:
         f.write("SOPS Secrets:\n")
         for app in sorted(sops_apps):
@@ -182,23 +312,48 @@ def write_summary():
             for cycle in cycles:
                 f.write("    " + "\n    → ".join(cycle) + "\n")
 
+        if empty_namespaces:
+            f.write("\nNamespaces with no dependencies (no file created):\n")
+            for ns in sorted(empty_namespaces):
+                f.write(f"  - {ns}\n")
 
-# def render_graphviz_png(graph, ns_filter):
-#     ns_graph = Digraph(format="png")
-#     ns_graph.attr(rankdir="LR")
 
-#     for src in sorted(graph.keys()):
-#         if not src.startswith(ns_filter + "/"):
-#             continue
-#         for dst in sorted(graph[src]):
-#             ns_graph.edge(src, dst)
+def write_readme():
+    """Write a README.md file summarizing all generated graph images and the summary report."""
+    readme_path = os.path.join(DEPENDENCIES_DIR, "README.md")
+    print(f"📝 Writing README to {readme_path}...")
 
-#     filename = f"DEPENDENCIES-{ns_filter}"
-#     ns_graph.render(filename=filename, cleanup=True)
-#     print(f"🖼️  PNG written to {filename}.png")
+    with open(readme_path, "w") as f:
+        f.write("# 📊 Kubernetes App Dependencies\n\n")
+        f.write("Automatically generated dependency graphs for each namespace.\n\n")
+
+        full_img = "DEPENDENCIES-full.png"
+        if full_img in os.listdir(DEPENDENCIES_DIR):
+            f.write("## 🔗 Full Dependency Graph\n\n")
+            f.write(f"![Full](./{full_img})\n\n")
+
+        f.write("## 📂 Namespace Dependency Graphs\n\n")
+        for filename in sorted(os.listdir(DEPENDENCIES_DIR)):
+            if filename.startswith("DEPENDENCIES-") and filename.endswith(".png"):
+                if filename in [full_img, "DEPENDENCIES-SUMMARY.png"]:
+                    continue
+                title = filename.replace("DEPENDENCIES-", "").replace(".png", "")
+                f.write(f"### {title}\n\n")
+                f.write(f"![{title}](./{filename})\n\n")
+
+        summary_path = os.path.join(DEPENDENCIES_DIR, "DEPENDENCIES-SUMMARY.md")
+        if os.path.exists(summary_path):
+            f.write("## 📋 Summary\n\n")
+            with open(summary_path, "r") as summary_file:
+                summary_content = summary_file.read()
+                f.write("```\n")
+                f.write(summary_content)
+                f.write("```\n")
 
 
 if __name__ == "__main__":
+    os.makedirs(DEPENDENCIES_DIR, exist_ok=True)
+
     print("🔍 Scanning for Kubernetes resources...")
     for root, _, files in os.walk(BASE_DIR):
         if ".private" in root.split(os.sep):
@@ -211,12 +366,9 @@ if __name__ == "__main__":
     collect_ks_blocks()
     check_ks_includes()
     write_mermaid(graph)
+    write_namespace_files(graph)
     write_summary()
-
-    # # Render PNGs for each namespace
-    # all_namespaces = {app_id.split("/")[0] for app_id in nodes if "/" in app_id}
-    # for ns in sorted(all_namespaces):
-    #     render_graphviz_png(graph, ns)
+    write_readme()
 
     cycles = find_cycles(graph)
     if cycles:
@@ -230,6 +382,10 @@ if __name__ == "__main__":
             print(f"    {warn}")
     else:
         print("\n✅ All externalsecret.yaml files are correctly included in ks.yaml.")
+
+    print("\n🖼️ Rendering Mermaid PNGs for all namespaces...")
+    render_mermaid_pngs()
+    fix_png_suffix_issue()
 
     print("\n🔐 Apps using \033[1msecret.sops.yaml\033[0m:")
     for app in sorted(sops_apps):
@@ -245,4 +401,3 @@ if __name__ == "__main__":
 
     print(f"\n✅ Dependency graph written to {OUTPUT_FILE}")
     print(f"✅ Summary written to {SUMMARY_FILE}")
-
