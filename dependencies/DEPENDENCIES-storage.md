@@ -5,8 +5,15 @@ config:
 ---
 flowchart LR
 
+  subgraph "ns: storage"
+    storage/garage-webui
+    storage/snapshot-controller
+    storage/volsync
+  end
   external-secrets/external-secrets-stores --> storage/garage-webui
   rook-ceph/rook-ceph-cluster --> storage/volsync
+  storage/snapshot-controller --> rook-ceph/rook-ceph-cluster
+  storage/snapshot-controller --> rook-ceph/rook-ceph-operator
   storage/volsync --> default/nextcloud
   storage/volsync --> default/nextcloud-elasticsearch
   storage/volsync --> default/nextcloud-onlyoffice

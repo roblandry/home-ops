@@ -6,6 +6,13 @@ config:
 flowchart LR
 
   subgraph "ns: services"
+    network/internal-remote-services-secrets
+    network/internal/remote-services/secrets
+    services/graylog
+    services/graylog/elasticsearch
+    services/netbox
+    services/pgloader/secret
+    services/vaultwarden
     services/graylog-elasticsearch --> services/graylog
     services/graylog-mongodb --> services/graylog
   end

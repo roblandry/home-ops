@@ -6,6 +6,8 @@ config:
 flowchart LR
 
   subgraph "ns: rook-ceph"
+    rook-ceph/rook-ceph-operator
+    rook-ceph/rook-ceph/operator
     rook-ceph/rook-ceph-operator --> rook-ceph/rook-ceph-cluster
   end
   external-secrets/external-secrets-stores --> rook-ceph/rook-ceph-operator
@@ -19,4 +21,6 @@ flowchart LR
   rook-ceph/rook-ceph-cluster --> monitor/loki
   rook-ceph/rook-ceph-cluster --> monitor/thanos
   rook-ceph/rook-ceph-cluster --> storage/volsync
+  storage/snapshot-controller --> rook-ceph/rook-ceph-cluster
+  storage/snapshot-controller --> rook-ceph/rook-ceph-operator
 ```

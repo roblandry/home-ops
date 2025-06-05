@@ -106,4 +106,19 @@ Using Both:
 
 Namespaces with no dependencies (no file created):
   - kube-system
+
+HelmRelease dependsOn blocks:
+  - default/echo:
+      → network/cloudflared
+  - flux-system/flux-instance:
+      → flux-system/flux-operator
+  - monitor/loki:
+      → rook-ceph/rook-ceph-cluster
+  - monitor/vector-agent:
+      → monitor/vector-aggregator
+  - rook-ceph/rook-ceph-cluster:
+      → rook-ceph/rook-ceph-operator
+      → storage/snapshot-controller
+  - rook-ceph/rook-ceph-operator:
+      → storage/snapshot-controller
 ```

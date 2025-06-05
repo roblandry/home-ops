@@ -6,6 +6,14 @@ config:
 flowchart LR
 
   subgraph "ns: database"
+    database/cloudnative-pg
+    database/cloudnative-pg/cluster
+    database/dragonfly-cluster
+    database/dragonfly-operator
+    database/mariadb-cluster
+    database/mariadb-crds
+    database/mariadb-operator
+    database/pgadmin
     database/cloudnative-pg --> database/postgres-cluster
     database/dragonfly-operator --> database/dragonfly-cluster
     database/mariadb-crds --> database/mariadb-operator

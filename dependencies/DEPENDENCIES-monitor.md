@@ -6,9 +6,17 @@ config:
 flowchart LR
 
   subgraph "ns: monitor"
+    monitor/gatus/secrets
+    monitor/grafana
+    monitor/loki
+    monitor/prometheus-operator-crds
+    monitor/unpoller
+    monitor/vector-agent
+    monitor/vector-aggregator
     monitor/gatus-secrets --> monitor/gatus
     monitor/kube-prometheus-stack --> monitor/thanos
     monitor/prometheus-operator-crds --> monitor/kube-prometheus-stack
+    monitor/vector-aggregator --> monitor/vector-agent
   end
   database/postgres-cluster --> monitor/gatus
   database/postgres-cluster --> monitor/grafana

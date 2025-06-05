@@ -26,6 +26,7 @@ external_secret_apps = {}
 sops_apps = set()
 warnings = []
 ks_path_map = {}  # path -> (name, namespace, dependsOn)
+hr_path_map = {}  # path -> (name, namespace, dependsOn)
 empty_namespaces = []
 
 
@@ -49,7 +50,7 @@ def infer_app_id_from_path(path):
 
 
 def parse_file(path):
-    """Parse a YAML file looking for Kustomization definitions and build the graph."""
+    """Parse a YAML file looking for Kustomization or HelmRelease definitions and build the graph."""
     docs = safe_load(path)
     for doc in docs:
         if not isinstance(doc, dict):
@@ -60,8 +61,16 @@ def parse_file(path):
         name = metadata.get("name")
         namespace = metadata.get("namespace")
 
-        if not kind == "Kustomization" or not name:
+        if kind not in ["Kustomization", "HelmRelease"] or not name:
             continue
+
+        if kind == "Kustomization" and "ks.yaml" not in path:
+            continue
+
+        if kind == "HelmRelease":
+            depends = doc.get("spec", {}).get("dependsOn", [])
+            if not depends:
+                continue
 
         if not namespace:
             rel_path = os.path.relpath(os.path.dirname(path), BASE_DIR)
@@ -69,10 +78,13 @@ def parse_file(path):
 
             matched_namespace = None
             for ks_path, (_, ks_ns, _) in ks_path_map.items():
-                if rel_path_norm == ks_path or rel_path_norm.startswith(
-                    f"{ks_path}{os.sep}"
-                ):
+                if rel_path_norm in ks_path:
                     matched_namespace = ks_ns
+                    break
+
+            for hr_path, (_, hr_ns, _) in hr_path_map.items():
+                if rel_path_norm in hr_path:
+                    matched_namespace = hr_ns
                     break
 
             namespace = matched_namespace or "default"
@@ -80,13 +92,13 @@ def parse_file(path):
         full_id = f"{namespace}/{name}"
         nodes.add(full_id)
 
-        if kind in ["HelmRelease", "Kustomization"]:
-            for dep in doc.get("spec", {}).get("dependsOn", []):
-                dep_ns = dep.get("namespace", "default")
-                dep_name = dep.get("name")
-                if dep_name:
-                    dep_id = f"{dep_ns}/{dep_name}"
-                    graph[dep_id].add(full_id)
+        # Add graph edges based on dependsOn
+        for dep in doc.get("spec", {}).get("dependsOn", []):
+            dep_ns = dep.get("namespace", "default")
+            dep_name = dep.get("name")
+            if dep_name:
+                dep_id = f"{dep_ns}/{dep_name}"
+                graph[dep_id].add(full_id)
 
 
 def detect_secret_files():
@@ -111,35 +123,52 @@ def detect_secret_files():
 
 
 def collect_ks_blocks():
-    """Populate ks_path_map from ks.yaml files for namespace inference."""
+    """Populate ks_path_map from ks.yaml and hr_path_map from helmrelease.yaml files (only if dependsOn exists)."""
     for root, _, files in os.walk(BASE_DIR):
         if ".private" in root.split(os.sep):
             continue
+
         for f in files:
-            if f == "ks.yaml":
-                ks_path = os.path.join(root, f)
-                try:
-                    with open(ks_path) as fobj:
-                        docs = list(yaml.safe_load_all(fobj))
-                        for doc in docs:
-                            if isinstance(doc, dict):
-                                path = doc.get("spec", {}).get("path", "")
-                                name = doc.get("metadata", {}).get("name")
-                                namespace = doc.get("metadata", {}).get("namespace")
-                                if not namespace:
-                                    inferred = infer_app_id_from_path(ks_path)
-                                    namespace = (
-                                        inferred.split("/")[0]
-                                        if inferred and "/" in inferred
-                                        else "default"
-                                    )
-                                if not name or not path:
-                                    continue
-                                full_path = os.path.normpath(path)
-                                depends = doc.get("spec", {}).get("dependsOn", [])
-                                ks_path_map[full_path] = (name, namespace, depends)
-                except Exception as e:
-                    warnings.append(f"⚠️ Failed to parse ks.yaml at {ks_path}: {e}")
+            full_file_path = os.path.join(root, f)
+            if f not in ["ks.yaml", "helmrelease.yaml"]:
+                continue
+
+            try:
+                with open(full_file_path) as fobj:
+                    docs = list(yaml.safe_load_all(fobj))
+                    for doc in docs:
+                        if not isinstance(doc, dict):
+                            continue
+
+                        path = doc.get("spec", {}).get("path", "")
+                        name = doc.get("metadata", {}).get("name")
+                        namespace = doc.get("metadata", {}).get("namespace")
+
+                        if not namespace:
+                            inferred = infer_app_id_from_path(full_file_path)
+                            namespace = (
+                                inferred.split("/")[0]
+                                if inferred and "/" in inferred
+                                else "default"
+                            )
+
+                        if f == "ks.yaml" and (not name or not path):
+                            continue
+
+                        if path:
+                            full_path = os.path.normpath(path)
+                        else:
+                            full_path = os.path.relpath(root, BASE_DIR)
+
+                        depends = doc.get("spec", {}).get("dependsOn", [])
+
+                        if f == "ks.yaml" and depends:
+                            ks_path_map[full_path] = (name, namespace, depends)
+                        elif f == "helmrelease.yaml" and depends:
+                            hr_path_map[full_path] = (name, namespace, depends)
+
+            except Exception as e:
+                warnings.append(f"⚠️ Failed to parse {f} at {full_file_path}: {e}")
 
 
 def check_ks_includes():
@@ -210,30 +239,49 @@ def write_mermaid(graph):
         f.write("```\n")
 
 
+def check_string_in_tuples(list_of_tuples, target_string):
+    for tuple_item in list_of_tuples:
+        if target_string in tuple_item:
+            return True
+    return False
+
+
 def write_namespace_files(graph):
-    """Generate individual Mermaid files per namespace with internal and cross-namespace dependencies."""
+    """Write namespace-specific dependency graphs with intra-namespace edges grouped in a subgraph."""
     namespace_nodes = defaultdict(set)
+
+    # Track which nodes belong to which namespace
     for node in nodes:
         if "/" in node:
             ns, _ = node.split("/", 1)
             namespace_nodes[ns].add(node)
 
     for ns in sorted(namespace_nodes.keys()):
+
+        if ns in ["external-secrets", "secret-sops"]:
+            print(f"📭 Skipping namespace '{ns}' as it is a special namespace.")
+            continue
+
         ns_nodes = namespace_nodes[ns]
         intra_edges = []
         cross_edges = []
+        inside_ns = []
 
         for src in graph:
             for dst in graph[src]:
-                if src in ns_nodes and dst in ns_nodes:
+                if (src in ns_nodes and dst in ns_nodes) or (ns in src and ns in dst):
                     intra_edges.append((src, dst))
                 elif src in ns_nodes or dst in ns_nodes:
                     cross_edges.append((src, dst))
-
+                if ns in src and "app" not in src and src not in inside_ns:
+                    inside_ns.append(src)
+                if ns in dst and "app" not in dst and dst not in inside_ns:
+                    inside_ns.append(dst)
+        for item in inside_ns:
+            if check_string_in_tuples(intra_edges, item) and check_string_in_tuples(cross_edges, item):
+                inside_ns.remove(item)
         if not intra_edges and not cross_edges:
-            print(
-                f"📭 No dependencies found in namespace '{ns}', skipping file creation."
-            )
+            print(f"📭 No dependencies found in namespace '{ns}', skipping file creation.")
             empty_namespaces.append(ns)
             continue
 
@@ -242,13 +290,23 @@ def write_namespace_files(graph):
             f.write("```mermaid\n")
             f.write("---\nconfig:\n  layout: elk\n---\n")
             f.write("flowchart LR\n\n")
-            if intra_edges:
+
+            # Intra-namespace edges grouped in a subgraph
+            if intra_edges or inside_ns:
+
+                # print(f"inside_ns: {inside_ns}")
                 f.write(f'  subgraph "ns: {ns}"\n')
-                for src, dst in sorted(intra_edges):
-                    f.write(f"    {src} --> {dst}\n")
+                for item in sorted(inside_ns):
+                    f.write(f'    {item}\n')
+                if intra_edges:
+                  for src, dst in sorted(intra_edges):
+                      f.write(f'    {src} --> {dst}\n')
                 f.write("  end\n")
+
+            # Cross-namespace edges outside subgraph
             for src, dst in sorted(cross_edges):
                 f.write(f"  {src} --> {dst}\n")
+
             f.write("```\n")
 
 
@@ -317,6 +375,16 @@ def write_summary():
             for ns in sorted(empty_namespaces):
                 f.write(f"  - {ns}\n")
 
+        if hr_path_map:
+            f.write("\nHelmRelease dependsOn blocks:\n")
+            for path, (name, ns, depends) in sorted(hr_path_map.items()):
+                f.write(f"  - {ns}/{name}:\n")
+                for dep in depends:
+                    dep_ns = dep.get("namespace", "default")
+                    dep_name = dep.get("name")
+                    if dep_name:
+                        f.write(f"      → {dep_ns}/{dep_name}\n")
+
 
 def write_readme():
     """Write a README.md file summarizing all generated graph images and the summary report."""
@@ -355,6 +423,9 @@ if __name__ == "__main__":
     os.makedirs(DEPENDENCIES_DIR, exist_ok=True)
 
     print("🔍 Scanning for Kubernetes resources...")
+
+    collect_ks_blocks()
+
     for root, _, files in os.walk(BASE_DIR):
         if ".private" in root.split(os.sep):
             continue
@@ -363,12 +434,14 @@ if __name__ == "__main__":
                 parse_file(os.path.join(root, f))
 
     detect_secret_files()
-    collect_ks_blocks()
     check_ks_includes()
     write_mermaid(graph)
     write_namespace_files(graph)
     write_summary()
     write_readme()
+
+    # print(f"nodes: {nodes}")
+    # print(f"graph: {graph}")
 
     cycles = find_cycles(graph)
     if cycles:
@@ -398,6 +471,16 @@ if __name__ == "__main__":
     print("\n📦 Apps using \033[1mboth\033[0m:")
     for app in sorted(sops_apps & external_secret_apps.keys()):
         print(f"    {app}")
+
+    if hr_path_map:
+        print("\n🧩 HelmReleases with dependsOn blocks:")
+        for path, (name, ns, depends) in sorted(hr_path_map.items()):
+            print(f"  - {ns}/{name}:")
+            for dep in depends:
+                dep_ns = dep.get("namespace", "default")
+                dep_name = dep.get("name")
+                if dep_name:
+                    print(f"      → {dep_ns}/{dep_name}")
 
     print(f"\n✅ Dependency graph written to {OUTPUT_FILE}")
     print(f"✅ Summary written to {SUMMARY_FILE}")

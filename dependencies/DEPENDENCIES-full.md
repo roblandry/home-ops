@@ -65,6 +65,8 @@ flowchart LR
   monitor/gatus-secrets --> monitor/gatus
   monitor/kube-prometheus-stack --> monitor/thanos
   monitor/prometheus-operator-crds --> monitor/kube-prometheus-stack
+  monitor/vector-aggregator --> monitor/vector-agent
+  network/cloudflared --> default/echo
   rook-ceph/rook-ceph-cluster --> database/mariadb-cluster
   rook-ceph/rook-ceph-cluster --> database/postgres-cluster
   rook-ceph/rook-ceph-cluster --> default/n8n
@@ -92,6 +94,8 @@ flowchart LR
   secret-sops --> services/vaultwarden/app
   services/graylog-elasticsearch --> services/graylog
   services/graylog-mongodb --> services/graylog
+  storage/snapshot-controller --> rook-ceph/rook-ceph-cluster
+  storage/snapshot-controller --> rook-ceph/rook-ceph-operator
   storage/volsync --> default/nextcloud
   storage/volsync --> default/nextcloud-elasticsearch
   storage/volsync --> default/nextcloud-onlyoffice

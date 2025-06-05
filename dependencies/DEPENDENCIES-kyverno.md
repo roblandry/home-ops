@@ -6,6 +6,8 @@ config:
 flowchart LR
 
   subgraph "ns: kyverno"
+    kyverno/kyverno
+    kyverno/kyverno-policies
     kyverno/kyverno --> kyverno/kyverno-policies
   end
 ```

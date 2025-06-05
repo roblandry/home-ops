@@ -6,6 +6,9 @@ config:
 flowchart LR
 
   subgraph "ns: external-secrets"
+    external-secrets
+    external-secrets/external-secrets
+    external-secrets/external-secrets/stores/bitwarden
     external-secrets/external-secrets --> external-secrets/external-secrets-stores
   end
   external-secrets/external-secrets-stores --> cert-manager/cert-manager
