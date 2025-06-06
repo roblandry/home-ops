@@ -31,6 +31,7 @@ metadata:
       proxy_set_header Connection "upgrade";
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Host $host;
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "kvm2"
     gethomepage.dev/description: "PiKVM Management Interface"
