@@ -12,7 +12,7 @@ spec:
       targetPort: 80
       name: http
   type: ExternalName
-  externalName: pikvm.rack.home.internal
+  externalName: zeus.kvm.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -35,10 +35,10 @@ metadata:
     gethomepage.dev/name: "kvm2"
     gethomepage.dev/description: "PiKVM Management Interface"
     # gethomepage.dev/href: "https://kvm2.${SECRET_DOMAIN}"
-    gethomepage.dev/href: "http://pikvm.rack.home.internal"
+    gethomepage.dev/href: "http://zeus.kvm.home.internal"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "pikvm.png"
-    gethomepage.dev/siteMonitor: http://pikvm.rack.home.internal
+    gethomepage.dev/siteMonitor: http://zeus.kvm.home.internal
 spec:
   ingressClassName: internal
   rules:
