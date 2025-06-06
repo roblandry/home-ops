@@ -64,8 +64,19 @@ spec:
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
+        # error-pages
         custom-http-errors: >-
           403,404,500,501,502,503
+        # Authentik / homepage cors errors
+        server-snippet: |
+          set $cors_origin "";
+          if ($http_origin ~* "^https://([a-z0-9-]+\\.)?${SECRET_DOMAIN//./\\.}$") {
+              set $cors_origin $http_origin;
+          }
+          add_header 'Access-Control-Allow-Origin' "$cors_origin" always;
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+          add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type' always;
+          add_header 'Access-Control-Allow-Credentials' 'true' always;
       metrics:
         enabled: true
         serviceMonitor:
