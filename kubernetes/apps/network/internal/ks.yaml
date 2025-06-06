@@ -97,7 +97,7 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-      - name: external-remote-services-secret
+      - name: internal-remote-services-secret
         kind: Secret
   prune: true
   retryInterval: 2m
