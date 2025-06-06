@@ -32,12 +32,12 @@ metadata:
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "kvm2"
-    gethomepage.dev/description: "PiKVM Management Interface"
+    gethomepage.dev/name: "Zeus KVM"
+    gethomepage.dev/description: "KVM Management Interface"
     # gethomepage.dev/href: "https://kvm2.${SECRET_DOMAIN}"
     gethomepage.dev/href: "http://zeus.kvm.home.internal"
     gethomepage.dev/group: "Infrastructure"
-    gethomepage.dev/icon: "pikvm.png"
+    gethomepage.dev/icon: "tinypilot.png"
     gethomepage.dev/siteMonitor: http://zeus.kvm.home.internal
 spec:
   ingressClassName: internal
