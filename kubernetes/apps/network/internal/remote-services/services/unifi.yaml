@@ -1,31 +1,31 @@
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
-# kind: Service
-# apiVersion: v1
-# metadata:
-#   name: remote-internal-unifi
-#   namespace: network
-# spec:
-#   ports:
-#     - port: 80
-#       protocol: TCP
-#       targetPort: 80
-#       name: http
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
-# apiVersion: discovery.k8s.io/v1
-# kind: EndpointSlice
-# metadata:
-#   name: remote-internal-unifi
-#   namespace: network
-#   labels:
-#     kubernetes.io/service-name: remote-internal-unifi
-# addressType: IPv4
-# ports:
-#   - port: 80
-# endpoints:
-#   - addresses:
-#     - 10.0.10.1
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-internal-unifi
+  namespace: network
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: http
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: remote-internal-unifi
+  namespace: network
+  labels:
+    kubernetes.io/service-name: remote-internal-unifi
+addressType: IPv4
+ports:
+  - port: 80
+endpoints:
+  - addresses:
+    - 10.0.10.1
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -47,7 +47,7 @@ metadata:
     gethomepage.dev/widget.type: "unifi"
     gethomepage.dev/widget.url: https://10.0.10.1
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_UNIFI_USER}"
-    gethomepage.dev/widget.password: "${quote}${HOMEPAGE_VAR_UNIFI_PASS}${quote}"
+    gethomepage.dev/widget.password: "${HOMEPAGE_VAR_UNIFI_PASS}"
     gethomepage.dev/siteMonitor: https://10.0.10.1
 spec:
   ingressClassName: internal
