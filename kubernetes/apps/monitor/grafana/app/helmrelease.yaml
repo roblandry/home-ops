@@ -183,10 +183,10 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        node-exporter-full:  # --- NO DATA --- #
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 40
+        node-exporter-full-with-node-name:
+          # renovate: depName="Node Exporter Full with Node Name"
+          gnetId: 10242
+          revision: 1
           datasource: Prometheus
         proxmox-prometheus:  # --- NO DATA --- #
           # renovate: depName="Proxmox via Prometheus"
