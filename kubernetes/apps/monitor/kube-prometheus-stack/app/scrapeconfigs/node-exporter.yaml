@@ -7,11 +7,14 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - proxmox-1.${PRIVATE_DOMAIN}:9100
-        - proxmox-2.${PRIVATE_DOMAIN}:9100
-        - proxmox-3.${PRIVATE_DOMAIN}:9100
-        # - proxmox-4.${SERVERS_DOMAIN}:9100
-        - leo.${PRIVATE_DOMAIN}:9100
+        # - 10.0.10.3:9100
+        # - 10.0.10.6:9100
+        # - 10.0.10.7:9100
+        # - 10.0.10.8:9100
+        - pve.srv.home.internal:9100
+        - nuc01.rack.home.internal:9100
+        - nuc02.rack.home.internal:9100
+        - nuc03.rack.home.internal:9100
   metricsPath: /metrics
   honorTimestamps: true
   relabelings:
