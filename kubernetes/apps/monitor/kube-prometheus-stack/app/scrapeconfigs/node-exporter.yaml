@@ -7,10 +7,6 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        # - 10.0.10.3:9100
-        # - 10.0.10.6:9100
-        # - 10.0.10.7:9100
-        # - 10.0.10.8:9100
         - pve.svr.home.internal:9100
         - zeus.nas.home.internal:9100
         - nuc01.rack.home.internal:9100
