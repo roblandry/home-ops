@@ -84,10 +84,21 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: false
-        deviceFilter: sdb
+        # deviceFilter: nvme0n1
 
         config:
           osdsPerDevice: "1"
+
+        nodes:
+          - name: "node01"
+            devices:
+              - name: "nvme0n1"
+          - name: "node02"
+            devices:
+              - name: "sdb"
+          - name: "node03"
+            devices:
+              - name: "sdb"
 
       resources:
         mgr:

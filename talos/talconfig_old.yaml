@@ -21,15 +21,14 @@ cniConfig:
 nodes:
   - hostname: "node01"
     ipAddress: "10.0.10.120"
-    installDiskSelector:
-      model: Samsung SSD 870
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/1baf010923d75dfc23080bdc40340fc40571946617a8310982e8155f828c841a
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "48:21:0b:6c:ce:71"
+          hardwareAddr: "bc:24:11:f0:55:76"
         dhcp: false
         addresses:
           - "10.0.10.120/24"
@@ -43,24 +42,8 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions:
-            - siderolabs/i915
+            - siderolabs/qemu-guest-agent
             - siderolabs/nut-client
-            - siderolabs/nvme-cli
-        extraKernelArgs:
-          - -init_on_alloc                      # Less security, faster puter
-          - -init_on_free                       # Less security, faster puter
-          - -selinux                            # Less security, faster puter
-          - apparmor=0                          # Less security, faster puter
-          - i915.enable_guc=3                   # Raptor Lake CPU / iGPU
-          - init_on_alloc=0                     # Less security, faster puter
-          - init_on_free=0                      # Less security, faster puter
-          - intel_iommu=on                      # PCI Passthrough
-          - iommu=pt                            # PCI Passthrough
-          - mitigations=off                     # Less security, faster puter
-          # - module_blacklist=igc                # Disable onboard NIC
-          - security=none                       # Less security, faster puter
-          - sysctl.kernel.kexec_load_disabled=1 # Raptor Lake CPU / iGPU
-          - talos.auditd.disabled=1             # Less security, faster puter
 
   - hostname: "node02"
     ipAddress: "10.0.10.121"
