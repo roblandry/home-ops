@@ -93,6 +93,7 @@ spec:
           - name: "node01"
             devices:
               - name: "nvme0n1"
+              - name: dummy0n0
           - name: "node02"
             devices:
               - name: "sdb"
