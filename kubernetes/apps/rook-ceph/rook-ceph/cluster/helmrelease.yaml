@@ -82,21 +82,23 @@ spec:
         prometheusEndpoint: http://thanos-query-frontend.monitor.svc.cluster.local:10902
 
       storage:
-        useAllNodes: true
+        useAllNodes: false
         useAllDevices: false
-        deviceFilter: '^sdb$|^nvme0n1$'
+        # deviceFilter: '^sdb$|^nvme0n1$'
 
         config:
           osdsPerDevice: "1"
 
-        # nodes:
-        #   - name: "node01"
-        #     devices:
-        #       - name: "nvme0n1"
-        #   - name: "node02"
-        #     deviceFilter: "sdb"
-        #   - name: "node03"
-        #     deviceFilter: "sdb"
+        nodes:
+          - name: "node01"
+            devices:
+              - name: "nvme0n1"
+          - name: "node02"
+            devices:
+              - name: "sdb"
+          - name: "node03"
+            devices:
+              - name: "sdb"
 
       resources:
         mgr:
