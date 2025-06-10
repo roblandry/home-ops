@@ -95,8 +95,12 @@ spec:
               - name: "nvme0n1"
           - name: "node02"
             deviceFilter: "sdb"
+            config:
+              ignoreExisting: false
           - name: "node03"
             deviceFilter: "sdb"
+            config:
+              ignoreExisting: false
 
       resources:
         mgr:
