@@ -28,8 +28,8 @@ spec:
         containers:
           network-ups-tools:
             image:
-              repository: ghcr.io/jr0dd/network-ups-tools
-              tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
+              repository: instantlinux/nut-upsd
+              tag: 2.8.2-r2@sha256:b403e5a314e11fbf20734ce65485f801166b120276aaa9ed14d9853b18eefff3
             env:
               TZ: ${CONFIG_TIMEZONE}
               NAME: nut-network
