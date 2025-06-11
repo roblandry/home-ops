@@ -32,6 +32,9 @@ spec:
               tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
             env:
               TZ: ${CONFIG_TIMEZONE}
+              NAME: nut-network
+              DRIVER: snmp-ups
+              PORT: net.ups.home.internal
             envFrom:
               - secretRef:
                   name: *secret
