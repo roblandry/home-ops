@@ -25,7 +25,6 @@ resources:
   - ./plex.yaml
   - ./prowlarr.yaml
   - ./proxmox.yaml
-  - ./proxmox1.yaml
   - ./proxmox2.yaml
   - ./proxmox3.yaml
   - ./radarr.yaml
