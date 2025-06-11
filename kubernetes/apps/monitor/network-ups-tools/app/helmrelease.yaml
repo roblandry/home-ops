@@ -91,7 +91,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: *app
+        name: network-ups-tools-config
         defaultMode: 0400
         globalMounts:
           - path: /etc/nut
