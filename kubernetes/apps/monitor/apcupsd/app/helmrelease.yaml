@@ -127,7 +127,7 @@ spec:
             ## apcupsd.conf v1.1 ##
             UPSCABLE ether
             UPSTYPE pcnet
-            DEVICE 10.0.10.15:apc:apcshutdown052581
+            DEVICE 10.0.10.15:apc:${APCUPSD_PASSWORD}
             LOCKFILE /var/lock
             SCRIPTDIR /etc/apcupsd
             PWRFAILDIR /etc/apcupsd
