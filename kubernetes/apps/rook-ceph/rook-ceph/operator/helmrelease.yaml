@@ -141,3 +141,5 @@ spec:
             cpu: 25m
           limits:
             memory: 256Mi
+
+    enableDiscoveryDaemon: true
