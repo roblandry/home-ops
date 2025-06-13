@@ -107,7 +107,7 @@ spec:
               - name: "nvme0n1"
           - name: "node02"
             devices:
-              - name: "sdb"
+              - name: "nvme0n1"
           - name: "node03"
             devices:
               - name: "sdb"
