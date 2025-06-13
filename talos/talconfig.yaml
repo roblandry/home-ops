@@ -25,7 +25,7 @@ nodes:
       model: Samsung SSD 870
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/1baf010923d75dfc23080bdc40340fc40571946617a8310982e8155f828c841a
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -44,34 +44,34 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/i915
-            - siderolabs/nut-client
             - siderolabs/nvme-cli
-        extraKernelArgs:
-          - -init_on_alloc                      # Less security, faster puter
-          - -init_on_free                       # Less security, faster puter
-          - -selinux                            # Less security, faster puter
-          - apparmor=0                          # Less security, faster puter
-          - i915.enable_guc=3                   # Raptor Lake CPU / iGPU
-          - init_on_alloc=0                     # Less security, faster puter
-          - init_on_free=0                      # Less security, faster puter
-          - intel_iommu=on                      # PCI Passthrough
-          - iommu=pt                            # PCI Passthrough
-          - mitigations=off                     # Less security, faster puter
-          # - module_blacklist=igc                # Disable onboard NIC
-          - security=none                       # Less security, faster puter
-          - sysctl.kernel.kexec_load_disabled=1 # Raptor Lake CPU / iGPU
-          - talos.auditd.disabled=1             # Less security, faster puter
+        # extraKernelArgs:
+        #   - -init_on_alloc                      # Less security, faster puter
+        #   - -init_on_free                       # Less security, faster puter
+        #   - -selinux                            # Less security, faster puter
+        #   - apparmor=0                          # Less security, faster puter
+        #   - i915.enable_guc=3                   # Raptor Lake CPU / iGPU
+        #   - init_on_alloc=0                     # Less security, faster puter
+        #   - init_on_free=0                      # Less security, faster puter
+        #   - intel_iommu=on                      # PCI Passthrough
+        #   - iommu=pt                            # PCI Passthrough
+        #   - mitigations=off                     # Less security, faster puter
+        #   # - module_blacklist=igc                # Disable onboard NIC
+        #   - security=none                       # Less security, faster puter
+        #   - sysctl.kernel.kexec_load_disabled=1 # Raptor Lake CPU / iGPU
+        #   - talos.auditd.disabled=1             # Less security, faster puter
 
   - hostname: "node02"
     ipAddress: "10.0.10.121"
-    installDisk: "/dev/sda"
+    installDiskSelector:
+      model: Samsung SSD 870
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:c9:f5:bb"
+          hardwareAddr: "48:21:0b:6c:cc:a0"
         dhcp: false
         addresses:
           - "10.0.10.121/24"
@@ -85,19 +85,20 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions:
-            - siderolabs/qemu-guest-agent
-            - siderolabs/nut-client
+            - siderolabs/i915
+            - siderolabs/nvme-cli
 
   - hostname: "node03"
     ipAddress: "10.0.10.122"
-    installDisk: "/dev/sda"
+    installDiskSelector:
+      model: Samsung SSD 870
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:bc:69:61"
+          hardwareAddr: "48:21:0b:67:6f:05"
         dhcp: false
         addresses:
           - "10.0.10.122/24"
@@ -111,8 +112,8 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions:
-            - siderolabs/qemu-guest-agent
-            - siderolabs/nut-client
+            - siderolabs/i915
+            - siderolabs/nvme-cli
 
 # Global patches
 patches:
