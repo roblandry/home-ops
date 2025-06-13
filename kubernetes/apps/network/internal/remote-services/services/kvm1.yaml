@@ -26,7 +26,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "kvm1"
     gethomepage.dev/description: "iDRAC Management Interface"
-    gethomepage.dev/href: "https://kvm1.${SECRET_DOMAIN}"
+    gethomepage.dev/href: "https://idrac.rack.home.internal"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "idrac.png"
     gethomepage.dev/siteMonitor: https://idrac.rack.home.internal:443
