@@ -3,7 +3,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: remote-internal-kvm2
+  name: remote-internal-kvm4
   namespace: network
 spec:
   ports:
@@ -12,46 +12,37 @@ spec:
       targetPort: 80
       name: http
   type: ExternalName
-  externalName: zeus.kvm.home.internal
+  externalName: node02.kvm.home.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-kvm2
+  name: remote-internal-kvm4
   namespace: network
   annotations:
-    # error-pages.home.arpa/enabled: "true"
-    # authentik.home.arpa/enabled: "true"
-    # # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    # # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # # nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
-    # nginx.ingress.kubernetes.io/configuration-snippet: |
-    #   proxy_set_header Upgrade $http_upgrade;
-    #   proxy_set_header Connection "upgrade";
-    #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    #   proxy_set_header X-Forwarded-Proto $scheme;
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Zeus KVM"
+    gethomepage.dev/name: "node02 KVM"
     gethomepage.dev/description: "KVM Management Interface"
-    gethomepage.dev/href: "http://zeus.kvm.home.internal"
+    # gethomepage.dev/href: "https://kvm4.${SECRET_DOMAIN}"
+    gethomepage.dev/href: "http://node02.kvm.home.internal"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "tinypilot.png"
-    gethomepage.dev/siteMonitor: http://zeus.kvm.home.internal
+    gethomepage.dev/siteMonitor: http://node02.kvm.home.internal
 spec:
   ingressClassName: internal
   rules:
-    - host: "kvm2.${SECRET_DOMAIN}"
+    - host: "kvm4.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-kvm2
+              name: remote-internal-kvm4
               port:
                 number: 80
   tls:
     - hosts:
-        - "kvm2.${SECRET_DOMAIN}"
+        - "kvm4.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"

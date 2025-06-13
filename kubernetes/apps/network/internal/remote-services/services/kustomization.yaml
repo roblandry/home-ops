@@ -16,6 +16,9 @@ resources:
   - ./frigate.yaml
   - ./kvm1.yaml
   - ./kvm2.yaml
+  - ./kvm3.yaml
+  - ./kvm4.yaml
+  - ./kvm5.yaml
   - ./lidarr.yaml
   - ./maybefinance.yaml
   - ./obico.yaml
@@ -25,8 +28,6 @@ resources:
   - ./plex.yaml
   - ./prowlarr.yaml
   - ./proxmox.yaml
-  - ./proxmox2.yaml
-  - ./proxmox3.yaml
   - ./radarr.yaml
   - ./readarr.yaml
   - ./sabnzbd.yaml
