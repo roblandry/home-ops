@@ -43,3 +43,9 @@ spec:
     keepHistory: false
 
   values:
+    grafanaDashboard:
+      enabled: true
+      annotations:
+        grafana_folder: Homelab
+    serviceMonitor:
+      enabled: true
