@@ -13,7 +13,7 @@ spec:
       targetPort: 8080
       name: http
   type: ExternalName
-  externalName: search.home.internal
+  externalName: search.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1

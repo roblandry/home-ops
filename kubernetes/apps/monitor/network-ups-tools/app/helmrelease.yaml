@@ -120,7 +120,7 @@ spec:
           ups.conf: |-
             [ups]
               driver = "snmp-ups"
-              port = "net.ups.home.internal"
+              port = "net.ups.internal"
               config:
                 - mibs = apcc
                 - snmp_version = v2c

@@ -12,7 +12,7 @@ spec:
       targetPort: 5001
       name: http
   type: ExternalName
-  externalName: zeus.nas.home.internal
+  externalName: zeus.nas.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -29,7 +29,7 @@ metadata:
     gethomepage.dev/href: "https://dt.${SECRET_DOMAIN}"
     gethomepage.dev/group: "NVR"
     gethomepage.dev/icon: "double-take.png"
-    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:5001
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:5001
 spec:
   ingressClassName: internal
   rules:

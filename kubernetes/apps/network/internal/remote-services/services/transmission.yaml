@@ -12,7 +12,7 @@ spec:
       targetPort: 9091
       name: http
   type: ExternalName
-  externalName: zeus.nas.home.internal
+  externalName: zeus.nas.internal
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 # apiVersion: discovery.k8s.io/v1
@@ -27,7 +27,7 @@ spec:
 #   - port: 9091
 # endpoints:
 #   - addresses:
-#     - zeus.nas.home.internal
+#     - zeus.nas.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -47,11 +47,11 @@ metadata:
     gethomepage.dev/group: "Downloads"
     gethomepage.dev/icon: "transmission.png"
     gethomepage.dev/widget.type: "transmission"
-    gethomepage.dev/widget.url: http://zeus.nas.home.internal:9091
+    gethomepage.dev/widget.url: http://zeus.nas.internal:9091
     gethomepage.dev/widget.username: "${HOMEPAGE_VAR_TRANSMISSION_USER}"
     gethomepage.dev/widget.password: "${quote}${HOMEPAGE_VAR_TRANSMISSION_PASS}${quote}"
     gethomepage.dev/widget.rpcUrl: "/transmission/"
-    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:9091
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:9091
 spec:
   ingressClassName: internal
   rules:

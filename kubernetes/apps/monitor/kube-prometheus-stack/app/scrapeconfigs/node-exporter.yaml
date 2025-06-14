@@ -7,11 +7,11 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - pve.svr.home.internal:9100
-        - zeus.nas.home.internal:9100
-        # - nuc01.rack.home.internal:9100
-        # - nuc02.rack.home.internal:9100
-        # - nuc03.rack.home.internal:9100
+        - pve.svr.internal:9100
+        - zeus.nas.internal:9100
+        # - nuc01.rack.internal:9100
+        # - nuc02.rack.internal:9100
+        # - nuc03.rack.internal:9100
   metricsPath: /metrics
   honorTimestamps: true
   relabelings:

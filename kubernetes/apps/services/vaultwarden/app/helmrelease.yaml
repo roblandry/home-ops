@@ -93,5 +93,5 @@ spec:
       # import:
       #   enabled: true
       #   type: nfs
-      #   server: zeus.nas.home.internal
+      #   server: zeus.nas.internal
       #   path: /mnt/user/appdata/vaultwarden

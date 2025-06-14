@@ -12,7 +12,7 @@ spec:
       targetPort: 443
       name: http
   type: ExternalName
-  externalName: idrac.rack.home.internal
+  externalName: idrac.rack.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -26,10 +26,10 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "kvm1"
     gethomepage.dev/description: "iDRAC Management Interface"
-    gethomepage.dev/href: "https://idrac.rack.home.internal"
+    gethomepage.dev/href: "https://idrac.rack.internal"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "idrac.png"
-    gethomepage.dev/siteMonitor: https://idrac.rack.home.internal:443
+    gethomepage.dev/siteMonitor: https://idrac.rack.internal:443
     nginx.ingress.kubernetes.io/secure-backends: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-verify: "false"

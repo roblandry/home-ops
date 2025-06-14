@@ -23,7 +23,7 @@ spec:
     substitute:
       APP: garage
       GATUS_GROUP: *namespace
-      GATUS_URL: http://zeus.nas.home.internal:3900
+      GATUS_URL: http://zeus.nas.internal:3900
       GATUS_STATUS: "403"
   prune: true
   retryInterval: 2m

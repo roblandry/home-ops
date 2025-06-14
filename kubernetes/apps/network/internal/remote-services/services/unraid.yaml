@@ -12,7 +12,7 @@ spec:
       targetPort: 8443
       name: https
   type: ExternalName
-  externalName: zeus.nas.home.internal
+  externalName: zeus.nas.internal
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 # apiVersion: discovery.k8s.io/v1
@@ -27,7 +27,7 @@ spec:
 #   - port: 8443
 # endpoints:
 #   - addresses:
-#     - zeus.nas.home.internal
+#     - zeus.nas.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -46,7 +46,7 @@ metadata:
     gethomepage.dev/href: "https://unraid.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Storage"
     gethomepage.dev/icon: "unraid.png"
-    gethomepage.dev/siteMonitor: https://zeus.nas.home.internal:8443
+    gethomepage.dev/siteMonitor: https://zeus.nas.internal:8443
     nginx.ingress.kubernetes.io/secure-backends: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-verify: "false"
@@ -80,7 +80,7 @@ data:
     endpoints:
       - name: Unraid
         group: remote-internal
-        url: https://zeus.nas.home.internal:8443
+        url: https://zeus.nas.internal:8443
         interval: 1m
         ui:
           hide-url: true

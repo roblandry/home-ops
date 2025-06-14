@@ -12,7 +12,7 @@ spec:
       targetPort: 9000
       name: http
   type: ExternalName
-  externalName: zeus.nas.home.internal
+  externalName: zeus.nas.internal
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/endpointslice.json
 # apiVersion: discovery.k8s.io/v1
@@ -27,7 +27,7 @@ spec:
 #   - port: 9000
 # endpoints:
 #   - addresses:
-#     - zeus.nas.home.internal
+#     - zeus.nas.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -47,10 +47,10 @@ metadata:
     gethomepage.dev/group: "Services"
     gethomepage.dev/icon: "portainer.png"
     gethomepage.dev/widget.type: "portainer"
-    gethomepage.dev/widget.url: http://zeus.nas.home.internal:9000
+    gethomepage.dev/widget.url: http://zeus.nas.internal:9000
     gethomepage.dev/widget.env: "1"
     gethomepage.dev/widget.key: "${HOMEPAGE_VAR_PORTAINER_TOKEN}"
-    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:9000
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:9000
 spec:
   ingressClassName: internal
   rules:

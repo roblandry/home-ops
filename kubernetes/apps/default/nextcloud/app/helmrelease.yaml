@@ -71,7 +71,7 @@
             # gethomepage.dev/widget.type: "nextcloud"
             # gethomepage.dev/widget.url: "http://cloud.${SECRET_DOMAIN}"
             # gethomepage.dev/widget.key: "${HOMEPAGE_VAR_NEXTCLOUD_KEY}"
-            # gethomepage.dev/siteMonitor: https://zeus.nas.home.internal:4443
+            # gethomepage.dev/siteMonitor: https://zeus.nas.internal:4443
             nginx.ingress.kubernetes.io/secure-backends: "false"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             nginx.ingress.kubernetes.io/ssl-verify: "false"
@@ -105,5 +105,5 @@
         # import:
         #   enabled: true
         #   type: nfs
-        #   server: zeus.nas.home.internal
+        #   server: zeus.nas.internal
         #   path: /mnt/user/appdata/nextcloud

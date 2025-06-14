@@ -32,8 +32,8 @@ spec:
               - secretRef:
                   name: *secret
             env:
-              API_BASE_URL: "http://zeus.nas.home.internal:3903"
-              S3_ENDPOINT_URL: "http://zeus.nas.home.internal:3900"
+              API_BASE_URL: "http://zeus.nas.internal:3903"
+              S3_ENDPOINT_URL: "http://zeus.nas.internal:3900"
     service:
       main:
         controller: main

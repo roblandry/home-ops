@@ -12,7 +12,7 @@ spec:
       targetPort: 81
       name: http
   type: ExternalName
-  externalName: zeus.nas.home.internal
+  externalName: zeus.nas.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -30,7 +30,7 @@ metadata:
     gethomepage.dev/href: "https://apps.${SECRET_DOMAIN}"
     gethomepage.dev/group: "Web"
     gethomepage.dev/icon: "organizr.png"
-    gethomepage.dev/siteMonitor: http://zeus.nas.home.internal:81
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:81
 spec:
   ingressClassName: internal
   rules:

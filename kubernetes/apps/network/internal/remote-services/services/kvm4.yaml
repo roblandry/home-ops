@@ -12,7 +12,7 @@ spec:
       targetPort: 80
       name: http
   type: ExternalName
-  externalName: node02.kvm.home.internal
+  externalName: node02.kvm.internal
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
 apiVersion: networking.k8s.io/v1
@@ -25,10 +25,10 @@ metadata:
     gethomepage.dev/name: "node02 KVM"
     gethomepage.dev/description: "KVM Management Interface"
     # gethomepage.dev/href: "https://kvm4.${SECRET_DOMAIN}"
-    gethomepage.dev/href: "http://node02.kvm.home.internal"
+    gethomepage.dev/href: "http://node02.kvm.internal"
     gethomepage.dev/group: "Infrastructure"
     gethomepage.dev/icon: "tinypilot.png"
-    gethomepage.dev/siteMonitor: http://node02.kvm.home.internal
+    gethomepage.dev/siteMonitor: http://node02.kvm.internal
 spec:
   ingressClassName: internal
   rules:
