@@ -23,6 +23,7 @@ resources:
   - ./maybefinance.yaml
   - ./obico.yaml
   - ./ollama.yaml
+  - ./openai.yaml
   - ./oods.yaml
   - ./overseerr.yaml
   - ./photoprism.yaml

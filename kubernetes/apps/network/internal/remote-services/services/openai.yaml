@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-internal-openai
+  namespace: network
+spec:
+  ports:
+    - port: 3001
+      protocol: TCP
+      targetPort: 3001
+      name: http
+  type: ExternalName
+  externalName: zeus.nas.internal
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-internal-openai
+  namespace: network
+  annotations:
+    # error-pages.home.arpa/enabled: "true"
+    # # authentik.home.arpa/enabled: "true"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "openai"
+    gethomepage.dev/description: "OpenAI openai"
+    gethomepage.dev/href: "https://openai.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "openai.png"
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:3001
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "openai.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-internal-openai
+              port:
+                number: 3001
+  tls:
+    - hosts:
+        - "openai.${SECRET_DOMAIN}"
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"

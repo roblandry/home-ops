@@ -35,8 +35,28 @@ spec:
   ai:
     enabled: true
     backend: localai
-    model: llama3
-    baseUrl: http://remote-internal-ollama.network.svc.cluster.local:11434
+    model: llama3.2
+    baseUrl: http://remote-internal-ollama.network.svc.cluster.local:11434/v1
   noCache: false
   repository: ghcr.io/k8sgpt-ai/k8sgpt
   version: v0.3.48
+# ---
+# apiVersion: core.k8sgpt.ai/v1alpha1
+# kind: K8sGPT
+# metadata:
+#   name: k8sgpt-openai
+#   namespace: ai
+#   annotations:
+#     reloader.stakater.com/auto: "true"
+#     secret.reloader.stakater.com/reload: &secret k8sgpt-secret
+# spec:
+#   analysis:
+#     interval: 1h
+#   ai:
+#     enabled: true
+#     backend: openai
+#     model: llama3.2
+#     baseUrl: http://remote-internal-openai.network.svc.cluster.local
+#   noCache: false
+#   repository: ghcr.io/k8sgpt-ai/k8sgpt
+#   version: v0.3.48
