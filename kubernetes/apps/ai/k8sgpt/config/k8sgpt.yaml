@@ -1,8 +1,30 @@
+# ---
+# apiVersion: core.k8sgpt.ai/v1alpha1
+# kind: K8sGPT
+# metadata:
+#   name: k8sgpt-openai
+#   namespace: ai
+#   annotations:
+#     reloader.stakater.com/auto: "true"
+#     secret.reloader.stakater.com/reload: &secret k8sgpt-secret
+# spec:
+#   analysis:
+#     interval: 1h
+#   ai:
+#     enabled: false
+#     model: gpt-4o-mini
+#     backend: openai
+#     secret:
+#       name: *secret
+#       key: K8SGPT_API_KEY
+#   noCache: false
+#   repository: ghcr.io/k8sgpt-ai/k8sgpt
+#   version: v0.3.48
 ---
 apiVersion: core.k8sgpt.ai/v1alpha1
 kind: K8sGPT
 metadata:
-  name: k8sgpt-openai
+  name: k8sgpt-ollama
   namespace: ai
   annotations:
     reloader.stakater.com/auto: "true"
@@ -11,12 +33,10 @@ spec:
   analysis:
     interval: 1h
   ai:
-    enabled: false
-    model: gpt-4o-mini
-    backend: openai
-    secret:
-      name: *secret
-      key: K8SGPT_API_KEY
+    enabled: true
+    backend: ollama
+    model: llama3
+    baseUrl: http://remote-internal-ollama.network.svc.cluster.local:11434
   noCache: false
   repository: ghcr.io/k8sgpt-ai/k8sgpt
   version: v0.3.48

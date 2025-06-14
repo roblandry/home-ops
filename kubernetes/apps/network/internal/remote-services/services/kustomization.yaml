@@ -22,6 +22,7 @@ resources:
   - ./lidarr.yaml
   - ./maybefinance.yaml
   - ./obico.yaml
+  - ./ollama.yaml
   - ./oods.yaml
   - ./overseerr.yaml
   - ./photoprism.yaml

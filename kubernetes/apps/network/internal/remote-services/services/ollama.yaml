@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-internal-ollama
+  namespace: network
+spec:
+  ports:
+    - port: 11434
+      protocol: TCP
+      targetPort: 11434
+      name: http
+  type: ExternalName
+  externalName: zeus.nas.internal
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-internal-ollama
+  namespace: network
+  annotations:
+    # error-pages.home.arpa/enabled: "true"
+    # # authentik.home.arpa/enabled: "true"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "ollama"
+    gethomepage.dev/description: "OpenAI ollama"
+    gethomepage.dev/href: "https://ollama.${SECRET_DOMAIN}"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "openai.png"
+    gethomepage.dev/siteMonitor: http://zeus.nas.internal:11434
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "ollama.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-internal-ollama
+              port:
+                number: 11434
+  tls:
+    - hosts:
+        - "ollama.${SECRET_DOMAIN}"
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"
