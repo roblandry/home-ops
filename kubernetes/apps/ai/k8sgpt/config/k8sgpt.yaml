@@ -11,7 +11,7 @@ spec:
   analysis:
     interval: 1h
   ai:
-    enabled: true
+    enabled: false
     model: gpt-4o-mini
     backend: openai
     secret:
