@@ -1,0 +1,28 @@
+---
+apiVersion: core.k8sgpt.ai/v1alpha1
+kind: K8sGPT
+metadata:
+  name: k8sgpt-openai
+  namespace: ai
+spec:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    secret.reloader.stakater.com/reload: &secret k8sgpt-secret
+  ai:
+    backend: openai
+    model: gpt-4o
+    baseURL: https://api.openai.com/v1
+    # filters:
+    #   - Pod
+    #   - Deployment
+    #   - Service
+    # output:
+    #   format: json
+    cache:
+      enabled: true
+      ttl: 3600
+    secretRef:
+      name: *secret
+  analysis:
+    interval: 1hr
+    namespace: ""
