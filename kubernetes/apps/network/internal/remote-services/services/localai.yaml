@@ -3,7 +3,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: remote-internal-openai
+  name: remote-internal-localai
   namespace: network
 spec:
   ports:
@@ -18,32 +18,32 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: remote-internal-openai
+  name: remote-internal-localai
   namespace: network
   annotations:
     # error-pages.home.arpa/enabled: "true"
     # # authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "openai"
-    gethomepage.dev/description: "OpenAI openai"
-    gethomepage.dev/href: "https://openai.${SECRET_DOMAIN}"
+    gethomepage.dev/name: "localai"
+    gethomepage.dev/description: "localai localai"
+    gethomepage.dev/href: "https://localai.${SECRET_DOMAIN}"
     gethomepage.dev/group: "AI"
-    gethomepage.dev/icon: "openai.png"
+    gethomepage.dev/icon: "localai.png"
     gethomepage.dev/siteMonitor: http://zeus.nas.internal:3001
 spec:
   ingressClassName: internal
   rules:
-    - host: "openai.${SECRET_DOMAIN}"
+    - host: "localai.${SECRET_DOMAIN}"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: remote-internal-openai
+              name: remote-internal-localai
               port:
                 number: 3001
   tls:
     - hosts:
-        - "openai.${SECRET_DOMAIN}"
+        - "localai.${SECRET_DOMAIN}"
       secretName: "${SECRET_DOMAIN/./-}-production-tls"

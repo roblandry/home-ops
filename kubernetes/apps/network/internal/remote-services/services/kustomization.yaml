@@ -20,10 +20,10 @@ resources:
   - ./kvm4.yaml
   - ./kvm5.yaml
   - ./lidarr.yaml
+  - ./localai.yaml
   - ./maybefinance.yaml
   - ./obico.yaml
   - ./ollama.yaml
-  - ./openai.yaml
   - ./oods.yaml
   - ./overseerr.yaml
   - ./photoprism.yaml
