@@ -43,14 +43,14 @@ spec:
     keepHistory: false
 
   values:
-    grafanaDashboard:
-      enabled: true
-      annotations:
-        grafana_folder: Homelab
+    # grafanaDashboard:
+    #   enabled: true
+    #   annotations:
+    #     grafana_folder: Homelab
     serviceMonitor:
       enabled: true
-      # Fix label name mismatch in Grafana Dashboard
-      metricRelabelings:
-        - sourceLabels: [__meta_kubernetes_service_name]
-          targetLabel: job
-          replacement: k8sgpt-operator
+    #   # Fix label name mismatch in Grafana Dashboard
+    #   metricRelabelings:
+    #     - sourceLabels: [__meta_kubernetes_service_name]
+    #       targetLabel: job
+    #       replacement: k8sgpt-operator
