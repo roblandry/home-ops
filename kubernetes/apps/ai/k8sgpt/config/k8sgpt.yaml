@@ -34,7 +34,7 @@ spec:
     interval: 1h
   ai:
     enabled: true
-    backend: ollama
+    backend: localai
     model: llama3
     baseUrl: http://remote-internal-ollama.network.svc.cluster.local:11434
   noCache: false
