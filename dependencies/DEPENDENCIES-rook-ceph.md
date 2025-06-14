@@ -10,7 +10,6 @@ flowchart LR
     rook-ceph/rook-ceph/operator
     rook-ceph/rook-ceph-operator --> rook-ceph/rook-ceph-cluster
   end
-  external-secrets/external-secrets-stores --> rook-ceph/rook-ceph-operator
   rook-ceph/rook-ceph-cluster --> database/mariadb-cluster
   rook-ceph/rook-ceph-cluster --> database/postgres-cluster
   rook-ceph/rook-ceph-cluster --> default/n8n

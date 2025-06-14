@@ -7,6 +7,7 @@ SOPS Secrets:
   - flux-system/flux-instance/app
   - monitor/headlamp/app
   - monitor/kube-prometheus-stack/app
+  - monitor/network-ups-tools/app
   - network/external/cloudflared
   - network/external/external-dns
   - rook-ceph/rook-ceph/operator

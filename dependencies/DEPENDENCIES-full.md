@@ -38,7 +38,6 @@ flowchart LR
   external-secrets --> services/netbox/app
   external-secrets --> storage/garage-webui/app
   external-secrets/external-secrets --> external-secrets/external-secrets-stores
-  external-secrets/external-secrets-stores --> cert-manager/cert-manager
   external-secrets/external-secrets-stores --> database/pgadmin
   external-secrets/external-secrets-stores --> database/postgres-cluster
   external-secrets/external-secrets-stores --> default/homepage
@@ -53,9 +52,7 @@ flowchart LR
   external-secrets/external-secrets-stores --> monitor/unpoller
   external-secrets/external-secrets-stores --> network/authentik
   external-secrets/external-secrets-stores --> network/authentik-backup
-  external-secrets/external-secrets-stores --> network/external-external-dns
   external-secrets/external-secrets-stores --> network/internal-remote-services-secrets
-  external-secrets/external-secrets-stores --> rook-ceph/rook-ceph-operator
   external-secrets/external-secrets-stores --> services/graylog
   external-secrets/external-secrets-stores --> services/graylog-elasticsearch
   external-secrets/external-secrets-stores --> services/netbox
@@ -86,6 +83,7 @@ flowchart LR
   secret-sops --> flux-system/flux-instance/app
   secret-sops --> monitor/headlamp/app
   secret-sops --> monitor/kube-prometheus-stack/app
+  secret-sops --> monitor/network-ups-tools/app
   secret-sops --> network/external/cloudflared
   secret-sops --> network/external/external-dns
   secret-sops --> rook-ceph/rook-ceph/operator

@@ -32,10 +32,6 @@ Automatically generated dependency graphs for each namespace.
 
 ![kyverno](./DEPENDENCIES-kyverno.png)
 
-### monitor
-
-![monitor](./DEPENDENCIES-monitor.png)
-
 ### network
 
 ![network](./DEPENDENCIES-network.png)
@@ -64,6 +60,7 @@ SOPS Secrets:
   - flux-system/flux-instance/app
   - monitor/headlamp/app
   - monitor/kube-prometheus-stack/app
+  - monitor/network-ups-tools/app
   - network/external/cloudflared
   - network/external/external-dns
   - rook-ceph/rook-ceph/operator

@@ -8,7 +8,6 @@ flowchart LR
   subgraph "ns: services"
     network/internal-remote-services-secrets
     network/internal/remote-services/secrets
-    services/graylog
     services/graylog/elasticsearch
     services/netbox
     services/pgloader/secret

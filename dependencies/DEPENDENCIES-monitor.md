@@ -8,6 +8,7 @@ flowchart LR
   subgraph "ns: monitor"
     monitor/gatus/secrets
     monitor/grafana
+    monitor/kube-prometheus-stack
     monitor/loki
     monitor/prometheus-operator-crds
     monitor/unpoller
