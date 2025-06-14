@@ -26,7 +26,7 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 "aqua:yannh/kubeconform" = "0.7.0"
 # My Tools
 "aqua:kubecolor/kubecolor" = "0.5.1"
-"aqua:aws/aws-cli" = "2.27.31"
+"aqua:aws/aws-cli" = "2.27.35"
 "aqua:int128/kubelogin" = "1.32.4"
 nodejs = "24.1.0"
 "npm" = "11.4.1"
