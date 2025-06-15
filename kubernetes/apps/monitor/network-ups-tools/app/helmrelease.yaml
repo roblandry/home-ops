@@ -81,9 +81,9 @@ spec:
             interval: 15s
             scrapeTimeout: 10s
             path: /ups_metrics
-            params:
-              target:
-                - localhost:3493
+            # params:
+            #   target:
+            #     - localhost:3493
             relabelings:
               # - sourceLabels: [__param_target]
               #   targetLabel: target
