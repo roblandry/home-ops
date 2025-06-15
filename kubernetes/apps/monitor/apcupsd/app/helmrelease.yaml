@@ -45,6 +45,8 @@ spec:
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: *app
+          hostNetwork: true
+          dnsPolicy: ClusterFirstWithHostNet
 
     service:
       apcupsd:
@@ -104,26 +106,6 @@ spec:
     #         relabelings:
     #           - sourceLabels: [__param_target]
     #             targetLabel: target
-
-    # persistence:
-    #   config:
-    #     type: configMap
-    #     name: apcupsd-config
-    #     defaultMode: 0400
-    #     globalMounts:
-    #       - path: /etc/apcupsd
-      # ups:
-      #   type: hostPath
-      #   hostPath: /dev/bus/usb/001/002
-      #   globalMounts:
-      #     - path: /dev/bus/usb/001/001
-      #       readOnly: false
-
-    # configMaps:
-    #   config:
-    #     enabled: true
-    #     data:
-    #       apcupsd.conf: |-
 
     persistence:
       config:
