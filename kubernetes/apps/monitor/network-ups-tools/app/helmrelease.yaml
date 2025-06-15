@@ -134,11 +134,11 @@ spec:
       config:
         enabled: true
         data:
-          # nut.conf: |-
-          #   MODE=netserver
-          # upsd.conf: |-
-          #   MAXAGE 20
-          #   LISTEN 0.0.0.0
+          nut.conf: |-
+            MODE=netserver
+          upsd.conf: |-
+            MAXAGE 20
+            LISTEN 0.0.0.0
           upsd.users: |-
             [upsmon]
               password  = "bacon"
