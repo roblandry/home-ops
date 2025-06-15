@@ -34,9 +34,19 @@ spec:
               TZ: ${CONFIG_TIMEZONE}
             command: ["/bin/sh", "-c"]
             args:
-              - >-
-                rm -f /run/nut/*.pid || true &&
-                exec /usr/sbin/upsd -Dn -D2 -c /etc/nut/ups.conf
+              - |
+                set -eux
+                echo "=== Debug startup begin ==="
+                echo "-- Removing stale PIDs --"
+                rm -f /run/nut/*.pid || true
+                echo "-- Checking /etc/nut --"
+                ls -lah /etc/nut
+                echo "-- Checking for upsd binary --"
+                which upsd || ls -l /usr/sbin/*upsd*
+                echo "-- Starting driver --"
+                upsdrvctl start
+                echo "-- Launching upsd in debug mode (-D) --"
+                upsd -D -F
             # envFrom:
             #   - secretRef:
             #       name: *secret
