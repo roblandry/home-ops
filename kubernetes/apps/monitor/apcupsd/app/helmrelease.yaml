@@ -45,8 +45,8 @@ spec:
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: *app
-          hostNetwork: true
-          dnsPolicy: ClusterFirstWithHostNet
+          # hostNetwork: true
+          # dnsPolicy: ClusterFirstWithHostNet
 
     service:
       apcupsd:
