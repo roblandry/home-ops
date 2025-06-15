@@ -28,8 +28,8 @@ spec:
         containers:
           network-ups-tools:
             image:
-              repository: ghcr.io/jr0dd/network-ups-tools
-              tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
+              repository: untouchedwagons/network-ups-tools
+              tag: 1.0.0@sha256:672410b7cefcb15f443663f3e1338bb9a9a02e1510348daed1cc97afde61e18c
             env:
               TZ: ${CONFIG_TIMEZONE}
             # envFrom:
@@ -106,11 +106,11 @@ spec:
       config:
         enabled: true
         data:
-          nut.conf: |-
-            MODE=netserver
-          upsd.conf: |-
-            MAXAGE 20
-            LISTEN 0.0.0.0
+          # nut.conf: |-
+          #   MODE=netserver
+          # upsd.conf: |-
+          #   MAXAGE 20
+          #   LISTEN 0.0.0.0
           upsd.users: |-
             [upsmon]
               password  = "bacon"
@@ -120,17 +120,18 @@ spec:
           ups.conf: |-
             [netups]
               driver = "snmp-ups"
-              port = "auto"
-              community = "public"
               port = "net.ups.internal"
+              community = "public"
+              mibs = apcc
+              desc = "APC Smart-UPS 1500"
               # config:
               #   - mibs = apcc
               #   - snmp_version = v2c
               #   - pollfreq 15
-          upsmon.conf: |-
-            MONITOR ups@localhost:3493 1 upsmon "bacon" master
-            SHUTDOWNCMD "/sbin/shutdown -h +0"
-            POWERDOWNFLAG /etc/killpower
-            POLLFREQ 15
-            POLLFREQALERT 5
-            HOSTSYNC 15
+          # upsmon.conf: |-
+          #   MONITOR ups@localhost:3493 1 upsmon "bacon" master
+          #   SHUTDOWNCMD "/sbin/shutdown -h +0"
+          #   POWERDOWNFLAG /etc/killpower
+          #   POLLFREQ 15
+          #   POLLFREQALERT 5
+          #   HOSTSYNC 15
