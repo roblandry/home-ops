@@ -81,16 +81,17 @@ spec:
             interval: 15s
             scrapeTimeout: 10s
             path: /ups_metrics
-            # params:
-            #   target:
-            #     - localhost:3493
+            params:
+              target:
+                - localhost:3493
             relabelings:
-              # - sourceLabels: [__param_target]
-              #   targetLabel: target
-              - source_labels: ['__address__']
-                regex: '.*'
-                target_label: instance
-                replacement: 'netups'
+              - sourceLabels: [__param_target]
+                targetLabel: target
+              # - source_labels: ['__address__']
+              #   regex: '.*'
+              #   target_label: instance
+              #   replacement: 'netups'
+
     persistence:
       config:
         type: configMap
