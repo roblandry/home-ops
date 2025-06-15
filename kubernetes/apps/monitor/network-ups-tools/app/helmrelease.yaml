@@ -131,10 +131,6 @@ spec:
               community = "public"
               mibs = apcc
               desc = "APC Smart-UPS 1500"
-              # config:
-              #   - mibs = apcc
-              #   - snmp_version = v2c
-              #   - pollfreq 15
           # upsmon.conf: |-
           #   MONITOR ups@localhost:3493 1 upsmon "bacon" master
           #   SHUTDOWNCMD "/sbin/shutdown -h +0"
