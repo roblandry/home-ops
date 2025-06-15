@@ -42,10 +42,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-          exporter:
-            image:
-              repository: ghcr.io/druggeri/nut_exporter
-              tag: 3.2.0
+          # exporter:
+          #   image:
+          #     repository: ghcr.io/druggeri/nut_exporter
+          #     tag: 3.2.0
 
         pod:
           annotations:
@@ -63,30 +63,30 @@ spec:
           http:
             port: 3493
             protocol: TCP
-      metrics:
-        enabled: true
-        controller: *app
-        ports:
-          metrics:
-            enabled: true
-            port: 9199
-            protocol: TCP
+      # metrics:
+      #   enabled: true
+      #   controller: *app
+      #   ports:
+      #     metrics:
+      #       enabled: true
+      #       port: 9199
+      #       protocol: TCP
 
-    serviceMonitor:
-      network-ups-tools:
-        serviceName: network-ups-tools-metrics
-        endpoints:
-          - port: metrics
-            scheme: http
-            interval: 15s
-            scrapeTimeout: 10s
-            path: /ups_metrics
-            params:
-              target:
-                - localhost:3493
-            relabelings:
-              - sourceLabels: [__param_target]
-                targetLabel: target
+    # serviceMonitor:
+    #   network-ups-tools:
+    #     serviceName: network-ups-tools-metrics
+    #     endpoints:
+    #       - port: metrics
+    #         scheme: http
+    #         interval: 15s
+    #         scrapeTimeout: 10s
+    #         path: /ups_metrics
+    #         params:
+    #           target:
+    #             - localhost:3493
+    #         relabelings:
+    #           - sourceLabels: [__param_target]
+    #             targetLabel: target
 
     persistence:
       config:
