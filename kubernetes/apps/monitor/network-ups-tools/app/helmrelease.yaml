@@ -37,16 +37,22 @@ spec:
               - |
                 set -eux
                 echo "=== Debug startup begin ==="
-                echo "-- Removing stale PIDs --"
                 rm -f /run/nut/*.pid || true
-                echo "-- Checking /etc/nut --"
                 ls -lah /etc/nut
-                echo "-- Checking for upsd binary --"
-                which upsd || ls -l /usr/sbin/*upsd*
+                which upsd
                 echo "-- Starting driver --"
                 upsdrvctl start
-                echo "-- Launching upsd in debug mode (-D) --"
-                upsd -D -F
+                echo "-- Launching upsd with strace --"
+                if command -v strace; then
+                  strace -o /tmp/upsd.strace upsd -D -F || rc=$?
+                else
+                  upsd -D -F || rc=$?
+                fi
+                rc=${rc:-$?}
+                echo "=== upsd exited with code $rc ==="
+                echo "-- strace output --"
+                cat /tmp/upsd.strace || true
+                exit $rc
             # envFrom:
             #   - secretRef:
             #       name: *secret
