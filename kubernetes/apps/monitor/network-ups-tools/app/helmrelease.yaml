@@ -92,22 +92,15 @@ spec:
       config:
         type: configMap
         name: network-ups-tools-config
-        # defaultMode: 0400
+        defaultMode: 0400
         globalMounts:
           - path: /etc/nut
-      # runtime:
-      #   type: emptyDir
-      #   advancedMounts:
-      #     network-ups-tools:
-      #       network-ups-tools:
-      #         - path: /run/nut
-
-      # ups:
-      #   type: hostPath
-      #   hostPath: /dev/bus/usb/001/002
-      #   globalMounts:
-      #     - path: /dev/bus/usb/001/001
-      #       readOnly: false
+      runtime:
+        type: emptyDir
+        advancedMounts:
+          network-ups-tools:
+            network-ups-tools:
+              - path: /run/nut
 
     configMaps:
       config:
