@@ -105,13 +105,13 @@ spec:
     #           - sourceLabels: [__param_target]
     #             targetLabel: target
 
-    persistence:
-      config:
-        type: configMap
-        name: apcupsd-config
-        defaultMode: 0400
-        globalMounts:
-          - path: /etc/apcupsd
+    # persistence:
+    #   config:
+    #     type: configMap
+    #     name: apcupsd-config
+    #     defaultMode: 0400
+    #     globalMounts:
+    #       - path: /etc/apcupsd
       # ups:
       #   type: hostPath
       #   hostPath: /dev/bus/usb/001/002
@@ -119,35 +119,17 @@ spec:
       #     - path: /dev/bus/usb/001/001
       #       readOnly: false
 
-    configMaps:
+    # configMaps:
+    #   config:
+    #     enabled: true
+    #     data:
+    #       apcupsd.conf: |-
+
+    persistence:
       config:
-        enabled: true
-        data:
-          apcupsd.conf: |-
-            ## apcupsd.conf v1.1 ##
-            UPSCABLE ether
-            UPSTYPE pcnet
-            DEVICE 10.0.10.15:apc:${APCUPSD_PASSWORD}
-            LOCKFILE /var/lock
-            SCRIPTDIR /etc/apcupsd
-            PWRFAILDIR /etc/apcupsd
-            NOLOGINDIR /etc
-            ONBATTERYDELAY 6
-            BATTERYLEVEL 25
-            MINUTES 10
-            TIMEOUT 0
-            ANNOY 300
-            ANNOYDELAY 60
-            NOLOGON disable
-            KILLDELAY 0
-            NETSERVER on
-            NISIP 0.0.0.0
-            NISPORT 3551
-            EVENTSFILE /var/log/apcupsd.events
-            EVENTSFILEMAX 10
-            UPSCLASS standalone
-            UPSMODE disable
-            STATTIME 0
-            STATFILE /var/log/apcupsd.status
-            LOGSTATS off
-            DATATIME 0
+        type: configMap
+        name: apcupsd-configmap
+        globalMounts:
+          - path: /etc/apcupsd/apcupsd.conf
+            subPath: apcupsd.conf
+            readOnly: true
