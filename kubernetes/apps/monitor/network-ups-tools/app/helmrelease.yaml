@@ -24,7 +24,6 @@ spec:
         # annotations:
         #   reloader.stakater.com/auto: "true"
         #   secret.reloader.stakater.com/reload: &secret network-ups-tools-secret
-        type: daemonset
         strategy: RollingUpdate
         containers:
           network-ups-tools:
@@ -86,13 +85,12 @@ spec:
               target:
                 - localhost:3493
             relabelings:
-              - source_labels: [__param_ups]
+              # - sourceLabels: [__param_target]
+              #   targetLabel: target
+              - source_labels: ['__address__']
+                regex: '.*'
                 target_label: instance
-              - source_labels: [__meta_kubernetes_pod_node_name]
-                target_label: kubernetes_node
-              - target_label: __address__
-                replacement: network-ups-tools.monitor.svc.cluster.local:9199
-
+                replacement: 'netups'
     persistence:
       config:
         type: configMap
