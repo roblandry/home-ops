@@ -118,15 +118,16 @@ spec:
               instcmds = ALL
               upsmon master
           ups.conf: |-
-            [ups]
+            [netups]
               driver = "snmp-ups"
               port = "net.ups.internal"
+              community = "public"
               config:
                 - mibs = apcc
                 - snmp_version = v2c
                 - pollfreq 15
           upsmon.conf: |-
-            MONITOR ups@localhost:3493 1 upsmon "bacon" master
+            MONITOR netups@net.ups.internal 1 upsmon "bacon" master
             SHUTDOWNCMD "/sbin/shutdown -h +0"
             POWERDOWNFLAG /etc/killpower
             POLLFREQ 15
