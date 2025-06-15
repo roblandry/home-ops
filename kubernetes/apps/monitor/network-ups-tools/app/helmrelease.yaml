@@ -32,41 +32,20 @@ spec:
               tag: 1.0.0@sha256:672410b7cefcb15f443663f3e1338bb9a9a02e1510348daed1cc97afde61e18c
             env:
               TZ: ${CONFIG_TIMEZONE}
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                set -eux
-                echo "=== Debug startup begin ==="
-                rm -f /run/nut/*.pid || true
-                ls -lah /etc/nut
-                which upsd
-                echo "-- Starting driver --"
-                upsdrvctl start
-                echo "-- Launching upsd with strace --"
-                if command -v strace; then
-                  strace -o /tmp/upsd.strace upsd -D -F || rc=$?
-                else
-                  upsd -D -F || rc=$?
-                fi
-                rc=${rc:-$?}
-                echo "=== upsd exited with code $rc ==="
-                echo "-- strace output --"
-                cat /tmp/upsd.strace || true
-                exit $rc
             # envFrom:
             #   - secretRef:
             #       name: *secret
-            # securityContext:
-            #   privileged: true
-            # probes:
-            #   liveness:
-            #     enabled: true
-            #   readiness:
-            #     enabled: true
-          # exporter:
-          #   image:
-          #     repository: ghcr.io/druggeri/nut_exporter
-          #     tag: 3.2.0
+            securityContext:
+              privileged: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          exporter:
+            image:
+              repository: ghcr.io/druggeri/nut_exporter
+              tag: 3.2.0
 
         pod:
           annotations:
@@ -84,30 +63,30 @@ spec:
           http:
             port: 3493
             protocol: TCP
-      # metrics:
-      #   enabled: true
-      #   controller: *app
-      #   ports:
-      #     metrics:
-      #       enabled: true
-      #       port: 9199
-      #       protocol: TCP
+      metrics:
+        enabled: true
+        controller: *app
+        ports:
+          metrics:
+            enabled: true
+            port: 9199
+            protocol: TCP
 
-    # serviceMonitor:
-    #   network-ups-tools:
-    #     serviceName: network-ups-tools-metrics
-    #     endpoints:
-    #       - port: metrics
-    #         scheme: http
-    #         interval: 15s
-    #         scrapeTimeout: 10s
-    #         path: /ups_metrics
-    #         params:
-    #           target:
-    #             - localhost:3493
-    #         relabelings:
-    #           - sourceLabels: [__param_target]
-    #             targetLabel: target
+    serviceMonitor:
+      network-ups-tools:
+        serviceName: network-ups-tools-metrics
+        endpoints:
+          - port: metrics
+            scheme: http
+            interval: 15s
+            scrapeTimeout: 10s
+            path: /ups_metrics
+            params:
+              target:
+                - localhost:3493
+            relabelings:
+              - sourceLabels: [__param_target]
+                targetLabel: target
 
     persistence:
       config:
