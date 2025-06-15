@@ -73,7 +73,7 @@ spec:
             protocol: TCP
 
     serviceMonitor:
-      app:
+      network-ups-tools:
         serviceName: network-ups-tools-metrics
         endpoints:
           - port: metrics
@@ -95,6 +95,13 @@ spec:
         defaultMode: 0400
         globalMounts:
           - path: /etc/nut
+      runtime:
+        type: emptyDir
+        advancedMounts:
+          network-ups-tools:
+            network-ups-tools:
+              - path: /run/nut
+
       # ups:
       #   type: hostPath
       #   hostPath: /dev/bus/usb/001/002
