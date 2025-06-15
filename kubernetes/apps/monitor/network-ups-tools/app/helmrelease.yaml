@@ -87,6 +87,9 @@ spec:
             relabelings:
               - sourceLabels: [__param_target]
                 targetLabel: target
+              - sourceLabels: [__param_target]
+                targetLabel: instance
+                replacement: net.ups.internal
               # - source_labels: ['__address__']
               #   regex: '.*'
               #   target_label: instance
