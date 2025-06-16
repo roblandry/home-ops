@@ -58,11 +58,8 @@ spec:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.0
             env:
-              NUT_SERVER: zeus.nas.internal
-              NUT_PORT: "3493"
-              NUT_USER: upsmon
-              NUT_PASSWORD: bacon
-              TZ: ${CONFIG_TIMEZONE}
+              NUT_EXPORTER_SERVER: zeus.nas.internal
+              NUT_EXPORTER_PASSWORD: bacon
         pod:
           labels:
             app.kubernetes.io/component: nut-exporter-unraid
@@ -134,8 +131,10 @@ spec:
       config:
         type: configMap
         name: network-ups-tools-config
-        globalMounts:
-          - path: /etc/nut
+        advancedMounts:
+          network-ups-tools:
+            network-ups-tools:
+              - path: /etc/nut
 
     configMaps:
       config:
