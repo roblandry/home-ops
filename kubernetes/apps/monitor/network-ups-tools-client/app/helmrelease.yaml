@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app network-ups-tools
+  name: &app network-ups-tools-client
   namespace: &namespace monitor
 spec:
   interval: 1h
