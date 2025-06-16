@@ -179,6 +179,15 @@ spec:
             network-ups-tools:
               - path: /etc/nut
 
+      shutdown:
+        type: hostPath
+        hostPath: /sbin/shutdown
+        advancedMounts:
+          network-ups-tools:
+            network-ups-tools:
+              - path: /sbin/shutdown
+                readOnly: true
+
     configMaps:
       config:
         enabled: true
