@@ -59,7 +59,10 @@ spec:
               tag: 3.2.0
             args:
               - --nut.server=zeus.nas.internal
-              - --nut.password=bacon
+              - --nut.username=monuser
+            env:
+              # NUT_EXPORTER_SERVER: zeus.nas.internal
+              NUT_EXPORTER_PASSWORD: bacon
         pod:
           labels:
             app.kubernetes.io/component: nut-exporter-unraid
