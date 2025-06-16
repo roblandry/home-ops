@@ -17,11 +17,11 @@ roleRef:
   name: nut-master-labeler
 subjects:
   - kind: ServiceAccount
-    name: nut-master
+    name: nut-master-labeler
     namespace: monitor
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nut-master
+  name: nut-master-labeler
   namespace: monitor
