@@ -46,10 +46,26 @@ spec:
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.0
-
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: *app
+
+      # Added for unRAID NUT
+      nut-exporter-unraid:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/druggeri/nut_exporter
+              tag: 3.2.0
+            env:
+              NUT_SERVER: zeus.nas.internal
+              NUT_PORT: "3493"
+              NUT_USER: upsmon
+              NUT_PASSWORD: bacon
+              TZ: ${CONFIG_TIMEZONE}
+        pod:
+          labels:
+            app.kubernetes.io/component: nut-exporter-unraid
 
     service:
       network-ups-tools:
@@ -63,9 +79,19 @@ spec:
           http:
             port: 3493
             protocol: TCP
+
       metrics:
         enabled: true
         controller: *app
+        ports:
+          metrics:
+            enabled: true
+            port: 9199
+            protocol: TCP
+
+      # Added for unRAID NUT
+      nut-exporter-unraid:
+        controller: nut-exporter-unraid
         ports:
           metrics:
             enabled: true
@@ -90,10 +116,19 @@ spec:
               - sourceLabels: [__param_target]
                 targetLabel: instance
                 replacement: net.ups.internal
-              # - source_labels: ['__address__']
-              #   regex: '.*'
-              #   target_label: instance
-              #   replacement: 'netups'
+
+      # Added for unRAID NUT
+      nut-exporter-unraid:
+        serviceName: nut-exporter-unraid
+        endpoints:
+          - port: metrics
+            path: /ups_metrics
+            interval: 15s
+            scrapeTimeout: 10s
+            relabelings:
+              - sourceLabels: [__address__]
+                targetLabel: instance
+                replacement: zeus.nas.internal
 
     persistence:
       config:
