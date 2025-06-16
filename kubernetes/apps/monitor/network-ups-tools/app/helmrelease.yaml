@@ -6,7 +6,6 @@ metadata:
   name: &app network-ups-tools
   namespace: &namespace monitor
 spec:
-
   interval: 1h
   chartRef:
     kind: OCIRepository
@@ -25,16 +24,52 @@ spec:
         #   reloader.stakater.com/auto: "true"
         #   secret.reloader.stakater.com/reload: &secret network-ups-tools-secret
         strategy: RollingUpdate
+        serviceAccount:
+          create: false
+          name: nut-master-labeler
         containers:
           network-ups-tools:
             image:
               repository: untouchedwagons/network-ups-tools
               tag: 1.0.0@sha256:672410b7cefcb15f443663f3e1338bb9a9a02e1510348daed1cc97afde61e18c
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              - name: TZ
+                value: ${CONFIG_TIMEZONE}
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
             # envFrom:
             #   - secretRef:
             #       name: *secret
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - sh
+                    - -c
+                    - |
+                      apk add --no-cache curl jq
+                      TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+                      CA=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                      API=https://kubernetes.default.svc
+                      NODE=$(echo $NODE_NAME)
+
+                      # Remove label from ALL nodes
+                      for n in $(curl -s --cacert $CA -H "Authorization: Bearer $TOKEN" $API/api/v1/nodes | jq -r '.items[].metadata.name'); do
+                        curl -s -X PATCH --header "Authorization: Bearer $TOKEN" \
+                          -H "Content-Type: application/merge-patch+json" \
+                          --cacert $CA \
+                          --data '{"metadata":{"labels":{"nut-master":null}}}' \
+                          $API/api/v1/nodes/$n
+                      done
+
+                      # Set label only on current node
+                      curl -s -X PATCH --header "Authorization: Bearer $TOKEN" \
+                        -H "Content-Type: application/merge-patch+json" \
+                        --cacert $CA \
+                        --data '{"metadata":{"labels":{"nut-master":"true"}}}' \
+                        $API/api/v1/nodes/$NODE
             securityContext:
               privileged: true
             probes:
@@ -42,10 +77,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+
           exporter:
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.0
+
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: *app
@@ -164,10 +201,10 @@ spec:
               community = "public"
               mibs = apcc
               desc = "APC Smart-UPS 1500"
-          # upsmon.conf: |-
-          #   MONITOR ups@localhost:3493 1 upsmon "bacon" master
-          #   SHUTDOWNCMD "/sbin/shutdown -h +0"
-          #   POWERDOWNFLAG /etc/killpower
-          #   POLLFREQ 15
-          #   POLLFREQALERT 5
-          #   HOSTSYNC 15
+          upsmon.conf: |-
+            MONITOR netups@localhost:3493 1 upsmon "bacon" master
+            SHUTDOWNCMD "/sbin/shutdown -h +0"
+            POWERDOWNFLAG /etc/killpower
+            POLLFREQ 15
+            POLLFREQALERT 5
+            HOSTSYNC 15
