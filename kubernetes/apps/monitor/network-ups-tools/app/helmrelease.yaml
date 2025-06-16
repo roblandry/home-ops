@@ -57,11 +57,9 @@ spec:
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.0
-            args:
-              - --nut.server=zeus.nas.internal
-              - --nut.username=monuser
             env:
-              # NUT_EXPORTER_SERVER: zeus.nas.internal
+              NUT_EXPORTER_SERVER: zeus.nas.internal
+              NUT_EXPORTER_USERNAME: monuser
               NUT_EXPORTER_PASSWORD: bacon
         pod:
           labels:
@@ -90,7 +88,7 @@ spec:
             protocol: TCP
 
       # Added for unRAID NUT
-      nut-exporter-unraid:
+      metrics-unraid:
         controller: nut-exporter-unraid
         ports:
           metrics:
@@ -119,14 +117,19 @@ spec:
 
       # Added for unRAID NUT
       nut-exporter-unraid:
-        serviceName: nut-exporter-unraid
+        serviceName: network-ups-tools-metrics-unraid
         endpoints:
           - port: metrics
             path: /ups_metrics
             interval: 15s
             scrapeTimeout: 10s
+            params:
+              target:
+                - zeus.nas.internal:3493
             relabelings:
-              - sourceLabels: [__address__]
+              - sourceLabels: [__param_target]
+                targetLabel: target
+              - sourceLabels: [__param_target]
                 targetLabel: instance
                 replacement: svr.ups.internal
 
