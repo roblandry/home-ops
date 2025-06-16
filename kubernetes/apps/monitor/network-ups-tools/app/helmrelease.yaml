@@ -125,7 +125,7 @@ spec:
             relabelings:
               - sourceLabels: [__address__]
                 targetLabel: instance
-                replacement: zeus.nas.internal
+                replacement: svr.ups.internal
 
     persistence:
       config:
