@@ -45,6 +45,7 @@ nodes:
           officialExtensions:
             - siderolabs/i915
             - siderolabs/nvme-cli
+            - siderolabs/nut-client
         # extraKernelArgs:
         #   - -init_on_alloc                      # Less security, faster puter
         #   - -init_on_free                       # Less security, faster puter
@@ -87,6 +88,7 @@ nodes:
           officialExtensions:
             - siderolabs/i915
             - siderolabs/nvme-cli
+            - siderolabs/nut-client
 
   - hostname: "node03"
     ipAddress: "10.0.10.122"
@@ -114,9 +116,11 @@ nodes:
           officialExtensions:
             - siderolabs/i915
             - siderolabs/nvme-cli
+            - siderolabs/nut-client
 
 # Global patches
 patches:
+  - "@./patches/global/machine-features.yaml"
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
