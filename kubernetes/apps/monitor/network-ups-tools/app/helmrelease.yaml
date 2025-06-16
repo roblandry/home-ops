@@ -53,13 +53,13 @@ spec:
       # Added for unRAID NUT
       nut-exporter-unraid:
         containers:
-          app:
+          nut-exporter-unraid:
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.0
-            env:
-              NUT_EXPORTER_SERVER: zeus.nas.internal
-              NUT_EXPORTER_PASSWORD: bacon
+            args:
+              - --nut.server=zeus.nas.internal
+              - --nut.password=bacon
         pod:
           labels:
             app.kubernetes.io/component: nut-exporter-unraid
