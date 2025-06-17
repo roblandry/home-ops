@@ -9,12 +9,12 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
-      namespace: storage
   components:
     - ../../../../components/volsync
     - ../../../../components/gatus
+  dependsOn:
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/default/plantit/app
   postBuild:
