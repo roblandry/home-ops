@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-3.7.3/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ntfy
+  namespace: &namespace monitor
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      ntfy:
+        annotations:
+          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: &secret ntfy-secret
+        strategy: RollingUpdate
+        containers:
+          ntfy:
+            image:
+              repository: binwiederhier/ntfy
+              tag: v2@sha256:e1a5e7324268fac1918c511105cedc2fd33d3a31f26a2abc4cf3c3c8d63dcb0c
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              NTFY_BASE_URL: https://ntfy.${SECRET_DOMAIN}
+              NTFY_CACHE_FILE: /var/lib/ntfy/cache.db
+              NTFY_AUTH_FILE: /var/lib/ntfy/auth.db
+              NTFY_AUTH_DEFAULT_ACCESS: deny-all
+              NTFY_BEHIND_PROXY: true
+              NTFY_ATTACHMENT_CACHE_DIR: /var/lib/ntfy/attachments
+              NTFY_ENABLE_LOGIN: true
+              # NTFY_WEB_PUSH_PUBLIC_KEY: <public_key>
+              # NTFY_WEB_PUSH_PRIVATE_KEY: <private_key>
+              NTFY_WEB_PUSH_FILE: /var/lib/ntfy/webpush.db
+              # NTFY_WEB_PUSH_EMAIL_ADDRESS: <email>
+            envFrom:
+              - secretRef:
+                  name: *secret
+            args:
+              - serve
+            resources:
+              requests:
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+
+    service:
+      ntfy:
+        controller: *app
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      ntfy:
+        enabled: true
+        className: external
+        annotations:
+          gethomepage.dev/app: *app
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: *app
+          gethomepage.dev/description: "ntfy is a simple HTTP-based pub-sub notification service."
+          gethomepage.dev/href: "https://ntfy.${SECRET_DOMAIN}"
+          gethomepage.dev/group: "Services"
+          gethomepage.dev/icon: "ntfy.png"
+        hosts:
+          - host: &host "ntfy.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: *app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+
+    persistence:
+      config:
+        existingClaim: *app
+        advancedMounts:
+          ntfy:
+            ntfy:
+              - path: /var/lib/ntfy
+
