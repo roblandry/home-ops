@@ -72,6 +72,7 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          error-pages.home.arpa/enabled: "true"
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: *app
