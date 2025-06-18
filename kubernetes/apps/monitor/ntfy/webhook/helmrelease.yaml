@@ -41,7 +41,7 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
           annotations:
-            configmap.reloader.stakater.com/reload: *app
+            configmap.reloader.stakater.com/reload: ntfy-webhook-code
     service:
       ntfy-webhook-relay:
         enabled: true
