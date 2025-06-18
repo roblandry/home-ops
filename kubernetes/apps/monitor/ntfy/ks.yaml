@@ -48,11 +48,11 @@ spec:
   # components:
     # - ../../../../components/volsync
     # - ../../../../components/gatus
-  dependsOn:
-    - name: volsync
-      namespace: storage
+  # dependsOn:
+  #   - name: volsync
+  #     namespace: storage
   interval: 30m
-  path: ./kubernetes/apps/monitor/webhook/app
+  path: ./kubernetes/apps/monitor/ntfy/webhook
   # postBuild:
     # substituteFrom:
     #   - name: cluster-secrets
