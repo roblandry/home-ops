@@ -8,9 +8,10 @@ metadata:
 data:
   startup.sh: |
     #!/bin/sh
+    set -e
     pip install --no-cache-dir --prefix=/tmp/.python flask jinja2 requests
     export PYTHONPATH=/tmp/.python/lib/python3.11/site-packages
-    python /app/webhook.py
+    exec python /app/webhook.py
   webhook.py: |
     from flask import Flask, request
     import requests
