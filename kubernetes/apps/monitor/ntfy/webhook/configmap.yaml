@@ -76,21 +76,20 @@ data:
   ntfy_message.j2: |
     {% set labels = alert.labels %}
     {% set annotations = alert.annotations %}
-    {{ annotations.summary or annotations.description or "No summary provided." }}
 
-    {% if annotations.message %}
-    Message: {{ annotations.message }}
-    {% endif %}
-    ---
-    🔎 Details
-    - Alertname: {{ labels.alertname }}
-    - Severity: {{ labels.severity }}
-    - Instance: {{ labels.instance or "n/a" }}
-    - Job: {{ labels.job or "n/a" }}
-    - Namespace: {{ labels.namespace or "n/a" }}
-    - Pod: {{ labels.pod or "n/a" }}
-    - Node: {{ labels.node or "n/a" }}
+    ⚠️ **{{ annotations.summary or annotations.description or "No summary provided." }}**
 
-    🕒 Starts At: {{ alert.startsAt }}
-    {% if alert.endsAt %}🟢 Ends At: {{ alert.endsAt }}{% endif %}
+    {% if annotations.message -%}
+    📝 {{ annotations.message }}
+    {%- endif %}
+
+    🔍 **Details:** {{ labels.alertname }} | Severity: {{ labels.severity }} | Namespace: {{ labels.namespace or "n/a" }} | Pod: {{ labels.pod or "n/a" }} | Node: {{ labels.node or "n/a" }}
+
+    📟 Instance: {{ labels.instance or "n/a" }} | Job: {{ labels.job or "n/a" }}
+
+    🕒 Start: {{ alert.startsAt }}
+    {% if alert.endsAt -%}
+    🟢 End: {{ alert.endsAt }}
+    {%- endif %}
+
 
