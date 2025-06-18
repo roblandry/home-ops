@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/configmap.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ntfy-webhook-code
+  namespace: monitor
+data:
+  startup.sh: |
+    #!/bin/sh
+    pip install --no-cache-dir flask jinja2 requests
+    python /app/webhook.py
+  webhook.py: |
+    from flask import Flask, request
+    import requests
+    from jinja2 import Environment, FileSystemLoader
+    import os
+
+    app = Flask(__name__)
+    env = Environment(loader=FileSystemLoader("/app/templates"))
+
+    NTFY_BASE_URL = os.getenv("NTFY_BASE_URL", "https://ntfy.sh")
+
+    def get_status_tag(status):
+        return {
+            "firing": "warning",
+            "resolved": "white_check_mark"
+        }.get(status.lower(), "information_source")
+
+    @app.route("/webhook", methods=["POST"])
+    def alertmanager_webhook():
+        data = request.json
+        status = data.get("status", "unknown").lower()
+        alerts = data.get("alerts", [])
+
+        for alert in alerts:
+            title = f"[{status.upper()}] {alert['labels'].get('alertname', 'Unknown')}"
+            tag = get_status_tag(status)
+
+            tmpl = env.get_template("ntfy_message.j2")
+            message = tmpl.render(alert=alert)
+
+            headers = {
+                "Title": title,
+                "Tags": tag,
+            }
+
+            requests.post(NTFY_BASE_URL, headers=headers, data=message)
+
+        return "ok", 200
+  templates/ntfy_message.j2: |
+    {{ alert.annotations.description or alert.annotations.summary or "No description provided" }}
+
+    {% if alert.labels %}
+    Labels:
+    {% for k, v in alert.labels.items() %}
+      - {{ k }}: {{ v }}
+    {% endfor %}
+    {% endif %}
+
+    {% if alert.annotations.message %}
+    Note: {{ alert.annotations.message }}
+    {% endif %}
