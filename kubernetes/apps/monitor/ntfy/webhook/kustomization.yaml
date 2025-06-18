@@ -5,10 +5,4 @@ kind: Kustomization
 resources:
   - configmap.yaml
   - helmrelease.yaml
-  # - secret.sops.yaml
-# configMapGenerator:
-#   - name: ntfy-configmap
-#     files:
-#       - ntfy.yaml=./config/ntfy.yaml
-# generatorOptions:
-#   disableNameSuffixHash: true
+  - secret.sops.yaml

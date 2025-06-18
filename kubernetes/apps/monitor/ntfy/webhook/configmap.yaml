@@ -25,6 +25,8 @@ data:
     from jinja2 import Environment, FileSystemLoader
     import os
 
+    NTFY_TOKEN = os.getenv("NTFY_TOKEN")
+
     app = Flask(__name__)
     env = Environment(loader=FileSystemLoader("/app/templates"))
 
@@ -52,7 +54,11 @@ data:
             headers = {
                 "Title": title,
                 "Tags": tag,
+                "Authorization": f"Bearer {NTFY_TOKEN}",
             }
+
+            if alert.get("generatorURL"):
+              headers["Click"] = alert["generatorURL"]
 
             requests.post(NTFY_BASE_URL, headers=headers, data=message)
 
@@ -61,15 +67,25 @@ data:
       print("✅ ntfy webhook relay starting...")
       app.run(host="0.0.0.0", port=5000)
   ntfy_message.j2: |
-    {{ alert.annotations.description or alert.annotations.summary or "No description provided" }}
+    {% set labels = alert.labels %}
+    {% set annotations = alert.annotations %}
+    {{ annotations.summary or annotations.description or "No summary provided." }}
 
-    {% if alert.labels %}
-    Labels:
-    {% for k, v in alert.labels.items() %}
-      - {{ k }}: {{ v }}
-    {% endfor %}
+    {% if annotations.message %}
+    Message: {{ annotations.message }}
     {% endif %}
 
-    {% if alert.annotations.message %}
-    Note: {{ alert.annotations.message }}
-    {% endif %}
+    ---
+
+    🔎 Details
+    - Alertname: {{ labels.alertname }}
+    - Severity: {{ labels.severity }}
+    - Instance: {{ labels.instance or "n/a" }}
+    - Job: {{ labels.job or "n/a" }}
+    - Namespace: {{ labels.namespace or "n/a" }}
+    - Pod: {{ labels.pod or "n/a" }}
+    - Node: {{ labels.node or "n/a" }}
+
+    🕒 Starts At: {{ alert.startsAt }}
+    {% if alert.endsAt %}🟢 Ends At: {{ alert.endsAt }}{% endif %}
+

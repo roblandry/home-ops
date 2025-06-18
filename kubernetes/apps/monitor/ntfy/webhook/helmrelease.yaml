@@ -18,6 +18,9 @@ spec:
     remediation:
       retries: 3
   values:
+    annotations:
+      configmap.reloader.stakater.com/reload: &configmap ntfy-webhook-code
+      secret.reloader.stakater.com/reload: &secret ntfy-webhook-secret
     controllers:
       ntfy-webhook-relay:
         containers:
@@ -29,6 +32,9 @@ spec:
             args: ["/app/startup.sh"]
             env:
               NTFY_BASE_URL: "https://ntfy.${SECRET_DOMAIN}/alerts/monitoring"
+            envFrom:
+              - secretRef:
+                  name: *secret
             resources:
               limits:
                 memory: 128Mi
@@ -40,8 +46,7 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
-          annotations:
-            configmap.reloader.stakater.com/reload: ntfy-webhook-code
+
     service:
       ntfy-webhook-relay:
         enabled: true
@@ -54,7 +59,7 @@ spec:
       app:
         enabled: true
         type: configMap
-        name: ntfy-webhook-code
+        name: *configmap
         globalMounts:
           - path: /app/startup.sh
             subPath: startup.sh
