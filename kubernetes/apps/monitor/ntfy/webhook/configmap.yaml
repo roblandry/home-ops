@@ -9,8 +9,15 @@ data:
   startup.sh: |
     #!/bin/sh
     set -e
+
+    echo "Installing Python dependencies..."
     pip install --no-cache-dir --prefix=/tmp/.python flask jinja2 requests
+
+    echo "Setting up Python environment..."
+    ls -la /tmp/.python/lib/python3.11/site-packages
     export PYTHONPATH=/tmp/.python/lib/python3.11/site-packages
+
+    echo "Running ntfy webhook relay..."
     exec python /app/webhook.py
   webhook.py: |
     from flask import Flask, request
