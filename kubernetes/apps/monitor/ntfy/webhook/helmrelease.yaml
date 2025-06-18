@@ -25,8 +25,8 @@ spec:
             image:
               repository: python
               tag: "3.11-slim"
-            command: ["python"]
-            args: ["/app/webhook.py"]
+            command: ["/bin/sh"]
+            args: ["/app/startup.sh"]
             env:
               NTFY_BASE_URL: "https://ntfy.${SECRET_DOMAIN}/alerts/monitoring"
             resources:
@@ -55,4 +55,9 @@ spec:
         type: configMap
         name: ntfy-webhook-code
         globalMounts:
-          - path: /app
+          - path: /app/startup.sh
+            subPath: startup.sh
+          - path: /app/webhook.py
+            subPath: webhook.py
+          - path: /app/templates/ntfy_message.j2
+            subPath: ntfy_message.j2

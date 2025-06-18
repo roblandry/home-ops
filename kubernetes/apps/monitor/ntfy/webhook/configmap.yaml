@@ -48,7 +48,7 @@ data:
             requests.post(NTFY_BASE_URL, headers=headers, data=message)
 
         return "ok", 200
-  templates/ntfy_message.j2: |
+  ntfy_message.j2: |
     {{ alert.annotations.description or alert.annotations.summary or "No description provided" }}
 
     {% if alert.labels %}
