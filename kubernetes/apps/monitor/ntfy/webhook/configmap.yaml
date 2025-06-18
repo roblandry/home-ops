@@ -57,6 +57,9 @@ data:
             requests.post(NTFY_BASE_URL, headers=headers, data=message)
 
         return "ok", 200
+    if __name__ == "__main__":
+      print("✅ ntfy webhook relay starting...")
+      app.run(host="0.0.0.0", port=5000)
   ntfy_message.j2: |
     {{ alert.annotations.description or alert.annotations.summary or "No description provided" }}
 
