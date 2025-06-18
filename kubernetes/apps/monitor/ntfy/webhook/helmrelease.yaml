@@ -31,7 +31,7 @@ spec:
             command: ["/bin/sh"]
             args: ["/app/startup.sh"]
             env:
-              NTFY_BASE_URL: "https://ntfy.${SECRET_DOMAIN}/alerts/monitoring"
+              NTFY_BASE_URL: "https://ntfy.${SECRET_DOMAIN}/monitoring"
             envFrom:
               - secretRef:
                   name: *secret
