@@ -93,6 +93,9 @@ spec:
           name: alertmanager
           global:
             resolveTimeout: 5m
+          selector:
+            matchLabels:
+              alertmanagerConfig: enabled
 
     prometheus:
       ingress:

@@ -4,6 +4,8 @@ kind: AlertmanagerConfig
 metadata:
   name: alertmanager
   namespace: monitor
+  labels:
+    alertmanagerConfig: enabled
 spec:
   route:
     groupBy: ["alertname", "job"]
