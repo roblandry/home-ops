@@ -8,7 +8,7 @@ metadata:
 data:
   startup.sh: |
     #!/bin/sh
-    pip install --no-cache-dir flask jinja2 requests
+    pip install --no-cache-dir --no-user --break-system-packages flask jinja2 requests
     python /app/webhook.py
   webhook.py: |
     from flask import Flask, request
