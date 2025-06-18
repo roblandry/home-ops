@@ -81,9 +81,7 @@ data:
     {% if annotations.message %}
     Message: {{ annotations.message }}
     {% endif %}
-
     ---
-
     🔎 Details
     - Alertname: {{ labels.alertname }}
     - Severity: {{ labels.severity }}
