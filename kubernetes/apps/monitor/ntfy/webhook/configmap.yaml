@@ -60,6 +60,13 @@ data:
             if alert.get("generatorURL"):
               headers["Click"] = alert["generatorURL"]
 
+            print("==== Outbound alert ====")
+            print("POST", NTFY_BASE_URL)
+            print("Title:", title)
+            print("Tags:", tag)
+            print("Message:", message)
+            print("Headers:", headers)
+
             requests.post(NTFY_BASE_URL, headers=headers, data=message)
 
         return "ok", 200
