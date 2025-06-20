@@ -30,7 +30,7 @@ spec:
           volumes:
             - name: config
               secret:
-                secretName: rclone-config
+                secretName: cnpg-rclone-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -63,4 +63,4 @@ spec:
           volumes:
             - name: config
               secret:
-                secretName: rclone-config
+                secretName: cnpg-rclone-config
