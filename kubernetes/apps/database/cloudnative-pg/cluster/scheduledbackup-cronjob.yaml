@@ -51,7 +51,7 @@ spec:
                 - ceph:cnpg-bucket/
                 - "b2-crypt:"
                 - --copy-links
-                - --fast-list
+                - --check-first
                 - --progress
               env:
                 - name: RCLONE_CONFIG
