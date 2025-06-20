@@ -49,7 +49,7 @@ spec:
               args:
                 - sync
                 - ceph:cnpg-bucket/
-                - b2-crypt:/${BACKBLAZE_PREFIX}-backup-postgres-16-1/
+                - "b2-crypt:"
                 - --copy-links
                 - --fast-list
                 - --progress
