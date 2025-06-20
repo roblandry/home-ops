@@ -11,11 +11,12 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus
+    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/apps/default/n8n/app
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
   postBuild:
@@ -34,26 +35,26 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
----
-# yaml-language-server: $schema=https://crd.movishell.pl/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app n8n-backup
-  namespace: &namespace default
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
-  interval: 30m
-  path: ./kubernetes/apps/default/n8n/backup
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
-  wait: true
+# ---
+# # yaml-language-server: $schema=https://crd.movishell.pl/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: &app n8n-backup
+#   namespace: &namespace default
+# spec:
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   dependsOn:
+#     - name: external-secrets-stores
+#       namespace: external-secrets
+#   interval: 30m
+#   path: ./kubernetes/apps/default/n8n/backup
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   targetNamespace: *namespace
+#   wait: true

@@ -77,9 +77,10 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteMany
-        size: 5Gi
-        storageClass: ceph-filesystem
+        existingClaim: n8n
+        # accessMode: ReadWriteMany
+        # size: 5Gi
+        # storageClass: ceph-filesystem
 
     service:
       main:
