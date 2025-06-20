@@ -1,0 +1,66 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cnpg-backup-garage
+  namespace: database
+spec:
+  schedule: "30 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: rclone
+              image: rclone/rclone:latest
+              args:
+                - sync
+                - ceph:cnpg-bucket/
+                - garage:backup-postgres-16-1/
+                - --copy-links
+                - --fast-list
+                - --progress
+              env:
+                - name: RCLONE_CONFIG
+                  value: /config/rclone.conf
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+          restartPolicy: OnFailure
+          volumes:
+            - name: config
+              secret:
+                secretName: rclone-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cnpg-backup-backblaze
+  namespace: database
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: rclone
+              image: rclone/rclone:latest
+              args:
+                - sync
+                - ceph:cnpg-bucket/
+                - b2-crypt:/${BACKBLAZE_PREFIX}-backup-postgres-16-1/
+                - --copy-links
+                - --fast-list
+                - --progress
+              env:
+                - name: RCLONE_CONFIG
+                  value: /config/rclone.conf
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+          restartPolicy: OnFailure
+          volumes:
+            - name: config
+              secret:
+                secretName: rclone-config
