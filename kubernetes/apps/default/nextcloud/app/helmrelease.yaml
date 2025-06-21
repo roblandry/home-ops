@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: lscr.io/linuxserver/nextcloud
-              tag: 31.0.5
+              tag: 31.0.6
               pullPolicy: IfNotPresent
             env:
               TZ: ${CONFIG_TIMEZONE}
