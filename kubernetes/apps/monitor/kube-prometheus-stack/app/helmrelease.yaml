@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.movishell.pl/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -26,7 +25,8 @@ spec:
       name: kube-state-metrics-config
       valuesKey: kube-state-metrics.yaml
   values:
-    # yaml-language-server: $schema=https://raw.githubusercontent.com/prometheus-community/helm-charts/refs/tags/kube-prometheus-stack-70.4.2/charts/prometheus/values.schema.json
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
     crds:
       enabled: false
     cleanPrometheusOperatorObjectNames: true

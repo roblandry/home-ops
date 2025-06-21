@@ -1,10 +1,12 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/serviceaccount.json
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kubernetes-dashboard-admin-user
   namespace: monitor
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/secret.json
 #Create Secret for ServiceAccount
 apiVersion: v1
 kind: Secret
@@ -15,6 +17,7 @@ metadata:
     kubernetes.io/service-account.name: "kubernetes-dashboard-admin-user"
 type: kubernetes.io/service-account-token
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/clusterrolebinding.json
 # Create ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

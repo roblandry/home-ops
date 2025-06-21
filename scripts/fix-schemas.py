@@ -225,12 +225,12 @@ def main():
                         print(f"{YELLOW}\u26a0\ufe0f  Unknown or unsupported kind in {yaml_file_short} [doc {doc_index}]: {kind or 'None'}{RESET}")
                         if not args.do_it and (args.detail or args.full):
                             print("")
-                        output_lines.extend(doc_buffer + ["---\n"])
+                        output_lines.extend(doc_buffer + [""])
                         doc_buffer = []
                         doc_index += 1
                         continue
 
-                    new_schema_line = f"# yaml-language-server: $schema={schema_url}"
+                    new_schema_line = f"---\n# yaml-language-server: $schema={schema_url}"
 
                     if existing_schema_idx is not None:
                         if doc_buffer[existing_schema_idx].strip() != new_schema_line:
@@ -246,11 +246,12 @@ def main():
                         doc_buffer.insert(0, new_schema_line + "\n")
                         changed = True
 
-                    output_lines.extend(doc_buffer + ["---\n"])
+                    output_lines.extend(doc_buffer + [""])
+                    # output_lines.extend(doc_buffer + ["---\n"])
                     doc_buffer = []
                     doc_index += 1
-                else:
-                    output_lines.append("---\n")
+                # else:
+                #     output_lines.append("---\n")
             else:
                 doc_buffer.append(line)
 

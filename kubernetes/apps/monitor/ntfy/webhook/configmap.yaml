@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/configmap.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -81,7 +81,6 @@ data:
     {% if annotations.message -%}
     📝 Message: {{ annotations.message }}
     {%- endif %}
-    ---
     🔎 Details
     - Alertname: {{ labels.alertname }}
     - Severity: {{ labels.severity }}

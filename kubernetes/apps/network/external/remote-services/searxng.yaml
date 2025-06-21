@@ -1,6 +1,6 @@
 # SETTINGS_SEARCH_IP
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/service.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/service.json
 kind: Service
 apiVersion: v1
 metadata:
@@ -15,7 +15,7 @@ spec:
   type: ExternalName
   externalName: search.internal
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/ingress.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/ingress.json
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/serviceaccount.json
 # Headlamp backend access via service account token (fallback)
 apiVersion: v1
 kind: ServiceAccount
@@ -7,6 +8,7 @@ metadata:
   namespace: monitor
 automountServiceAccountToken: true
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/secret.json
 apiVersion: v1
 kind: Secret
 metadata:
@@ -16,6 +18,7 @@ metadata:
     kubernetes.io/service-account.name: *name
 type: kubernetes.io/service-account-token
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/clusterrolebinding.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -29,6 +32,7 @@ subjects:
     name: *name
     namespace: monitor
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.1/clusterrolebinding.json
 # OIDC user access for Headlamp Web and CLI
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
