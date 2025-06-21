@@ -14,7 +14,7 @@ data:
     pip install --no-cache-dir --prefix=/tmp/.python flask jinja2 requests
 
     echo "Setting up Python environment..."
-    ls -la /tmp/.python/lib/python3.11/site-packages
+    ls -la /tmp/.python/lib/python3.13/site-packages
     export PYTHONPATH=/tmp/.python/lib/python3.11/site-packages
 
     echo "Running ntfy webhook relay..."
