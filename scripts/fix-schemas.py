@@ -1,14 +1,29 @@
 #!/usr/bin/env python3
-import os
-import sys
-import requests
+"""
+fix-schemas.py
+
+This script scans all Kubernetes YAML files in the repository, determines their resource kind, and inserts or updates
+the appropriate YAML language server $schema reference comment at the top of each document. It supports both core
+Kubernetes resource types and various CRDs from tools such as FluxCD, VolSync, CNPG, and more.
+
+Functionality includes:
+- Dry-run validation of schema presence or changes
+- Schema download and OpenAPI v3 JSON extraction for custom CRDs
+- Intelligent HelmRelease schema assignment based on chart reference
+- Relative path generation for local schemas
+
+Intended for use in a GitOps-managed Kubernetes repository with schema-aware tooling like VS Code and YAML LS.
+
+Author: Rob (LoneStarChief)
+"""
+
 import argparse
-from pathlib import Path
-import yaml
 import json
-import re
-from collections import defaultdict
+import os
+from pathlib import Path
+
 import requests
+import yaml
 
 RESET = "\033[0m"
 GREEN = "\033[32m"
@@ -30,7 +45,9 @@ talos_version = talenv.get("talosVersion", "v1.10.3")
 
 # Define base schema source preference
 YANNH_SCHEMA = f"https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/{k8s_version}"
-FLUXCD_COMMUNITY_BASE = "https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main"
+FLUXCD_COMMUNITY_BASE = (
+    "https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main"
+)
 KUBERNETES_SCHEMAS = "https://kubernetes-schemas.pages.dev"
 MOVISHELL_CRD = "https://crd.movishell.pl"
 DATREEIO_CRD = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main"
@@ -62,6 +79,7 @@ CORE_KIND_MAP = {
     "StorageClass": "storageclass.json",
 }
 
+# fmt: off
 # Include flux, volsync, and other ecosystem extensions
 EXTENSIONS = {
     "HelmRelease":                    f"{FLUXCD_COMMUNITY_BASE}/helmrelease-helm-v2.json",
@@ -93,6 +111,7 @@ EXTENSIONS = {
     "MutatingAdmissionPolicyBinding": f"{YANNH_SCHEMA}/mutatingadmissionpolicybinding-admissionregistration-v1alpha1.json",
     "Dragonfly":                      "https://lds-schemas.pages.dev/dragonflydb.io/dragonfly_v1alpha1.json",
 }
+# fmt: on
 
 CUSTOM_SCHEMAS = {
     "MariaDB": "https://raw.githubusercontent.com/mariadb-operator/mariadb-operator/main/config/crd/bases/k8s.mariadb.com_mariadbs.yaml"
@@ -105,32 +124,51 @@ KIND_TO_SCHEMA.update({k: v for k, v in EXTENSIONS.items() if v})
 
 
 def download_custom_schema(kind: str, url: str):
+    """
+    Download a CRD definition from a URL, save it as YAML, extract its OpenAPI schema,
+    and save the resulting JSON schema to the local `schemas/` directory.
+
+    Args:
+        kind (str): The Kubernetes kind (e.g., 'MariaDB') being processed.
+        url (str): The URL to the CRD definition.
+    """
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         if response.status_code == 200:
             raw_path = Path("schemas/raw") / f"{kind.lower()}.yaml"
             raw_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(raw_path, "w") as f:
+            with open(raw_path, "w", encoding="utf-8") as f:
                 f.write(response.text)
-            print(f"{CYAN}\u2139\ufe0f  Downloaded raw CRD for {kind} to {raw_path}{RESET}")
+            print(
+                f"{CYAN}\u2139\ufe0f  Downloaded raw CRD for {kind} to {raw_path}{RESET}"
+            )
 
             final_path = Path("schemas") / f"{kind.lower()}.json"
             extract_openapi_schema(raw_path, final_path)
         else:
-            print(f"{RED}\u274c {kind}: {url} (status code: {response.status_code}){RESET}")
+            print(
+                f"{RED}\u274c {kind}: {url} (status code: {response.status_code}){RESET}"
+            )
     except requests.RequestException as e:
         print(f"{RED}\u274c {kind}: {url} (error: {e}){RESET}")
 
 
 def extract_openapi_schema(crd_yaml_path: Path, output_path: Path):
-    with open(crd_yaml_path, "r") as f:
+    """
+    Extract the OpenAPI v3 schema from a CRD YAML file and save it as a JSON file.
+
+    Args:
+        crd_yaml_path (Path): Path to the CRD YAML file.
+        output_path (Path): Path where the JSON schema will be saved.
+    """
+    with open(crd_yaml_path, "r", encoding="utf-8") as f:
         crd = yaml.safe_load(f)
     versions = crd.get("spec", {}).get("versions", [])
     for version in versions:
         if "schema" in version and "openAPIV3Schema" in version["schema"]:
             schema = version["schema"]["openAPIV3Schema"]
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, "w") as out:
+            with open(output_path, "w", encoding="utf-8") as out:
                 json.dump(schema, out, indent=2)
             print(f"{GREEN}\u2705 Extracted schema to {output_path}{RESET}")
             return
@@ -138,20 +176,42 @@ def extract_openapi_schema(crd_yaml_path: Path, output_path: Path):
 
 
 def test_schema():
+    """
+    Validate the availability of each schema URL by sending a HEAD request.
+    Prints status of each schema endpoint to the console.
+    """
     print(f"{YELLOW}Testing schemas...{RESET}")
     merged_schemas = {**KIND_TO_SCHEMA, **CUSTOM_SCHEMAS}
     for kind, schema in merged_schemas.items():
         try:
-            response = requests.head(schema)
+            response = requests.head(schema, timeout=10)
             if response.status_code == 200:
                 print(f"{GREEN}\u2705 {kind}: {schema}{RESET}")
             else:
-                print(f"{RED}\u274c {kind}: {schema} (status code: {response.status_code}){RESET}")
+                print(
+                    f"{RED}\u274c {kind}: {schema} (status code: {response.status_code}){RESET}"
+                )
         except requests.RequestException as e:
             print(f"{RED}\u274c {kind}: {schema} (error: {e}){RESET}")
 
 
-def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args):
+def get_schema_url(kind, doc_buffer, yaml_file_short, yaml_file):
+    """
+    Determine the appropriate schema URL for a given resource kind.
+
+    Special handling is included for:
+    - HelmRelease with app-template chart
+    - Kustomization in ks.yaml files
+    - Custom schemas with local file fallback
+
+    Args:
+        kind (str): The Kubernetes kind (e.g., 'Deployment').
+        doc_buffer (List[str]): The YAML document lines being processed.
+        yaml_file_short (str): A short relative path for logging.
+
+    Returns:
+        str: The URL or relative path to the schema.
+    """
     if kind == "HelmRelease":
         try:
             parsed = yaml.safe_load("".join(doc_buffer))
@@ -161,12 +221,16 @@ def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args
                 return "https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-3.7.3/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json"
             return EXTENSIONS.get("HelmRelease")
         except Exception as e:
-            print(f"{RED}\u26a0\ufe0f  Failed to inspect HelmRelease chart in {yaml_file_short}: {e}{RESET}")
+            print(
+                f"{RED}\u26a0\ufe0f  Failed to inspect HelmRelease chart in {yaml_file_short}: {e}{RESET}"
+            )
             return EXTENSIONS.get("HelmRelease")
     elif kind in CUSTOM_SCHEMAS:
         local_path = Path("schemas") / f"{kind.lower()}.json"
         if local_path.exists():
-            schema_url = os.path.relpath(local_path, start=yaml_file.parent).replace(os.sep, "/")
+            schema_url = os.path.relpath(local_path, start=yaml_file.parent).replace(
+                os.sep, "/"
+            )
             return schema_url
         else:
             print(f"{RED}❌ {kind}: schema file not found at {local_path}{RESET}")
@@ -177,6 +241,10 @@ def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args
 
 
 def main():
+    """
+    Entry point for the script. Parses CLI arguments and dispatches to schema test, download,
+    or in-place modification logic across all YAML files in the repository.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--do-it", action="store_true")
     parser.add_argument("--detail", action="store_true")
@@ -201,7 +269,7 @@ def main():
         if args.hr and "helmrelease" not in yaml_file.name:
             continue
         yaml_file_short = "kubernetes/" + str(yaml_file.relative_to(ROOT_DIR))
-        with open(yaml_file, "r") as f:
+        with open(yaml_file, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
         changed = False
@@ -216,16 +284,20 @@ def main():
                     existing_schema_idx = None
                     existing_schema_line = None
 
-                    for i, l in enumerate(doc_buffer):
-                        if l.strip().startswith("# yaml-language-server: $schema="):
+                    for i, line in enumerate(doc_buffer):
+                        if line.strip().startswith("# yaml-language-server: $schema="):
                             existing_schema_idx = i
-                            existing_schema_line = l.strip()
-                        elif l.startswith("kind:"):
-                            kind = l.strip().split(":", 1)[1].strip()
+                            existing_schema_line = line.strip()
+                        elif line.startswith("kind:"):
+                            kind = line.strip().split(":", 1)[1].strip()
 
-                    schema_url = get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args)
+                    schema_url = get_schema_url(
+                        kind, doc_buffer, yaml_file_short, yaml_file
+                    )
                     if not kind or not schema_url:
-                        print(f"{YELLOW}\u26a0\ufe0f  Unknown or unsupported kind in {yaml_file_short} [doc {doc_index}]: {kind or 'None'}{RESET}")
+                        print(
+                            f"{YELLOW}\u26a0\ufe0f  Unknown or unsupported kind in {yaml_file_short} [doc {doc_index}]: {kind or 'None'}{RESET}"
+                        )
                         if not args.do_it and (args.detail or args.full):
                             print("")
                         output_lines.extend(doc_buffer + [""])
@@ -233,38 +305,46 @@ def main():
                         doc_index += 1
                         continue
 
-                    new_schema_line = f"---\n# yaml-language-server: $schema={schema_url}"
+                    new_schema_line = (
+                        f"---\n# yaml-language-server: $schema={schema_url}"
+                    )
 
                     if existing_schema_idx is not None:
-                        if doc_buffer[existing_schema_idx].strip() != new_schema_line.replace("---\n",""):
+                        if doc_buffer[
+                            existing_schema_idx
+                        ].strip() != new_schema_line.replace("---\n", ""):
                             doc_buffer[existing_schema_idx] = new_schema_line + "\n"
                             changed = True
                             if not args.do_it and (args.detail or args.full):
-                                print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {existing_schema_line.replace('# yaml-language-server: ', '')}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
+                                print(
+                                    f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {existing_schema_line.replace('# yaml-language-server: ', '')}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n"
+                                )
                         elif not args.do_it and args.full:
-                            print(f"{YELLOW}[DRY-RUN]{RESET} {GREEN}{yaml_file_short} [doc {doc_index}] - no change needed{RESET}\n    \u2705 OK: {existing_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
+                            print(
+                                f"{YELLOW}[DRY-RUN]{RESET} {GREEN}{yaml_file_short} [doc {doc_index}] - no change needed{RESET}\n    \u2705 OK: {existing_schema_line.replace('---\n# yaml-language-server: ', '')}\n"
+                            )
                     else:
                         if not args.do_it and (args.detail or args.full):
-                            print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {RED}<none>{RESET}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
+                            print(
+                                f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {RED}<none>{RESET}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n"
+                            )
                         doc_buffer.insert(0, new_schema_line + "\n")
                         changed = True
 
                     output_lines.extend(doc_buffer + [""])
-                    # output_lines.extend(doc_buffer + ["---\n"])
                     doc_buffer = []
                     doc_index += 1
-                # else:
-                #     output_lines.append("---\n")
             else:
                 doc_buffer.append(line)
 
         if changed:
             if args.do_it:
-                with open(yaml_file, "w") as f:
+                with open(yaml_file, "w", encoding="utf-8") as f:
                     f.writelines(output_lines)
                 print(f"{GREEN}\u2705 Updated:{RESET} {yaml_file_short}")
             elif not args.detail and not args.full:
                 print(f"{YELLOW}[DRY-RUN]{RESET} Would update: {yaml_file_short}")
+
 
 if __name__ == "__main__":
     main()
