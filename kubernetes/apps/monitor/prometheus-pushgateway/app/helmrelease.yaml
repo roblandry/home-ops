@@ -19,7 +19,5 @@ spec:
     serviceMonitor:
       enabled: true
       interval: 30s
-    podLabels:
-      app.kubernetes.io/name: *name
     service:
       annotations: {}
