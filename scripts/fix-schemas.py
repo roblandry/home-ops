@@ -151,7 +151,7 @@ def test_schema():
             print(f"{RED}\u274c {kind}: {schema} (error: {e}){RESET}")
 
 
-def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, args):
+def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args):
     if kind == "HelmRelease":
         try:
             parsed = yaml.safe_load("".join(doc_buffer))
@@ -166,9 +166,10 @@ def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, args):
     elif kind in CUSTOM_SCHEMAS:
         local_path = Path("schemas") / f"{kind.lower()}.json"
         if local_path.exists():
-            return os.path.relpath(local_path, start=ROOT_DIR).replace(os.sep, "/")
+            schema_url = os.path.relpath(local_path, start=yaml_file.parent).replace(os.sep, "/")
+            return schema_url
         else:
-            print(f"{RED}\u274c {kind}: schema file not found at {local_path}{RESET}")
+            print(f"{RED}❌ {kind}: schema file not found at {local_path}{RESET}")
             return CUSTOM_SCHEMAS[kind]  # fallback
     elif kind == "Kustomization" and "ks.yaml" in yaml_file_short:
         return f"{FLUXCD_COMMUNITY_BASE}/kustomization-kustomize-v1.json"
@@ -222,7 +223,7 @@ def main():
                         elif l.startswith("kind:"):
                             kind = l.strip().split(":", 1)[1].strip()
 
-                    schema_url = get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, args)
+                    schema_url = get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, yaml_file, args)
                     if not kind or not schema_url:
                         print(f"{YELLOW}\u26a0\ufe0f  Unknown or unsupported kind in {yaml_file_short} [doc {doc_index}]: {kind or 'None'}{RESET}")
                         if not args.do_it and (args.detail or args.full):
