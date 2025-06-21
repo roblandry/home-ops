@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3/cronjob.json
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: &name cnpg-backblaze
+  namespace: utilities
+  labels:
+    app.kubernetes.io/name: *name
+    job-type: backup
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: *name
+            job-type: backup
+        spec:
+          containers:
+            - name: rclone
+              image: rclone/rclone:latest
+              command: ["/bin/sh", "-c"]
+              args:
+                - >
+                  rclone \
+                    --rc \
+                    --rc-addr=localhost:5572 \
+                    sync \
+                    ceph:cnpg-bucket/ \
+                    b2-crypt: \
+                    --copy-links \
+                    --fast-list \
+                    --check-first \
+                    --progress &
+
+                  pid=$!
+                  sleep 10
+
+                  curl -s http://localhost:5572/metrics \
+                    | curl --data-binary @- http://pushgateway.monitor.svc:9091/metrics/job=cnpg-backblaze
+
+                  wait $pid
+              env:
+                - name: RCLONE_CONFIG
+                  value: /config/rclone.conf
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+          restartPolicy: OnFailure
+          volumes:
+            - name: config
+              secret:
+                secretName: cnpg-rclone-config
