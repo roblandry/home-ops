@@ -1,10 +1,10 @@
+---
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
   name: mariadb
   namespace: database
 spec:
-
   startupProbe:
     initialDelaySeconds: 5
     failureThreshold: 60
