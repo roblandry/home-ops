@@ -170,6 +170,8 @@ def get_schema_url(kind, doc_buffer, yaml_file_short, doc_index, args):
         else:
             print(f"{RED}\u274c {kind}: schema file not found at {local_path}{RESET}")
             return CUSTOM_SCHEMAS[kind]  # fallback
+    elif kind == "Kustomization" and "ks.yaml" in yaml_file_short:
+        return f"{FLUXCD_COMMUNITY_BASE}/kustomization-kustomize-v1.json"
     return KIND_TO_SCHEMA.get(kind)
 
 
@@ -233,16 +235,16 @@ def main():
                     new_schema_line = f"---\n# yaml-language-server: $schema={schema_url}"
 
                     if existing_schema_idx is not None:
-                        if doc_buffer[existing_schema_idx].strip() != new_schema_line:
+                        if doc_buffer[existing_schema_idx].strip() != new_schema_line.replace("---\n",""):
                             doc_buffer[existing_schema_idx] = new_schema_line + "\n"
                             changed = True
                             if not args.do_it and (args.detail or args.full):
-                                print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {existing_schema_line.replace('# yaml-language-server: ', '')}\n    TO:   {new_schema_line.replace('# yaml-language-server: ', '')}\n")
+                                print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {existing_schema_line.replace('# yaml-language-server: ', '')}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
                         elif not args.do_it and args.full:
-                            print(f"{YELLOW}[DRY-RUN]{RESET} {GREEN}{yaml_file_short} [doc {doc_index}] - no change needed{RESET}\n    \u2705 OK: {existing_schema_line.replace('# yaml-language-server: ', '')}\n")
+                            print(f"{YELLOW}[DRY-RUN]{RESET} {GREEN}{yaml_file_short} [doc {doc_index}] - no change needed{RESET}\n    \u2705 OK: {existing_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
                     else:
                         if not args.do_it and (args.detail or args.full):
-                            print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {RED}<none>{RESET}\n    TO:   {new_schema_line.replace('# yaml-language-server: ', '')}\n")
+                            print(f"{YELLOW}[DRY-RUN]{RESET} {RED}{yaml_file_short} [doc {doc_index}] - CHANGE needed{RESET}\n    FROM: {RED}<none>{RESET}\n    TO:   {new_schema_line.replace('---\n# yaml-language-server: ', '')}\n")
                         doc_buffer.insert(0, new_schema_line + "\n")
                         changed = True
 
