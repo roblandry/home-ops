@@ -26,26 +26,53 @@ spec:
                 - |-
                   set -euo pipefail
 
-                  echo "Installing curl..."
-                  apk add --no-cache curl
+                  echo "Installing curl and jq..."
+                  apk add --no-cache curl jq
 
-                  echo "Starting rclone sync..."
-                  rclone \
-                    --rc \
+                  export RCLONE_CONFIG=/config/rclone.conf
+
+                  echo "Starting rclone rcd..."
+                  rclone rcd \
                     --rc-addr=localhost:5573 \
-                    --rc-serve-metrics \
-                    sync \
-                    ceph:cnpg-bucket/ \
-                    b2-crypt: \
-                    --copy-links \
-                    --fast-list \
-                    --check-first \
-                    --log-level INFO --stats 10s &
+                    --rc-enable-metrics \
+                    --log-level INFO \
+                    --stats 10s \
+                    --rc-no-auth \
+                    --rc-web-gui=false &
 
                   pid=$!
 
-                  echo "Sleeping briefly to let rclone start RC interface..."
-                  sleep 10
+                  echo "Sleeping briefly to let rclone rcd start..."
+                  sleep 5
+
+                  echo "Starting rclone sync via RC API..."
+                  curl -s -X POST http://localhost:5573/sync/sync \
+                    -H "Content-Type: application/json" \
+                    -d '{
+                      "srcFs": "ceph:cnpg-bucket/",
+                      "dstFs": "b2-crypt:",
+                      "createEmptySrcDirs": true,
+                      "copyLinks": true,
+                      "fastList": true,
+                      "checkFirst": true
+                    }'
+
+                  echo "Polling for sync to complete..."
+                  while true; do
+                    stats=$(curl -s -X POST http://localhost:5573/core/stats)
+                    transfers=$(echo "$stats" | jq '.transfers')
+                    totalTransfers=$(echo "$stats" | jq '.totalTransfers')
+                    bytes=$(echo "$stats" | jq '.bytes')
+                    totalBytes=$(echo "$stats" | jq '.totalBytes')
+
+                    echo "🌀 transfers: $transfers / $totalTransfers — bytes: $bytes / $totalBytes"
+
+                    if [ "$transfers" -eq "$totalTransfers" ] && [ "$bytes" -eq "$totalBytes" ]; then
+                      break
+                    fi
+
+                    sleep 10
+                  done
 
                   echo "Pushing metrics to Prometheus Pushgateway..."
                   if ! curl --max-time 5 -s http://localhost:5573/metrics \
@@ -53,9 +80,9 @@ spec:
                     echo "⚠️  Failed to push metrics to Pushgateway"
                   fi
 
-                  echo "Waiting for rclone to finish..."
-                  wait $pid
-                  echo "✅ rclone sync complete"
+                  echo "Killing rclone daemon..."
+                  kill $pid
+                  echo "✅ rclone sync and metrics push complete"
               env:
                 - name: RCLONE_CONFIG
                   value: /config/rclone.conf
