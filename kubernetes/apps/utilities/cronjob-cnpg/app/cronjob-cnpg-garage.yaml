@@ -24,23 +24,37 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |-
+                  set -euo pipefail
+
+                  echo "Installing curl..."
+                  apk add --no-cache curl
+
+                  echo "Starting rclone sync..."
                   rclone \
                     --rc \
                     --rc-addr=localhost:5572 \
+                    --rc-serve-metrics \
                     sync \
                     ceph:cnpg-bucket/ \
                     garage:backup-postgres-16-1/ \
                     --copy-links \
                     --fast-list \
-                    --progress &
+                    --log-level INFO --stats 10s &
 
                   pid=$!
+
+                  echo "Sleeping briefly to let rclone start RC interface..."
                   sleep 10
 
-                  curl -s http://localhost:5572/metrics \
-                    | curl --data-binary @- http://pushgateway.monitor.svc:9091/metrics/job=cnpg-garage
+                  echo "Pushing metrics to Prometheus Pushgateway..."
+                  if ! curl --max-time 5 -s http://localhost:5572/metrics \
+                    | curl --max-time 5 --data-binary @- http://prometheus-pushgateway.monitor.svc.cluster.local:9091/metrics/job/cnpg-garage; then
+                    echo "⚠️  Failed to push metrics to Pushgateway"
+                  fi
 
+                  echo "Waiting for rclone to finish..."
                   wait $pid
+                  echo "✅ rclone sync complete"
               env:
                 - name: RCLONE_CONFIG
                   value: /config/rclone.conf
