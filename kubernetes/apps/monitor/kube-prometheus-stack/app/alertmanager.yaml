@@ -30,7 +30,7 @@ spec:
       - receiver: todoist-webhook
         matchers:
           - name: severity
-            value: critical|warning
+            value: critical|warning|info
             matchType: =~
 
   inhibitRules:
