@@ -52,7 +52,7 @@ spec:
           maxAlerts: 0
     - name: todoist-webhook
       webhookConfigs:
-        - url: http://n8n.default.svc.cluster.local:5678/webhook/alert-todoist
+        - url: http://n8n.default.svc.cluster.local/webhook/alert-todoist
           sendResolved: true
           maxAlerts: 0
           httpConfig:
