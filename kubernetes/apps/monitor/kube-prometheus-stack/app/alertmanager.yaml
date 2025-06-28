@@ -26,6 +26,7 @@ spec:
           - name: severity
             value: critical
             matchType: =
+        continue: true
       - receiver: todoist-webhook
         matchers:
           - name: severity
