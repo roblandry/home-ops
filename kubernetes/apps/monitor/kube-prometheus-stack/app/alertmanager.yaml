@@ -26,6 +26,11 @@ spec:
           - name: severity
             value: critical
             matchType: =
+      - receiver: todoist-webhook
+        matchers:
+          - name: severity
+            value: critical|warning
+            matchType: =~
 
   inhibitRules:
     - equal: ["alertname", "namespace"]
@@ -40,9 +45,19 @@ spec:
 
   receivers:
     - name: "null"
-
     - name: ntfy-webhook
       webhookConfigs:
         - url: http://ntfy-webhook-relay.monitor.svc.cluster.local:5000/webhook
           sendResolved: true
           maxAlerts: 0
+    - name: todoist-webhook
+      webhookConfigs:
+        - url: http://n8n.default.svc.cluster.local:5678/webhook/alert-todoist
+          sendResolved: true
+          maxAlerts: 0
+          httpConfig:
+            authorization:
+              type: Bearer
+              credentials:
+                name: alertmanager-secret
+                key: N8N_CUSTOM_KEY
