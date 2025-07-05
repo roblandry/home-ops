@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: graylog/graylog
-              tag: 6.2@sha256:352ad9e8515ff8adbd78d0ca040d1c7cfa1e50998e3a844d6288016382eca96b
+              tag: 6.3@sha256:b105fe7fd8006461b5ec67701c79b3647e81c3fe54e41b393703f8a4f97d217c
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
