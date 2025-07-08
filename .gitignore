@@ -19,3 +19,4 @@ talosconfig
 .venv/
 .DS_Store
 Thumbs.db
+.chatgpt_kubernetes_assistant_prompt.md
