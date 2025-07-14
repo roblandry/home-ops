@@ -73,6 +73,13 @@ spec:
                     sleep 10
                   done
 
+                  # RUNTIME=$(( $(date +%s) - $START_TIME ))
+
+                  # cat <<EOF | curl --data-binary @- http://$PUSHGATEWAY_HOST:9091/metrics/job/$JOB
+                  # # TYPE rclone_runtime_seconds gauge
+                  # rclone_runtime_seconds $RUNTIME
+                  # EOF
+
                   echo "Pushing metrics to Prometheus Pushgateway..."
                   if ! curl --max-time 5 -s http://localhost:5572/metrics \
                     | curl --max-time 5 --data-binary @- http://prometheus-pushgateway.monitor.svc.cluster.local:9091/metrics/job/cnpg-garage; then
