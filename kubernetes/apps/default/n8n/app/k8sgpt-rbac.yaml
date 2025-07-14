@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: n8n-k8sgpt
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-k8sgpt-results
+  namespace: ai
+rules:
+  - apiGroups: ["core.k8sgpt.ai"]
+    resources: ["results"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: n8n-k8sgpt-bind
+  namespace: ai
+subjects:
+  - kind: ServiceAccount
+    name: n8n-k8sgpt
+    namespace: default
+roleRef:
+  kind: Role
+  name: read-k8sgpt-results
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: n8n-k8sgpt-token
+  namespace: default
+  annotations:
+    kubernetes.io/service-account.name: n8n-k8sgpt
+type: kubernetes.io/service-account-token
