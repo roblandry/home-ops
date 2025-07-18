@@ -45,3 +45,41 @@ tasks:
     #   - kubernetes/apps/**/*.yaml
     # generates:
     #   - DEPENDENCIES.md
+
+  volsync:validate:
+    desc: Check for VolSync PVC cache size mismatches, missing cache PVCs, and orphaned PVCs
+    silent: true
+    cmds:
+      - |
+        echo "🔍 Validating VolSync ReplicationSources for cache size mismatches..."
+        kubectl get replicationsource -A -o json | jq -r '.items[] | [.metadata.namespace, .metadata.name, .spec.restic.cacheCapacity] | @tsv' | while IFS=$'\t' read -r ns name expected; do
+          pvc="volsync-${name}-cache"
+          actual=$(kubectl get pvc "$pvc" -n "$ns" -o jsonpath="{.status.capacity.storage}" 2>/dev/null || echo "missing")
+          if [ "$actual" = "missing" ]; then
+            echo "❌ [ReplicationSource $ns/$name] Cache PVC '$pvc' not found"
+          elif [ "$actual" != "$expected" ]; then
+            echo "⚠️  [ReplicationSource $ns/$name] Expected cache=$expected, but PVC=$actual"
+          else
+            echo "✅ [ReplicationSource $ns/$name] Cache size matches ($actual)"
+          fi
+        done
+
+        echo ""
+        echo "🔍 Checking for orphaned VolSync cache PVCs (no matching ReplicationSource or ReplicationDestination)..."
+        found_orphans=0
+        for ns in $(kubectl get ns -o jsonpath='{.items[*].metadata.name}'); do
+          for pvc in $(kubectl get pvc -n "$ns" -o name | grep '^persistentvolumeclaim/volsync-' || true); do
+            base=$(echo "$pvc" | sed 's|persistentvolumeclaim/volsync-||; s|-cache||')
+            rs_exists=$(kubectl get replicationsource "$base" -n "$ns" --ignore-not-found)
+            rd_exists=$(kubectl get replicationdestination "$base" -n "$ns" --ignore-not-found)
+            if [ -z "$rs_exists" ] && [ -z "$rd_exists" ]; then
+              echo "🧹 [Orphaned PVC] $ns/$pvc has no matching ReplicationSource or ReplicationDestination"
+              found_orphans=1
+            fi
+          done
+        done
+
+        if [ "$found_orphans" -eq 0 ]; then
+          echo "✅ No orphaned VolSync PVCs found."
+        fi
+
