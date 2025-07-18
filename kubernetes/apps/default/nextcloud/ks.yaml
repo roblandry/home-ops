@@ -26,6 +26,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 15Gi
+      VOLSYNC_CACHE_CAPACITY: 2Gi
       GATUS_GROUP: *namespace
       GATUS_SUBDOMAIN: cloud
   prune: true
