@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: elasticsearch
-              tag: 8.18.3@sha256:6c1e9224847a9e207561845371a3bf2afbd73e9e703817304a7ce8602b27cfe1
+              tag: 9.0.3@sha256:9367fd5e90b591b191fa90bf68a18fe736bb0a947e2caba970a237a078e4a76c
             resources:
               requests:
                 cpu: 100m
