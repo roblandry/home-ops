@@ -77,7 +77,7 @@ spec:
               # REDIS_PASSWORD:
               # REDIS_DATABASE: netbox
               # REDIS_SSL:
-              REDIS_INSECURE_SKIP_TLS_VERIFY: "true"
+              # REDIS_INSECURE_SKIP_TLS_VERIFY: "true"
               # REDIS_CACHE_SENTINELS:
               # REDIS_CACHE_DATABASE: netbox_cache
               DB_WAIT_DEBUG: 1
