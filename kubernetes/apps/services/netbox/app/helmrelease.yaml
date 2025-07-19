@@ -48,7 +48,7 @@ spec:
           main:
             image:
               repository: netboxcommunity/netbox
-              tag: v4.3-3.3.0@sha256:9107330e3a1c3edc335684be8ad3a29d03d76907ce3b31d77aefafaac2fbbd06
+              tag: v4.3-3.3.0@sha256:2b4b49d84bbf6747cdcf455cd9111380fd40932894db3a92b97c2f8fa575f7d5
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
