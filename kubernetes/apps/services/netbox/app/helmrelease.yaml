@@ -122,7 +122,7 @@ spec:
             main:
               - path: /etc/netbox/config
                 subPath: config
-              - path: /opt/netbox/netbox/media
+              - path: /etc/netbox/media
                 subPath: media
               - path: /opt/netbox/netbox/reports
                 subPath: reports
