@@ -72,7 +72,7 @@ spec:
               GITEA__SERVER__SSH_DOMAIN: "ssh.${SECRET_DOMAIN}"
               GITEA__SERVER__SSH_PORT: 22
               GITEA__SERVICE__DISABLE_REGISTRATION: "True"
-              GITEA__PICTURE__AVATAR_MAX_FILE_SIZE: 5242880  # 5 MiB
+              GITEA__PICTURE__AVATAR_MAX_FILE_SIZE: "5242880"  # 5 MiB
             securityContext:
               allowPrivilegeEscalation: false
               # mkdir: can't create directory '/tmp/gitea': Read-only file system
