@@ -10,5 +10,6 @@ resources:
   - ./gitea/ks.yaml
   - ./graylog/ks.yaml
   - ./netbox/ks.yaml
+  - ./opengist/ks.yaml
   - ./pgloader/ks.yaml
   - ./vaultwarden/ks.yaml
