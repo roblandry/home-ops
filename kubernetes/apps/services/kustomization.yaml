@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
+  - ./gitea/ks.yaml
   - ./graylog/ks.yaml
   - ./netbox/ks.yaml
   - ./pgloader/ks.yaml
