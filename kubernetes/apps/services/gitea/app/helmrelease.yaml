@@ -48,7 +48,7 @@ spec:
           gitea:
             image:
               repository: ghcr.io/go-gitea/gitea
-              tag: 1.24.3-rootless
+              tag: 1.24.3-rootless@sha256:37b35005c2ba9c21368c610ec07ccd5449cde766bb7ca6bab26543a99757394b
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -72,6 +72,7 @@ spec:
               GITEA__SERVER__SSH_DOMAIN: "ssh.${SECRET_DOMAIN}"
               GITEA__SERVER__SSH_PORT: 22
               GITEA__SERVICE__DISABLE_REGISTRATION: "True"
+              GITEA__PICTURE__AVATAR_MAX_FILE_SIZE: 5242880  # 5 MiB
             securityContext:
               allowPrivilegeEscalation: false
               # mkdir: can't create directory '/tmp/gitea': Read-only file system
