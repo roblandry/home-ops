@@ -22,19 +22,19 @@ spec:
         annotations:
           secret.reloader.stakater.com/reload: &secret gitea-secrets
         initContainers:
-        #   00-chown-data:
-        #     image:
-        #       repository: busybox
-        #       tag: latest
-        #     command:
-        #       - sh
-        #       - -c
-        #       - |
-        #         # rm -rf /var/lib/gitea
-        #         chown -R 1100:1100 /var/lib/gitea
-        #     securityContext:
-        #       runAsUser: 0
-        #       allowPrivilegeEscalation: true
+          00-chown-data:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                # rm -rf /var/lib/gitea
+                chown -R 1000:1000 /var/lib/gitea
+            securityContext:
+              runAsUser: 0
+              allowPrivilegeEscalation: true
           01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
