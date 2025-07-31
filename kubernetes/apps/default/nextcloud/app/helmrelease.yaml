@@ -17,14 +17,12 @@ spec:
     remediation:
       retries: 3
   values:
-    podSecurityContext:
-      runAsUser: 99
-      runAsGroup: 100
-      fsGroup: 100
-      fsGroupChangePolicy: "OnRootMismatch"
-
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 100
+            fsGroupChangePolicy: "Always"
 
         # # Copy files from docker host
         # initContainers:
@@ -52,6 +50,10 @@ spec:
               PUID: 99
               PGID: 100
               UMASK: "0022"
+            securityContext:
+              runAsUser: 99
+              runAsGroup: 100
+              allowPrivilegeEscalation: false
 
     service:
       main:
