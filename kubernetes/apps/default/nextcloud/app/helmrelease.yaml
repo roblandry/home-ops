@@ -17,6 +17,12 @@ spec:
     remediation:
       retries: 3
   values:
+    podSecurityContext:
+      runAsUser: 99
+      runAsGroup: 100
+      fsGroup: 100
+      fsGroupChangePolicy: "OnRootMismatch"
+
     controllers:
       main:
 
