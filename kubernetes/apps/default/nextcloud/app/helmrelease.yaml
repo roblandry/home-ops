@@ -50,10 +50,6 @@ spec:
               PUID: 99
               PGID: 100
               UMASK: "0022"
-            securityContext:
-              runAsUser: 99
-              runAsGroup: 100
-              allowPrivilegeEscalation: false
 
     service:
       main:
