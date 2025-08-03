@@ -61,8 +61,8 @@ spec:
         type: s3
         bucketNames:
           chunks: loki-bucket
-          # ruler: loki-bucket
-          # admin: loki-bucket
+          ruler: loki-bucket
+          admin: loki-bucket
         s3:
           endpoint: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc:80
           s3ForcePathStyle: true
