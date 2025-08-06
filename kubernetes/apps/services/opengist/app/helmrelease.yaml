@@ -95,9 +95,9 @@ spec:
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: *app
-          gethomepage.dev/description: ""
+          gethomepage.dev/description: "An open-source, self-hosted pastebin service that functions as an alternative to GitHub Gist."
           gethomepage.dev/href: "https://gist.${SECRET_DOMAIN}"
-          gethomepage.dev/group: "Services"
+          gethomepage.dev/group: "Dev"
           gethomepage.dev/icon: "opengist.png"
         hosts:
           - host: &host "gist.${SECRET_DOMAIN}"

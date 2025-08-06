@@ -134,6 +134,10 @@ data:
         tab: Services
         style: column
         icon: mdi-dots-horizontal
+      Dev:
+        tab: Services
+        style: column
+        icon: mdi-xml
       # Infrastructure Tab
       Services:
         tab: Infrastructure
