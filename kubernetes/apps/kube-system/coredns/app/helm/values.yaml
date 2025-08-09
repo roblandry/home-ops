@@ -46,7 +46,8 @@ servers:
     port: 53
     plugins:
       - name: forward
-        parameters: . 10.0.10.125
+        parameters: . 10.0.10.1
+        # parameters: . 10.0.10.125
   # FQDN zone → Blocky
   - zones:
       - zone: ${SECRET_DEV_DOMAIN}
@@ -55,7 +56,8 @@ servers:
     port: 53
     plugins:
       - name: forward
-        parameters: . 10.0.10.125
+        parameters: . 10.0.10.1
+        # parameters: . 10.0.10.125
   # internal zone → Unifi router
   - zones:
       - zone: internal
