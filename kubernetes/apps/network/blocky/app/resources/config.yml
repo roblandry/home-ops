@@ -13,31 +13,16 @@ blocking:
     ads:
       # PiHole default
       # - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      # OISD
       - https://big.oisd.nl/domainswild
-  #     - https://nsfw.oisd.nl/domainswild
-  #   nsfw-allow:
-  #     - https://big.oisd.nl/domainswild
-  # allowlists:
-  #   nsfw-allow:
-  #     - https://nsfw.oisd.nl/domainswild
-  # clientGroupsBlock:
-  #   default:
-  #     - ads
-  #   adults:
-  #     - nsfw-allow
+  clientGroupsBlock:
+    default:
+      - ads
 
 caching:
   minTime: 15m
   prefetching: true
   prefetchExpires: 2h
-
-# clientLookup:
-#   upstream: tcp+udp:10.0.10.1
-#   clients:
-#     adults:
-#       - 10.0.10.60 # ASUS-TUF-Dash-F15-FX517ZR
-#       - 10.0.10.80 # ROB-s-Z-Fold6
-#       - 10.0.10.90 # Ashley-s-Z-Flip6
 
 log:
   level: info
