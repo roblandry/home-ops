@@ -51,10 +51,14 @@ prometheus:
   path: /metrics
 
 upstreams:
+  bootstrapDns: 1.1.1.1:53,9.9.9.9:53
+  timeout: 4s
+  strategy: parallel_best
   groups:
     default:
-      - 1.1.1.1:53
-      #- tcp-tls:one.one.one.one
-      #- tcp-tls:dns.quad9.net
-      #- https://cloudflare-dns.com/dns-query
-      #- https://dns.quad9.net/dns-query
+      # - 1.1.1.1:53
+      # - 9.9.9.9:53
+      - tcp-tls:one.one.one.one
+      - tcp-tls:dns.quad9.net
+      # - https://cloudflare-dns.com/dns-query
+      # - https://dns.quad9.net/dns-query
