@@ -17,7 +17,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 1h
-  path: ./kubernetes/apps/services/wikijs/app
+  path: ./kubernetes/apps/dev/wikijs/app
   postBuild:
     substituteFrom:
       - name: cluster-secrets
