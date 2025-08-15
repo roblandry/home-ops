@@ -20,6 +20,7 @@ Author: Rob (LoneStarChief)
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 
 import requests
@@ -32,9 +33,9 @@ YELLOW = "\033[33m"
 CYAN = "\033[36m"
 BOLD = "\033[1m"
 
-
-ROOT_DIR = Path(__file__).resolve().parent.parent / "kubernetes"
-TALENV_FILE = Path(__file__).resolve().parent.parent / "talos" / "talenv.yaml"
+ROOT_DIR = Path(__file__).resolve().parent.parent
+KUBERNETES_DIR = ROOT_DIR / "kubernetes"
+TALENV_FILE = ROOT_DIR / "talos" / "talenv.yaml"
 
 # Load Talenv metadata
 with TALENV_FILE.open() as f:
@@ -195,7 +196,75 @@ def test_schema():
             print(f"{RED}\u274c {kind}: {schema} (error: {e}){RESET}")
 
 
-def get_schema_url(kind, doc_buffer, yaml_file_short, yaml_file):
+def gh_headers():
+    """
+    Prepare GitHub API headers, including authentication if a token is available.
+    Returns:
+        dict: Headers for GitHub API requests.
+    """
+    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+    if not token and (ROOT_DIR / "github-pat.txt").exists():
+        with open(f"{ROOT_DIR}/github-pat.txt", "r", encoding="utf-8") as f:
+            line = f.readline()
+        if line and (line.startswith("ghp_") or line.startswith("github_pat_")):
+            token = line.strip()
+
+    # print(f"{YELLOW}\u2139\ufe0f  Using GitHub token: {token}{RESET}")
+    # exit(1)
+
+    h = {"Accept": "application/vnd.github+json"}
+    if token:
+        h["Authorization"] = f"Bearer {token}"
+    return h
+
+
+def iter_app_template_tags(owner, repo):
+    """
+    Generator to iterate over all tags in a GitHub repository using pagination.
+    Args:
+        owner (str): GitHub repository owner.
+        repo (str): GitHub repository name.
+    Yields:
+        str: Tag name.
+    """
+    url = f"https://api.github.com/repos/{owner}/{repo}/tags"
+    page = 1
+    while True:
+        r = requests.get(url, headers=gh_headers(), params={
+                         "per_page": 100, "page": page}, timeout=30)
+        r.raise_for_status()
+        data = r.json()
+        if not data:
+            break
+        for t in data:
+            yield t["name"]
+        page += 1
+
+
+def latest_app_template_tag():
+    """
+    Determine the latest app-template tag from the bjw-s-labs/helm-charts repository.
+    Returns:
+        str: The latest tag name, or a default if none found.
+    """
+    best_ver = None
+    best_tag = None
+    tag_rx = re.compile(r"^app-template-(\d+)\.(\d+)\.(\d+)$")
+
+    for name in iter_app_template_tags(owner="bjw-s-labs", repo="helm-charts"):
+        m = tag_rx.match(name)
+        if not m:
+            continue
+        ver = tuple(map(int, m.groups()))  # (major, minor, patch)
+        if best_ver is None or ver > best_ver:
+            best_ver, best_tag = ver, name
+    if best_tag is None:
+        best_tag = "app-template-3.7.3"
+
+    return best_tag
+
+
+def get_schema_url(kind, doc_buffer, yaml_file_short, yaml_file, tag):
     """
     Determine the appropriate schema URL for a given resource kind.
 
@@ -215,10 +284,12 @@ def get_schema_url(kind, doc_buffer, yaml_file_short, yaml_file):
     if kind == "HelmRelease":
         try:
             parsed = yaml.safe_load("".join(doc_buffer))
-            chart_spec = parsed.get("spec", {}).get("chart", {}).get("spec", {})
-            chart_ref = parsed.get("spec", {}).get("chartRef", {}).get("name", "")
+            chart_spec = parsed.get("spec", {}).get(
+                "chart", {}).get("spec", {})
+            chart_ref = parsed.get("spec", {}).get(
+                "chartRef", {}).get("name", "")
             if chart_spec.get("chart") == "app-template" or chart_ref == "app-template":
-                return "https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-3.7.3/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json"
+                return f"https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/{tag}/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json"
             return EXTENSIONS.get("HelmRelease")
         except Exception as e:
             print(
@@ -254,6 +325,8 @@ def main():
     parser.add_argument("--dl-schema", action="store_true")
     args = parser.parse_args()
 
+    tag = latest_app_template_tag()
+
     if args.test_schema:
         test_schema()
         return
@@ -263,12 +336,13 @@ def main():
             download_custom_schema(kind, url)
         return
 
-    for yaml_file in ROOT_DIR.rglob("*.yaml"):
-        if any(part in yaml_file.parts for part in [".private", ".venv", "docker"]):
+    for yaml_file in KUBERNETES_DIR.rglob("*.yaml"):
+        if any(part in yaml_file.parts for part in [".private", ".venv", "docker", "secret.sops.yaml"]):
             continue
         if args.hr and "helmrelease" not in yaml_file.name:
             continue
-        yaml_file_short = "kubernetes/" + str(yaml_file.relative_to(ROOT_DIR))
+        yaml_file_short = "kubernetes/" + \
+            str(yaml_file.relative_to(KUBERNETES_DIR))
         with open(yaml_file, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
@@ -292,7 +366,7 @@ def main():
                             kind = line.strip().split(":", 1)[1].strip()
 
                     schema_url = get_schema_url(
-                        kind, doc_buffer, yaml_file_short, yaml_file
+                        kind, doc_buffer, yaml_file_short, yaml_file, tag
                     )
                     if not kind or not schema_url:
                         print(
@@ -343,7 +417,8 @@ def main():
                     f.writelines(output_lines)
                 print(f"{GREEN}\u2705 Updated:{RESET} {yaml_file_short}")
             elif not args.detail and not args.full:
-                print(f"{YELLOW}[DRY-RUN]{RESET} Would update: {yaml_file_short}")
+                print(
+                    f"{YELLOW}[DRY-RUN]{RESET} Would update: {yaml_file_short}")
 
 
 if __name__ == "__main__":
