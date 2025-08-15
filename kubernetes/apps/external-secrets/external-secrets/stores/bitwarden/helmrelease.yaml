@@ -19,13 +19,13 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      bitwarden:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
 
         containers:
-          main:
+          cli:
             image:
               repository: ghcr.io/roblandry/bw-cli
               tag: 2025.7.0@sha256:317e4b0d3f11eb6b367f9585135202be66ba1bc697ab8561ad287d7bf0ba91ff
@@ -58,8 +58,8 @@ spec:
               limits:
                 memory: 256M
     service:
-      main:
-        controller: main
+      cli:
+        controller: bitwarden
         ports:
           http:
             port: 8087
