@@ -27,8 +27,8 @@ spec:
         containers:
           cli:
             image:
-              repository: ghcr.io/larivierec/bitwarden-cli
-              tag: 2024.9.0@sha256:960a74eb472c4fee148a53bd7d9ec500131e9c87f490fc44404e82a28da39812
+              repository: ghcr.io/roblandry/bw-cli
+              tag: 2025.7.0@sha256:317e4b0d3f11eb6b367f9585135202be66ba1bc697ab8561ad287d7bf0ba91ff
             envFrom:
               - secretRef:
                   name: bitwarden-cli
