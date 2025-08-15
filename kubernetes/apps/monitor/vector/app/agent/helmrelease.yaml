@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-3.7.3/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-4.2.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vector-agent
+  name: &app vector-agent
 spec:
   interval: 30m
   timeout: 15m
@@ -22,8 +22,15 @@ spec:
     - name: vector-aggregator
       namespace: monitor
   values:
+    serviceAccount:
+      vector-agent:
+        staticToken: true
+        forceRename: *app
+
     controllers:
       vector-agent:
+        serviceAccount:
+          identifier: *app
         type: daemonset
         strategy: RollingUpdate
         annotations:
@@ -54,9 +61,6 @@ spec:
             args: ["--config", "/etc/vector/vector.yaml"]
             securityContext:
               privileged: true
-    serviceAccount:
-      create: true
-      name: vector-agent
     persistence:
       config:
         enabled: true
