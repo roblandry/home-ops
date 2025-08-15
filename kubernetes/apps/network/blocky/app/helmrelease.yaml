@@ -72,7 +72,7 @@ spec:
             matchLabels:
               app.kubernetes.io/name: *app
     service:
-      app:
+      blocky:
         controller: *app
         ports:
           http:
@@ -106,7 +106,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: *app
                   port: http
     persistence:
       config:
