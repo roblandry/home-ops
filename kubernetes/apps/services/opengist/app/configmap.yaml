@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +8,6 @@ metadata:
     reloader.stakater.com/match: "true"
 data:
   config.yml: |
-    ---
     # Set the log level to one of the following: trace, debug, info, warn, error, fatal, panic. Default: warn
     log-level: warn
 

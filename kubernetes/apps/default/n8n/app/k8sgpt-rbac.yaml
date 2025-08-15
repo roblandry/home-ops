@@ -1,9 +1,12 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/serviceaccount.json
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: n8n-k8sgpt
   namespace: default
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/role.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -14,6 +17,7 @@ rules:
     resources: ["results"]
     verbs: ["get", "list"]
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/rolebinding.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -28,6 +32,7 @@ roleRef:
   name: read-k8sgpt-results
   apiGroup: rbac.authorization.k8s.io
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/secret.json
 apiVersion: v1
 kind: Secret
 metadata:

@@ -337,7 +337,14 @@ def main():
         return
 
     for yaml_file in KUBERNETES_DIR.rglob("*.yaml"):
-        if any(part in yaml_file.parts for part in [".private", ".venv", "docker", "secret.sops.yaml"]):
+        if any(part in yaml_file.parts for part in [
+                ".private",
+                ".venv",
+                "docker",
+                "secret.sops.yaml",
+                "sops-age.sops.yaml",
+                "cluster-secrets.sops.yaml"
+        ]):
             continue
         if args.hr and "helmrelease" not in yaml_file.name:
             continue
