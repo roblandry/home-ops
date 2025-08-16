@@ -55,7 +55,7 @@ spec:
 
         pod:
           annotations:
-            configmap.reloader.stakater.com/reload: *app
+            configmap.reloader.stakater.com/reload: network-ups-tools-config
 
       # Added for unRAID NUT
       nut-exporter-unraid:
