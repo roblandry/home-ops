@@ -54,6 +54,12 @@ spec:
       enabled: false
     lvm-localpv:
       enabled: false
+    alloy:
+      enabled: false
+    loki:
+      enabled: false
+    minio:
+      enabled: false
     mayastor:
       enabled: false
       # csi:
@@ -71,4 +77,3 @@ spec:
       replicated:
         mayastor:
           enabled: false
-
