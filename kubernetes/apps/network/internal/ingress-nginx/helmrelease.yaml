@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: internal-ingress-nginx
+  namespace: network
 spec:
   interval: 1h
   chart:
@@ -62,8 +63,8 @@ spec:
           "http_user_agent": "$http_user_agent"}
         proxy-body-size: 0
         proxy-buffer-size: 16k
-        proxy-buffers-number: 8
-        proxy-busy-buffers-size: 64k
+        proxy-buffers-number: 16
+        proxy-busy-buffers-size: 96k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
         # error-pages
@@ -86,7 +87,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
+        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production
       resources:
         requests:
           cpu: 100m
