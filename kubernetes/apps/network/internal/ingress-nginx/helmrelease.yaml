@@ -87,7 +87,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production
+        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
           cpu: 100m
