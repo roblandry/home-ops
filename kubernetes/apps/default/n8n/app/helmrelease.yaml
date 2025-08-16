@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 1.106.2
+              tag: 1.107.2
             command: ["n8n"]
             env:
               GENERIC_TIMEZONE: ${CONFIG_TIMEZONE}
