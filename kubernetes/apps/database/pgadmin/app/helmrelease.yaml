@@ -109,10 +109,9 @@ spec:
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
-      pgpass:
-        type: secret
-        name: pgadmin-secret
-        globalMounts:
-          - path: /pgadmin4/pgpass
-            subPath: pgpass
-
+      # pgpass:
+      #   type: secret
+      #   name: pgadmin-secret
+      #   globalMounts:
+      #     - path: /pgadmin4/pgpass
+      #       subPath: pgpass
