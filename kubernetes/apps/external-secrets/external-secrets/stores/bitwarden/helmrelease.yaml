@@ -28,7 +28,7 @@ spec:
           cli:
             image:
               repository: ghcr.io/roblandry/bw-cli
-              tag: 2025.7.0@sha256:72d88ae21b4e64ea65d04006d5c5c29f91343dc59bc813023e8d432a2dccb9e4
+              tag: 2025.7.0@sha256:8e88aba869d3a60bfc344580ba03abab3a298f614b6b28863250b9873150ee3d
             envFrom:
               - secretRef:
                   name: bitwarden-cli
