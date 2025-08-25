@@ -2,12 +2,7 @@
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: dev
-components:
-  - ../../components/common
-  - ../../components/repos/app-template
 resources:
-  # - ./gitea/ks.yaml
-  - ./gitea-runner/ks.yaml
-  # - ./opengist/ks.yaml
-  - ./wikijs/ks.yaml
+  # - ./externalsecret.yaml
+  - ./helmrelease.yaml
+  - ./secret.sops.yaml
