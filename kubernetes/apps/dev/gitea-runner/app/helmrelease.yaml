@@ -29,6 +29,12 @@ spec:
               repository: gitea/act_runner
               tag: 0.2.12-dind-rootless@sha256:e00005fdd3387f76de2d8cb00f9cb8ae3327bd2af72af9096ed0a64274e34c82
               pullPolicy: IfNotPresent
+            command:
+              [
+                "sh",
+                "-c",
+                "while ! nc -z localhost 2376 </dev/null; do echo 'waiting for docker daemon...'; sleep 5; done; /sbin/tini -- /opt/act/run.sh",
+              ]
             envFrom:
               - secretRef:
                   name: *secret
