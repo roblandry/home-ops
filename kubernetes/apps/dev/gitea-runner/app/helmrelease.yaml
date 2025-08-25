@@ -34,7 +34,10 @@ spec:
                   name: *secret
             env:
               GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
-              DOCKER_HOST: unix:///run/user/1000/docker.sock
+              # DOCKER_HOST: unix:///run/user/1000/docker.sock
+              DOCKER_HOST: tcp://localhost:2376
+              DOCKER_CERT_PATH: /certs/client
+              DOCKER_TLS_VERIFY: "0"
             resources:
               requests:
                 cpu: 10m
