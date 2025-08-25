@@ -84,3 +84,12 @@ spec:
           gitea-runner:
             dind:
               - path: /var/lib/docker
+      dind-config:
+        type: configMap
+        name: dind-daemon
+        advancedMounts:
+          gitea-runner:
+            dind:
+              - path: /etc/docker/daemon.json
+                subPath: daemon.json
+                readOnly: true
