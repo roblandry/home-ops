@@ -4,7 +4,7 @@ metadata:
   name: dind-daemon
   namespace: dev
 data:
-  daemon.json: |
+  daemon.json: |-
     {
       "dns": ["10.43.0.10"],
       "dns-search": ["svc.cluster.local","cluster.local"]
