@@ -58,6 +58,7 @@ spec:
               - "--dns=10.43.0.10"
               - "--dns-search=svc.cluster.local"
               - "--dns-search=cluster.local"
+              - "--insecure-registry=gitea.services.svc.cluster.local:3000"
             securityContext:
               privileged: true
               runAsUser: 0
