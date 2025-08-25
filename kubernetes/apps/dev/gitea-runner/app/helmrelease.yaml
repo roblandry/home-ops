@@ -49,9 +49,9 @@ spec:
               tag: "27-dind"
               pullPolicy: IfNotPresent
             args:
-              - "--host=tcp://0.0.0.0:2375" # expose TCP for the sidecar
+              - "--host=tcp://0.0.0.0:2375"
               - "--storage-driver=overlay2"
-              - "--iptables=false" # avoid kernel module/PSA friction
+              - "--iptables=false"
             securityContext:
               privileged: true
               runAsUser: 0
@@ -70,3 +70,11 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /data
+
+      # DinD layer/cache storage
+      dind-lib:
+        type: emptyDir
+        advancedMounts:
+          gitea-runner:
+            dind:
+              - path: /var/lib/docker
