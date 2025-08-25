@@ -105,9 +105,9 @@ spec:
     ingress:
       gitea:
         enabled: true
-        className: internal
+        className: external
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           # error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
           gethomepage.dev/app: *app
