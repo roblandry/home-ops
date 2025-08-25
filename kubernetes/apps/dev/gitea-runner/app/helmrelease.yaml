@@ -22,6 +22,7 @@ spec:
       gitea-runner:
         annotations:
           secret.reloader.stakater.com/reload: &secret gitea-runner-secrets
+          configmap.reloader.stakater.com/reload: dind-daemon
         strategy: Recreate
         containers:
           runner:
