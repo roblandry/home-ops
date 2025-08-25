@@ -7,5 +7,5 @@ data:
   daemon.json: |
     {
       "dns": ["10.43.0.10"],
-      "dns-search": ["svc.cluster.local","cluster.local"],
+      "dns-search": ["svc.cluster.local","cluster.local"]
     }
