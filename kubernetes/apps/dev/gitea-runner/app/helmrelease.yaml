@@ -34,7 +34,8 @@ spec:
               - secretRef:
                   name: *secret
             env:
-              GITEA_INSTANCE_URL: https://gitea.${SECRET_DOMAIN}
+              # GITEA_INSTANCE_URL: https://gitea.${SECRET_DOMAIN}
+              GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
               # GITEA_RUNNER_LABELS: "k8s,dind"
               GITEA_RUNNER_LABELS: "k8s:docker://catthehacker/ubuntu:act-22.04,dind"
               DOCKER_HOST: tcp://127.0.0.1:2375
@@ -54,6 +55,9 @@ spec:
               - "--host=tcp://0.0.0.0:2375"
               - "--storage-driver=overlay2"
               - "--iptables=false"
+              - "--dns=10.43.0.10"
+              - "--dns-search=svc.cluster.local"
+              - "--dns-search=cluster.local"
             securityContext:
               privileged: true
               runAsUser: 0
