@@ -27,7 +27,7 @@ spec:
           runner:
             image:
               repository: gitea/act_runner
-              tag: 0.2.12@sha256:e00005fdd3387f76de2d8cb00f9cb8ae3327bd2af72af9096ed0a64274e34c82
+              tag: 0.2.12-dind@sha256:c28c0716e249b1067d222b2114d774d1c9b3e00f51fa12e97b88a1f47733d253
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
