@@ -48,6 +48,10 @@ spec:
               repository: docker
               tag: "27-dind"
               pullPolicy: IfNotPresent
+            args:
+              - "--host=tcp://0.0.0.0:2375" # expose TCP for the sidecar
+              - "--storage-driver=overlay2"
+              - "--iptables=false" # avoid kernel module/PSA friction
             securityContext:
               privileged: true
               runAsUser: 0
