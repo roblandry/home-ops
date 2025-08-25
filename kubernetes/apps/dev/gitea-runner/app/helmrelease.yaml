@@ -34,7 +34,7 @@ spec:
               - secretRef:
                   name: *secret
             env:
-              GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
+              GITEA_INSTANCE_URL: https://gitea.${SECRET_DOMAIN}
               # GITEA_RUNNER_LABELS: "k8s,dind"
               GITEA_RUNNER_LABELS: "k8s:docker://catthehacker/ubuntu:act-22.04,dind"
               DOCKER_HOST: tcp://127.0.0.1:2375
