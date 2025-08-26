@@ -7,7 +7,7 @@ data:
   config.yaml: |-
     runner:
       envs:
-        DOCKER_HOST: tcp://docker:2376
+        DOCKER_HOST: tcp://127.0.0.1:2376
         DOCKER_TLS_VERIFY: 1
         DOCKER_CERT_PATH: /certs/client
         DOCKER_BUILDKIT: 1
@@ -21,9 +21,8 @@ data:
         - "base:docker://ubuntu:22.04"
 
     container:
-      docker_host: tcp://docker:2376
-      options: |-
-        --add-host=docker:host-gateway
-        -v /certs/client:/certs/client:ro
+      network: host
+      docker_host: tcp://127.0.0.1:2376
+      options: -v /certs/client:/certs/client:ro
       valid_volumes:
         - /certs
