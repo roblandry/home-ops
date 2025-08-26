@@ -111,6 +111,16 @@ spec:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           # error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
+          # 1) Do NOT intercept errors (so 401/404/405, etc, pass through as-is)
+          nginx.ingress.kubernetes.io/disable-proxy-intercept-errors: "true"
+          # If your controller ignores the annotation (seen in some versions),
+          # force it with a snippet:
+          nginx.ingress.kubernetes.io/server-snippet: |
+            proxy_intercept_errors off;
+          # Optional but common for registries:
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: *app
