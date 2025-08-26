@@ -22,13 +22,13 @@ spec:
       gitea-runner:
         annotations:
           secret.reloader.stakater.com/reload: &secret gitea-runner-secrets
+          configmap.reloader.stakater.com/reload: &config runner-config
         strategy: Recreate
         containers:
           runner:
             image:
               repository: gitea/act_runner
               tag: 0.2.12-dind@sha256:c28c0716e249b1067d222b2114d774d1c9b3e00f51fa12e97b88a1f47733d253
-              # tag: 0.2.21@sha256:62a561c82dd67ec77ea600db7eac78ac5fed8e2244950fbf1829c54da12e8e54
               pullPolicy: IfNotPresent
             securityContext:
               privileged: true
@@ -40,17 +40,15 @@ spec:
                   name: *secret
             env:
               GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
-              # GITEA_RUNNER_LABELS: "k8s,dind"
-              GITEA_RUNNER_LABELS: "k8s:docker://catthehacker/ubuntu:act-22.04,dind"
               DOCKER_HOST: tcp://127.0.0.1:2376
               DOCKER_CERT_PATH: /certs/client
               DOCKER_TLS_VERIFY: "1"
             args:
-              # DNS for job containers
+              - --host=tcp://0.0.0.0:2376
+              - --storage-driver=overlay2
               - --dns=10.43.0.10
               - --dns-search=svc.cluster.local
               - --dns-search=cluster.local
-              # internal HTTP registry
               - --insecure-registry=gitea.services.svc.cluster.local:3000
 
     defaultPodOptions:
@@ -63,6 +61,16 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /data
+
+      runner-config:
+        type: configMap
+        name: *config
+        advancedMounts:
+          gitea-runner:
+            runner:
+              - path: /data/config.yaml
+                subPath: config.yaml
+                readOnly: true
 
       dind-lib:
         type: emptyDir

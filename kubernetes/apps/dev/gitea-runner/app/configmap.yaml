@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runner-config
+  namespace: dev
+data:
+  config.yaml: |-
+    runner:
+      envs:
+        - DOCKER_HOST=tcp://docker:2376
+        - DOCKER_TLS_VERIFY=1
+        - DOCKER_CERT_PATH=/certs/client
+        - DOCKER_BUILDKIT=1
+      labels:
+        - node:docker://catthehacker/ubuntu:act-22.04
+        - python:docker://python:3.12-bookworm
+        - golang:docker://golang:1.22-bookworm
+        - base:docker://ubuntu:22.04
+        - dind
+
+    container:
+      docker_host: tcp://docker:2376
+      options: |-
+        --add-host=docker:host-gateway
+        -v /certs/client:/certs/client:ro
+      valid_volumes:
+        - /certs
