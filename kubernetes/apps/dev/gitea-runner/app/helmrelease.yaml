@@ -27,46 +27,25 @@ spec:
           runner:
             image:
               repository: gitea/act_runner
-              # tag: 0.2.12-dind@sha256:c28c0716e249b1067d222b2114d774d1c9b3e00f51fa12e97b88a1f47733d253
-              tag: 0.2.21@sha256:62a561c82dd67ec77ea600db7eac78ac5fed8e2244950fbf1829c54da12e8e54
+              tag: 0.2.12-dind@sha256:c28c0716e249b1067d222b2114d774d1c9b3e00f51fa12e97b88a1f47733d253
+              # tag: 0.2.21@sha256:62a561c82dd67ec77ea600db7eac78ac5fed8e2244950fbf1829c54da12e8e54
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
                   name: *secret
             env:
-              # GITEA_INSTANCE_URL: https://gitea.${SECRET_DOMAIN}
               GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
               # GITEA_RUNNER_LABELS: "k8s,dind"
               GITEA_RUNNER_LABELS: "k8s:docker://catthehacker/ubuntu:act-22.04,dind"
               DOCKER_HOST: tcp://127.0.0.1:2375
-            # command:
-            #   [
-            #     "sh",
-            #     "-lc",
-            #     "until nc -z 127.0.0.1 2375; do echo waiting for dind; sleep 1; done; /sbin/tini -- /opt/act/run.sh",
-            #   ]
-
-          dind:
-            image:
-              repository: docker
-              tag: "27-dind"
-              pullPolicy: IfNotPresent
+              DOCKER_TLS_VERIFY: "0"
             args:
-              - "--host=tcp://0.0.0.0:2375"
-              - "--storage-driver=overlay2"
-              - "--dns=10.43.0.10"
-              - "--dns-search=svc.cluster.local"
-              - "--dns-search=cluster.local"
-              - "--insecure-registry=gitea.services.svc.cluster.local:3000"
-              - "--exec-opt=native.cgroupdriver=cgroupfs"
-            securityContext:
-              privileged: true
-              runAsUser: 0
-            env:
-              DOCKER_TLS_CERTDIR: ""
-            ports:
-              - { name: docker, containerPort: 2375 }
-
+              # DNS for job containers
+              - --dns=10.43.0.10
+              - --dns-search=svc.cluster.local
+              - --dns-search=cluster.local
+              # internal HTTP registry
+              - --insecure-registry=gitea.services.svc.cluster.local:3000
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
@@ -74,31 +53,32 @@ spec:
 
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: gitea-runner
         globalMounts:
           - path: /data
 
-      # DinD layer/cache storage
       dind-lib:
         type: emptyDir
         advancedMounts:
           gitea-runner:
-            dind:
+            runner:
               - path: /var/lib/docker
+
       host-modules:
         type: hostPath
         hostPath: /lib/modules
         hostPathType: Directory
         advancedMounts:
           gitea-runner:
-            dind:
+            runner:
               - path: /lib/modules
                 readOnly: true
+
       host-cgroup:
         type: hostPath
         hostPath: /sys/fs/cgroup
         hostPathType: Directory
         advancedMounts:
           gitea-runner:
-            dind:
+            runner:
               - path: /sys/fs/cgroup
