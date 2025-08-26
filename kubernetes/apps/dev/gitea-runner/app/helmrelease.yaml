@@ -43,6 +43,7 @@ spec:
               DOCKER_HOST: tcp://127.0.0.1:2376
               DOCKER_CERT_PATH: /certs/client
               DOCKER_TLS_VERIFY: "1"
+              CONFIG_FILE: /data/config.yaml
             args:
               - --host=tcp://0.0.0.0:2376
               - --storage-driver=overlay2
