@@ -42,8 +42,9 @@ spec:
               GITEA_INSTANCE_URL: http://gitea.services.svc.cluster.local:3000
               # GITEA_RUNNER_LABELS: "k8s,dind"
               GITEA_RUNNER_LABELS: "k8s:docker://catthehacker/ubuntu:act-22.04,dind"
-              DOCKER_HOST: tcp://127.0.0.1:2375
-              DOCKER_TLS_VERIFY: "0"
+              DOCKER_HOST: tcp://127.0.0.1:2376
+              DOCKER_CERT_PATH: /certs/client
+              DOCKER_TLS_VERIFY: "1"
             args:
               # DNS for job containers
               - --dns=10.43.0.10
