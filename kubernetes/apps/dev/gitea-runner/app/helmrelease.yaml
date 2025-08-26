@@ -30,6 +30,11 @@ spec:
               tag: 0.2.12-dind@sha256:c28c0716e249b1067d222b2114d774d1c9b3e00f51fa12e97b88a1f47733d253
               # tag: 0.2.21@sha256:62a561c82dd67ec77ea600db7eac78ac5fed8e2244950fbf1829c54da12e8e54
               pullPolicy: IfNotPresent
+            securityContext:
+              privileged: true
+              runAsUser: 0
+              seccompProfile:
+                type: Unconfined
             envFrom:
               - secretRef:
                   name: *secret
@@ -46,6 +51,7 @@ spec:
               - --dns-search=cluster.local
               # internal HTTP registry
               - --insecure-registry=gitea.services.svc.cluster.local:3000
+
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
@@ -53,7 +59,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: gitea-runner
+        existingClaim: *app
         globalMounts:
           - path: /data
 
