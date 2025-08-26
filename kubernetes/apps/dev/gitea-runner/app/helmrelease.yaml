@@ -59,6 +59,7 @@ spec:
               - "--dns-search=svc.cluster.local"
               - "--dns-search=cluster.local"
               - "--insecure-registry=gitea.services.svc.cluster.local:3000"
+              - "--exec-opt=native.cgroupdriver=cgroupfs"
             securityContext:
               privileged: true
               runAsUser: 0
@@ -85,3 +86,20 @@ spec:
           gitea-runner:
             dind:
               - path: /var/lib/docker
+      host-modules:
+        type: hostPath
+        hostPath: /lib/modules
+        hostPathType: Directory
+        advancedMounts:
+          gitea-runner:
+            dind:
+              - path: /lib/modules
+                readOnly: true
+      host-cgroup:
+        type: hostPath
+        hostPath: /sys/fs/cgroup
+        hostPathType: Directory
+        advancedMounts:
+          gitea-runner:
+            dind:
+              - path: /sys/fs/cgroup
