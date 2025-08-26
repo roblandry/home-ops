@@ -25,4 +25,4 @@ data:
       docker_host: tcp://127.0.0.1:2376
       options: -v /certs/client:/certs/client:ro
       valid_volumes:
-        - /certs
+        - /certs/client
