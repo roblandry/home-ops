@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
+  - ./aqualab/ks.yaml
   - ./echo/ks.yaml
   - ./homepage/ks.yaml
   - ./mealie/ks.yaml
