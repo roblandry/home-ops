@@ -46,21 +46,20 @@ spec:
               MIGRATE: "true"
               DJANGO_DEBUG: "false"
               ALLOWED_HOSTS: "aqualab.${SECRET_DOMAIN}"
-            # Ive never had to set this before and didnt in this run
-            ports:
-              - name: http
-                containerPort: 8000
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet: { path: /_healthz, port: http }
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet: { path: /_healthz, port: http }
+            # ports:
+            #   - name: http
+            #     containerPort: 8000
+            # probes:
+            #   liveness:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet: { path: /_healthz, port: http }
+            #   readiness:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet: { path: /_healthz, port: http }
 
     service:
       app:
