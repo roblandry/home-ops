@@ -18,7 +18,10 @@
   },
 
   hostRules: [
-    { hostType: "docker", matchHost: "{{ secrets.GITEA_REGISTRY_HOST }}" },
+    { 
+      hostType: "docker", 
+      matchHost: "{{ secrets.GITEA_REGISTRY_HOST }}"
+    },
   ],
 
   pinDigests: true,
