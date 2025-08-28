@@ -1,0 +1,25 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  packageRules: [
+    {
+      description: "Auto-merge Gitea Docker images",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchPackagePatterns: ["^gitea\\.${SECRET_DOMAIN}/"],
+      registryUrls: ["https://{{ secrets.GITEA_REGISTRY_HOST }}"],
+      ignoreTests: true,
+    },
+  ],
+
+  registryAliases: {
+    "gitea.${SECRET_DOMAIN}": "{{ secrets.GITEA_REGISTRY_HOST }}",
+  },
+
+  hostRules: [
+    { hostType: "docker", matchHost: "{{ secrets.GITEA_REGISTRY_HOST }}" },
+  ],
+
+  pinDigests: true,
+}
