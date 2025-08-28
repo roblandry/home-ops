@@ -19,9 +19,10 @@
 
   hostRules: [
     { 
+      hostType: "docker",
       matchHost: "{{ secrets.GITEA_REGISTRY_HOST }}",
-      username: "",
-      password: ""
+      username: "{{ secrets.GITEA_REGISTRY_USER }}",
+      password: "{{ secrets.GITEA_REGISTRY_PASS }}",
     },
   ],
 
