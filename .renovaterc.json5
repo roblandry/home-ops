@@ -36,4 +36,7 @@
   kustomize: {
     managerFilePatterns: ["/^kustomization\\.ya?ml(?:\\.j2)?$/"],
   },
+  registryAliases: {
+    "gitea.${SECRET_DOMAIN}": "{{ secrets.GITEA_REGISTRY_HOST }}",
+  },
 }

@@ -2,6 +2,14 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
+      description: "Auto-merge Gitea Docker images",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchPackageNames: ["/lonestarchief/"],
+      ignoreTests: false,
+    },
+    {
       description: "Auto-merge OCI Charts",
       matchDatasources: ["docker"],
       automerge: true,
