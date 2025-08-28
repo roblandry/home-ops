@@ -12,7 +12,6 @@ flowchart LR
   end
   rook-ceph/rook-ceph-cluster --> database/mariadb-cluster
   rook-ceph/rook-ceph-cluster --> database/postgres-cluster
-  rook-ceph/rook-ceph-cluster --> default/n8n
   rook-ceph/rook-ceph-cluster --> default/nextcloud
   rook-ceph/rook-ceph-cluster --> default/nextcloud-elasticsearch
   rook-ceph/rook-ceph-cluster --> default/nextcloud-onlyoffice

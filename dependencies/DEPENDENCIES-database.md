@@ -10,7 +10,6 @@ flowchart LR
     database/cloudnative-pg/cluster
     database/dragonfly-cluster
     database/dragonfly-operator
-    database/mariadb-cluster
     database/mariadb-crds
     database/mariadb-operator
     database/pgadmin

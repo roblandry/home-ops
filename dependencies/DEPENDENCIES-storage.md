@@ -14,13 +14,19 @@ flowchart LR
   rook-ceph/rook-ceph-cluster --> storage/volsync
   storage/snapshot-controller --> rook-ceph/rook-ceph-cluster
   storage/snapshot-controller --> rook-ceph/rook-ceph-operator
+  storage/volsync --> default/mealie
+  storage/volsync --> default/n8n
   storage/volsync --> default/nextcloud
   storage/volsync --> default/nextcloud-elasticsearch
   storage/volsync --> default/nextcloud-onlyoffice
   storage/volsync --> default/plantit
+  storage/volsync --> dev/gitea-runner
+  storage/volsync --> monitor/ntfy
+  storage/volsync --> services/gitea
   storage/volsync --> services/graylog
   storage/volsync --> services/graylog-elasticsearch
   storage/volsync --> services/graylog-mongodb
   storage/volsync --> services/netbox
+  storage/volsync --> services/opengist
   storage/volsync --> services/vaultwarden
 ```
