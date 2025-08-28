@@ -8,19 +8,20 @@
       automerge: true,
       automergeType: "branch",
       matchPackagePatterns: ["^gitea\\.${SECRET_DOMAIN}/"],
-      registryUrls: ["https://{{ secrets.GITEA_REGISTRY_HOST }}"],
+      // matchPackagePatterns: ["^gitea\\.\\$\\{SECRET_DOMAIN\\}/"],
+      registryUrls: ["https://gitea.{{ secrets.GITEA_REGISTRY_HOST }}"],
       ignoreTests: true,
     },
   ],
 
   registryAliases: {
-    "gitea.${SECRET_DOMAIN}": "{{ secrets.GITEA_REGISTRY_HOST }}",
+    "gitea.${SECRET_DOMAIN}": "gitea.{{ secrets.GITEA_REGISTRY_HOST }}",
   },
 
   hostRules: [
-    { 
+    {
       hostType: "docker",
-      matchHost: "{{ secrets.GITEA_REGISTRY_HOST }}",
+      matchHost: "gitea.{{ secrets.GITEA_REGISTRY_HOST }}",
       username: "{{ secrets.GITEA_REGISTRY_USER }}",
       password: "{{ secrets.GITEA_REGISTRY_PASS }}",
     },
