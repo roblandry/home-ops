@@ -4,6 +4,21 @@ This repository contains a complete home Kubernetes cluster setup using Talos Li
 
 **Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.**
 
+## Quick Validation Checklist
+
+**Before making any changes, verify your environment:**
+
+1. **Tool availability:** `which task && which python3 && which kubectl`
+2. **Task commands work:** `task --list` (should show 10 tasks)
+3. **Schema validation works:** `python3 scripts/check-schemas.py | tail -5` (should complete in <1 second)
+4. **Dependency generation works:** `python3 scripts/generate_deps.py 2>/dev/null | head -5` (should complete in ~2 seconds)
+5. **YAML syntax is valid:** `find kubernetes/ -name "*.yaml" | head -3 | xargs -I {} python3 -c "import yaml; yaml.safe_load(open('{}'))"`
+
+**Expected behavior when cluster is not available:**
+- `task reconcile` → "precondition not met" (missing kubeconfig)
+- `task bootstrap:talos` → "precondition not met" (missing age.key)
+- `task bootstrap:apps` → "precondition not met" (missing cluster)
+
 ## Working Effectively
 
 ### Bootstrap and Setup

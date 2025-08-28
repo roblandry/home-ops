@@ -9,7 +9,6 @@ flowchart LR
     network/internal-remote-services-secrets
     network/internal/remote-services/secrets
     services/gitea
-    services/graylog-mongodb
     services/graylog/elasticsearch
     services/netbox
     services/opengist
