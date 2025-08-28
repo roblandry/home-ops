@@ -32,6 +32,10 @@ Automatically generated dependency graphs for each namespace.
 
 ![kyverno](./DEPENDENCIES-kyverno.png)
 
+### monitor
+
+![monitor](./DEPENDENCIES-monitor.png)
+
 ### network
 
 ![network](./DEPENDENCIES-network.png)
@@ -52,18 +56,24 @@ Automatically generated dependency graphs for each namespace.
 
 ```
 SOPS Secrets:
+  - ai/k8sgpt/config
   - cert-manager/cert-manager/app
   - database/cloudnative-pg/cluster
+  - default/aqualab/app
   - default/mealie/app
   - default/plantit/app
+  - dev/gitea-runner/app
+  - dev/wikijs/app
   - external-secrets/external-secrets/stores/bitwarden
   - flux-system/flux-instance/app
   - monitor/headlamp/app
   - monitor/kube-prometheus-stack/app
-  - monitor/network-ups-tools/app
+  - monitor/ntfy/app
+  - monitor/ntfy/webhook
   - network/external/cloudflared
   - network/external/external-dns
   - rook-ceph/rook-ceph/operator
+  - services/gitea/app
   - services/netbox/app
   - services/pgloader/secret
   - services/vaultwarden/app
@@ -72,9 +82,9 @@ External Secrets:
   - cert-manager/cert-manager/app
   - database/cloudnative-pg/cluster
   - database/pgadmin/app
+  - default/aqualab/app
   - default/homepage/app
   - default/n8n/app
-  - default/n8n/backup
   - default/nextcloud/elasticsearch
   - default/nextcloud/onlyoffice
   - monitor/gatus/secrets
@@ -84,7 +94,6 @@ External Secrets:
   - monitor/thanos/app
   - monitor/unpoller/app
   - network/authentik/app
-  - network/authentik/backup
   - network/external/external-dns
   - network/internal/remote-services/secrets
   - rook-ceph/rook-ceph/operator
@@ -92,10 +101,12 @@ External Secrets:
   - services/graylog/elasticsearch
   - services/netbox/app
   - storage/garage-webui/app
+  - utilities/cronjob-cnpg/app
 
 Using Both:
   - cert-manager/cert-manager/app
   - database/cloudnative-pg/cluster
+  - default/aqualab/app
   - monitor/kube-prometheus-stack/app
   - network/external/external-dns
   - rook-ceph/rook-ceph/operator

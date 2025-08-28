@@ -8,8 +8,9 @@ flowchart LR
   subgraph "ns: monitor"
     monitor/gatus/secrets
     monitor/grafana
-    monitor/kube-prometheus-stack
     monitor/loki
+    monitor/ntfy
+    monitor/ntfy/webhook
     monitor/prometheus-operator-crds
     monitor/unpoller
     monitor/vector-agent
@@ -29,4 +30,5 @@ flowchart LR
   rook-ceph/rook-ceph-cluster --> monitor/kube-prometheus-stack
   rook-ceph/rook-ceph-cluster --> monitor/loki
   rook-ceph/rook-ceph-cluster --> monitor/thanos
+  storage/volsync --> monitor/ntfy
 ```
