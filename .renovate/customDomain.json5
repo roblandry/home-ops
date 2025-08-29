@@ -1,31 +1,32 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-
-  packageRules: [
-    {
-      description: "Auto-merge Gitea Docker images",
-      matchDatasources: ["docker"],
-      automerge: true,
-      automergeType: "branch",
-      matchPackagePatterns: ["^gitea\\.${SECRET_DOMAIN}/"],
-      // matchPackagePatterns: ["^gitea\\.\\$\\{SECRET_DOMAIN\\}/"],
-      registryUrls: ["https://gitea.{{ secrets.GITEA_REGISTRY_HOST }}"],
-      ignoreTests: true,
-    },
-  ],
+  pinDigests: true,
 
   registryAliases: {
     "gitea.${SECRET_DOMAIN}": "gitea.{{ secrets.GITEA_REGISTRY_HOST }}",
   },
 
+  packageRules: [
+    {
+      description: "Route & automerge Gitea Docker images",
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["^gitea\\.\\$\\{SECRET_DOMAIN\\}/"],
+      registryUrls: ["https://gitea.{{ secrets.GITEA_REGISTRY_HOST }}"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
+      branchTopic: "gitea-image-digest",
+      commitMessageTopic: "gitea image",
+      prTitle: "chore(gitea): update image digest",
+      prBodyNotes: [
+        "Image reference from private registry (domain/owner redacted).",
+      ],
+    },
+  ],
   hostRules: [
     {
       hostType: "docker",
       matchHost: "gitea.{{ secrets.GITEA_REGISTRY_HOST }}",
-      username: "{{ secrets.GITEA_REGISTRY_USER }}",
-      password: "{{ secrets.GITEA_REGISTRY_PASS }}",
     },
   ],
-
-  pinDigests: true,
 }
