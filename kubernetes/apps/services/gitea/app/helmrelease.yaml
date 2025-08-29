@@ -109,9 +109,11 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          # Added to allow renovate access
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+          external-dns.alpha.kubernetes.io/hostname: "gitea.${SECRET_DOMAIN}"
           # error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
-          # 1) Do NOT intercept errors (so 401/404/405, etc, pass through as-is)
           nginx.ingress.kubernetes.io/disable-proxy-intercept-errors: "true"
           # If your controller ignores the annotation (seen in some versions),
           # force it with a snippet:
@@ -121,6 +123,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+          # gethomepage.dev metadata
           gethomepage.dev/app: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: *app
