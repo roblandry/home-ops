@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: gitea.${SECRET_DOMAIN}/lonestarchief/aqualab
-              tag: latest@sha256:a4cea39c4c45dc79a5535ebbef0332b9cf1c07d45f34a24feb6fedba0097b7e5
+              tag: latest@sha256:d204f4d75c08e329f860e436ca0a58ba23cf5245e470e87558e4d1a1347a959d
             envFrom:
               - secretRef:
                   name: *secret
