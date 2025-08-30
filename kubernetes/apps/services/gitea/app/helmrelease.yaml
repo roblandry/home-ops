@@ -108,10 +108,10 @@ spec:
         enabled: true
         className: external
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           # Added to allow renovate access
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-          external-dns.alpha.kubernetes.io/hostname: "gitea.${SECRET_DOMAIN}"
+          # external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+          # external-dns.alpha.kubernetes.io/hostname: "gitea.${SECRET_DOMAIN}"
           # error-pages.home.arpa/enabled: "true"
           # authentik.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/disable-proxy-intercept-errors: "true"
@@ -135,6 +135,30 @@ spec:
           - host: &host "gitea.${SECRET_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
+                service:
+                  identifier: *app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-production-tls"
+      cr:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+          external-dns.alpha.kubernetes.io/hostname: "cr.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/disable-proxy-intercept-errors: "true"
+          nginx.ingress.kubernetes.io/server-snippet: |
+            proxy_intercept_errors off;
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+        hosts:
+          - host: &host "cr.${SECRET_DOMAIN}"
+            paths:
+              - path: /v2/
                 pathType: Prefix
                 service:
                   identifier: *app
