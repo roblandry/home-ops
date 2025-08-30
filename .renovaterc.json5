@@ -5,7 +5,7 @@
     "docker:enableMajor",
     "helpers:pinGitHubActionDigests",
     "github>roblandry/home-ops//.renovate/autoMerge.json5",
-    "github>roblandry/home-ops//.renovate/customDomain.json5",
+    // "github>roblandry/home-ops//.renovate/customDomain.json5",
     "github>roblandry/home-ops//.renovate/customManagers.json5",
     "github>roblandry/home-ops//.renovate/grafanaDashboards.json5",
     "github>roblandry/home-ops//.renovate/groups.json5",
