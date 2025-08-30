@@ -132,6 +132,20 @@ spec:
           - hosts:
               - *host
             secretName: "${SECRET_DOMAIN/./-}-production-tls"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: loki-gateway
+              topologyKey: kubernetes.io/hostname
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 0
+          maxUnavailable: 1
+      podDisruptionBudget:
+        maxUnavailable: 1
     read:
       replicas: 3
     write:
