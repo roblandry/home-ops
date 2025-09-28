@@ -50,5 +50,14 @@
       matchUpdateTypes: ["minor", "patch"],
       ignoreTests: true,
     },
+    {
+      description: "Auto-merge Trusted",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["minor", "patch", "digest"],
+      matchPackageNames: ["/bw-cli/"],
+      ignoreTests: false,
+    },
   ],
 }
