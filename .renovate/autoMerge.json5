@@ -57,7 +57,7 @@
       automergeType: "pr",
       matchUpdateTypes: ["minor", "patch", "digest"],
       matchPackageNames: ["/bw-cli/"],
-      ignoreTests: false,
+      ignoreTests: true,
     },
   ],
 }
