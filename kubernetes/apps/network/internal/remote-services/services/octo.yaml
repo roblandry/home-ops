@@ -7,9 +7,9 @@ metadata:
   namespace: network
 spec:
   ports:
-    - port: 80
+    - port: 5000
       protocol: TCP
-      targetPort: 80
+      targetPort: 5000
       name: http
   type: ExternalName
   externalName: octo.ptr.internal
@@ -45,7 +45,7 @@ spec:
             service:
               name: remote-internal-octo
               port:
-                number: 80
+                number: 5000
   tls:
     - hosts:
         - "octo.${SECRET_DOMAIN}"
