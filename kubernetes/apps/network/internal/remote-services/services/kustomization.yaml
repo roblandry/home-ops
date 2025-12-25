@@ -23,6 +23,7 @@ resources:
   - ./localai.yaml
   - ./maybefinance.yaml
   - ./obico.yaml
+  - ./octo.yaml
   - ./ollama.yaml
   - ./oods.yaml
   - ./overseerr.yaml

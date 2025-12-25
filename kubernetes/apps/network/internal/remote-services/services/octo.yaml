@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/service.json
+kind: Service
+apiVersion: v1
+metadata:
+  name: remote-internal-octo
+  namespace: network
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: http
+  type: ExternalName
+  externalName: octo.ptr.internal
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.3/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: remote-internal-octo
+  namespace: network
+  annotations:
+    error-pages.home.arpa/enabled: "true"
+    # authentik.home.arpa/enabled: "true"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "octo"
+    gethomepage.dev/description: "OctoPrint Management Interface"
+    gethomepage.dev/href: "http://octo.ptr.internal"
+    gethomepage.dev/group: "Infrastructure"
+    gethomepage.dev/icon: "octopi.png"
+    gethomepage.dev/siteMonitor: http://octo.ptr.internal
+    nginx.ingress.kubernetes.io/secure-backends: "false"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # nginx.ingress.kubernetes.io/ssl-verify: "false"
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "octo.${SECRET_DOMAIN}"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: remote-internal-octo
+              port:
+                number: 80
+  tls:
+    - hosts:
+        - "octo.${SECRET_DOMAIN}"
+      secretName: "${SECRET_DOMAIN/./-}-production-tls"
