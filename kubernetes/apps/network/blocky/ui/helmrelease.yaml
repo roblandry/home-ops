@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: gabrielduartem/blocky-ui
-              tag: 1.1.4@sha256:007439c7962edefc1150d025e1d7148ac606f16783cda7dd7047e00aee813d0b
+              tag: 1.5.0@sha256:21c3c3c6ce797be9a8b7efb9a04bc946561075efa98bf7a346deed758cbd9c8d
             env:
               - name: BLOCKY_API_URL
                 value: http://blocky.network.svc.cluster.local:4000
