@@ -48,7 +48,7 @@ spec:
           gitea:
             image:
               repository: ghcr.io/go-gitea/gitea
-              tag: 1.24.6-rootless@sha256:91f2b27e080739f0d19dba716c3214f17257c632cf762e545b44ca577e37052c
+              tag: 1.25.4-rootless@sha256:1926e89ad28358ef2146bb8a1b9c3ba24bae681cb02b72d2df11125fdc675abe
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
