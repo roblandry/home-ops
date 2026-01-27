@@ -43,7 +43,7 @@ spec:
             image:
               # Graylog 6.2 does not support ES 8.x
               repository: elasticsearch
-              tag: 7.17.28@sha256:a06b03a2db8db2be43d3c3851e7bcebdd4fff79f4db08c7da6bad7a8776d3e15
+              tag: 9.2.4@sha256:ba3ca06dc9121baad53ec025c87eef9352fcae11d89cd2e4cba8821977e81319
             resources:
               requests:
                 cpu: 100m
