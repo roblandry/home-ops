@@ -18,4 +18,4 @@ spec:
   noCache: false
   repository: ghcr.io/k8sgpt-ai/k8sgpt
   # renovate: datasource=docker depName=ghcr.io/k8sgpt-ai/k8sgpt
-  version: v0.4.25
+  version: v0.4.27
