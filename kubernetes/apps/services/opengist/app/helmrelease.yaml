@@ -48,7 +48,7 @@ spec:
           opengist:
             image:
               repository: ghcr.io/thomiceli/opengist
-              tag: 1.11.0@sha256:62406d9a08cbb20c3dd685d22240dfb7ad08ff21c106e04bb8da05619108031a
+              tag: 1.12.1@sha256:85361da4c2f259df6e0675c54574c991ae2601922cb56c4d0419fd3e15ceb139
               pullPolicy: IfNotPresent
             command: # double "$$" escape flux substitutions
               - ./opengist
