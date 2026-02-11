@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: mongo
-              tag: 8.0.14@sha256:3031bfad5692e3fa1defcd054d4794370889c93b2049e0c323f2b7571e495413
+              tag: 8.2.5@sha256:9e52bf8768ae4f59b9ca734845d15cee0e523ced14b900cc3692d241eec9154c
               pullPolicy: IfNotPresent
     service:
       main:
