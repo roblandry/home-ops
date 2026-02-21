@@ -28,7 +28,7 @@ spec:
           runner:
             image:
               repository: gitea/act_runner
-              tag: 0.2.13-dind@sha256:e66b0a324c56348da6e2442967f5e1ab26f99295114ec411ea2f666cc506bca7
+              tag: 0.3.0-dind@sha256:99f72f5821d44e18dd1fcab86703a79bbdffcdbdc87bb1d4fdb0f0c5495e9777
               pullPolicy: IfNotPresent
             securityContext:
               privileged: true
